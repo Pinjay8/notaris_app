@@ -29,7 +29,7 @@ class User extends Authenticatable
 
     public function notaris()
     {
-        return $this->belongsTo(Notaris::class, 'notaris_id');
+        return $this->belongsTo(Notaris::class);
     }
 
     /**

@@ -38,19 +38,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     // PageController routes
-    Route::controller(PageController::class)->group(function () {
-        Route::get('/virtual-reality', 'vr')->name('virtual-reality');
-        Route::get('/rtl', 'rtl')->name('rtl');
-        Route::get('/profile-static', 'profile')->name('profile-static');
-        Route::get('/sign-in-static', 'signin')->name('sign-in-static');
-        Route::get('/sign-up-static', 'signup')->name('sign-up-static');
-        Route::get('/{page}', 'index')->name('page');
-    });
+    // Route::controller(PageController::class)->group(function () {
+    //     Route::get('/virtual-reality', 'vr')->name('virtual-reality');
+    //     Route::get('/rtl', 'rtl')->name('rtl');
+    //     Route::get('/profile-static', 'profile')->name('profile-static');
+    //     Route::get('/sign-in-static', 'signin')->name('sign-in-static');
+    //     Route::get('/sign-up-static', 'signup')->name('sign-up-static');
+    //     Route::get('/{page}', 'index')->name('page');
+    // });
 
     // UserProfileController routes
     Route::controller(UserProfileController::class)->group(function () {
         Route::get('/profile', 'show')->name('profile');
-        Route::post('/profile', 'update')->name('profile.update');
+        Route::put('/profile', 'update')->name('profile.update');
     });
 
     // Logout route

@@ -21,8 +21,7 @@ class Notaris extends Model
         'address',
         'phone',
         'email',
-        'gender'
+        'gender',
+        'information',
     ];
-
-
 }
