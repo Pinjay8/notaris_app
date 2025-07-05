@@ -63,12 +63,41 @@
                     @method('PUT')
                     <div class="card-header pb-0 rounded-top">
                         <div class="d-flex align-items-center">
-                            <h5 class="mb-0">Edit Profiles</h5>
+                            <h5 class="mb-0">Edit Profile</h5>
                             <button type="submit" class="btn btn-primary btn-sm ms-auto">Ubah</button>
                         </div>
                     </div>
                     <div class="card-body">
                         <p class="text-uppercase text-sm">User Informations</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label text-sm">
+                                        Tanggal Pendaftaran</label>
+                                    <input class="form-control type=" text" name="first_name"
+                                        value="{{ old('signup_at', \Carbon\Carbon::parse($user->signup_at)->format('d-m-Y')) }}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label text-sm">
+                                        Waktu Aktif</label>
+                                    <input class="form-control type=" text" name="first_name"
+                                        value="{{ old('active_at', \Carbon\Carbon::parse($user->active_at)->format('d-m-Y H:i:s')) }}"
+                                        disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label text-sm">
+                                        Waktu Aktif Berakhir</label>
+                                    <input type="text" class="form-control" id="active_at" name="active_at" value=""
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="horizontal dark">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
