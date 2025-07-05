@@ -38,5 +38,24 @@ class DatabaseSeeder extends Seeder
             'active_at' => now(),
             'status' => 'active',
         ]);
+
+        DB::table('plans')->insert([
+            'id' => 1,
+            'name' => 'Free Plan',
+            'description' => 'Free plan for testing purposes',
+            'price' => 150000,
+            'duration_days' => 30,
+            'active' => true,
+        ]);
+
+        DB::table('subscriptions')->insert([
+            'id' => 1,
+            'user_id' => 1,
+            'plan_id' => 1,
+            'start_date' => now(),
+            'end_date' => now()->addMonth(),
+            'payment_date' => now(),
+            'status' => 'active',
+        ]);
     }
 }

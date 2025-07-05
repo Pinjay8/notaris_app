@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
+use App\Http\Controllers\SubscriptionsController;
 
 Route::middleware('guest')->group(function () {
     // LoginController routes
@@ -51,6 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(UserProfileController::class)->group(function () {
         Route::get('/profile', 'show')->name('profile');
         Route::put('/profile', 'update')->name('profile.update');
+    });
+
+    Route::controller(SubscriptionsController::class)->group(function () {
+        Route::get('/subscriptions', 'index')->name('subscriptions');
     });
 
     // Logout route

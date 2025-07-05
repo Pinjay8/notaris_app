@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('plan_id')->nullable()->constrained('plans');
-            $table->string('start_date')->nullable();
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->date('status')->nullable();
+            $table->date('payment_date')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

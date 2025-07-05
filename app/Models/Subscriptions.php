@@ -16,11 +16,17 @@ class Subscriptions extends Model
         'plan_id',
         'start_date',
         'end_date',
+        'payment_date',
         'status',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plans::class);
     }
 }

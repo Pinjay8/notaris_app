@@ -21,7 +21,7 @@
                 <li class="nav-item d-flex align-items-center">
                     <form method="post" action="{{ route('logout') }}" id="logout-form">
                         @csrf
-                        <button type="submit" class="btn text-white mb-0">
+                        <button type="submit" class="btn btn-primary text-white mb-0 shadow">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Log out</span>
                         </button>

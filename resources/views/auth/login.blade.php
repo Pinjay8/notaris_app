@@ -23,7 +23,7 @@
                                 <form role="form" method="POST" action="{{ route('login.perform') }}">
                                     @csrf
                                     <div class="flex flex-col mb-3">
-                                        <label for="email" class="form-label fs-6">Email <span
+                                        <label for="email" class="form-label text-sm">Email <span
                                                 class="text-danger">*</span></label>
                                         <input type="email" name="email" class="form-control form-control-lg"
                                             aria-label="Email">
@@ -32,6 +32,8 @@
                                         @enderror
                                     </div>
                                     <div class="flex flex-col mb-3">
+                                        <label for="email" class="form-label text-sm">Password <span
+                                                class="text-danger">*</span></label>
                                         <div class="input-group border-end">
                                             <input type="password" name="password" id="password"
                                                 class="form-control form-control-lg" aria-label="Password">
@@ -89,4 +91,3 @@
     </section>
 </main>
 @endsection
-

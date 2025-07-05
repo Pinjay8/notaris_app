@@ -12,7 +12,9 @@ class SubscriptionsController extends Controller
      */
     public function index()
     {
-        //
+        $subscriptions = Subscriptions::with('user', 'plan')->where('user_id', auth()->user()->id)->latest('start_date')->get();
+        // dd($subscriptions);
+        return view('pages.Subscription.index', compact('subscriptions'));
     }
 
     /**
