@@ -151,6 +151,7 @@ window.sidebarColor = function(a) {
   }
 }
 
+
 // Set Sidebar Type
 window.sidebarType = function(a) {
   var parent = a.parentElement.children;

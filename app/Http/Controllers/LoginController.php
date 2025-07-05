@@ -42,7 +42,7 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil Logout');
-        return redirect('/login');
+        return redirect()->route('login');
     }
 
     public function alertForgotPassword()

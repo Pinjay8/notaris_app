@@ -32,10 +32,13 @@
                                         @enderror
                                     </div>
                                     <div class="flex flex-col mb-3">
-                                        <label for="password" class="form-label fs-6">Password<span class="text-danger">
-                                                *</span></label>
-                                        <input type="password" name="password" class="form-control form-control-lg"
-                                            aria-label="Password">
+                                        <div class="input-group border-end">
+                                            <input type="password" name="password" id="password"
+                                                class="form-control form-control-lg" aria-label="Password">
+                                            <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                                <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                                            </span>
+                                        </div>
                                         @error('password')
                                         <p class="text-danger"> {{$message}} </p>
                                         @enderror
@@ -86,3 +89,4 @@
     </section>
 </main>
 @endsection
+

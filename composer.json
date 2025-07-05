@@ -8,7 +8,7 @@
         "php": "^8.2",
         "laravel-frontend-presets/argon": "^2.0",
         "laravel/framework": "^11.0",
-        "laravel/sanctum": "^4.1",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
         "php-flasher/flasher-notyf-laravel": "^2.1"
