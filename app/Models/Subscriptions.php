@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\LogsActivityCustom;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscriptions extends Model
 {
-    //
+    use LogsActivityCustom;
 
     protected $table = 'subscriptions';
 

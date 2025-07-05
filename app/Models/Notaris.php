@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\LogsActivityCustom;
 use Illuminate\Database\Eloquent\Model;
 
 class Notaris extends Model
 {
     //
+    use LogsActivityCustom;
 
     protected $table = 'notaris';
 

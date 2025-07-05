@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Password;
-use App\Http\Requests\LoginRequest;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -26,6 +27,19 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
+
+            $userId = Auth::id(); // Simpan dulu user_id secara eksplisit
+
+            // ActivityLog::create([
+            //     'user_id'    => $userId,
+            //     'menu'       => 'auth',
+            //     'action'     => 'login',
+            //     'data_type'  => 'users',
+            //     'data_id'    => $userId,
+            //     'ip_address' => $request->ip(),
+            //     'description' => 'Melakukan Login',
+            // ]);
+
             notyf()->position('x', 'right')->position('y', 'top')->success('Selamat datang, ' . Auth::user()->username . '!');
             return redirect()->route('dashboard');
         } else {

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('action');
             $table->string('data_type');
             $table->string('data_id');
-            $table->string('ip_address');
-            $table->string('description');
+            $table->string('ip_address')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

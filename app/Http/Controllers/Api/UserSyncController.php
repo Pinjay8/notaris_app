@@ -21,8 +21,6 @@ class UserSyncController extends Controller
             'status' => 'required',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']); // hash password jika belum
-
         $user = User::create($validated);
 
         return response()->json([
