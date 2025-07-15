@@ -43,7 +43,7 @@ class ProductService
 
         return $this->productRepo->deactivate($product);
     }
-    
+
     public function findProduct(int $id): ?Product
     {
         return $this->productRepo->find($id);

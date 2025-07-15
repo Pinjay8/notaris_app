@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Models\User;
 use App\Observers\UserObserver;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Repositories\Interfaces\DocumentRepositoryInterface;
 use App\Repositories\ProductRepository;
+use App\Repositories\DocumentRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
+        $this->app->bind(DocumentRepositoryInterface::class, DocumentRepository::class);
     }
 
     /**

@@ -49,6 +49,14 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Layanan</span>
                 </a>
+                <a href="{{ route('documents.index') }}"
+                    class="nav-link {{ Request::is('documents') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Dokumen</span>
+                </a>
                 {{-- <a class="nav-link {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}"
                     href="{{ route('profile') }}"> --}}
                     {{-- <a

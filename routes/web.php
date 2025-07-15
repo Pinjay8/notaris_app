@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
+use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscriptionsController;
 
@@ -61,6 +62,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('products', ProductsController::class);
     Route::put('products/{product}/deactivate', [ProductsController::class, 'deactivate'])->name('products.deactivate');
+
+    Route::resource('documents', DocumentsController::class);
+    Route::put('documents/{document}/deactivate', [DocumentsController::class, 'deactivate'])->name('documents.deactivate');
 
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

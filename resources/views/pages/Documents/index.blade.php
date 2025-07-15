@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Layanan'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Layanan</h6>
-                <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm mb-0">
-                    + Tambah Layanan
+                <h6 class="mb-0">Dokumen</h6>
+                <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
+                    + Tambah Dokumen
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('products.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
+                    <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
                         style="max-width: 500px;">
-                        <input type="text" name="search" placeholder="Cari kode/nama layanan..."
+                        <input type="text" name="search" placeholder="Cari kode/nama dokumen..."
                             value="{{ request('search') }}" class="form-control">
                         <select name="status" class="form-select">
                             <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Aktif</option>
@@ -31,13 +31,16 @@
                                     Id
                                 </th>
                                 <th class="th-title">
-                                    Nama Layanan
+                                    Nama Dokumen
                                 </th>
                                 <th class="th-title">
-                                    Kode Layanan
+                                    Kode Dokumen
                                 </th>
                                 <th class="th-title">
                                     Deskripsi
+                                </th>
+                                <th class="th-title">
+                                    Link
                                 </th>
                                 <th class="th-title">
                                     Gambar
@@ -51,43 +54,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($products as $product)
+                            @forelse ($documents as $document)
                             <tr>
                                 <td>
                                     <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
                                 </td>
                                 <td>
                                     <p class="text-sm mb-0  text-center"> {{
-                                        $product->name
+                                        $document->name
                                         }}
                                     </p>
                                 </td>
                                 <td>
                                     <p class="text-sm mb-0  text-center">{{
-                                        $product->code_products
+                                        $document->code
                                         }}
                                     </p>
                                 </td>
                                 <td>
                                     <p class="text-sm mb-0  text-center">{{
-                                        $product->description
+                                        $document->description
                                         }}
                                     </p>
                                 </td>
                                 <td>
-                                    <img src="{{ $product->getImageProduct() }}" alt="Gambar Layanan" width="100"
+                                    <p class="text-sm mb-0  text-center">{{
+                                        $document->link
+                                        }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <img src="{{ $document->getImageDocument() }}" alt="Gambar Layanan" width="100"
                                         class="rounded-circle img-fluid">
                                 </td>
                                 <td>
                                     <span
-                                        class="badge text-center d-block mx-auto bg-{{ $product->status == 1 ? 'success' : 'secondary' }}">
-                                        {{ $product->status == 1 ? 'Aktif' : 'Nonaktif' }}
+                                        class="badge text-center d-block mx-auto bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
+                                        {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
                                     </span>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a href="{{ route('products.edit', $product->id) }}"
+                                    <a href="{{ route('documents.edit', $document->id) }}"
                                         class="btn btn-info btn-sm mb-0">Edit</a>
-                                    <form action="{{ route('products.deactivate', $product->id) }}" method="POST"
+                                    <form action="{{ route('documents.deactivate', $document->id) }}" method="POST"
                                         class="d-inline-block">
                                         @csrf
                                         @method('PUT')
@@ -102,7 +111,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">Belum ada data layanan.</td>
+                                <td colspan="8" class="text-center text-muted">Belum ada data dokumen.</td>
                             </tr>
                             @endforelse
                         </tbody>
