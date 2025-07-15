@@ -57,5 +57,14 @@ class DatabaseSeeder extends Seeder
             'payment_date' => now(),
             'status' => 'active',
         ]);
+
+        DB::table('products')->insert([
+            'id' => 1,
+            'code_products' => 'abc-1',
+            'name' => 'abc',
+            'description' => 'abc abc abc',
+            'image' => 'https://example.com/images/abc.jpg',
+            'status' => true
+        ]);
     }
 }
