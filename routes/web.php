@@ -9,8 +9,10 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscriptionsController;
+
 
 Route::middleware('guest')->group(function () {
     // LoginController routes
@@ -60,11 +62,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/subscriptions', 'index')->name('subscriptions');
     });
 
-    Route::resource('products', ProductsController::class);
+    Route::resource('products', ProductsController::class)->except('show');
     Route::put('products/{product}/deactivate', [ProductsController::class, 'deactivate'])->name('products.deactivate');
 
     Route::resource('documents', DocumentsController::class);
     Route::put('documents/{document}/deactivate', [DocumentsController::class, 'deactivate'])->name('documents.deactivate');
+
+    Route::get('/product-documents', [ProductDocumentsController::class, 'selectProduct'])->name('products.documents.selectProduct');
+
+    Route::prefix('products/{product}/documents')->name('products.documents.')->group(function () {
+        Route::get('/', [ProductDocumentsController::class, 'index'])->name('index');
+        Route::post('/', [ProductDocumentsController::class, 'store'])->name('store');
+        Route::put('/{document}', [ProductDocumentsController::class, 'update'])->name('update');
+        Route::delete('/{document}', [ProductDocumentsController::class, 'destroy'])->name('destroy');
+    });
 
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

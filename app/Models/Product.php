@@ -17,4 +17,11 @@ class Product extends Model
 
         return Storage::url($this->image);
     }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Documents::class, 'product_documents', 'product_code', 'document_code')
+            ->withPivot('description', 'status')
+            ->withTimestamps();
+    }
 }
