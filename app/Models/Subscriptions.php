@@ -5,10 +5,11 @@ namespace App\Models;
 use App\LogsActivityCustom;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscriptions extends Model
 {
-    use LogsActivityCustom;
+    use LogsActivityCustom, SoftDeletes;
 
     protected $table = 'subscriptions';
 

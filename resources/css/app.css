@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-.th-title {
+th {
     text-transform: uppercase;
     text-align: center;
     color: secondary;

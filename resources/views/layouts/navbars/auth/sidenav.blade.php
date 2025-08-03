@@ -23,7 +23,7 @@
             </li>
             <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
-                    <i class="fab fa-laravel" style="color:
+                    <i class="fab fa-laravel" style="color: #f4645f;"></i>
                 </div>
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Menu</h6>
             </li>
@@ -68,15 +68,22 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen Layanan</span>
                 </a>
+                <a href="{{ route('clients.index') }}"
+                    class="nav-link {{ Route::currentRouteName() == 'clients' ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Klien</span>
+                </a>
             </li>
-            </li> --}}
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
             </li>
             <li class="nav-item">
-            </li>
+            </li> --}}
         </ul>
     </div>
 </aside>

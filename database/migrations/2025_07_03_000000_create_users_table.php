@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('notaris_id')->constrained('notaris');
+            $table->foreignId('notaris_id')->nullable()->constrained('notaris');
             $table->string('username');
             $table->string('password');
             $table->string('email')->unique();
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('active_at')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

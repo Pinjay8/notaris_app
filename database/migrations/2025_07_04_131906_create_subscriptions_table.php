@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->date('payment_date')->nullable();
             $table->string('status')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

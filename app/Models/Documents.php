@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\LogsActivityCustom;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Documents extends Model
 {
-    //
+    use LogsActivityCustom, SoftDeletes;
+
     protected $fillable = ['name', 'code', 'description', 'image', 'link', 'status'];
 
     public function getImageDocument()

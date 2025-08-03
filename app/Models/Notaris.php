@@ -4,11 +4,12 @@ namespace App\Models;
 
 use App\LogsActivityCustom;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notaris extends Model
 {
     //
-    use LogsActivityCustom;
+    use LogsActivityCustom, SoftDeletes;
 
     protected $table = 'notaris';
 
@@ -26,4 +27,9 @@ class Notaris extends Model
         'gender',
         'information',
     ];
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'notaris_id', 'id');
+    }
 }

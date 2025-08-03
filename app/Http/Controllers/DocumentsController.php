@@ -30,16 +30,21 @@ class DocumentsController extends Controller
 
     public function store(DocumentRequest $request)
     {
-
         $validated = $request->validated();
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
+        try {
+            if ($request->hasFile('image')) {
+                $validated['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
+            }
+
+            $result = $this->documentService->createDocument($validated);
+
+            notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan data dokumen');
+            return redirect()->route('documents.index');
+        } catch (\Exception $e) {
+            notyf()->position('x', 'right')->position('y', 'top')->error('Gagal menambahkan data dokumen');
+            return redirect()->back()->withInput();
         }
-
-        $this->documentService->createDocument($validated);
-
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan data dokumen');
     }
 
     public function edit(Documents $document)

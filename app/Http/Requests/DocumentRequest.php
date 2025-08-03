@@ -48,7 +48,8 @@ class DocumentRequest extends FormRequest
     public function messages()
     {
         return [
-            'code_products.required' => 'Kode dokumen harus diisi.',
+            'code.required' => 'Kode dokumen harus diisi.',
+            'code.unique' => 'Kode dokumen harus unik',
             'description.required' => 'Deskripsi dokumen harus diisi.',
             'name.required' => 'Nama dokumen harus diisi.',
             'link.required' => 'Link dokumen harus diisi.',

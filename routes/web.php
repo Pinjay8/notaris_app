@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
@@ -36,6 +37,9 @@ Route::middleware('guest')->group(function () {
         Route::get('/change-password', 'show')->name('change-password');
         Route::post('/change-password', 'update')->name('change.perform');
     });
+    // Public Access
+    Route::get('/client/{notaris_id}', [ClientController::class, 'publicForm'])->name('client.public.create');
+    Route::post('/client/{notaris_id}/store', [ClientController::class, 'storeClient'])->name('client.public.store');
 });
 
 Route::middleware('auth')->group(function () {
@@ -76,6 +80,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/{document}', [ProductDocumentsController::class, 'update'])->name('update');
         Route::delete('/{document}', [ProductDocumentsController::class, 'destroy'])->name('destroy');
     });
+
+    Route::resource('clients', ClientController::class);
 
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

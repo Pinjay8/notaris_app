@@ -21994,6 +21994,21 @@ hr.horizontal.gray-light {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0)) !important;
 }
 
+/* Menyembunyikan sidebar sepenuhnya ketika g-sidenav-hidden aktif di layar kecil */
+.g-sidenav-hidden .navbar-vertical {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    position: fixed;
+    z-index: 1030; /* pastikan di atas konten lain */
+  }
+
+  /* Untuk mencegah konten sidebar tetap muncul di luar layar */
+  .g-sidenav-hidden .navbar-vertical .nav-item,
+  .g-sidenav-hidden .navbar-vertical .navbar-brand,
+  .g-sidenav-hidden .navbar-vertical .sidenav-footer {
+    display: none !important;
+  }
+
 .g-sidenav-show:not(.g-sidenav-hidden) .navbar-vertical .nav-item .nav-link span.sidenav-mini-icon {
   opacity: 0;
 }

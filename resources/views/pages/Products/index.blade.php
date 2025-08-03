@@ -1,28 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Layanan'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Klien'])
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Layanan</h6>
-                <a href="{{ route('products.create') }}" class="btn btn-primary btn-sm mb-0">
-                    + Tambah Layanan
+                <h6 class="mb-0">Klien</h6>
+                <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm mb-0">
+                    + Tambah Klien
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('products.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
+                    <form method="GET" action="{{ route('clients.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
                         style="max-width: 500px;">
-                        <input type="text" name="search" placeholder="Cari kode/nama layanan..."
-                            value="{{ request('search') }}" class="form-control">
+                        <input type="text" name="search" placeholder="Cari klien
+                            value=" {{ request('search') }}" class="form-control">
                         <select name="status" class="form-select">
                             <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Aktif</option>
                             <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Nonaktif</option>
                             </option>
                         </select>
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                        <button type="submit" id="searchBtn"
+                            class="btn btn-primary btn-sm mb-0 d-flex align-items-center justify-content-center"
+                            style="width: 90px; height: 38px;">
+                            <span id="searchBtnText">Cari</span>
+                            <div id="searchSpinner" class="spinner-border spinner-border-sm text-light ms-2 d-none"
+                                role="status" aria-hidden="true"></div>
+                        </button>
                     </form>
                     <table class="table align-items-center mb-0">
                         <thead>
@@ -113,3 +119,24 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+    $(document).ready(function () {
+        const $form = $('form[action="{{ route('products.index') }}"]');
+        const $spinner = $('#searchSpinner');
+        const $btnText = $('#searchBtnText');
+
+        $form.on('submit', function (e) {
+            e.preventDefault(); // Cegah submit langsung
+            $spinner.removeClass('d-none');
+            $btnText.text('Memuat...');
+
+            // Beri delay agar spinner sempat tampil
+            setTimeout(() => {
+                $form.off('submit').submit(); // Matikan handler agar tidak infinite loop, lalu submit manual
+            }, 200);
+        });
+    });
+</script>
+@endpush

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('document_code')->constrained('documents');
             $table->string('description');
             $table->boolean('status')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

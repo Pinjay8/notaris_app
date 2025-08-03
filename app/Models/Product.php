@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\LogsActivityCustom;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
+    use LogsActivityCustom, SoftDeletes;
+
     protected $fillable = ['name', 'code_products', 'description', 'image', 'status'];
 
     public function getImageProduct()

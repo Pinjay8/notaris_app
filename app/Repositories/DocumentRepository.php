@@ -25,7 +25,7 @@ class DocumentRepository implements DocumentRepositoryInterface
     public function search(string $keyword, string $status = '1')
     {
         $query = Documents::where(function ($q) use ($keyword) {
-            $q->where('code_Documentss', 'like', "%{$keyword}%")
+            $q->where('code', 'like', "%{$keyword}%")
                 ->orWhere('name', 'like', "%{$keyword}%")
                 ->orWhere('description', 'like', "%{$keyword}%");
         });
