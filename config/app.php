@@ -54,6 +54,7 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -121,6 +122,16 @@ return [
     'maintenance' => [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
+
+    'aliases' => [
+        'App' => Illuminate\Support\Facades\App::class,
+        'Artisan' => Illuminate\Support\Facades\Artisan::class,
+        'Auth' => Illuminate\Support\Facades\Auth::class,
+        'Crypt' => Illuminate\Support\Facades\Crypt::class,
+        'DNS1D' => Milon\Barcode\Facades\DNS1DFacade::class,
+        'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
+        'Route' => Illuminate\Support\Facades\Route::class,
     ],
 
 ];

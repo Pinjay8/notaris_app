@@ -10,9 +10,15 @@ use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\NotaryClientDocumentController;
+use App\Http\Controllers\NotaryClientProductController;
+use App\Http\Controllers\NotaryClientWarkahController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SubscriptionsController;
+use App\Models\NotaryConsultation;
+use Milon\Barcode\Facades\DNS2DFacade;
+use App\Http\Controllers\NotaryConsultationController;
 
 
 Route::middleware('guest')->group(function () {
@@ -38,23 +44,25 @@ Route::middleware('guest')->group(function () {
         Route::post('/change-password', 'update')->name('change.perform');
     });
     // Public Access
+    // Route untuk akses form update dari link revisi (menggunakan encrypted id)
+    Route::get('/client/{encryptedId}', [ClientController::class, 'editCLient'])->name('client.editCLient');
+    // Route untuk submit update dari form revisi
+    Route::put('/client/{encryptedId}', [ClientController::class, 'updateClient'])->name('client.updateClient');
     Route::get('/client/{notaris_id}', [ClientController::class, 'publicForm'])->name('client.public.create');
     Route::post('/client/{notaris_id}/store', [ClientController::class, 'storeClient'])->name('client.public.store');
+    Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
 });
 
 Route::middleware('auth')->group(function () {
     // HomeController routes
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
-    // PageController routes
-    // Route::controller(PageController::class)->group(function () {
-    //     Route::get('/virtual-reality', 'vr')->name('virtual-reality');
-    //     Route::get('/rtl', 'rtl')->name('rtl');
-    //     Route::get('/profile-static', 'profile')->name('profile-static');
-    //     Route::get('/sign-in-static', 'signin')->name('sign-in-static');
-    //     Route::get('/sign-up-static', 'signup')->name('sign-up-static');
-    //     Route::get('/{page}', 'index')->name('page');
-    // });
+    Route::resource('consultation', NotaryConsultationController::class);
+    Route::get('/consultation/client/{id}', [NotaryConsultationController::class, 'getConsultationByClient'])->name('consultation.getConsultationByClient');
+    Route::put('consultation/{id}', [NotaryConsultationController::class, 'update'])->name('consultation.update');
+    Route::get('/consultation/client/product/{id}', [NotaryConsultationController::class, 'getConsultationByProduct'])->name('consultation.detail');
+    Route::get('/consultation/client/product/creates/{consultationId}', [NotaryConsultationController::class, 'creates'])->name('consultation.creates');
+    Route::post('/consultation/client/product/{id}', [NotaryConsultationController::class, 'storeProduct'])->name('consultation.storeProduct');
+    Route::delete('/consultation/client/product/{consultationId}/product/{productId}', [NotaryConsultationController::class, 'deleteProduct'])->name('consultation.deleteProduct');
 
     // UserProfileController routes
     Route::controller(UserProfileController::class)->group(function () {
@@ -82,6 +90,14 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::resource('clients', ClientController::class);
+    Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');
+
+    Route::resource('management-process', NotaryClientProductController::class);
+    Route::post('management-process/mark-done', [NotaryClientProductController::class, 'markDone'])->name('management-process.markDone');
+    Route::post('management-process/add-progress', [NotaryClientProductController::class, 'addProgress'])->name('management-process.addProgress');
+    Route::resource('documents-product', NotaryClientDocumentController::class);
+    Route::resource('warkah', NotaryClientWarkahController::class);
+
 
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

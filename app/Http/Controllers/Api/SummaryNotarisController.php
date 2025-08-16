@@ -188,10 +188,14 @@ class SummaryNotarisController extends Controller
 
 
 
-    public function allClients()
+
+    // Get All Clients
+    public function allClients(Request $request)
     {
         try {
-            $clients = Client::latest()->get();
+            $rowPerPage = $request->input('rowPerPage', 10); // default 20
+
+            $clients = Client::latest()->paginate($rowPerPage);
 
             if ($clients->isEmpty()) {
                 return response()->json([
@@ -202,10 +206,20 @@ class SummaryNotarisController extends Controller
 
             return response()->json([
                 'status' => true,
-                'data' => $clients
+                'data' => $clients->items(),
+                'pagination' => [
+                    'totalItems'  => $clients->total(),
+                    'totalPages'  => $clients->lastPage(),
+                    'currentPage' => $clients->currentPage(),
+                    'hasNextPage' => $clients->hasMorePages(),
+                    'hasPrevPage' => $clients->currentPage() > 1,
+                    'offset'      => ($clients->currentPage() - 1) * $clients->perPage(),
+                    'rowPerPage'  => $clients->perPage(),
+                ]
             ], 200);
         } catch (\Exception $e) {
             Log::error('Error get all clients: ' . $e->getMessage());
+
             return response()->json([
                 'status' => false,
                 'message' => 'Gagal mengambil data klien'

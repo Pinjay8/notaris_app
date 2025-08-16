@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('duration_days')->nullable();
             $table->string('active')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

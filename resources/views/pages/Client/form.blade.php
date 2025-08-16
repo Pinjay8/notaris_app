@@ -62,12 +62,12 @@
                             <label for="marital_status" class="form-label text-sm">Status Perkawinan</label>
                             <select name="marital_status" class="form-select">
                                 <option value="" hidden>Pilih Status</option>
-                                <option value="single" {{ old('marital_status', $client->marital_status ?? '') ==
-                                    'single' ? 'selected' : '' }}>Belum Menikah</option>
-                                <option value="married" {{ old('marital_status', $client->marital_status ?? '') ==
-                                    'married' ? 'selected' : '' }}>Menikah</option>
-                                <option value="divorced" {{ old('marital_status', $client->marital_status ?? '') ==
-                                    'divorced' ? 'selected' : '' }}>Cerai</option>
+                                <option value="Belum Menikah" {{ old('marital_status', $client->marital_status ?? '') ==
+                                    'Belum Menikah' ? 'selected' : '' }}>Belum Menikah</option>
+                                <option value="Menikah" {{ old('marital_status', $client->marital_status ?? '') ==
+                                    'Menikah' ? 'selected' : '' }}>Menikah</option>
+                                <option value="Cerai" {{ old('marital_status', $client->marital_status ?? '') ==
+                                    'Cerai' ? 'selected' : '' }}>Cerai</option>
                                 <option value="widow" {{ old('marital_status', $client->marital_status ?? '') == 'widow'
                                     ? 'selected' : '' }}>Janda/Duda</option>
                             </select>

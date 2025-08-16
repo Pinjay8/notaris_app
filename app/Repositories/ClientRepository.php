@@ -39,7 +39,7 @@ class ClientRepository implements ClientRepositoryInterface
             $query->where('status', $filters['status']);
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate(2);
+        return $query->orderBy('created_at', 'desc')->paginate(5);
     }
 
     public function create(array $data): Client

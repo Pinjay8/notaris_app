@@ -11,9 +11,10 @@ use Illuminate\Support\Facades\Log;
 class NotarisController extends Controller
 {
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
+            $rowPerPage = $request->input('rowPerPage', 10); // default 20
             $notaris = Notaris::select([
                 'id',
                 'first_name',
@@ -28,12 +29,21 @@ class NotarisController extends Controller
                 'email',
                 'gender',
                 'information',
-            ])->get();
+            ])->paginate($rowPerPage);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data notaris berhasil diambil',
-                'data' => $notaris,
+                'data' => $notaris->items(),
+                'pagination' => [
+                    'totalItems'   => $notaris->total(),
+                    'totalPages'   => $notaris->lastPage(),
+                    'currentPage'  => $notaris->currentPage(),
+                    'hasNextPage'  => $notaris->hasMorePages(),
+                    'hasPrevPage'  => $notaris->currentPage() > 1,
+                    'offset'       => ($notaris->currentPage() - 1) * $notaris->perPage(),
+                    'rowPerPage'   => $notaris->perPage(),
+                ],
             ]);
         } catch (\Throwable $e) {
             Log::error('Gagal mengambil data notaris', ['error' => $e->getMessage()]);

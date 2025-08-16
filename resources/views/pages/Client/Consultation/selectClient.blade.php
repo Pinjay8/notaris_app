@@ -12,7 +12,7 @@
                 <div class="mx-2 mb-3">
                     <h6 class="fw-medium">Pilih Layanan yang ingin ditambahkan ke dokumen</h6>
                 </div>
-                @foreach ($products as $product)
+                {{-- @foreach ($clients as $product)
                 <div class="col-md-4 mb-3">
                     <div class="card p-4">
                         <h5 class="text-capitalize">Layanan {{ $product->name }} - Kode {{ $product->code_products }}
@@ -22,7 +22,7 @@
                             Dokumen</a>
                     </div>
                 </div>
-                @endforeach
+                @endforeach --}}
             </div>
         </div>
     </div>

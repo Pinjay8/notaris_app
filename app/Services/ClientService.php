@@ -32,7 +32,7 @@ class ClientService
 
     public function create(array $data)
     {
-        $validated = $this->validate($data);
+        $validated = $this->validate($id = null, $data);
         $validated['notaris_id'] = auth()->user()->notaris_id;
         return $this->clientRepository->create($validated);
     }
@@ -49,7 +49,7 @@ class ClientService
         return $this->clientRepository->delete($id);
     }
 
-    protected function validate(array $data, $id = null)
+    protected function validate($id = null, array $data)
     {
         $rules = [
             'fullname' => 'required|string|max:255',

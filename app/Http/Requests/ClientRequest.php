@@ -36,7 +36,7 @@ class ClientRequest extends FormRequest
             'email' => 'required|email',
             'type' => 'required|in:personal,company',
             'status' => 'nullable|in:pending,valid,revisi',
-            'note' => 'nullable|string',
+            'note' => 'required|string',
             'company_name' => 'required|string',
             'npwp' => 'required|string',
         ];

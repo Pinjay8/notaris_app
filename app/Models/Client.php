@@ -14,6 +14,7 @@ class Client extends Model
 
     protected $fillable = [
         'notaris_id',
+        'uuid',
         'fullname',
         'nik',
         'birth_place',

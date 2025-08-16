@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
         DB::table('clients')->insert([
             [
                 'notaris_id' => 1,
+                'uuid' => '',
                 'fullname' => 'Jane Smith',
                 'nik' => '1234567890123456',
                 'birth_place' => 'Jakarta',
@@ -91,6 +92,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'notaris_id' => 1,
+                'uuid' => '',
                 'fullname' => 'PT Maju Jaya',
                 'nik' => '9876543210987654',
                 'birth_place' => 'Bandung',
