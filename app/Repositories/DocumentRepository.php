@@ -8,6 +8,7 @@ use App\Models\Documents;
 
 class DocumentRepository implements DocumentRepositoryInterface
 {
+
     public function all(string $status = '1')
     {
         $query = Documents::query();

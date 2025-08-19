@@ -42,13 +42,18 @@ class NotaryClientProduct extends Model
         return $this->belongsTo(NotaryConsultation::class, 'registration_code', 'registration_code');
     }
 
-    public function progresses()
+    public function progressHistory()
     {
         return $this->hasMany(NotaryCLientProgress::class, 'registration_code', 'registration_code');
     }
 
     public function getLastProgress()
     {
-        return $this->progresses()->latest()->first();
+        return $this->progressHistory()->latest()->first();
+    }
+
+    public function documentHistory()
+    {
+        return $this->hasMany(NotaryClientDocument::class, 'registration_code', 'registration_code');
     }
 }

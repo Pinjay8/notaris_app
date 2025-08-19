@@ -9,7 +9,7 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse  w-auto h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
@@ -40,7 +40,7 @@
                     class="nav-link {{ Route::currentRouteName() == 'subscriptions' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-calendar-event-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
                 </a>
@@ -48,7 +48,7 @@
                     class="nav-link {{ Route::currentRouteName() == 'products' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-box text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Layanan</span>
                 </a>
@@ -56,7 +56,7 @@
                     class="nav-link  {{ Route::currentRouteName() == 'documents' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
@@ -64,7 +64,7 @@
                     class="nav-link {{ Route::currentRouteName() == 'product-documents' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-file-earmark-plus-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen Layanan</span>
                 </a>
@@ -82,9 +82,10 @@
                     class="nav-link {{ Route::currentRouteName() == 'clients' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-person-add text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Klien</span>
+
                 </a>
             </li>
 
@@ -93,7 +94,7 @@
                     class="nav-link {{ request()->is('consultation*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-headset text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Konsultasi Klien</span>
                 </a>
@@ -116,15 +117,15 @@
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Back Office</h6>
             </li>
             <li class="nav-item">
-                <a href="{{ route('management-process.index') }}"
-                    class="nav-link {{ request()->is('document*') ? 'active' : '' }}">
+                <a href="{{ route('management-document.index') }}"
+                    class="nav-link {{ request()->is('mangement-document*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
-                <a href="{{ route('management-process.index') }}"
+                <a href="{{ route('management-document.index') }}"
                     class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,6 +133,87 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Warkah</span>
                 </a>
+
+            </li>
+            <li class="nav-item" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                <a href="#tablePartijAkta" data-bs-toggle="collapse" class="mb-0">
+                    <div class="d-flex align-items-center justify-content-between px-4 py-2">
+                        <!-- Kiri -->
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text text-sm">Partij Akta</span>
+                        </div>
+                        <!-- Kanan -->
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="tablePartijAkta">
+                    <ul class="nav nav-collapse mb-0 pb-0">
+                        <li>
+                            <a href="{{ route('akta-types.index') }}"
+                                class="nav-link {{ request()->is('akta-types*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Jenis Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-transactions.index') }}"
+                                class="nav-link {{ request()->is('akta-transactions*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Transaksi Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-documents.index') }}"
+                                class="nav-link {{ request()->is('akta-documents*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-parties.index') }}"
+                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta_number.index') }}"
+                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Penomoran Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-logs.index') }}"
+                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Logs Akta</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

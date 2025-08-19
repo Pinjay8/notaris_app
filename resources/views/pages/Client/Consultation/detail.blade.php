@@ -61,7 +61,7 @@
                                 <td class="text-center">
                                     {{ $product->registration_code }}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     {{ $product->product->name }}
                                 </td>
                                 <td class="text-center">

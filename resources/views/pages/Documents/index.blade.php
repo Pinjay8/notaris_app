@@ -84,7 +84,7 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <img src="{{ $document->getImageDocument() }}" alt="Gambar Layanan" width="100"
+                                    <img src="{{asset('storage/'.$document->image) }}" alt="Gambar Layanan" width="100"
                                         class="rounded-circle img-fluid">
                                 </td>
                                 <td>

@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Middleware\AuthMiddleware;
+use App\Listeners\LogAuthenticationActivity;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\Logout;
-use App\Listeners\LogAuthenticationActivity;
+
 
 // Event::listen(Login::class, [LogAuthenticationActivity::class, 'handle']);
 // Event::listen(Logout::class, [LogAuthenticationActivity::class, 'handle']);
@@ -19,7 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'auth.token' => AuthMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

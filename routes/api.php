@@ -15,16 +15,17 @@ use App\Http\Controllers\Api\SummaryNotarisController;
 // });
 
 
-Route::post('/users', [UserSyncController::class, 'store']);
-Route::post('/subscriptions', [SubscriptionSyncController::class, 'store']);
-Route::get('/activity-logs', [ActivityLogApiController::class, 'index']);
-Route::get('/notaris', [NotarisController::class, 'index']);
 
+Route::middleware('auth.token')->group(function () {
+    Route::post('/users', [UserSyncController::class, 'store']);
+    Route::post('/subscriptions', [SubscriptionSyncController::class, 'store']);
+    Route::get('/activity-logs', [ActivityLogApiController::class, 'index']);
+    Route::get('/notaris', [NotarisController::class, 'index']);
 
+    // Notaris Summary
+    Route::get('/notaris/summary', [SummaryNotarisController::class, 'index']);
+    Route::get('/notaris/summary/{id}', [SummaryNotarisController::class, 'filter']);
 
-// Notaris Summary
-Route::get('/notaris/summary', [SummaryNotarisController::class, 'index']);
-Route::get('/notaris/summary/{id}', [SummaryNotarisController::class, 'filter']);
-
-Route::get('/get-all-clients', [SummaryNotarisController::class, 'allClients']);
-Route::get('/notaris/clients/{id}', [SummaryNotarisController::class, 'clientsByNotaris']);
+    Route::get('/get-all-clients', [SummaryNotarisController::class, 'allClients']);
+    Route::get('/notaris/clients/{id}', [SummaryNotarisController::class, 'clientsByNotaris']);
+});

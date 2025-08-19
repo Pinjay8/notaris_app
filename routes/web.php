@@ -1,24 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DocumentsController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NotaryAktaDocumentsController;
+use App\Http\Controllers\NotaryAktaLogsController;
+use App\Http\Controllers\NotaryAktaPartiesController;
+use App\Http\Controllers\NotaryAktaTransactionController;
+use App\Http\Controllers\NotaryAktaTypesController;
 use App\Http\Controllers\NotaryClientDocumentController;
 use App\Http\Controllers\NotaryClientProductController;
 use App\Http\Controllers\NotaryClientWarkahController;
+use App\Http\Controllers\NotaryConsultationController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\SubscriptionsController;
+use App\Http\Controllers\UserProfileController;
+use App\Models\NotaryAktaTransaction;
 use App\Models\NotaryConsultation;
+use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS2DFacade;
-use App\Http\Controllers\NotaryConsultationController;
 
 
 Route::middleware('guest')->group(function () {
@@ -77,7 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductsController::class)->except('show');
     Route::put('products/{product}/deactivate', [ProductsController::class, 'deactivate'])->name('products.deactivate');
 
-    Route::resource('documents', DocumentsController::class);
+    Route::resource('documents', DocumentsController::class)->except('show');
     Route::put('documents/{document}/deactivate', [DocumentsController::class, 'deactivate'])->name('documents.deactivate');
 
     Route::get('/product-documents', [ProductDocumentsController::class, 'selectProduct'])->name('products.documents.selectProduct');
@@ -92,12 +98,60 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
     Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');
 
+
+    // Proses pEngurusan
     Route::resource('management-process', NotaryClientProductController::class);
     Route::post('management-process/mark-done', [NotaryClientProductController::class, 'markDone'])->name('management-process.markDone');
     Route::post('management-process/add-progress', [NotaryClientProductController::class, 'addProgress'])->name('management-process.addProgress');
-    Route::resource('documents-product', NotaryClientDocumentController::class);
-    Route::resource('warkah', NotaryClientWarkahController::class);
+    // BackOffice Dokumen
+    Route::get('management-document', [NotaryClientProductController::class, 'indexDocument'])->name('management-document.index');
+    // update status
+    Route::post('management-document/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
+        'management-document.markDone'
+    );
+    Route::post('management-document/add-document', [NotaryClientProductController::class, 'addDocument'])->name(
+        'management-document.addDocument'
+    );
+    // Update status document
+    Route::post('management-document/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
+        'management-document.updateStatus'
+    );
 
+    // Warkah
+    Route::get('warkah', [NotaryClientProductController::class, 'indexWarkah'])->name('warkah.index');
+    Route::post('warkah/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
+        'warkah.markDone'
+    );
+    Route::post('warkah/add-document', [NotaryClientProductController::class, 'addDocument'])->name(
+        'warkah.addDocument'
+    );
+    // Update status document
+    Route::post('warkah/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
+        'warkah.updateStatus'
+    );
+
+    // End
+    // Akta Type
+    Route::resource('akta-types', NotaryAktaTypesController::class);
+    Route::resource('akta-transactions', NotaryAktaTransactionController::class);
+    Route::resource('akta-documents', NotaryAktaDocumentsController::class);
+
+    Route::get('/akta-documents/create/{akta_transaction_id}', [NotaryAktaDocumentsController::class, 'createData'])
+        ->name('akta-documents.createData');
+
+    Route::post('/akta-documents/store/{akta_transaction_id}', [NotaryAktaDocumentsController::class, 'storeData'])
+        ->name('akta-documents.storeData');
+
+
+    Route::resource('akta-parties', NotaryAktaPartiesController::class)->except('create', 'store', 'show');
+    Route::get('akta-parties/createData/{akta_transaction_id}', [NotaryAktaPartiesController::class, 'createData'])
+        ->name('akta-parties.createData');
+    Route::post('/akta-parties,store/{akta_transaction_id}', [NotaryAktaPartiesController::class, 'storeData'])->name('akta-parties.storeData');
+    Route::get('akta-number', [NotaryAktaTransactionController::class, 'indexNumber'])->name('akta_number.index');
+    Route::post('akta-number/store', [NotaryAktaTransactionController::class, 'storeNumber'])->name(
+        'akta_number.store'
+    );
+    Route::resource('akta-logs', NotaryAktaLogsController::class);
 
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');

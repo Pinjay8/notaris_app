@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('notary_client_documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('notary_id')->nullable()->constrained('notaris');
+            $table->foreignId('notaris_id')->nullable()->constrained('notaris');
             $table->foreignId('client_id')->nullable()->constrained('clients');
             $table->string('registration_code')->nullable();
             $table->foreignId('product_id')->nullable()->constrained('products');

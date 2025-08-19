@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Models\NotaryClientDocument;
 use App\Models\NotaryClientProduct;
+use App\Models\Product;
+use App\Models\ProductDocuments;
 use App\Repositories\Interfaces\NotaryClientProductRepositoryInterface;
 
 class NotaryClientProductRepository implements NotaryClientProductRepositoryInterface
@@ -31,6 +34,50 @@ class NotaryClientProductRepository implements NotaryClientProductRepositoryInte
 
         foreach ($products as $product) {
             $product->last_progress = $product->getLastProgress();
+        }
+
+        return $products;
+    }
+
+    public function getAllWithRequiredDocuments(array $filters = [])
+    {
+        $query = NotaryClientProduct::with(['client', 'product']);
+
+        // filter by registration_code
+        if (!empty($filters['registration_code'])) {
+            $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');
+        }
+
+        // filter by client name
+        if (!empty($filters['client_name'])) {
+            $query->whereHas('client', function ($q) use ($filters) {
+                $q->where('fullname', 'like', '%' . $filters['client_name'] . '%'); // pastikan field benar
+            });
+        }
+
+        // default filter by status
+        if (empty($filters['status'])) {
+            $query->whereIn('status', ['new', 'progress']);
+        } else {
+            $query->where('status', $filters['status']);
+        }
+
+        $products = $query->get();
+
+        foreach ($products as $product) {
+            // ✅ Ambil dokumen wajib dari relasi product -> documents
+            $requiredDocs = $product->product
+                ? $product->product->documents->pluck('name')->toArray()
+                : [];
+
+            // ✅ Ambil dokumen yang sudah diupload klien
+            $uploadedDocs = NotaryClientDocument::where('registration_code', $product->registration_code)
+                ->pluck('document_name')
+                ->toArray();
+
+            // merge & format
+            $allDocs = array_unique(array_merge($requiredDocs, $uploadedDocs));
+            $product->documents_list = implode(', ', $allDocs);
         }
 
         return $products;

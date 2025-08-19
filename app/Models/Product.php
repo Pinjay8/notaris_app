@@ -28,4 +28,9 @@ class Product extends Model
             ->withPivot('description', 'status')
             ->withTimestamps();
     }
+
+    public function image()
+    {
+        return Storage::url($this->image);
+    }
 }

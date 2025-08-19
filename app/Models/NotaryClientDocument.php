@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\LogsActivityCustom;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\LogsActivityCustom;
+use Illuminate\Support\Facades\Storage;
 
 class NotaryClientDocument extends Model
 {
     use SoftDeletes, LogsActivityCustom;
 
-    protected $table = 'notary_client_products';
+    protected $table = 'notary_client_documents';
 
     protected $fillable = [
         'notaris_id',
@@ -38,5 +39,12 @@ class NotaryClientDocument extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    // image
+
+    public function image()
+    {
+        return Storage::url($this->document_link);
     }
 }
