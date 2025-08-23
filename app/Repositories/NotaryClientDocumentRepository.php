@@ -31,4 +31,24 @@ class NotaryClientDocumentRepository implements NotaryClientDocumentRepositoryIn
 
         return NotaryClientDocument::create($dataToCreate);
     }
+
+
+    public function findByCompositeKey(array $keys)
+    {
+        return NotaryClientDocument::where('registration_code', $keys['registration_code'])
+            ->where('notaris_id', $keys['notaris_id'])
+            ->where('client_id', $keys['client_id'])
+            ->where('product_id', $keys['product_id'])
+            ->firstOrFail();
+    }
+
+
+
+    public function updateStatusByCompositeKey(array $keys, string $status)
+    {
+        $product = $this->findByCompositeKey($keys);
+        $product->status = $status;
+        $product->save();
+        return $product;
+    }
 }

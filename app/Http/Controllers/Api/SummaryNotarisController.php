@@ -185,17 +185,16 @@ class SummaryNotarisController extends Controller
         ]);
     }
 
-
-
-
-
     // Get All Clients
     public function allClients(Request $request)
     {
         try {
-            $rowPerPage = $request->input('rowPerPage', 10); // default 20
+            // default 10, bisa diganti dengan ?limit=5
+            $limit = $request->input('limit', 10);
 
-            $clients = Client::latest()->paginate($rowPerPage);
+            $query = Client::latest();
+
+            $clients = $query->paginate($limit);
 
             if ($clients->isEmpty()) {
                 return response()->json([

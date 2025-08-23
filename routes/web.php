@@ -14,6 +14,10 @@ use App\Http\Controllers\NotaryClientDocumentController;
 use App\Http\Controllers\NotaryClientProductController;
 use App\Http\Controllers\NotaryClientWarkahController;
 use App\Http\Controllers\NotaryConsultationController;
+use App\Http\Controllers\NotaryRelaasAktaController;
+use App\Http\Controllers\NotaryRelaasDocumentController;
+use App\Http\Controllers\NotaryRelaasLogsController;
+use App\Http\Controllers\NotaryRelaasPartiesController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
@@ -23,6 +27,7 @@ use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\NotaryAktaTransaction;
 use App\Models\NotaryConsultation;
+use App\Models\NotaryRelaasAkta;
 use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS2DFacade;
 
@@ -118,20 +123,17 @@ Route::middleware('auth')->group(function () {
     );
 
     // Warkah
-    Route::get('warkah', [NotaryClientProductController::class, 'indexWarkah'])->name('warkah.index');
-    Route::post('warkah/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
+    Route::resource('warkah', NotaryClientWarkahController::class);
+    Route::post('warkah/mark-done', [NotaryClientWarkahController::class, 'markDone'])->name(
         'warkah.markDone'
     );
-    Route::post('warkah/add-document', [NotaryClientProductController::class, 'addDocument'])->name(
-        'warkah.addDocument'
-    );
     // Update status document
-    Route::post('warkah/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
+    Route::post('warkah/update-status', [NotaryClientWarkahController::class, 'updateStatusValid'])->name(
         'warkah.updateStatus'
     );
 
     // End
-    // Akta Type
+    // Partij Akta
     Route::resource('akta-types', NotaryAktaTypesController::class);
     Route::resource('akta-transactions', NotaryAktaTransactionController::class);
     Route::resource('akta-documents', NotaryAktaDocumentsController::class);
@@ -141,8 +143,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/akta-documents/store/{akta_transaction_id}', [NotaryAktaDocumentsController::class, 'storeData'])
         ->name('akta-documents.storeData');
-
-
     Route::resource('akta-parties', NotaryAktaPartiesController::class)->except('create', 'store', 'show');
     Route::get('akta-parties/createData/{akta_transaction_id}', [NotaryAktaPartiesController::class, 'createData'])
         ->name('akta-parties.createData');
@@ -153,6 +153,24 @@ Route::middleware('auth')->group(function () {
     );
     Route::resource('akta-logs', NotaryAktaLogsController::class);
 
+
+    // Relaas Akta
+    Route::resource('relaas-aktas', NotaryRelaasAktaController::class);
+    Route::resource('relaas-parties', NotaryRelaasPartiesController::class);
+    Route::get('/relaas-parties/createData/{relaas_id}', [NotaryRelaasPartiesController::class, 'create'])->name('relaas-parties.create');
+    Route::post('/relaas-parties/store/{relaas_id}', [NotaryRelaasPartiesController::class, 'store'])->name('relaas-parties.store');
+    Route::get('/relaas-parties/edit/{relaas_id}/{id}', [NotaryRelaasPartiesController::class, 'edit'])->name('relaas-parties.edit');
+    Route::put('/relaas-parties/update/{relaas_id}/{id}', [NotaryRelaasPartiesController::class, 'update'])->name('relaas-parties.update');
+    Route::get('/relaas-akta/number_akta',  [NotaryRelaasAktaController::class, 'indexNumber'])->name('relaas_akta.indexNumber');
+    Route::post('/relaas-akta/store', [NotaryRelaasAktaController::class, 'storeNumber'])->name(
+        'relaas-akta.store'
+    );
+    Route::resource('relaas-documents', NotaryRelaasDocumentController::class);
+    Route::get('/relaas-documents/create/{relaas_id}', [NotaryRelaasDocumentController::class, 'create'])->name('relaas-documents.create');
+    Route::post('/relaas-documents/store/{relaas_id}', [NotaryRelaasDocumentController::class, 'store'])->name('relaas-documents.store');
+    Route::get('/relaas-documents/edit/{relaas_id}/{id}', [NotaryRelaasDocumentController::class, 'edit'])->name('relaas-documents.edit');
+    Route::put('/relaas-documents/update/{relaas_id}/{id}', [NotaryRelaasDocumentController::class, 'update'])->name('relaas-documents.update');
+    Route::resource('relaas-logs', NotaryRelaasLogsController::class);
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

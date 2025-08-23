@@ -54,7 +54,8 @@ class NotaryAktaTransactionController extends Controller
 
         $this->service->create($data);
 
-        return redirect()->route('akta-transactions.index')->with('success', 'Transaksi akta berhasil dibuat.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta transaction.');
+        return redirect()->route('akta-transactions.index');
     }
 
     public function edit($id)
@@ -87,14 +88,16 @@ class NotaryAktaTransactionController extends Controller
 
         $this->service->update($id, $data);
 
-        return redirect()->route('akta-transactions.index')->with('success', 'Transaksi akta berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta transaction.');
+        return redirect()->route('akta-transactions.index');
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
 
-        return redirect()->route('akta-transactions.index')->with('success', 'Transaksi akta berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta transaction.');
+        return redirect()->route('akta-transactions.index');
     }
 
 
@@ -130,7 +133,8 @@ class NotaryAktaTransactionController extends Controller
             'akta_number_created_at' => now(),
         ]);
 
-        return redirect()->route('akta_number.index')->with('success', 'Nomor akta berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil ditambahkan.');
+        return redirect()->route('akta_number.index');
     }
 
 

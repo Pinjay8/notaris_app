@@ -134,8 +134,8 @@ class NotaryConsultationController extends Controller
         ]);
 
 
-        return redirect()->route('consultation.detail', ['id' => $consultationId])
-            ->with('success', 'Produk berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Produk berhasil ditambahkan');
+        return redirect()->route('consultation.detail', ['id' => $consultationId]);
     }
 
 

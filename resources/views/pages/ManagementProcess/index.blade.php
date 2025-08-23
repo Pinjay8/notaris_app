@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Notary Client Product'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Notaris Klien Produk'])
 
 <div class="row mt-4 mx-4">
     <div class="col md-12">
@@ -262,7 +262,8 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">Data tidak ditemukan.</td>
+                                <td colspan="7" class="text-center text-muted text-sm">Data produk notaris tidak
+                                    ditemukan.</td>
                             </tr>
                             @endforelse
                         </tbody>

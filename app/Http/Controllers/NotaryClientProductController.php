@@ -53,7 +53,6 @@ class NotaryClientProductController extends Controller
         $validated = $request->validate([
             'document_code' => 'nullable',
             'document_name' => 'required',
-            'document_date' => 'nullable|date',
             'note' => 'nullable|string',
             'document_link' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
             'uploaded_at' => 'nullable|date',

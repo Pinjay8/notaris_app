@@ -10,16 +10,16 @@
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
                 <h5>List Dokumen Klien</h5>
                 <form method="GET" action="{{ route('management-document.index') }}" class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <input type="text" name="registration_code" value="{{ request('registration_code') }}"
                             class="form-control" placeholder="Registration Code">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
                             placeholder="Client Name">
                     </div>
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Cari</button>
                     </div>
                 </form>
             </div>
@@ -28,7 +28,7 @@
                 <div class="table-responsive p-0">
                     <table class="table table-hover mb-0">
                         <thead>
-                            <tr>
+                            <tr class="text-center">
                                 <th>#</th>
                                 <th>Registration Code</th>
                                 <th>Client Name</th>
@@ -93,7 +93,7 @@
                                                         <table
                                                             class="table table-bordered table-striped table-hover align-middle mb-0">
                                                             <thead class="table-primary text-center">
-                                                                <tr>
+                                                                <tr class="text-center">
                                                                     <th style="width: 25%">Nama Dokumen</th>
                                                                     <th style="width: 15%">Dokumen</th>
                                                                     <th style="width: 30%">Catatan</th>
@@ -103,7 +103,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($docs as $doc)
-                                                                <tr>
+                                                                <tr class="text-center">
                                                                     <td>{{ $doc->document_name }}</td>
                                                                     {{-- <td class="text-center">
                                                                         @if($doc->document_link)
@@ -176,10 +176,12 @@
                                                                                 value="{{ $product->product_id }}">
                                                                             <input type="hidden" name="status"
                                                                                 value="valid">
+                                                                            @if($doc->status != 'valid')
                                                                             <button type="submit"
                                                                                 class="btn btn-success btn-sm px-3 mb-0">
                                                                                 <i class="bi bi-check-circle"></i> Valid
                                                                             </button>
+                                                                            @endif
                                                                         </form>
                                                                     </td>
                                                                 </tr>

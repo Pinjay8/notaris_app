@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class NotarisController extends Controller
 {
-
     public function index(Request $request): JsonResponse
     {
         try {
-            $rowPerPage = $request->input('rowPerPage', 10); // default 20
-            $notaris = Notaris::select([
+            // default 10 data per halaman, bisa diganti dengan ?limit=5
+            $limit = $request->input('limit', 10);
+
+            $query = Notaris::select([
                 'id',
                 'first_name',
                 'last_name',
@@ -29,12 +30,15 @@ class NotarisController extends Controller
                 'email',
                 'gender',
                 'information',
-            ])->paginate($rowPerPage);
+            ]);
+
+            // pakai pagination tapi jumlah data per halaman mengikuti limit
+            $notaris = $query->paginate($limit);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data notaris berhasil diambil',
-                'data' => $notaris->items(),
+                'data'    => $notaris->items(),
                 'pagination' => [
                     'totalItems'   => $notaris->total(),
                     'totalPages'   => $notaris->lastPage(),
@@ -51,7 +55,7 @@ class NotarisController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan saat mengambil data notaris',
-                'error' => $e->getMessage(),
+                'error'   => $e->getMessage(),
             ], 500);
         }
     }

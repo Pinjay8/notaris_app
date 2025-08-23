@@ -5,21 +5,25 @@ namespace App\Services;
 use App\Repositories\Interfaces\NotaryClientProductRepositoryInterface;
 use App\Repositories\Interfaces\NotaryClientProgressRepositoryInterface;
 use App\Repositories\Interfaces\NotaryClientDocumentRepositoryInterface;
+use App\Repositories\Interfaces\NotaryClientWarkahRepositoryInterface;
 
 class NotaryClientService
 {
     protected $productRepository;
     protected $progressRepo;
     protected $documentRepository;
+    protected $warkahRepository;
 
     public function __construct(
         NotaryClientProductRepositoryInterface $productRepository,
         NotaryClientProgressRepositoryInterface $progressRepo,
-        NotaryClientDocumentRepositoryInterface $documentRepository
+        NotaryClientDocumentRepositoryInterface $documentRepository,
+        NotaryClientWarkahRepositoryInterface $warkahRepository
     ) {
         $this->productRepository = $productRepository;
         $this->progressRepo = $progressRepo;
         $this->documentRepository = $documentRepository;
+        $this->warkahRepository = $warkahRepository;
     }
 
     // List Product Progress
@@ -67,10 +71,36 @@ class NotaryClientService
 
     public function updateStatusDocument(array $keys)
     {
-        return $this->productRepository->updateStatusByCompositeKey($keys, 'valid');
+        return $this->documentRepository->updateStatusByCompositeKey($keys, 'valid');
     }
 
     public function markCompleteds(array $keys)
+    {
+        return $this->productRepository->updateStatusByCompositeKey($keys, 'done');
+    }
+
+    // Warkah
+    public function listWarkah(array $filters = [])
+    {
+        return $this->productRepository->getAllWithRequiredWarkah($filters);
+    }
+
+    public function addWarkah(array $keys, array $data)
+    {
+        return $this->warkahRepository->createWarkah($keys, $data);
+    }
+
+    public function getWarkahHistory(array $keys)
+    {
+        return $this->warkahRepository->getByCompositeKey($keys);
+    }
+
+    public function updateStatusWarkah(array $keys)
+    {
+        return $this->warkahRepository->updateStatusByCompositeKey($keys, 'valid');
+    }
+
+    public function markCompletedWarkah(array $keys)
     {
         return $this->productRepository->updateStatusByCompositeKey($keys, 'done');
     }

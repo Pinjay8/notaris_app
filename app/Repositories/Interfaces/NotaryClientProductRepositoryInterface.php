@@ -6,6 +6,7 @@ interface NotaryClientProductRepositoryInterface
 {
     public function getAllWithLastProgress(array $filters = []);
     public function getAllWithRequiredDocuments(array $filters = []);
+    public function getAllWithRequiredWarkah(array $filters = []);
     public function findByCompositeKey(array $keys);
     public function updateStatusByCompositeKey(array $keys, string $status);
 }
@@ -20,10 +21,14 @@ interface NotaryClientDocumentRepositoryInterface
 {
     public function getByCompositeKey(array $keys);
     public function createDocument(array $keys, array $data);
+    public function findByCompositeKey(array $keys);
+    public function updateStatusByCompositeKey(array $keys, string $status);
 }
 
-interface NotaryCLientWarkahRepositoryInterface
+interface NotaryClientWarkahRepositoryInterface
 {
     public function getByCompositeKey(array $keys);
     public function createWarkah(array $keys, array $data);
+    public function findByCompositeKey(array $keys);
+    public function updateStatusByCompositeKey(array $keys, string $status);
 }

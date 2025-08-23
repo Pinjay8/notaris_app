@@ -14,17 +14,20 @@ class ActivityLogApiController extends Controller
             'user_id' => 'required|exists:users,id',
             'from'    => 'required|date',
             'to'      => 'required|date|after_or_equal:from',
-            'rowPerPage' => 'nullable|integer|min:1', // opsional
-            'page'       => 'nullable|integer|min:1', // opsional
+            'limit'   => 'nullable|integer|min:1', // opsional, jumlah data per halaman
+            'page'    => 'nullable|integer|min:1', // opsional halaman
         ]);
 
-        $rowPerPage = $request->input('rowPerPage', 20); // default 20
+        // default 20 data per halaman, bisa diganti dengan ?limit=5
+        $limit = $request->input('limit', 20);
 
-        $logs = ActivityLog::where('user_id', $request->user_id)
+        $query = ActivityLog::where('user_id', $request->user_id)
             ->whereDate('created_at', '>=', $request->from)
             ->whereDate('created_at', '<=', $request->to)
-            ->orderByDesc('created_at')
-            ->paginate($rowPerPage);
+            ->orderByDesc('created_at');
+
+        // pakai pagination, jumlah per halaman mengikuti limit
+        $logs = $query->paginate($limit);
 
         return response()->json([
             'status'  => true,

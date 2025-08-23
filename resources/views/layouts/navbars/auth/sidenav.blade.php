@@ -125,8 +125,7 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
-                <a href="{{ route('management-document.index') }}"
-                    class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                <a href="{{ route('warkah.index') }}" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
@@ -135,7 +134,7 @@
                 </a>
 
             </li>
-            <li class="nav-item" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+            <li class="nav-item">
                 <a href="#tablePartijAkta" data-bs-toggle="collapse" class="mb-0">
                     <div class="d-flex align-items-center justify-content-between px-4 py-2">
                         <!-- Kiri -->
@@ -205,6 +204,78 @@
                         <li>
                             <a href="{{ route('akta-logs.index') }}"
                                 class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Logs Akta</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#collapseRelaasAkta" role="button" aria-expanded="false"
+                    aria-controls="collapseRelaasAkta">
+                    <div class="d-flex align-items-center justify-content-between px-4 py-2">
+                        <!-- Kiri -->
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text text-sm">Relaas Akta</span>
+                        </div>
+                        <!-- Kanan -->
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                </a>
+
+                <div class="collapse" id="collapseRelaasAkta">
+                    <ul class="nav nav-collapse mb-0 pb-0">
+                        <li>
+                            <a href="{{ route('relaas-aktas.index') }}"
+                                class="nav-link {{ request()->is('relaas-aktas*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Transaksi Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('relaas-parties.index') }}"
+                                class="nav-link {{ request()->is('relaas-parties*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('relaas-documents.index') }}"
+                                class="nav-link {{ request()->is('relaas-document*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('relaas_akta.indexNumber') }}"
+                                class="nav-link {{ request()->is('relaas_akta*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Penomoran Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('relaas-logs.index') }}"
+                                class="nav-link {{ request()->is('relaas-logs*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
