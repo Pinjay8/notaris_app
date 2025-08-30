@@ -37,7 +37,7 @@
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
                 <a href="{{ route('subscriptions') }}"
-                    class="nav-link {{ Route::currentRouteName() == 'subscriptions' ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('subscriptions*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-calendar-event-fill text-dark text-sm opacity-10 pb-0"></i>
@@ -45,7 +45,7 @@
                     <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
                 </a>
                 <a href="{{ route('products.index') }}"
-                    class="nav-link {{ Route::currentRouteName() == 'products' ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-box text-dark text-sm opacity-10 pb-0"></i>
@@ -53,7 +53,7 @@
                     <span class="nav-link-text ms-1 mt-2">Layanan</span>
                 </a>
                 <a href="{{ route('documents.index') }}"
-                    class="nav-link  {{ Route::currentRouteName() == 'documents' ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('documents*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
@@ -61,7 +61,7 @@
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
                 <a href="{{ route('products.documents.selectProduct') }}"
-                    class="nav-link {{ Route::currentRouteName() == 'product-documents' ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('product-documents*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-file-earmark-plus-fill text-dark text-sm opacity-10 pb-0"></i>
@@ -125,6 +125,8 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('warkah.index') }}" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -132,7 +134,6 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Warkah</span>
                 </a>
-
             </li>
             <li class="nav-item">
                 <a href="#tablePartijAkta" data-bs-toggle="collapse" class="mb-0">
@@ -285,6 +286,46 @@
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('notary-legalisasi.index') }}"
+                    class="nav-link {{ request()->is('notary-legalisasi*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Legalisasi</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('notary-waarmerking.index') }}"
+                    class="nav-link {{ request()->is('notary-waarmerking*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Waarmarking</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('laporan-akta.index') }}"
+                    class="nav-link {{ request()->is('laporan-akta*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Laporan Akta</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('notary-letters.index') }}"
+                    class="nav-link {{ request()->is('notary-letters*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Surat Keluar</span>
+                </a>
             </li>
         </ul>
     </div>

@@ -33,7 +33,7 @@ Konsultasi'])
                         <div class="col-md-6 mb-3">
                             <label for="client_id" class="form-label">Klien</label>
                             <select name="client_id" class="form-select" required>
-                                <option value="">Pilih Klien</option>
+                                <option value="" hidden>Pilih Klien</option>
                                 @foreach($clients as $client)
                                 <option value="{{ $client->id }}" {{ old('client_id', $notaryConsultation->client_id ??
                                     '') == $client->id ? 'selected' : '' }}>

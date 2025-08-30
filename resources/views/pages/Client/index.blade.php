@@ -143,27 +143,35 @@
                                                     @php
                                                     $link = url("/clients/{$client->uuid}");
                                                     $dns2d = new \Milon\Barcode\DNS2D();
-                                                    $svg = $dns2d->getBarcodeSVG($link, 'QRCODE');
-                                                    $base64Svg = base64_encode($svg);
-                                                    @endphp
-                                                    <img src="data:image/svg+xml;base64,{{ $base64Svg }}" alt="QR Code"
-                                                        class="img-fluid w-50 mx-auto" />
 
+                                                    // true di sini artinya return base64 data langsung
+                                                    $png = $dns2d->getBarcodePNG($link, 'QRCODE', 5, 5, [0,0,0], true);
+                                                    @endphp
+                                                    <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
+                                                        class="img-fluid w-50 mx-auto" />
                                                     {{-- Tampilkan link di bawah QR Code --}}
                                                     <p class="mt-3 text-wrap"><a href="{{ $link }}" target="_blank">{{
                                                             $link
                                                             }}</a></p>
 
                                                     <div class="d-flex justify-content-center gap-2 mt-3">
-                                                        <a href="data:image/svg+xml;base64,{{ $base64Svg }}"
-                                                            download="qrcode-{{ $client->uuid }}.svg"
+                                                        <a href="data:image/png;base64,{{ $png }}"
+                                                            download="qrcode-{{ $client->fullname }}.png"
                                                             class="btn btn-primary btn-sm">
                                                             Download
                                                         </a>
-                                                        <a href="https://wa.me/?text={{ urlencode('Silakan akses: ' . $link) }}"
+                                                        @php
+                                                        // ubah no HP dari 08xxxx -> 628xxxx
+                                                        $phone = !empty($client->phone) ? preg_replace('/^0/', '62',
+                                                        $client->phone) : null;
+                                                        @endphp
+
+                                                        @if($phone)
+                                                        <a href="https://wa.me/{{ $phone }}?text={{ urlencode('Halo ' . $client->fullname . ', silakan akses link berikut: ' . $link) }}"
                                                             target="_blank" class="btn btn-success btn-sm">
                                                             Share WhatsApp
                                                         </a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

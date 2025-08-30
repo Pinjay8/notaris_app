@@ -14,10 +14,14 @@ use App\Http\Controllers\NotaryClientDocumentController;
 use App\Http\Controllers\NotaryClientProductController;
 use App\Http\Controllers\NotaryClientWarkahController;
 use App\Http\Controllers\NotaryConsultationController;
+use App\Http\Controllers\NotaryLaporanAktaController;
+use App\Http\Controllers\NotaryLegalisasiController;
+use App\Http\Controllers\NotaryLettersController;
 use App\Http\Controllers\NotaryRelaasAktaController;
 use App\Http\Controllers\NotaryRelaasDocumentController;
 use App\Http\Controllers\NotaryRelaasLogsController;
 use App\Http\Controllers\NotaryRelaasPartiesController;
+use App\Http\Controllers\NotaryWaarmerkingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
@@ -30,6 +34,7 @@ use App\Models\NotaryConsultation;
 use App\Models\NotaryRelaasAkta;
 use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS2DFacade;
+
 
 
 Route::middleware('guest')->group(function () {
@@ -131,7 +136,6 @@ Route::middleware('auth')->group(function () {
     Route::post('warkah/update-status', [NotaryClientWarkahController::class, 'updateStatusValid'])->name(
         'warkah.updateStatus'
     );
-
     // End
     // Partij Akta
     Route::resource('akta-types', NotaryAktaTypesController::class);
@@ -171,6 +175,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/relaas-documents/edit/{relaas_id}/{id}', [NotaryRelaasDocumentController::class, 'edit'])->name('relaas-documents.edit');
     Route::put('/relaas-documents/update/{relaas_id}/{id}', [NotaryRelaasDocumentController::class, 'update'])->name('relaas-documents.update');
     Route::resource('relaas-logs', NotaryRelaasLogsController::class);
+
+    Route::resource('notary-legalisasi', NotaryLegalisasiController::class);
+    Route::resource('notary-waarmerking', NotaryWaarmerkingController::class);
+    Route::resource('notary-letters', NotaryLettersController::class);
+    Route::get('laporan-akta', [NotaryLaporanAktaController::class, 'index'])->name('laporan-akta.index');
+    Route::get('laporan-akta/export-pdf', [NotaryLaporanAktaController::class, 'exportPdf'])
+        ->name('laporan-akta.export-pdf');
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

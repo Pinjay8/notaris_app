@@ -8,3 +8,30 @@ th {
     font-weight: bold;
     opacity: 7;
 }
+
+.hover-card {
+    transition: all 0.3s ease-in-out;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1200px) {
+    #iconNavbarSidenav {
+        display: flex !important;
+    }
+    #iconNavbarSidenav.d-none {
+        display: flex !important;
+    }
+    
+}
+
+@media (max-width: 1200px) {
+    .navbar #iconNavbarSidenav {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}

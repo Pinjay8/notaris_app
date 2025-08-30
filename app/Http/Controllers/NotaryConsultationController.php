@@ -18,20 +18,30 @@ class NotaryConsultationController extends Controller
     {
         $this->notaryConsultationService = $notaryConsultationService;
     }
-
-    public function selectClient()
+    public function selectClient(Request $request)
     {
-        // $notarisId = auth()->user()->notaris_id;
-        // $clients = Client::where('notaris_id', $notarisId)->get();
-        $clients = Client::all();
+        $query = Client::where('notaris_id', auth()->user()->notaris_id);
+
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('fullname', 'like', '%' . $request->search . '%');
+        }
+
+        $clients = $query->get();
+
         return view('pages.Client.Consultation.selectClient', compact('clients'));
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $notarisId = auth()->user()->notaris_id;
-        $clients = Client::where('notaris_id', $notarisId)->get();
+        $query = Client::where('notaris_id', auth()->user()->notaris_id);
+
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('fullname', 'like', '%' . $request->search . '%');
+        }
+
+        $clients = $query->get();
+
         return view('pages.Client.Consultation.index', compact('clients'));
     }
 

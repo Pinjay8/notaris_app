@@ -19,10 +19,13 @@ use App\Repositories\Interfaces\NotaryClientProductRepositoryInterface;
 use App\Repositories\Interfaces\NotaryClientProgressRepositoryInterface;
 use App\Repositories\Interfaces\NotaryClientWarkahRepositoryInterface;
 use App\Repositories\Interfaces\NotaryConsultationServiceInterface;
+use App\Repositories\Interfaces\NotaryLegalisasiRepositoryInterface;
+use App\Repositories\Interfaces\NotaryLetterRepositoryInterface;
 use App\Repositories\Interfaces\NotaryRelaasAktaRepositoryInterface;
 use App\Repositories\Interfaces\NotaryRelaasLogsRepositoryInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Repositories\Interfaces\RelaasPartiesRepositoryInterface;
+use App\Repositories\Interfaces\WaarmerkingRepositoryInterface;
 use App\Repositories\NotaryAktaDocumentRepository;
 use App\Repositories\NotaryAktaLogRepository;
 use App\Repositories\NotaryAktaPartiesRepository;
@@ -33,10 +36,13 @@ use App\Repositories\NotaryClientProductRepository;
 use App\Repositories\NotaryClientProgressRepository;
 use App\Repositories\NotaryClientWarkahRepository;
 use App\Repositories\NotaryConsultationRepository;
+use App\Repositories\NotaryLegalisasiRepository;
+use App\Repositories\NotaryLetterRepository;
 use App\Repositories\NotaryRelaasAktaRepository;
 use App\Repositories\NotaryRelaasLogsRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\RelaasPartiesRepository;
+use App\Repositories\WaarmerkingRepository;
 use App\Services\NotaryConsultationService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -65,6 +71,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(NotaryRelaasAktaRepositoryInterface::class, NotaryRelaasAktaRepository::class);
         $this->app->bind(NotaryRelaasLogsRepositoryInterface::class, NotaryRelaasLogsRepository::class);
         $this->app->bind(RelaasPartiesRepositoryInterface::class, RelaasPartiesRepository::class);
+        $this->app->bind(NotaryLegalisasiRepositoryInterface::class, NotaryLegalisasiRepository::class);
+        $this->app->bind(WaarmerkingRepositoryInterface::class, WaarmerkingRepository::class);
+        $this->app->bind(NotaryLetterRepositoryInterface::class, NotaryLetterRepository::class);
     }
 
     /**
