@@ -42,7 +42,7 @@ class NotaryRelaasAktaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'client_id' => 'required|exists:clients,id',
             'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
@@ -55,6 +55,8 @@ class NotaryRelaasAktaController extends Controller
             'status' => 'required|string',
             'note' => 'nullable|string',
         ]);
+
+        $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($validated);
 

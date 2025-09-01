@@ -2,10 +2,9 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Dokumen Layanan'])
-
-<div class="container mt-4">
-    <div class="row mt-4 mx-4">
-        <div class="card mb-4">
+<div class="row mt-4 mx-4">
+    <div class="col-12">
+        <div class="card mb-4  p-3">
             <div class="card-header px-1 pb-0 d-flex justify-content-between align-items-center mb-1">
                 <h5 class="mb-0 text-capitalize">Layanan {{ $product->name }}</h5>
             </div>
@@ -81,7 +80,7 @@
                             @endif
                         </td>
                         <td class="text-center d-flex align-items-center justify-content-center gap-2">
-                            <button type="button" class="btn btn-warning d-flex align-items-center gap-2 text-sm"
+                            <button type="button" class="btn btn-warning d-flex align-items-center gap-2 text-sm btn-sm"
                                 data-bs-toggle="modal" data-bs-target="#editModal{{ $doc->id }}">
                                 <i class="fas fa-edit fa-md"></i> Edit
                             </button>
@@ -89,7 +88,7 @@
                                 method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger  d-flex align-items-center gap-2 text-sm" type="submit"><i
+                                <button class="btn btn-danger  d-flex align-items-center gap-2 text-sm btn-sm" type="submit"><i
                                         class="fa fa-trash fa-md" aria-hidden="true"></i>Hapus</button>
                             </form>
                         </td>

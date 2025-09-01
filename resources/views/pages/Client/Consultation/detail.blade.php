@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-3 flex-wrap">
-                <h6>List Product Konsultasi</h6>
+                <h6>List Produk Konsultasi</h6>
                 <a href="{{ route('consultation.creates', ['consultationId' => $consultationId]) }}"
                     class="btn btn-primary btn-sm mb-0">
                     + Tambah Produk
@@ -48,29 +48,29 @@
                         </thead>
                         <tbody>
                             @forelse ($notaryClientProduct as $product)
-                            <tr>
-                                <td class="text-center">
+                            <tr class="text-center text-sm">
+                                <td>
                                     {{ $product->id }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->notaris->display_name }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->client->fullname }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->registration_code }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->product->name }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->note }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->status }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     {{ $product->completed_at }}
                                 </td>
                                 <td>

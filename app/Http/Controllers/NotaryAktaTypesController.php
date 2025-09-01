@@ -33,12 +33,14 @@ class NotaryAktaTypesController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'category' => 'nullable|in:pendirian,perubahan,pemutusan',
             'type' => 'nullable|string',
             'description' => 'nullable|string',
             'documents' => 'required|string',
         ]);
+
+        $data['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($data);
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta type.');

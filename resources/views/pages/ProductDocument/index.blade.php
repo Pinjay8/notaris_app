@@ -2,8 +2,8 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Dokumen Layanan'])
-<div class="container">
-    <div class="row mt-4 mx-4">
+<div class="row mt-4 mx-4">
+    <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-header px-2 pb-0 d-flex justify-content-between align-items-center mb-1">
                 <h6 class="mb-0">Dokumen Layanan</h6>
@@ -15,7 +15,8 @@
                 @foreach ($products as $product)
                 <div class="col-md-4 mb-3">
                     <div class="card p-4">
-                        <h5 class="text-capitalize">Layanan {{ $product->name }} - Kode {{ $product->code_products }}
+                        <h5 class="text-capitalize">Layanan {{ $product->name }} - Kode {{ $product->code_products
+                            }}
                         </h5>
                         <a href="{{ route('products.documents.index', $product->id) }}"
                             class="btn btn-primary mt-2">Kelola

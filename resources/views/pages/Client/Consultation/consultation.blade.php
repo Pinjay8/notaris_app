@@ -55,7 +55,7 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <p class="text-sm mb-0  text-center">Rp. {{
+                                    <p class="text-sm mb-0  text-center">{{
                                         $notaryconsultation->client->fullname
                                         }}
                                     </p>

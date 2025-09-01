@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Notaris Klien Produk'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Proses Pengurusan'])
 
 <div class="row mt-4 mx-4">
     <div class="col md-12">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-3">
                         <select name="status" class="form-select">
-                            <option value="">-- Status --</option>
+                            <option value="">Pilih Status</option>
                             <option value="new" @if(request('status')=='new' ) selected @endif>New</option>
                             <option value="done" @if(request('status')=='done' ) selected @endif>Done</option>
                             <option value="progress" @if(request('status')=='progress' ) selected @endif>
@@ -51,19 +51,19 @@
                         </thead>
                         <tbody>
                             @forelse ($products as $product)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $product->registration_code }}</td>
-                                <td class="text-center">{{ $product->client->fullname ?? '-' }}</td>
-                                <td class="text-center">{{ $product->product->name ?? '-' }}</td>
-                                <td class="text-center">
+                            <tr class="text-center text-sm">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $product->registration_code }}</td>
+                                <td>{{ $product->client->fullname ?? '-' }}</td>
+                                <td>{{ $product->product->name ?? '-' }}</td>
+                                <td>
                                     @if($product->last_progress)
                                     {{ $product->last_progress->progress }}
                                     @else
                                     Awal Permohonan
                                     @endif
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     @if($product->last_progress)
                                     {{ \Carbon\Carbon::parse($product->last_progress->progress_date)->format('d M Y') }}
                                     @else
@@ -108,7 +108,7 @@
                                                     @if($progressList->isEmpty())
                                                     <div class="text-center text-muted py-4 ">
                                                         <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                                                        <span>Belum ada histori progress.</span>
+                                                        <span>Belum ada riwayat progress.</span>
                                                     </div>
                                                     @else
                                                     <div class="timeline">
@@ -184,22 +184,24 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Progress</label>
+                                                            <label
+                                                                class="form-label text-start d-block">Progress</label>
                                                             <input type="text" class="form-control" name="progress"
                                                                 required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Tanggal Progress</label>
+                                                            <label class="form-label text-start d-block">Tanggal
+                                                                Progress</label>
                                                             <input type="date" class="form-control" name="progress_date"
                                                                 required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Catatan</label>
+                                                            <label class="form-label text-start d-block">Catatan</label>
                                                             <textarea class="form-control" name="note"
                                                                 rows="3"></textarea>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">Status</label>
+                                                            <label class="form-label text-start d-block">Status</label>
                                                             <input type="text" class="form-control" name="status">
                                                         </div>
                                                     </div>

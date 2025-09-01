@@ -38,7 +38,7 @@ class NotaryAktaTransactionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'registration_code' => 'required|string',
             'client_id' => 'required|exists:clients,id',
             'akta_type_id' => 'required|exists:notary_akta_types,id',
@@ -51,6 +51,7 @@ class NotaryAktaTransactionController extends Controller
         $data['year'] = null;
         $data['akta_number'] = null;
         $data['akta_number_created_at'] = null;
+        $data['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($data);
 

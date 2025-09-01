@@ -6,7 +6,7 @@
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header pb-0">
                 <h6>{{ isset($transaction) ? 'Edit Transaksi' : 'Tambah Transaksi' }}</h6>
             </div>
             <div class="card-body px-4 pt-3 pb-2">
@@ -17,7 +17,7 @@
                     @if(isset($transaction)) @method('PUT') @endif
 
                     {{-- Notaris --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="notaris_id" class="form-label">Notaris</label>
                         <select name="notaris_id" id="notaris_id" class="form-select" required>
                             <option value="" hidden>-- Pilih Notaris --</option>
@@ -28,7 +28,7 @@
                             </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     {{-- Client --}}
                     <div class="mb-3">

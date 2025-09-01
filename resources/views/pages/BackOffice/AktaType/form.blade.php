@@ -19,7 +19,7 @@
                         @method('PUT')
                     @endif
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="notaris_id" class="form-label">Notaris</label>
                         <select name="notaris_id" id="notaris_id" class="form-select" required>
                             <option value="" hidden>-- Pilih Notaris --</option>
@@ -29,7 +29,7 @@
                                 </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="category" class="form-label">Kategori</label>

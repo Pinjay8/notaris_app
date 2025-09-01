@@ -17,7 +17,7 @@
                     @if(isset($data)) @method('PUT') @endif
 
                     {{-- Notaris --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="notaris_id" class="form-label">Notaris</label>
                         <select name="notaris_id" id="notaris_id"
                             class="form-select @error('notaris_id') is-invalid @enderror">
@@ -32,7 +32,7 @@
                         @error('notaris_id')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     {{-- Client --}}
                     <div class="mb-3">
