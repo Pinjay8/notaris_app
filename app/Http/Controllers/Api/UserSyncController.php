@@ -17,7 +17,7 @@ class UserSyncController extends Controller
                 'username' => 'required|string|max:255|unique:users,username',
                 'password' => 'required|string|min:6',
                 'email' => 'required|email|unique:users,email',
-                'signup_at' => 'nullanle|date',
+                'signup_at' => 'nullable|date',
                 'active_at' => 'nullable|date',
                 'status' => 'required',
                 'phone' => 'required',
