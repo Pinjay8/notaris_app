@@ -20,6 +20,8 @@ class UserSyncController extends Controller
                 'signup_at' => 'required|date',
                 'active_at' => 'required|date',
                 'status' => 'required',
+                'phone' => 'required',
+                'address' => 'required',
             ]);
 
             $user = User::create($validated);

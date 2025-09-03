@@ -26,7 +26,9 @@ class User extends Authenticatable
         'password',
         'signup_at',
         'active_at',
-        'status'
+        'status',
+        'phone',
+        'address'
     ];
 
     public function notaris()
