@@ -121,7 +121,7 @@
                     class="nav-link {{ request()->is('mangement-document*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
@@ -130,7 +130,7 @@
                 <a href="{{ route('warkah.index') }}" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Warkah</span>
                 </a>
@@ -142,7 +142,7 @@
                         <div class="d-flex align-items-center">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                <i class="fa-solid fa-handshake text-dark text-sm opacity-10 pb-0"></i>
                             </div>
                             <span class="nav-link-text text-sm">Partij Akta</span>
                         </div>
@@ -157,7 +157,7 @@
                                 class="nav-link {{ request()->is('akta-types*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-layer-group text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Jenis Akta</span>
                             </a>
@@ -167,7 +167,7 @@
                                 class="nav-link {{ request()->is('akta-transactions*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-exchange-alt text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Transaksi Akta</span>
                             </a>
@@ -177,37 +177,37 @@
                                 class="nav-link {{ request()->is('akta-documents*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-file-contract text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('akta-parties.index') }}"
-                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('akta-parties*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-user-group text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('akta_number.index') }}"
-                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('akta_number*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Penomoran Akta</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('akta-logs.index') }}"
-                                class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('akta-logs*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-clock-rotate-left text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Logs Akta</span>
                             </a>
@@ -223,7 +223,7 @@
                         <div class="d-flex align-items-center">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                <i class="fa-solid fa-scroll text-dark text-sm opacity-10 pb-0"></i>
                             </div>
                             <span class="nav-link-text text-sm">Relaas Akta</span>
                         </div>
@@ -239,7 +239,7 @@
                                 class="nav-link {{ request()->is('relaas-aktas*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-exchange-alt text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Transaksi Akta</span>
                             </a>
@@ -249,7 +249,7 @@
                                 class="nav-link {{ request()->is('relaas-parties*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-user-group text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
                             </a>
@@ -259,7 +259,7 @@
                                 class="nav-link {{ request()->is('relaas-document*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-file-contract text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
                             </a>
@@ -269,7 +269,7 @@
                                 class="nav-link {{ request()->is('relaas_akta*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Penomoran Akta</span>
                             </a>
@@ -279,7 +279,7 @@
                                 class="nav-link {{ request()->is('relaas-logs*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                                    <i class="fa-solid fa-clock-rotate-left text-dark text-sm opacity-10 pb-0"></i>
                                 </div>
                                 <span class="nav-link-text ms-1 mt-2">Logs Akta</span>
                             </a>
@@ -292,7 +292,7 @@
                     class="nav-link {{ request()->is('notary-legalisasi*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="fa-solid fa-stamp text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Legalisasi</span>
                 </a>
@@ -302,7 +302,7 @@
                     class="nav-link {{ request()->is('notary-waarmerking*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="fa-solid fa-file-signature text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Waarmarking</span>
                 </a>
@@ -312,7 +312,7 @@
                     class="nav-link {{ request()->is('laporan-akta*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="fa-solid fa-chart-bar text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Laporan Akta</span>
                 </a>
@@ -322,7 +322,7 @@
                     class="nav-link {{ request()->is('notary-letters*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                        <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Surat Keluar</span>
                 </a>

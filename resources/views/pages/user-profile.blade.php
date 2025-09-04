@@ -67,8 +67,8 @@
                             <button type="submit" class="btn btn-primary btn-sm ms-auto">Ubah</button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <p class="text-uppercase text-sm">User Informations</p>
+                    <div class="card-body pt-1">
+                        <p class="text-uppercase text-sm">Informasi Akun</p>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -315,6 +315,6 @@
             </div>
         </div> --}}
     </div>
-    @include('layouts.footers.auth.footer')
+    {{-- @include('layouts.footers.auth.footer') --}}
 </div>
 @endsection
