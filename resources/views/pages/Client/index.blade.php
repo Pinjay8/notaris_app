@@ -88,16 +88,16 @@
                                 @forelse ($clients as $client)
                                 <tr class="text-sm mb-0 text-center">
                                     <td>
-                                        <p>{{ $loop->iteration }}</p>
+                                        {{ $loop->iteration }}
                                     </td>
                                     {{-- <td>
                                         <p class="text-sm mb-0 text-center">{{ $client->uuid }}</p>
                                     </td> --}}
                                     <td>
-                                        <p> {{
-                                            $client->fullname
-                                            }}
-                                        </p>
+                                        {{
+                                        $client->fullname
+                                        }}
+
                                     </td>
                                     <td>
                                         {{

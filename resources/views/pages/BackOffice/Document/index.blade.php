@@ -40,15 +40,15 @@
                         </thead>
                         <tbody>
                             @forelse ($products as $product)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $product->registration_code }}</td>
-                                <td class="text-center">{{ $product->client->fullname ?? '-' }}</td>
-                                <td class="text-center">{{ $product->product->name ?? '-' }}</td>
-                                <td class="text-center">
+                            <tr class="text-center text-sm">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $product->registration_code }}</td>
+                                <td>{{ $product->client->fullname ?? '-' }}</td>
+                                <td>{{ $product->product->name ?? '-' }}</td>
+                                <td>
                                     {{ $product->documents_list ?? '-' }}
                                 </td>
-                                <td class="text-center">
+                                <td>
                                     <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
                                         {{ ucfirst($product->status) }}
                                     </span>

@@ -12,11 +12,11 @@
                 <form method="GET" action="{{ route('warkah.index') }}" class="row g-3">
                     <div class="col-md-5">
                         <input type="text" name="registration_code" value="{{ request('registration_code') }}"
-                            class="form-control" placeholder="Registration Code">
+                            class="form-control" placeholder="Kode Registrasi">
                     </div>
                     <div class="col-md-5">
                         <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
-                            placeholder="Client Name">
+                            placeholder="Nama Klien">
                     </div>
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary ">Cari</button>
@@ -40,15 +40,15 @@
                         </thead>
                         <tbody>
                             @forelse ($products as $product)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $product->registration_code }}</td>
-                                <td class="text-center">{{ $product->client->fullname ?? '-' }}</td>
-                                <td class="text-center">{{ $product->product->name ?? '-' }}</td>
-                                <td class="text-center">
+                            <tr class="text-center text-sm">
+                                <td >{{ $loop->iteration }}</td>
+                                <td >{{ $product->registration_code }}</td>
+                                <td >{{ $product->client->fullname ?? '-' }}</td>
+                                <td >{{ $product->product->name ?? '-' }}</td>
+                                <td >
                                     {{ $product->documents_list ?? '-' }}
                                 </td>
-                                <td class="text-center">
+                                <td >
                                     <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
                                         {{ ucfirst($product->status) }}
                                     </span>

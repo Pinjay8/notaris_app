@@ -13,7 +13,7 @@
                         <div class="col-md-3">
                             <label for="type" class="form-label">Jenis Akta</label>
                             <select name="type" id="type" class="form-select">
-                                <option value="">-- Pilih Jenis --</option>
+                                <option value="" hidden>Pilih Jenis</option>
                                 <option value="partij" {{ request('type')=='partij' ? 'selected' : '' }}>Partij</option>
                                 <option value="relaas" {{ request('type')=='relaas' ? 'selected' : '' }}>Relaas</option>
                             </select>
@@ -43,7 +43,7 @@
         </div>
 
         {{-- Tabel Data --}}
-        <div class="card">
+        <div class="card ">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                 <h6>{{ ucfirst($queryType) }}</h6>
                 @if($data->isNotEmpty())
