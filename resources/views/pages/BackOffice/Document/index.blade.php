@@ -94,6 +94,7 @@
                                                             class="table table-bordered table-striped table-hover align-middle mb-0">
                                                             <thead class="table-primary text-center">
                                                                 <tr class="text-center">
+                                                                    <th style="width: 5%">#</th>
                                                                     <th style="width: 25%">Nama Dokumen</th>
                                                                     <th style="width: 15%">Dokumen</th>
                                                                     <th style="width: 30%">Catatan</th>
@@ -104,6 +105,7 @@
                                                             <tbody>
                                                                 @foreach($docs as $doc)
                                                                 <tr class="text-center">
+                                                                    <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $doc->document_name }}</td>
                                                                     {{-- <td class="text-center">
                                                                         @if($doc->document_link)
@@ -202,13 +204,13 @@
                                                             value="{{ $product->notaris_id }}">
                                                         <input type="hidden" name="client_id"
                                                             value="{{ $product->client_id }}">
-                                                        <input type="hidden" name="product_id"
-                                                            value="{{ $product->product_id }}">
+                                                        {{-- <input type="hidden" name="product_id"
+                                                            value="{{ $product->product_id }}"> --}}
 
                                                         <div class="mb-3">
                                                             <label class="form-label">Pilih Dokumen yang ingin
                                                                 dikirim</label>
-                                                            <select name="document_code" class="form-select">
+                                                            <select name="product_id" class="form-select">
                                                                 <option value="" hidden>-- Pilih --
                                                                 </option>
                                                                 @foreach($product->product->documents as $pd)
@@ -232,7 +234,7 @@
                                                                 required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">File Dokumen (link)</label>
+                                                            <label class="form-label">File Dokumen</label>
                                                             <input type="file" name="document_link"
                                                                 class="form-control">
                                                         </div>

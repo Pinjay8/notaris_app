@@ -56,4 +56,9 @@ class NotaryClientProduct extends Model
     {
         return $this->hasMany(NotaryClientDocument::class, 'registration_code', 'registration_code');
     }
+
+    public function warkahtHistory()
+    {
+        return $this->hasMany(NotaryClientWarkah::class, 'registration_code', 'registration_code');
+    }
 }

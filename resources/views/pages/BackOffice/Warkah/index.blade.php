@@ -94,6 +94,7 @@
                                                             class="table table-bordered table-striped table-hover align-middle mb-0">
                                                             <thead class="table-primary text-center">
                                                                 <tr class="text-center">
+                                                                    <th style="width: 5%">#</th>
                                                                     <th style="width: 25%">Nama Dokumen</th>
                                                                     <th style="width: 15%">Dokumen</th>
                                                                     <th style="width: 30%">Catatan</th>
@@ -104,49 +105,12 @@
                                                             <tbody>
                                                                 @foreach($docs as $doc)
                                                                 <tr class="text-center">
-                                                                    <td>{{ $doc->document_name }}</td>
-                                                                    {{-- <td class="text-center">
-                                                                        @if($doc->document_link)
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-primary px-3"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#previewModal{{ $doc->id }}">
-                                                                            <i class="bi bi-eye"></i> Lihat
-                                                                        </button>
-
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade"
-                                                                            id="previewModal{{ $doc->id }}"
-                                                                            tabindex="-1" aria-hidden="true">
-                                                                            <div
-                                                                                class="modal-dialog modal-dialog-centered modal-xl">
-                                                                                <!-- gunakan xl agar lebih lebar -->
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title">Preview
-                                                                                            Dokumen</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body text-center">
-                                                                                        <img src="{{ asset('storage/' . $doc->document_link) }}"
-                                                                                            alt="Preview"
-                                                                                            class="img-fluid rounded"
-                                                                                            style="max-height:80vh; object-fit:contain;">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        @else
-                                                                        <span class="text-muted">Belum ada</span>
-                                                                        @endif
-                                                                    </td> --}}
+                                                                    <td>{{ $loop->iteration }}</td>
+                                                                    <td>{{ $doc->warkah_name }}</td>
                                                                     <td>
-                                                                        <a href="{{ asset('storage/' . $doc->document_link) }}"
+                                                                        <a href="{{ asset('storage/' . $doc->warkah_link) }}"
                                                                             target="_blank">
-                                                                            <img src="{{ asset('storage/' . $doc->document_link) }}"
+                                                                            <img src="{{ asset('storage/' . $doc->warkah_link) }}"
                                                                                 alt="Dokumen" class="img-fluid"
                                                                                 style="max-width: 150px; cursor: pointer;">
                                                                         </a>
@@ -201,13 +165,13 @@
                                                             value="{{ $product->notaris_id }}">
                                                         <input type="hidden" name="client_id"
                                                             value="{{ $product->client_id }}">
-                                                        <input type="hidden" name="product_id"
-                                                            value="{{ $product->product_id }}">
+                                                        {{-- <input type="hidden" name="product_id"
+                                                            value="{{ $product->product_id }}"> --}}
 
                                                         <div class="mb-3">
                                                             <label class="form-label">Pilih Dokumen yang ingin
                                                                 dikirim</label>
-                                                            <select name="document_code" class="form-select">
+                                                            <select name="product_id" class="form-select">
                                                                 <option value="" hidden>-- Pilih --
                                                                 </option>
                                                                 @foreach($product->product->documents as $pd)
@@ -220,20 +184,19 @@
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label class="form-label">Kode Dokumen</label>
-                                                            <input type="text" name="document_code" class="form-control"
+                                                            <label class="form-label">Kode Warkah</label>
+                                                            <input type="text" name="warkah_code" class="form-control"
                                                                 required>
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label class="form-label">Nama Dokumen</label>
-                                                            <input type="text" name="document_name" class="form-control"
+                                                            <label class="form-label">Nama Warkah</label>
+                                                            <input type="text" name="warkah_name" class="form-control"
                                                                 required>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label">File Dokumen (link)</label>
-                                                            <input type="file" name="document_link"
-                                                                class="form-control">
+                                                            <label class="form-label">File Warkah</label>
+                                                            <input type="file" name="warkah_link" class="form-control">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label class="form-label">Catatan</label>

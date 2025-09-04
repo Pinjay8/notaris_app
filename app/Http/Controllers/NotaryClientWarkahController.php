@@ -50,7 +50,7 @@ class NotaryClientWarkahController extends Controller
 
         // handle file upload kalau ada
         if ($request->hasFile('warkah_link')) {
-            $validated['warkah_link'] = $request->file('warkah_link')->storeAs('documents', $request->file('document_link')->getClientOriginalName());
+            $validated['warkah_link'] = $request->file('warkah_link')->storeAs('documents', $request->file('warkah_link')->getClientOriginalName());
         }
 
         // status set new
