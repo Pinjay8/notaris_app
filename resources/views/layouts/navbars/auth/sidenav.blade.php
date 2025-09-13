@@ -1,4 +1,5 @@
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 "
+<aside
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 h-100"
     id="sidenav-main">
     <div class="sidenav-header">
         <i class="fas fa-times p-2 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -9,7 +10,7 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse  w-auto h-100" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse h-100 " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
@@ -325,6 +326,121 @@
                         <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Surat Keluar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#collapsePic" role="button" aria-expanded="false"
+                    aria-controls="collapsePic">
+                    <div class="d-flex align-items-center justify-content-between px-4 py-2">
+                        <!-- Kiri -->
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-user-tie text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text text-sm">PIC</span>
+                        </div>
+                        <!-- Kanan -->
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                </a>
+
+                <div class="collapse" id="collapsePic">
+                    <ul class="nav nav-collapse mb-0 pb-0">
+                        <li>
+                            <a href="{{ route('pic_staff.index') }}"
+                                class="nav-link {{ request()->is('pic_staff*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-users-gear text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Staff</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pic_documents.index') }}"
+                                class="nav-link {{ request()->is('pic_documents*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-file-lines text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Dokumen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pic_process.index') }}"
+                                class="nav-link {{ request()->is('pic_process*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-gears text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Proses Pengurusan</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pic_handovers.index') }}"
+                                class="nav-link {{ request()->is('pic_handovers*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Surat Terima Dokumen</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#collapseBiaya" role="button" aria-expanded="false"
+                    aria-controls="collapseBiaya">
+                    <div class="d-flex align-items-center justify-content-between px-4 py-2">
+                        <!-- Kiri -->
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-sack-dollar text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text text-sm">Biaya</span>
+                        </div>
+                        <!-- Kanan -->
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                </a>
+
+                <div class="collapse" id="collapseBiaya">
+                    <ul class="nav nav-collapse mb-0 pb-0">
+                        <li>
+                            <a href="{{ route('notary_costs.index') }}"
+                                class="nav-link {{ request()->is('notary_costs*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-file-invoice-dollar text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Total Biaya</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('notary_payments.index') }}"
+                                class="nav-link {{ request()->is('notary_payments*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-credit-card text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Pembayaran</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('report-payment.index') }}"
+                    class="nav-link {{ request()->is('report-payment*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Laporan Pembayaran</span>
                 </a>
             </li>
         </ul>

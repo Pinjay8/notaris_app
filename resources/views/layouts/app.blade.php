@@ -31,10 +31,7 @@
     @endguest
 
     @auth
-    @if (in_array(request()->route()->getName(), ['sign-in-static', 'sign-up-static', 'login', 'register',
-    'recover-password', 'rtl', 'virtual-reality']))
-    @yield('content')
-    @else
+
     @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
     @elseif (in_array(request()->route()->getName(), ['profile-static', 'profile']))
@@ -53,8 +50,8 @@
             </div>
         </div>
     </main>
-    {{-- @include('components.fixed-plugin') --}}
-    @endif
+    @include('components.fixed-plugin')
+    {{-- @endif --}}
     @endauth
 
     <!--   Core JS Files   -->

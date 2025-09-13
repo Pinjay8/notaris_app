@@ -14,18 +14,25 @@ use App\Http\Controllers\NotaryClientDocumentController;
 use App\Http\Controllers\NotaryClientProductController;
 use App\Http\Controllers\NotaryClientWarkahController;
 use App\Http\Controllers\NotaryConsultationController;
+use App\Http\Controllers\NotaryCostController;
 use App\Http\Controllers\NotaryLaporanAktaController;
 use App\Http\Controllers\NotaryLegalisasiController;
 use App\Http\Controllers\NotaryLettersController;
+use App\Http\Controllers\NotaryPaymenttController;
 use App\Http\Controllers\NotaryRelaasAktaController;
 use App\Http\Controllers\NotaryRelaasDocumentController;
 use App\Http\Controllers\NotaryRelaasLogsController;
 use App\Http\Controllers\NotaryRelaasPartiesController;
 use App\Http\Controllers\NotaryWaarmerkingController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PicDocumentsController;
+use App\Http\Controllers\PicHandOverController;
+use App\Http\Controllers\PicProcessController;
+use App\Http\Controllers\PicStaffController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReportPaymentController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UserProfileController;
@@ -34,6 +41,7 @@ use App\Models\NotaryConsultation;
 use App\Models\NotaryRelaasAkta;
 use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS2DFacade;
+
 
 
 
@@ -182,6 +190,23 @@ Route::middleware('auth')->group(function () {
     Route::get('laporan-akta', [NotaryLaporanAktaController::class, 'index'])->name('laporan-akta.index');
     Route::get('laporan-akta/export-pdf', [NotaryLaporanAktaController::class, 'exportPdf'])
         ->name('laporan-akta.export-pdf');
+
+
+    //PIC
+    Route::resource('pic_documents', PicDocumentsController::class);
+    Route::resource('pic_staff', PicStaffController::class);
+    Route::resource('pic_process', PicProcessController::class);
+    Route::resource('pic_handovers', PicHandOverController::class);
+    Route::get('pic_handovers/{id}/print', [PicHandoverController::class, 'print'])->name('pic_handovers.print');
+
+    // Biaya
+    Route::resource('notary_costs', NotaryCostController::class);
+    Route::get('notary_costs/{id}/print', [NotaryCostController::class, 'print'])->name('notary_costs.print');
+    Route::resource('notary_payments', NotaryPaymenttController::class);
+    Route::get('notary_payments/{id}/print', [NotaryPaymenttController::class, 'print'])->name('notary_payments.print');
+    Route::PATCH('notary_payments/{id}/valid', [NotaryPaymenttController::class, 'valid'])->name('notary_payments.valid');
+    Route::get('report-payment', [ReportPaymentController::class, 'index'])->name('report-payment.index');
+    Route::get('report-payment/print', [ReportPaymentController::class, 'print'])->name('report-payment.print');
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
