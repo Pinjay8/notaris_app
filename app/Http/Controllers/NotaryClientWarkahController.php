@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 class NotaryClientWarkahController extends Controller
 {
 
-    protected $notaryClientservice;
+    // protected $notaryClientservice;
 
 
-    public function __construct(NotaryClientService $notaryClientservice)
-    {
-        $this->notaryClientservice = $notaryClientservice;
-    }
+    // public function __construct(NotaryClientService $notaryClientservice)
+    // {
+    //     $this->notaryClientservice = $notaryClientservice;
+    // }
     /**
      * Display a listing of the resource.
      */
@@ -174,19 +174,19 @@ class NotaryClientWarkahController extends Controller
 
 
 
-    public function markDones(Request $request)
-    {
-        $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
-        $this->notaryClientservice->markCompleteds($keys);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi done');
-        return redirect()->back();
-    }
+    // public function markDones(Request $request)
+    // {
+    //     $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
+    //     $this->notaryClientservice->markCompleteds($keys);
+    //     notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi done');
+    //     return redirect()->back();
+    // }
 
-    public function updateStatusValid(Request $request)
-    {
-        $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
-        $this->notaryClientservice->updateStatusWarkah($keys);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi valid');
-        return redirect()->back();
-    }
+    // public function updateStatusValid(Request $request)
+    // {
+    //     $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
+    //     $this->notaryClientservice->updateStatusWarkah($keys);
+    //     notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi valid');
+    //     return redirect()->back();
+    // }
 }
