@@ -152,7 +152,8 @@ Route::middleware('auth')->group(function () {
     // );
 
     // Warkah
-    Route::resource('warkah', NotaryClientWarkahController::class);
+    // Route::resource('warkah', NotaryClientWarkahController::class);
+    Route::get('warkah', [NotaryClientWarkahController::class, 'index'])->name('warkah.index');
     Route::post('warkah/store', [NotaryClientWarkahController::class, 'addDocument'])->name('warkah.addDocument');
     Route::post('warkah/status', [NotaryClientWarkahController::class, 'updateStatus'])->name('warkah.updateStatus');
     // Route::post('warkah/mark-done', [NotaryClientWarkahController::class, 'markDone'])->name(
