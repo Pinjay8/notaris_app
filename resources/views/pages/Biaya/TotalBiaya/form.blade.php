@@ -41,7 +41,7 @@
                             @foreach ($picDocuments as $doc)
                             <option value="{{ $doc->id }}" {{ old('pic_document_id', $cost->pic_document_id ?? '') ==
                                 $doc->id ? 'selected' : '' }}>
-                                 {{ $doc->pic_document_code }} - {{ $doc->document_number }}
+                                {{ $doc->pic_document_code }} - {{ $doc->document_type }}
                             </option>
                             @endforeach
                         </select>

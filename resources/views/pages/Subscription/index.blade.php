@@ -70,7 +70,7 @@
                                 <td>
                                     <span
                                         class="badge text-center d-block mx-auto bg-{{ $subscription->status == 'active' ? 'success' : 'secondary' }}">
-                                        {{ ucfirst($subscription->status) }}
+                                        {{ $subscription->status == 'active' ? 'Aktif' : 'Non Aktif' }}
                                     </span>
                                 </td>
                             </tr>

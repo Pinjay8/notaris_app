@@ -17,7 +17,6 @@ class NotaryClientDocument extends Model
         'notaris_id',
         'client_id',
         'registration_code',
-        'product_id',
         'document_code',
         'document_name',
         'note',
@@ -35,6 +34,7 @@ class NotaryClientDocument extends Model
     {
         return $this->belongsTo(Notaris::class);
     }
+
 
     public function client()
     {

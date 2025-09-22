@@ -33,6 +33,7 @@ use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReportPaymentController;
+use App\Http\Controllers\ReportProcessController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UserProfileController;
@@ -75,6 +76,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/client/{notaris_id}', [ClientController::class, 'publicForm'])->name('client.public.create');
     Route::post('/client/{notaris_id}/store', [ClientController::class, 'storeClient'])->name('client.public.store');
     Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+    Route::post('/client/{uuid}/upload-document', [ClientController::class, 'uploadDocument'])
+        ->name('client.uploadDocument');
 });
 
 Route::middleware('auth')->group(function () {
@@ -116,20 +119,30 @@ Route::middleware('auth')->group(function () {
     Route::resource('clients', ClientController::class);
     Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');
 
+    Route::get('/clients-info', [ClientController::class, 'indexClient'])->name('clients-info.index');
+
 
     // Proses pEngurusan
+    Route::get('client-progress', [PicProcessController::class, 'indexProcess'])->name('pic-progress.indexProcess');
+    Route::post('pic_process/progress/store', [PicProcessController::class, 'storeProgress'])
+        ->name('pic-progress.storeProgress');
     Route::resource('management-process', NotaryClientProductController::class);
+    Route::put('/management-process/{id}/valid', [NotaryClientProductController::class, 'markAsValid'])->name('management-process.markAsValid');
     Route::post('management-process/mark-done', [NotaryClientProductController::class, 'markDone'])->name('management-process.markDone');
     Route::post('management-process/add-progress', [NotaryClientProductController::class, 'addProgress'])->name('management-process.addProgress');
     // BackOffice Dokumen
-    Route::get('management-document', [NotaryClientProductController::class, 'indexDocument'])->name('management-document.index');
-    // update status
-    Route::post('management-document/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
+    Route::get('management-document', [NotaryClientDocumentController::class, 'index'])->name('management-document.index');
+    Route::post('management-document/store', [NotaryClientDocumentController::class, 'addDocument'])->name('management-document.addDocument');
+    Route::post('management-document/mark-done', [NotaryClientDocumentController::class, 'markDone'])->name(
         'management-document.markDone'
     );
-    Route::post('management-document/add-document', [NotaryClientProductController::class, 'addDocument'])->name(
-        'management-document.addDocument'
-    );
+    // update status
+    // Route::post('management-document/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
+    //     'management-document.markDone'
+    // );
+    // Route::post('management-document/add-document', [NotaryClientProductController::class, 'addDocument'])->name(
+    //     'management-document.addDocument'
+    // );
     // Update status document
     Route::post('management-document/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
         'management-document.updateStatus'
@@ -196,6 +209,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pic_documents', PicDocumentsController::class);
     Route::resource('pic_staff', PicStaffController::class);
     Route::resource('pic_process', PicProcessController::class);
+    Route::put('/pic_process/{id}/complete', [PicProcessController::class, 'markComplete'])->name('pic_process.markComplete');
     Route::resource('pic_handovers', PicHandOverController::class);
     Route::get('pic_handovers/{id}/print', [PicHandoverController::class, 'print'])->name('pic_handovers.print');
 
@@ -207,6 +221,8 @@ Route::middleware('auth')->group(function () {
     Route::PATCH('notary_payments/{id}/valid', [NotaryPaymenttController::class, 'valid'])->name('notary_payments.valid');
     Route::get('report-payment', [ReportPaymentController::class, 'index'])->name('report-payment.index');
     Route::get('report-payment/print', [ReportPaymentController::class, 'print'])->name('report-payment.print');
+    Route::get('report-progress', [ReportProcessController::class, 'index'])->name('report-progress.index');
+    Route::get('report-progress/print', [ReportProcessController::class, 'print'])->name('report-progress.print');
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });

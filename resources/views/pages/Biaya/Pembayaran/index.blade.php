@@ -54,7 +54,7 @@
                 {{-- Tombol buka modal --}}
                 <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal"
                     data-bs-target="#paymentFilesModal">
-                    <i class="fa-solid fa-file"></i> Lihat Payment Files
+                    <i class="fa-solid fa-file"></i> Lihat File Pembayaran
                 </button>
             </div>
 
@@ -101,7 +101,7 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit" class="btn btn-sm btn-primary mb-0">
-                                                    Validasi
+                                                    Valid
                                                 </button>
                                             </form>
                                             @endif

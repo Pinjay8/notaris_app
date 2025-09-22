@@ -2,9 +2,9 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Klien'])
-<div class="row mt-4 mx-4">
+<div class="row mt-4 mx-4 ">
     <div class="col-md-12">
-        <div class="card mb-4 p-3">
+        <div class="card mb-4 p-3 shadow-lg">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-2 flex-wrap">
                 <h6 class="mb-0">Klien</h6>
                 <div class="d-flex gap-2 flex-wrap">
@@ -140,8 +140,13 @@
                                         <div class="modal fade" id="qrModal{{ $client->id }}" tabindex="-1"
                                             aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content p-3 text-center">
-                                                    <h5 class="mb-3">QR Code Klien</h5>
+                                                <div class="modal-content p-3 text-center ">
+                                                    <h5 class="modal-title w-100 text-center">QR Code Klien</h5>
+                                                    <button type="button"
+                                                        class="btn-close btn-close-white position-absolute end-0 me-4 p-2"
+                                                        style="background-color: var(--bs-primary); border-radius: 50%;"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                    </button>
                                                     @php
                                                     $link = url("/clients/{$client->uuid}");
                                                     $dns2d = new \Milon\Barcode\DNS2D();
@@ -150,11 +155,18 @@
                                                     $png = $dns2d->getBarcodePNG($link, 'QRCODE', 5, 5, [0,0,0], true);
                                                     @endphp
                                                     <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
-                                                        class="img-fluid w-50 mx-auto" />
+                                                        class="img-fluid w-50 mx-auto mt-3" />
                                                     {{-- Tampilkan link di bawah QR Code --}}
-                                                    <p class="mt-3 text-wrap"><a href="{{ $link }}" target="_blank">{{
-                                                            $link
-                                                            }}</a></p>
+                                                    <h5 class="mt-3">Link Klien</h5>
+                                                    <div class="input-group my-2" style="max-width: 600px;">
+
+                                                        <input type="text" class="form-control" value="{{ $link }}"
+                                                            readonly onclick="this.select()">
+                                                        <button class="btn btn-info mb-0"
+                                                            onclick="copyToClipboard('{{ $link }}')" title="Copy link">
+                                                            <i class="fa-regular fa-clipboard fa-lg"></i>
+                                                        </button>
+                                                    </div>
 
                                                     <div class="d-flex justify-content-center gap-2 mt-3">
                                                         <a href="data:image/png;base64,{{ $png }}"
@@ -192,6 +204,8 @@
                                         </button>
 
                                         @endif
+
+                                        @if($client->status !== 'valid')
                                         <form action="{{ route('clients.markAsValid', $client->id) }}" method="POST"
                                             class="d-inline-block">
                                             @csrf
@@ -200,6 +214,8 @@
                                                     class="fa-solid fa-circle-check fa-3x"
                                                     style="font-size: 14px"></i></button>
                                         </form>
+                                        @endif
+
                                         <a href="{{ route('clients.edit', $client->id) }}"
                                             class="btn btn-info btn-xs mb-0">
                                             <i class="fa-solid fa-pencil" style="font-size: 14px">

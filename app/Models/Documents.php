@@ -12,7 +12,13 @@ class Documents extends Model
 {
     use LogsActivityCustom, SoftDeletes;
 
-    protected $fillable = ['name', 'code', 'description', 'image', 'link', 'status'];
+    protected $fillable = [
+        'notaris_id',
+        'code',
+        'name',
+        'description',
+        'status'
+    ];
 
     public function getImageDocument()
     {
@@ -21,6 +27,11 @@ class Documents extends Model
         }
 
         return Storage::url($this->image);
+    }
+
+    public function notaris()
+    {
+        return $this->belongsTo(Notaris::class);
     }
 
     public function products()

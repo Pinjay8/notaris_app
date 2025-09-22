@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\NotaryCost;
-use PDF;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Mpdf\Mpdf;
+
 
 class ReportPaymentController extends Controller
 {
@@ -51,7 +53,15 @@ class ReportPaymentController extends Controller
 
         $costs = $query->latest()->get();
 
-        $pdf = \Mpdf\Mpdf::loadView('pages.Laporan.print', compact('costs'));
-        return $pdf->stream("Laporan-Pembayaran.pdf");
+        // Render Blade ke HTML
+        $html = View::make('pages.Laporan.print', compact('costs'))->render();
+
+        // Inisialisasi mPDF (A4 portrait, bisa diubah ke landscape)
+        $mpdf = new Mpdf(['format' => 'A4-L']); // L = landscape
+
+        $mpdf->WriteHTML($html);
+
+        return response($mpdf->Output('Laporan-Pembayaran.pdf', 'I'))
+            ->header('Content-Type', 'application/pdf');
     }
 }

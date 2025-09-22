@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->string('name');
+            $table->foreignId('notaris_id')->constrained('notaris');
             $table->string('description')->nullable();
-            $table->longText('image')->nullable();
-            $table->string('link')->nullable();
+            // $table->longText('image')->nullable();
+            $table->string('name');
             $table->boolean('status')->default(true);
             $table->softDeletes();
             $table->timestamps();

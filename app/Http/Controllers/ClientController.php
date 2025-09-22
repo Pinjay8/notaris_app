@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClientRequest;
 use App\Models\Client;
+use App\Models\Documents;
 use App\Models\Notaris;
+use App\Models\NotaryClientDocument;
+use App\Models\NotaryCost;
+use App\Models\NotaryPayment;
+use App\Models\PicDocuments;
+use App\Models\PicProcess;
 use App\Services\ClientService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
+// use client request
+use DNS2D;
 use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Milon\Barcode\Facades\DNS2DFacade;
-use DNS2D;
-// use client request
-use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
@@ -21,6 +28,12 @@ class ClientController extends Controller
     public function __construct(ClientService $clientService)
     {
         $this->clientService = $clientService;
+    }
+
+    public function indexClient(Request $request)
+    {
+        $clients = Client::where('id',)->get();
+        return view('pages.Info.index', compact('clients'));
     }
 
     public function index(Request $request)
@@ -176,6 +189,88 @@ class ClientController extends Controller
     public function showByUuid($uuid)
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
-        return view('pages.Client.detail', compact('client'));
+        $notaryCost = NotaryCost::where('client_id', $client->id)->get();
+        $notaryPayment = NotaryPayment::where('client_id', $client->id)->get();
+        $picDocuments = PicDocuments::with('processes')
+            ->where('client_id', $client->id)
+            ->get();
+        $clientDocuments = NotaryClientDocument::where('client_id', $client->id)->get();
+
+        // Tambahkan daftar dokumen yang bisa diupload
+        $documents = Documents::where('notaris_id', $client->notaris_id)->get();
+
+        return view('pages.Client.detail', compact(
+            'client',
+            'notaryCost',
+            'notaryPayment',
+            'picDocuments',
+            'clientDocuments',
+            'documents' // jangan lupa kirim ke view
+        ));
     }
+
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
+
+        // Hitung jumlah konsultasi notaris ini hari ini
+        $countToday = NotaryClientDocument::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        $countToday += 1; // untuk konsultasi baru ini
+
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    }
+
+
+    public function uploadDocument(Request $request, $uuid)
+    {
+        $client = Client::where('uuid', $uuid)->firstOrFail();
+
+        $validated = $request->validate([
+            'document_name' => 'required|string',
+            'document_code' => 'required',
+            'document_file' => 'required|file|mimes:pdf,jpg,jpeg,png',
+            'note' => 'nullable',
+        ]);
+
+        // Simpan file di storage
+        $filePath = $request->file('document_file')->storeAs('documents', $request->file('document_file')->getClientOriginalName());
+
+        // Ambil nama dokumen dari table documents
+        $documentName = Documents::where('code', $validated['document_code'])->value('name');
+
+        // Simpan ke notary_client_document
+        NotaryClientDocument::create([
+            'notaris_id' => $client->notaris_id,
+            'client_id' => $client->id,
+            'registration_code' => $this->generateRegistrationCode($client->notaris_id, $client->id),
+            'document_code' => $validated['document_code'],
+            'document_name' => $documentName,
+            'note' => $validated['note'] ?? null,
+            'document_link' => $filePath,
+            'uploaded_at' => now(),
+            'status' => 'new', // otomatis new
+        ]);
+
+        return redirect()->back()->with('success', 'Dokumen berhasil diupload, menunggu validasi admin.');
+    }
+
+    // public function showProcessClient($uuid)
+    // {
+    //     // $client = Client::where('uuid', $uuid)->firstOrFail();
+    //     // return view('pages.Client.process', compact('client'));
+    //     $client = Client::where('uuid', $uuid)->firstOrFail();
+    //     $picDocuments = PicDocuments::where('client_id', $client->id)->get();
+    //     $picProcess = PicProcess::where('pic_document_id', $picDocuments->id)->firstOrFail();
+    // }
+
+    // public function showCostClient($uuid)
+    // {
+    //     $client = Client::where('uuid', $uuid)->firstOrFail();
+    //     $notaryCost = NotaryCost::where('client_id', $client->id)->get();
+    //     return view('pages.Client.detail', compact('client', 'notaryCost'));
+    // }
 }

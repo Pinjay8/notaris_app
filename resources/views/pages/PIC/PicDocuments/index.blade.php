@@ -9,7 +9,7 @@
             {{-- Card Utama --}}
             <div class="card mb-4">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="mb-0">Daftar PIC Dokumen</h5>
+                    <h5 class="mb-0">Dokumen</h5>
                     <a href="{{ route('pic_documents.create') }}" class="btn btn-sm btn-primary mb-0">
                         + Tambah PIC Dokumen
                     </a>

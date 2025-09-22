@@ -23,12 +23,12 @@ Konsultasi'])
 
                     <div class="row">
 
-                        <div class="mb-3 col-md-6">
+                        {{-- <div class="mb-3 col-md-6">
                             <label class="form-label fw-bold">Registration Code</label>
                             <input type="text" name="registration_code" class="form-control"
                                 value="{{ old('registration_code', $registrationCode ?? $notaryConsultation->registration_code ?? '') }}"
                                 readonly>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-6 mb-3">
                             <label for="client_id" class="form-label">Klien</label>

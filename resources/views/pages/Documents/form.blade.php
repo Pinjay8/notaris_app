@@ -34,14 +34,14 @@
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="link" class="form-label text-sm">Link</label>
                         <input type="text" name="link" id="link" class="form-control"
                             value="{{ old('link', $document->link ?? '') }}">
                         @error('link')
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="description" class="form-label text-sm">Deskripsi</label>
@@ -51,18 +51,22 @@
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
                     </div>
-
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="image" class="form-label text-sm">Gambar</label>
                         <input type="file" name="image" id="image" class="form-control">
-                        @if(isset($document) && $document->image)
+
+
+                        @if(old('image'))
+
+                        @elseif(isset($document) && $document->image)
                         <img src="{{ $document->getImageDocument() }}" alt="Preview Gambar" class="img-thumbnail mt-2"
                             width="150">
                         @endif
+
                         @error('image')
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
                     {{-- status --}}
                     <div class="mb-3">
                         <label for="status" class="form-label text-sm">Status</label>

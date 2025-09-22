@@ -27,10 +27,10 @@ class PicDocumentsService
     public function createDocument(array $data)
     {
         // generate code: datenow-notarisID-picID-clientID
-        $data['pic_document_code'] = Carbon::now()->format('Y-m-d')
+        $data['pic_document_code'] = Carbon::now()->format('Ymd')
             . '-' . $data['notaris_id']
-            . '-' . $data['pic_id']
-            . '-' . $data['client_id'];
+            . '-' . $data['client_id']
+            . '-' . $data['pic_id'];
 
         return $this->repository->create($data);
     }

@@ -59,8 +59,11 @@ class NotaryConsultationController extends Controller
         // Ambil semua client untuk dropdown
         $clients = Client::where('notaris_id', $notarisId)->get();
 
+        $firstClient = $clients->first();
         // Generate registration code dari service
-        $registrationCode = $this->notaryConsultationService->generateRegistrationCode($notarisId);
+        $registrationCode = $firstClient
+            ? $this->notaryConsultationService->generateRegistrationCode($notarisId, $firstClient->id)
+            : null;
 
         return view('pages.Client.Consultation.form', compact('clients', 'registrationCode'));
     }

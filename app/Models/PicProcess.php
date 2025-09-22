@@ -22,4 +22,13 @@ class PicProcess extends Model
     {
         return $this->belongsTo(PicDocuments::class);
     }
+
+    public function notaris()
+    {
+        return $this->belongsTo(Notaris::class);
+    }
+
+    protected $casts = [
+        'step_date' => 'date',
+    ];
 }

@@ -22,8 +22,16 @@
                         @endif
 
                         {{-- hidden input: pic_document_id agar prosesnya nyambung --}}
-                        <input type="hidden" name="pic_document_id"
-                            value="{{ old('pic_document_id', $process->pic_document_id ?? $picDocument->id ?? '') }}">
+                        @if(isset($picDocument))
+                        <input type="hidden" name="pic_document_id" value="{{ $picDocument->id }}">
+                        @endif
+
+
+
+                        {{-- hidden input untuk redirect balik ke index --}}
+                        @if(request('pic_document_code'))
+                        <input type="hidden" name="pic_document_code" value="{{ request('pic_document_code') }}">
+                        @endif
 
                         <div class="mb-3">
                             <label for="step_name" class="form-label text-sm">Nama Proses</label>
@@ -62,8 +70,8 @@
                         {{-- step date --}}
                         <div class="mb-3">
                             <label for="step_date" class="form-label text-sm">Tanggal Proses</label>
-                            <input type="datetime-local" name="step_date" id="step_date" class="form-control"
-                                value="{{ old('step_date', isset($process->step_date) ? \Carbon\Carbon::parse($process->step_date)->format('Y-m-d\TH:i') : '') }}">
+                            <input type="date" name="step_date" id="step_date" class="form-control"
+                                value="{{ old('step_date', isset($process->step_date) ? \Carbon\Carbon::parse($process->step_date)->format('Y-m-d') : '') }}">
                             @error('step_date')
                             <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror

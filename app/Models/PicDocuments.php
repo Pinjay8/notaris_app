@@ -39,4 +39,14 @@ class PicDocuments extends Model
     {
         return $this->belongsTo(Notaris::class, 'notaris_id');
     }
+
+    public function processes()
+    {
+        return $this->hasMany(PicProcess::class, 'pic_document_id');
+    }
+
+    public function latestProcess()
+    {
+        return $this->hasOne(PicProcess::class, 'pic_document_id')->latestOfMany('step_date');
+    }
 }

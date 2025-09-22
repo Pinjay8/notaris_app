@@ -32,9 +32,9 @@ class NotaryConsultationRepository implements NotaryConsultationServiceInterface
         return $notary;  // kembalikan model setelah update
     }
 
-    public function generateRegistrationCode(int $notarisId): string
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
     {
-        return NotaryConsultation::generateRegistrationCode($notarisId);
+        return NotaryConsultation::generateRegistrationCode($notarisId, $clientId);
     }
 
     public function getProductByConsultation(int $consultationId)

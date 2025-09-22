@@ -39,8 +39,10 @@ class PicProcessController extends Controller
 
         return view('pages.PIC.PicProcess.form', compact('picDocument'));
     }
+
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'pic_document_id'   => 'required',
             'step_name'      => 'required',
@@ -48,13 +50,19 @@ class PicProcessController extends Controller
             'step_date'              => 'required',
             'note'              => 'nullable',
         ]);
+        // dd($validated);
+
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
-
         $this->service->createProcess($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Proses pengurusan berhasil ditambahkan.');
-        return redirect()->route('pic_process.index');
+        return redirect()->route(
+            'pic_process.index',
+            [
+                'pic_document_code' => $request->pic_document_code
+            ]
+        );
     }
 
     public function edit($id)
@@ -87,5 +95,20 @@ class PicProcessController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Proses pengurusan berhasil dihapus.');
         return redirect()->back();
+    }
+
+    public function indexProcess(Request $request)
+    {
+        $processes = collect();
+
+        if ($request->filled('pic_document_code')) {
+            $doc = PicDocuments::where('pic_document_code', $request->pic_document_code)->first();
+
+            if ($doc) {
+                $processes = $this->service->listProcesses(['pic_document_id' => $doc->id]);
+            }
+        }
+
+        return view('pages.ManagementProcess.index2', compact('processes'));
     }
 }

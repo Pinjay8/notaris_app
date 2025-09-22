@@ -24,7 +24,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="bg-light">
 
     @guest
     @yield('content')
@@ -43,12 +43,12 @@
     @include('layouts.navbars.auth.sidenav')
     <main class="main-content border-radius-lg">
         @yield('content')
-        <div id="globalSpinner"
+        {{-- <div id="globalSpinner"
             class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 z-index-9999 d-flex justify-content-center align-items-center">
             <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-        </div>
+        </div> --}}
     </main>
     @include('components.fixed-plugin')
     {{-- @endif --}}
@@ -64,12 +64,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+                var options = {
+                    damping: '0.5'
+                }
+                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
             }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
     </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

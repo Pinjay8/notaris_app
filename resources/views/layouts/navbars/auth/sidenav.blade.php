@@ -10,7 +10,7 @@
         </a>
     </div>
     <hr class="horizontal dark mt-0">
-    <div class="collapse navbar-collapse h-100 " id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse vh-100 h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
@@ -45,7 +45,7 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
                 </a>
-                <a href="{{ route('products.index') }}"
+                {{-- <a href="{{ route('products.index') }}"
                     class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -53,6 +53,16 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Layanan</span>
                 </a>
+
+                <a href="{{ route('products.documents.selectProduct') }}"
+                    class="nav-link {{ request()->is('product-documents*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-file-earmark-plus-fill text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Dokumen Layanan</span>
+                </a> --}}
+
                 <a href="{{ route('documents.index') }}"
                     class="nav-link {{ request()->is('documents*') ? 'active' : '' }}">
                     <div
@@ -61,16 +71,6 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
-                <a href="{{ route('products.documents.selectProduct') }}"
-                    class="nav-link {{ request()->is('product-documents*') ? 'active' : '' }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-file-earmark-plus-fill text-dark text-sm opacity-10 pb-0"></i>
-                    </div>
-                    <span class="nav-link-text ms-1 mt-2">Dokumen Layanan</span>
-                </a>
-
-
             </li>
             <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
@@ -100,9 +100,19 @@
                     <span class="nav-link-text ms-1 mt-2">Konsultasi Klien</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('management-process.index') }}"
                     class="nav-link {{ request()->is('management-process*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Proses Pengurusan</span>
+                </a>
+            </li> --}}
+            <li class="nav-item">
+                <a href="{{ route('pic-progress.indexProcess') }}"
+                    class="nav-link {{ request()->is('pic-progress*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
@@ -443,6 +453,96 @@
                     <span class="nav-link-text ms-1 mt-2">Laporan Pembayaran</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('report-progress.index') }}"
+                    class="nav-link {{ request()->is('report-progress*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Laporan Pengurusan</span>
+                </a>
+            </li>
+            {{-- <li class="nav-item">
+                <a href="#tablePartijAkta" data-bs-toggle="collapse" class="mb-0">
+                    <div class="d-flex align-items-center justify-content-between px-4 py-2">
+                        <!-- Kiri -->
+                        <div class="d-flex align-items-center">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-handshake text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text text-sm">Klien</span>
+                        </div>
+                        <!-- Kanan -->
+                        <i class="bi bi-caret-down-fill"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="tablePartijAkta">
+                    <ul class="nav nav-collapse mb-0 pb-0">
+                        <li>
+                            <a href="{{ route('clients-info.index') }}"
+                                class="nav-link {{ request()->is('clients-info*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-layer-group text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Info</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-transactions.index') }}"
+                                class="nav-link {{ request()->is('akta-transactions*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-exchange-alt text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Transaksi Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-documents.index') }}"
+                                class="nav-link {{ request()->is('akta-documents*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-file-contract text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-parties.index') }}"
+                                class="nav-link {{ request()->is('akta-parties*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-user-group text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta_number.index') }}"
+                                class="nav-link {{ request()->is('akta_number*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Penomoran Akta</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('akta-logs.index') }}"
+                                class="nav-link {{ request()->is('akta-logs*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-clock-rotate-left text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Logs Akta</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li> --}}
         </ul>
     </div>
 </aside>

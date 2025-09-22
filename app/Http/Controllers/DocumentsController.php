@@ -32,18 +32,21 @@ class DocumentsController extends Controller
     {
         $validated = $request->validated();
 
-        try {
-            if ($request->hasFile('image')) {
-                $validated['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
-            }
 
+        try {
+            // if ($request->hasFile('image')) {
+            //     $validated['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
+            // }
+            $validated['notaris_id'] = auth()->user()->notaris_id;
             $result = $this->documentService->createDocument($validated);
+
 
             notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan data dokumen');
             return redirect()->route('documents.index');
         } catch (\Exception $e) {
             notyf()->position('x', 'right')->position('y', 'top')->error('Gagal menambahkan data dokumen');
             return redirect()->back()->withInput();
+            dd($e->getMessage());
         }
     }
 
@@ -54,18 +57,20 @@ class DocumentsController extends Controller
 
     public function update(DocumentRequest $request, Documents $documents)
     {
+        // dd($request->all());
         $validated = $request->validated();
+        $validated['notaris_id'] = auth()->user()->notaris_id;
 
-        $dokumenPath = $documents->image;
+        // $dokumenPath = $documents->image;
 
-        if ($request->hasFile('image')) {
-            if ($dokumenPath) {
-                Storage::delete($dokumenPath);
-            }
-            $validated['image'] = $request->file('image')->storeAs("img", $request->file('image')->getClientOriginalName());
-        } else {
-            $validated['image'] = $dokumenPath;
-        }
+        // if ($request->hasFile('image')) {
+        //     if ($dokumenPath) {
+        //         Storage::delete($dokumenPath);
+        //     }
+        //     $validated['image'] = $request->file('image')->storeAs("img", $request->file('image')->getClientOriginalName());
+        // } else {
+        //     $validated['image'] = $dokumenPath;
+        // }
 
         $this->documentService->updateDocument($documents, $validated);
 

@@ -66,14 +66,14 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="registration_code" class="form-label text-sm">Kode Registrasi</label>
                         <input type="text" name="registration_code" id="registration_code" class="form-control"
                             value="{{ old('registration_code', $picDocument->registration_code ?? '') }}">
                         @error('registration_code')
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="document_type" class="form-label text-sm">Tipe Dokumen</label>
@@ -106,9 +106,15 @@
                         <label for="status" class="form-label text-sm">Status</label>
                         <select name="status" id="status" class="form-select">
                             <option value="">Pilih Status</option>
-                            <option value="pending" {{ old('status', $picDocument->status ?? '') == 'pending' ?
-                                'selected' : '' }}>Pending</option>
-                            <option value="selesai" {{ old('status', $picDocument->status ?? '') == 'selesai' ?
+                            <option value="delivered" {{ old('status', $picDocument->status ?? '') == 'delivered' ?
+                                'selected' : '' }}>
+                                Dikirim
+                            </option>
+                            <option value="process" {{ old('status', $picDocument->status ?? '') == 'process' ?
+                                'selected' : '' }}>Proses</option>
+                            <option value="received" {{ old('status', $picDocument->status ?? '') == 'diterima' ?
+                                'selected' : '' }}>Diterima</option>
+                            <option value="completed" {{ old('status', $picDocument->status ?? '') == 'selesai' ?
                                 'selected' : '' }}>Selesai</option>
                         </select>
                         @error('status')

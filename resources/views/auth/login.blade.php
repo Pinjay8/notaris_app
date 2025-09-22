@@ -11,11 +11,15 @@
 <main class="main-content  mt-0">
     <section>
         <div class="page-header min-vh-100">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-                        <div class="card card-plain">
+            <div class="container d-flex justify-content-center align-items-center min-vh-100">
+                <div class="row justify-content-center w-100">
+                    <div class="col-xl-6  col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                        <div class="card shadow-sm rounded-4">
                             <div class="card-header pb-0 text-start">
+                                <div class="text-center mb-2 ">
+                                    <img src="{{ asset('img/logo-ct-dark.png') }}" alt="" class="mx-auto"
+                                        style="width: 60px; height: 60px">
+                                </div>
                                 <h4 class="font-weight-bolder">Sign In</h4>
                                 <p class="mb-0">Enter your email and password to sign in</p>
                             </div>
@@ -73,7 +77,7 @@
                             </div> --}}
                         </div>
                     </div>
-                    <div
+                    {{-- <div
                         class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                         <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                             style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
@@ -84,7 +88,7 @@
                             <p class="text-white position-relative">The more effortless the writing looks, the more
                                 effort the writer actually put into the process.</p>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

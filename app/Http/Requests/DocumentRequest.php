@@ -26,20 +26,19 @@ class DocumentRequest extends FormRequest
         $rules = [
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            // 'notaris_id' => 'required',
             'status' => 'required',
-            'link' => "required"
         ];
 
         if ($this->isMethod('post')) {
             // Untuk create
             $rules['code'] = 'required|string|unique:documents,code';
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:5000';
+            // $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif|max:5000';
         }
 
         if ($this->isMethod('put') || $this->isMethod('patch')) {
-            // Untuk update
-            $rules['code'] = 'required|string|unique:documents,code,' . $productId;
-            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000';
+            $documentId = $this->route('document'); // ini sudah ID, bukan object
+            $rules['code'] = 'required|string|unique:documents,code,' . $documentId;
         }
 
         return $rules;
@@ -52,8 +51,7 @@ class DocumentRequest extends FormRequest
             'code.unique' => 'Kode dokumen harus unik',
             'description.required' => 'Deskripsi dokumen harus diisi.',
             'name.required' => 'Nama dokumen harus diisi.',
-            'link.required' => 'Link dokumen harus diisi.',
-            'image.required' => 'Gambar dokumen harus diisi.',
+            // 'image.required' => 'Gambar dokumen harus diisi.',
             'status.required' => 'Status dokumen harus diisi.',
         ];
     }

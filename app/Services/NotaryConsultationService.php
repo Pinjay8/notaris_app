@@ -32,7 +32,7 @@ class NotaryConsultationService
     {
         $validated = $this->validate($data);
         if (!isset($data['registration_code']) && isset($data['notaris_id'])) {
-            $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id']);
+            $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
         }
         return $this->notaryRepository->create($data);
     }
@@ -48,18 +48,19 @@ class NotaryConsultationService
         return $this->notaryRepository->update($id, $validated);
     }
 
-    public function generateRegistrationCode(int $notarisId): string
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
     {
         $today = Carbon::now()->format('Ymd');
 
         // Hitung jumlah konsultasi notaris ini hari ini
         $countToday = NotaryConsultation::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
             ->whereDate('created_at', Carbon::today())
             ->count();
 
         $countToday += 1; // untuk konsultasi baru ini
 
-        return 'N' . $notarisId . '-' . $today . '-' . $countToday;
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
     }
 
     public function validate(array $data, $id = null)

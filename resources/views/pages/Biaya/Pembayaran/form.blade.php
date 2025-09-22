@@ -42,7 +42,7 @@
         @error('note') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
-    <button type="submit" class="btn btn-success">Simpan</button>
+    <button type="submit" class="btn btn-primary">Simpan</button>
 </form>
 
 @push('js')

@@ -39,12 +39,12 @@
                                 <th class="th-title">
                                     Deskripsi
                                 </th>
-                                <th class="th-title">
+                                {{-- <th class="th-title">
                                     Link
                                 </th>
                                 <th class="th-title">
                                     Gambar
-                                </th>
+                                </th> --}}
                                 <th class="th-title">
                                     Status
                                 </th>
@@ -77,7 +77,7 @@
                                         }}
                                     </p>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <p class="text-sm mb-0  text-center">{{
                                         $document->link
                                         }}
@@ -86,7 +86,7 @@
                                 <td>
                                     <img src="{{asset('storage/'.$document->image) }}" alt="Gambar Layanan" width="100"
                                         class="rounded-circle img-fluid">
-                                </td>
+                                </td> --}}
                                 <td>
                                     <span
                                         class="badge text-center d-block mx-auto bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
@@ -111,7 +111,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted">Belum ada data dokumen.</td>
+                                <td colspan="8" class="text-center text-muted text-sm">Belum ada data dokumen.</td>
                             </tr>
                             @endforelse
                         </tbody>

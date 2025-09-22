@@ -11,6 +11,6 @@ interface NotaryConsultationServiceInterface
     public function findById(int $id): ?NotaryConsultation;
     public function create(array $data): NotaryConsultation;
     public function update(int $id, array $data): ?NotaryConsultation;
-    public function generateRegistrationCode(int $notarisId): string;
+    public function generateRegistrationCode(int $notarisId, int $clientId): string;
     public function getProductByConsultation(int $consultationId);
 }

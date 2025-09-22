@@ -1,40 +1,133 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Notary Client Document'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen'])
 
 <div class="row mt-4 mx-4">
     <div class="col md-12">
         {{-- Table List --}}
         <div class="card">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
-                <h5>List Dokumen Klien</h5>
-                <form method="GET" action="{{ route('management-document.index') }}" class="row g-3">
-                    <div class="col-md-5">
-                        <input type="text" name="registration_code" value="{{ request('registration_code') }}"
-                            class="form-control" placeholder="Registration Code">
+
+                <h5>List Dokumen</h5>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#uploadModal">
+                    + Tambah Dokumen
+                </button>
+                {{-- Modal Upload --}}
+                <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="uploadModalLabel">Tambah Dokumen Klien</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Tutup"></button>
+                            </div>
+
+                            <form method="POST" action="{{ route('management-document.addDocument') }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Dokumen yang Harus Diisi</label>
+                                        @if($requiredDocuments->isEmpty())
+                                        <p class="text-muted">Semua dokumen sudah diisi.</p>
+                                        @else
+                                        <ul class="list-group">
+                                            @foreach($requiredDocuments->pluck('name') as $docName)
+                                            <li class="list-group-item list-group-item-secondary">
+                                                {{ $docName }}
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                        @endif
+                                    </div>
+                                    {{-- client_id --}}
+                                    <div class="mb-3">
+                                        <label class="form-label">Klien</label>
+                                        @php
+                                        $clients = $clients ?? collect();
+                                        @endphp
+                                        <select name="client_id" class="form-select" required>
+                                            <option value="" hidden>Pilih Klien</option>
+                                            @foreach($clients as $client)
+                                            <option value="{{ $client->id }}">{{ $client->fullname }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{-- <div class="mb-3">
+                                        <label class="form-label">Kode Regsitrasi</label>
+                                        <input type="text" name="registration_code" class="form-control" required>
+                                    </div> --}}
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Kode Dokumen</label>
+                                        <input type="text" name="document_code" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Nama Dokumen</label>
+                                        <input type="text" name="document_name" class="form-control" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">File Dokumen</label>
+                                        <input type="file" name="document_link" class="form-control"
+                                            accept=".jpg,.jpeg,.png,.pdf">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Catatan</label>
+                                        <textarea name="note" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Tanggal Upload</label>
+                                        <input type="date" name="uploaded_at" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Tambah</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
-                            placeholder="Client Name">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Cari</button>
-                    </div>
-                </form>
+                </div>
             </div>
 
             <div class="card-body px-0 pt-0 pb-2">
+                <div class="d-flex justify-content-end w-100 px-2">
+                    <form method="GET" action="{{ route('management-document.index') }}" class="row g-3">
+                        <div class="col-md-5">
+                            <input type="text" name="registration_code" value="{{ request('registration_code') }}"
+                                class="form-control" placeholder="Kode Registrasi">
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="client_name" value="{{ request('client_name') }}"
+                                class="form-control" placeholder="Nama Klien">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                        </div>
+                    </form>
+                </div>
                 <div class="table-responsive p-0">
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>Registration Code</th>
-                                <th>Client Name</th>
-                                <th>Product</th>
-                                <th>Dokumen Dibutuhkan</th>
+                                <th>Kode Registrasi</th>
+                                <th>Nama Klien</th>
+                                <th>Dokumen</th>
+                                <th>Kode Dokumen</th>
+                                <th>Tanggal Upload</th>
                                 <th>Status</th>
+                                <th>Catatan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -44,10 +137,13 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->registration_code }}</td>
                                 <td>{{ $product->client->fullname ?? '-' }}</td>
-                                <td>{{ $product->product->name ?? '-' }}</td>
-                                <td>
+                                <td>{{ $product->document_name ?? '-' }}</td>
+                                <td>{{ $product->document_code ?? '-' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($product->uploaded_at)->format('d-m-Y') }}</td>
+                                <td>{{ $product->note ?? '-' }}</td>
+                                {{-- <td>
                                     {{ $product->documents_list ?? '-' }}
-                                </td>
+                                </td> --}}
                                 <td>
                                     <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
                                         {{ ucfirst($product->status) }}
@@ -55,10 +151,10 @@
                                 </td>
                                 <td class="d-flex flex-wrap gap-1 justify-content-center">
                                     {{-- Tombol Detail Dokumen --}}
-                                    <button type="button" class="btn btn-info btn-xs" data-bs-toggle="modal"
+                                    {{-- <button type="button" class="btn btn-info btn-xs" data-bs-toggle="modal"
                                         data-bs-target="#documentDetailModal-{{ $product->registration_code }}">
                                         <i class="fa fa-file"></i>
-                                    </button>
+                                    </button> --}}
 
                                     {{-- Modal Detail Dokumen --}}
                                     <div class="modal fade" id="documentDetailModal-{{ $product->registration_code }}"
@@ -107,44 +203,6 @@
                                                                 <tr class="text-center">
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td>{{ $doc->document_name }}</td>
-                                                                    {{-- <td class="text-center">
-                                                                        @if($doc->document_link)
-                                                                        <button type="button"
-                                                                            class="btn btn-sm btn-outline-primary px-3"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#previewModal{{ $doc->id }}">
-                                                                            <i class="bi bi-eye"></i> Lihat
-                                                                        </button>
-
-                                                                        <!-- Modal -->
-                                                                        <div class="modal fade"
-                                                                            id="previewModal{{ $doc->id }}"
-                                                                            tabindex="-1" aria-hidden="true">
-                                                                            <div
-                                                                                class="modal-dialog modal-dialog-centered modal-xl">
-                                                                                <!-- gunakan xl agar lebih lebar -->
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title">Preview
-                                                                                            Dokumen</h5>
-                                                                                        <button type="button"
-                                                                                            class="btn-close"
-                                                                                            data-bs-dismiss="modal"
-                                                                                            aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <div class="modal-body text-center">
-                                                                                        <img src="{{ asset('storage/' . $doc->document_link) }}"
-                                                                                            alt="Preview"
-                                                                                            class="img-fluid rounded"
-                                                                                            style="max-height:80vh; object-fit:contain;">
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        @else
-                                                                        <span class="text-muted">Belum ada</span>
-                                                                        @endif
-                                                                    </td> --}}
                                                                     <td>
                                                                         <a href="{{ asset('storage/' . $doc->document_link) }}"
                                                                             target="_blank">
@@ -194,64 +252,7 @@
                                                     @endif
 
                                                     {{-- Form Upload Dokumen Baru --}}
-                                                    <form method="POST"
-                                                        action="{{ route('management-document.addDocument') }}"
-                                                        enctype="multipart/form-data" class="mt-3">
-                                                        @csrf
-                                                        <input type="hidden" name="registration_code"
-                                                            value="{{ $product->registration_code }}">
-                                                        <input type="hidden" name="notaris_id"
-                                                            value="{{ $product->notaris_id }}">
-                                                        <input type="hidden" name="client_id"
-                                                            value="{{ $product->client_id }}">
-                                                        {{-- <input type="hidden" name="product_id"
-                                                            value="{{ $product->product_id }}"> --}}
 
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Pilih Dokumen yang ingin
-                                                                dikirim</label>
-                                                            <select name="product_id" class="form-select">
-                                                                <option value="" hidden>-- Pilih --
-                                                                </option>
-                                                                @foreach($product->product->documents as $pd)
-                                                                <option value="{{ $pd->id }}">{{ $pd->name }}
-                                                                </option>
-                                                                @endforeach
-                                                            </select>
-                                                            {{-- <small class="text-muted">Kosongkan jika ingin input
-                                                                manual</small> --}}
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Kode Dokumen</label>
-                                                            <input type="text" name="document_code" class="form-control"
-                                                                required>
-                                                        </div>
-
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Nama Dokumen</label>
-                                                            <input type="text" name="document_name" class="form-control"
-                                                                required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">File Dokumen</label>
-                                                            <input type="file" name="document_link"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Catatan</label>
-                                                            <textarea name="note" class="form-control"></textarea>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Tanggal Upload</label>
-                                                            <input type="date" name="uploaded_at" class="form-control">
-                                                        </div>
-
-                                                        <div class="text-end">
-                                                            <button type="submit"
-                                                                class="btn btn-primary">Upload</button>
-                                                        </div>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +303,8 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">Data tidak ditemukan.</td>
+                                <td colspan="10" class="text-center text-muted text-sm">Data dokumen tidak ditemukan.
+                                </td>
                             </tr>
                             @endforelse
                         </tbody>

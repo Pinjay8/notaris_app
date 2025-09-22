@@ -32,7 +32,7 @@
                                 <th>Kode Pembayaran</th>
                                 <th>Klien</th>
                                 <th>Kode Dokumen</th>
-                                <th>Total</th>
+                                <th>Total Biaya</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -212,7 +212,8 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted text-sm">Belum ada biaya</td>
+                                <td colspan="7" class="text-center text-muted text-sm">Data Biaya tidak ditemukan.
+                                </td>
                             </tr>
                             @endforelse
                         </tbody>
