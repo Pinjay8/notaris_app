@@ -12,11 +12,10 @@
             <div class="card-body px-4 pt-3 pb-2">
                 <form
                     action="{{ isset($aktaType) ? route('akta-types.update', $aktaType->id) : route('akta-types.store') }}"
-                    method="POST"
-                >
+                    method="POST">
                     @csrf
                     @if(isset($aktaType))
-                        @method('PUT')
+                    @method('PUT')
                     @endif
 
                     {{-- <div class="mb-3">
@@ -24,9 +23,10 @@
                         <select name="notaris_id" id="notaris_id" class="form-select" required>
                             <option value="" hidden>-- Pilih Notaris --</option>
                             @foreach($notaris as $notary)
-                                <option value="{{ $notary->id }}" {{ isset($aktaType) && $aktaType->notaris_id == $notary->id ? 'selected' : '' }}>
-                                    {{ $notary->display_name }}
-                                </option>
+                            <option value="{{ $notary->id }}" {{ isset($aktaType) && $aktaType->notaris_id ==
+                                $notary->id ? 'selected' : '' }}>
+                                {{ $notary->display_name }}
+                            </option>
                             @endforeach
                         </select>
                     </div> --}}
@@ -34,11 +34,12 @@
                     <div class="mb-3">
                         <label for="category" class="form-label">Kategori</label>
                         <select name="category" id="category" class="form-select">
-                            <option value="" hidden>-- Pilih Kategori --</option>
+                            <option value="" hidden>Pilih Kategori</option>
                             @foreach(['pendirian','perubahan','pemutusan'] as $cat)
-                                <option value="{{ $cat }}" {{ isset($aktaType) && $aktaType->category == $cat ? 'selected' : '' }}>
-                                    {{ ucfirst($cat) }}
-                                </option>
+                            <option value="{{ $cat }}" {{ isset($aktaType) && $aktaType->category == $cat ? 'selected' :
+                                '' }}>
+                                {{ ucfirst($cat) }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -51,18 +52,21 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Deskripsi</label>
-                        <textarea name="description" id="description" class="form-control">{{ $aktaType->description ?? old('description') }}</textarea>
+                        <textarea name="description" id="description"
+                            class="form-control">{{ $aktaType->description ?? old('description') }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="documents" class="form-label">Dokumen</label>
-                        <textarea name="documents" id="documents" class="form-control" required>{{ $aktaType->documents ?? old('documents') }}</textarea>
+                        <label for="documents" class="form-label">Dokumen yang diperlukan</label>
+                        <textarea name="documents" id="documents" class="form-control"
+                            required>{{ $aktaType->documents ?? old('documents') }}</textarea>
                     </div>
 
+
+                    <a href="{{ route('akta-types.index') }}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary">
                         {{ isset($aktaType) ? 'Update' : 'Simpan' }}
                     </button>
-                    <a href="{{ route('akta-types.index') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>
         </div>

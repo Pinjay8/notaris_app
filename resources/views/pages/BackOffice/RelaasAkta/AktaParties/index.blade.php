@@ -9,7 +9,7 @@
             <div class="card-header pb-0">
                 <h6>Pihak Akta</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body pt-1">
 
                 {{-- Form Pencarian --}}
                 <form method="GET" action="{{ route('relaas-parties.index') }}" class="mb-3">

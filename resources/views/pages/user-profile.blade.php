@@ -4,7 +4,7 @@
 @include('layouts.navbars.auth.topnav', ['title' => 'Profile'])
 <div class="card shadow-lg mx-4 card-profile-bottom">
     <div class="card-body p-3">
-        <div class="row gx-4">
+        <div class="row gx-4 p-2">
             <div class="col-auto">
                 <img src="{{ filter_var($notaris->image, FILTER_VALIDATE_URL)
                 ? $notaris->image

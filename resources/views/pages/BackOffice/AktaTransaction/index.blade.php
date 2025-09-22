@@ -30,12 +30,12 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Client</th>
+                                <th>Klien</th>
                                 <th>Jenis Akta</th>
                                 <th>Status</th>
-                                <th>Year</th>
-                                <th>Akta Number</th>
-                                <th>Registration Code</th>
+                                <th>Tahun</th>
+                                <th>Nomor Akta</th>
+                                <th>Kode Registrasi</th>
                                 <th>Waktu Dibuat</th>
                                 <th>Waktu Selesai</th>
                                 <th>Aksi</th>

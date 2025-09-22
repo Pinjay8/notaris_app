@@ -34,7 +34,7 @@
                     <div class="mb-3">
                         <label for="client_id" class="form-label">Client</label>
                         <select name="client_id" id="client_id" class="form-select" required>
-                            <option value="" hidden>-- Pilih Client --</option>
+                            <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ isset($transaction) && $transaction->client_id ==
                                 $client->id ? 'selected' : '' }}>
@@ -48,7 +48,7 @@
                     <div class="mb-3">
                         <label for="akta_type_id" class="form-label">Jenis Akta</label>
                         <select name="akta_type_id" id="akta_type_id" class="form-select" required>
-                            <option value="" hidden>-- Pilih Jenis Akta --</option>
+                            <option value="" hidden>Pilih Jenis Akta</option>
                             @foreach($aktaTypes as $aktaType)
                             <option value="{{ $aktaType->id }}" {{ isset($transaction) && $transaction->akta_type_id ==
                                 $aktaType->id ? 'selected' : '' }}>
@@ -59,12 +59,12 @@
                     </div>
 
                     {{-- Registration Code --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="registration_code" class="form-label">Kode Registrasi</label>
                         <input type="text" name="registration_code" id="registration_code" class="form-control"
                             value="{{ isset($transaction) ? $transaction->registration_code : old('registration_code') }}"
                             required>
-                    </div>
+                    </div> --}}
                     {{-- Date Submission --}}
                     <div class="mb-3">
                         <label for="date_submission" class="form-label">Tanggal Pengajuan</label>

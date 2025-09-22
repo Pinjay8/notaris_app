@@ -14,8 +14,12 @@ class RelaasPartiesService
         $this->repo = $repo;
     }
 
-    public function searchRelaas(string $registrationCode)
+    public function searchRelaas(?string $registrationCode)
     {
+        if (!$registrationCode) {
+            return null; // tidak melakukan pencarian jika kosong
+        }
+
         return $this->repo->searchByRegistrationCode($registrationCode);
     }
 

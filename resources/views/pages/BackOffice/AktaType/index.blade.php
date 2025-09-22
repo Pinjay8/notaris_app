@@ -58,7 +58,7 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <p class="text-sm mb-0  text-center"> {{
+                                    <p class="text-sm mb-0  text-center text-capitalize"> {{
                                         $aktaType->category
                                         }}
                                     </p>

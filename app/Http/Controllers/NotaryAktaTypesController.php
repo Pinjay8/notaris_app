@@ -34,10 +34,10 @@ class NotaryAktaTypesController extends Controller
     {
         $data = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'category' => 'nullable|in:pendirian,perubahan,pemutusan',
-            'type' => 'nullable|string',
+            'category' => 'required|in:pendirian,perubahan,pemutusan',
+            'type' => 'required|string',
             'description' => 'nullable|string',
-            'documents' => 'required|string',
+            'documents' => 'nullable|string',
         ]);
 
         $data['notaris_id'] = auth()->user()->notaris_id;

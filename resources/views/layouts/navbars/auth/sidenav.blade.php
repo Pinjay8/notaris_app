@@ -79,8 +79,7 @@
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">CS</h6>
             </li>
             <li class="nav-item">
-                <a href="{{ route('clients.index') }}"
-                    class="nav-link {{ Route::currentRouteName() == 'clients' ? 'active' : '' }}">
+                <a href="{{ route('clients.index') }}" class="nav-link {{ request()->is('clients*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-person-add text-dark text-sm opacity-10 pb-0"></i>
@@ -129,7 +128,8 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('management-document.index') }}"
-                    class="nav-link {{ request()->is('mangement-document*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('management-document*') ? 'active' : '' }}">
+
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
@@ -161,9 +161,9 @@
                         <i class="bi bi-caret-down-fill"></i>
                     </div>
                 </a>
-                <div class="collapse" id="tablePartijAkta">
-                    <ul class="nav nav-collapse mb-0 pb-0">
-                        <li>
+                <div class="collapse {{ request()->is('akta-*') ? 'show' : '' }}" id="tablePartijAkta">
+                    <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
+                        <li class="p-0">
                             <a href="{{ route('akta-types.index') }}"
                                 class="nav-link {{ request()->is('akta-types*') ? 'active' : '' }}">
                                 <div
@@ -243,8 +243,8 @@
                     </div>
                 </a>
 
-                <div class="collapse" id="collapseRelaasAkta">
-                    <ul class="nav nav-collapse mb-0 pb-0">
+                <div class="collapse {{ request()->is('relaas-*') ? 'show' : '' }}" id="collapseRelaasAkta">
+                    <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                         <li>
                             <a href="{{ route('relaas-aktas.index') }}"
                                 class="nav-link {{ request()->is('relaas-aktas*') ? 'active' : '' }}">
@@ -356,7 +356,7 @@
                 </a>
 
                 <div class="collapse" id="collapsePic">
-                    <ul class="nav nav-collapse mb-0 pb-0">
+                    <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                         <li>
                             <a href="{{ route('pic_staff.index') }}"
                                 class="nav-link {{ request()->is('pic_staff*') ? 'active' : '' }}">

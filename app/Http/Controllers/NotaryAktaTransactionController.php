@@ -9,6 +9,7 @@ use App\Models\NotaryAktaType;
 use App\Models\NotaryAktaTypes;
 use App\Services\NotaryAktaTransactionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class NotaryAktaTransactionController extends Controller
 {
@@ -35,11 +36,26 @@ class NotaryAktaTransactionController extends Controller
         return view('pages.BackOffice.AktaTransaction.form', compact('clients', 'aktaTypes', 'notaris'));
     }
 
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
+
+        // Hitung jumlah konsultasi notaris ini hari ini
+        $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        $countToday += 1; // untuk konsultasi baru ini
+
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'registration_code' => 'required|string',
+            // 'registration_code' => 'required|string',
             'client_id' => 'required|exists:clients,id',
             'akta_type_id' => 'required|exists:notary_akta_types,id',
             'date_submission' => 'nullable|date',
@@ -52,6 +68,7 @@ class NotaryAktaTransactionController extends Controller
         $data['akta_number'] = null;
         $data['akta_number_created_at'] = null;
         $data['notaris_id'] = auth()->user()->notaris_id;
+        $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
 
         $this->service->create($data);
 
@@ -72,8 +89,8 @@ class NotaryAktaTransactionController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
-            'registration_code' => 'required|string',
+            // 'notaris_id' => 'required|exists:notaris,id',
+            // 'registration_code' => 'required|string',
             'client_id' => 'required|exists:clients,id',
             'akta_type_id' => 'required|exists:notary_akta_types,id',
             'date_submission' => 'required|date',
@@ -86,6 +103,7 @@ class NotaryAktaTransactionController extends Controller
         $data['year'] = null;
         $data['akta_number'] = null;
         $data['akta_number_created_at'] = null;
+        $data['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->update($id, $data);
 

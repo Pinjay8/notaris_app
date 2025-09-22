@@ -66,3 +66,9 @@ th {
 .nav-pills .nav-link.active i {
     color: #fff !important;
 }
+
+
+.sidenav .nav-link.active {
+    background-color: #f1f1f1 !important; /* warna terang, bisa diganti sesuai kebutuhan */
+    color: #000; /* teks menjadi hitam agar kontras */
+}
