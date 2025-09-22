@@ -9,7 +9,7 @@
         <div class="card">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
 
-                <h5>List Dokumen</h5>
+                <h5>Dokumen</h5>
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#uploadModal">
                     + Tambah Dokumen
@@ -29,7 +29,7 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
-                                    <div class="mb-3">
+                                    {{-- <div class="mb-3">
                                         <label class="form-label">Dokumen yang Harus Diisi</label>
                                         @if($requiredDocuments->isEmpty())
                                         <p class="text-muted">Semua dokumen sudah diisi.</p>
@@ -42,7 +42,7 @@
                                             @endforeach
                                         </ul>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                     {{-- client_id --}}
                                     <div class="mb-3">
                                         <label class="form-label">Klien</label>
@@ -63,14 +63,15 @@
                                     </div> --}}
 
                                     <div class="mb-3">
-                                        <label class="form-label">Kode Dokumen</label>
-                                        <input type="text" name="document_code" class="form-control" required>
+                                        <label class="form-label">Pilih Jenis Dokumen</label>
+                                        <select name="document_code" class="form-select" required>
+                                            <option value="" hidden>Pilih Dokumen</option>
+                                            @foreach($documents as $doc)
+                                            <option value="{{ $doc->code }}">{{ $doc->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label class="form-label">Nama Dokumen</label>
-                                        <input type="text" name="document_name" class="form-control" required>
-                                    </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">File Dokumen</label>
@@ -140,16 +141,13 @@
                                 <td>{{ $product->document_name ?? '-' }}</td>
                                 <td>{{ $product->document_code ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->uploaded_at)->format('d-m-Y') }}</td>
-                                <td>{{ $product->note ?? '-' }}</td>
-                                {{-- <td>
-                                    {{ $product->documents_list ?? '-' }}
-                                </td> --}}
                                 <td>
                                     <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
                                         {{ ucfirst($product->status) }}
                                     </span>
                                 </td>
-                                <td class="d-flex flex-wrap gap-1 justify-content-center">
+                                <td>{{ $product->note ?? '-' }}</td>
+                                <td>
                                     {{-- Tombol Detail Dokumen --}}
                                     {{-- <button type="button" class="btn btn-info btn-xs" data-bs-toggle="modal"
                                         data-bs-target="#documentDetailModal-{{ $product->registration_code }}">
@@ -157,8 +155,8 @@
                                     </button> --}}
 
                                     {{-- Modal Detail Dokumen --}}
-                                    <div class="modal fade" id="documentDetailModal-{{ $product->registration_code }}"
-                                        tabindex="-1"
+                                    {{-- <div class="modal fade"
+                                        id="documentDetailModal-{{ $product->registration_code }}" tabindex="-1"
                                         aria-labelledby="documentDetailLabel-{{ $product->registration_code }}"
                                         aria-hidden="true">
                                         <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -213,13 +211,13 @@
                                                                     </td>
                                                                     <td>{{ $doc->note ?? '-' }}</td>
                                                                     <td class="text-center">
-                                                                        <span class="badge rounded-pill text-white
-                            {{ $doc->status == 'valid' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                                                        <span
+                                                                            class="badge rounded-pill text-white {{ $doc->status == 'valid' ? 'bg-success' : 'bg-warning text-dark' }}">
                                                                             {{ ucfirst($doc->status ?? 'new') }}
                                                                         </span>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        {{-- Form Update Status --}}
+
                                                                         <form method="POST"
                                                                             action="{{ route('management-document.updateStatus') }}"
                                                                             class="d-inline">
@@ -236,7 +234,7 @@
                                                                                 value="{{ $product->product_id }}">
                                                                             <input type="hidden" name="status"
                                                                                 value="valid">
-                                                                            @if($doc->status != 'valid')
+                                                                            @if($doc->status === 'new')
                                                                             <button type="submit"
                                                                                 class="btn btn-success btn-sm px-3 mb-0">
                                                                                 <i class="bi bi-check-circle"></i> Valid
@@ -250,16 +248,13 @@
                                                         </table>
                                                     </div>
                                                     @endif
-
-                                                    {{-- Form Upload Dokumen Baru --}}
-
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- Tombol Mark Done --}}
-                                    @if($product->status !== 'done')
+                                    {{-- @if($product->status !== 'done')
                                     <button type="button" class="btn btn-success btn-xs" data-bs-toggle="modal"
                                         data-bs-target="#markDoneModal-{{ $product->registration_code }}">
                                         <i class="fa fa-check"></i>
@@ -298,12 +293,71 @@
                                             </form>
                                         </div>
                                     </div>
+                                    @endif --}}
+                                    @if($product->status !== 'done' && $product->status !== 'valid')
+                                    <button type="button" class="btn btn-success btn-xs" data-bs-toggle="modal"
+                                        data-bs-target="#validationModal-{{ $product->registration_code }}">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+
+                                    <div class="modal fade" id="validationModal-{{ $product->registration_code }}"
+                                        tabindex="-1"
+                                        aria-labelledby="validationModalLabel-{{ $product->registration_code }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Validasi Dokumen</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
+                                                    kode registrasi
+                                                    <strong>{{ $product->registration_code }}</strong> <br>
+                                                    dinyatakan <span class="text-success fw-bold">VALID</span> atau
+                                                    <span class="text-danger fw-bold">TIDAK VALID</span>?
+                                                </div>
+                                                <div class="modal-footer d-flex justify-content-between">
+                                                    {{-- Tidak Valid --}}
+                                                    <form method="POST"
+                                                        action="{{ route('management-document.updateStatus') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="registration_code"
+                                                            value="{{ $product->registration_code }}">
+                                                        <input type="hidden" name="notaris_id"
+                                                            value="{{ $product->notaris_id }}">
+                                                        <input type="hidden" name="client_id"
+                                                            value="{{ $product->client_id }}">
+                                                        <input type="hidden" name="status" value="invalid">
+                                                        <button type="submit" class="btn btn-danger">Tidak
+                                                            Valid</button>
+                                                    </form>
+
+                                                    {{-- Valid --}}
+                                                    <form method="POST"
+                                                        action="{{ route('management-document.updateStatus') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="registration_code"
+                                                            value="{{ $product->registration_code }}">
+                                                        <input type="hidden" name="notaris_id"
+                                                            value="{{ $product->notaris_id }}">
+                                                        <input type="hidden" name="client_id"
+                                                            value="{{ $product->client_id }}">
+                                                        <input type="hidden" name="status" value="valid">
+                                                        <button type="submit" class="btn btn-success">Valid</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @endif
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted text-sm">Data dokumen tidak ditemukan.
+                                <td colspan="10" class="text-center text-muted text-sm">Data dokumen warkah tidak
+                                    ditemukan.
                                 </td>
                             </tr>
                             @endforelse

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Documents;
+use App\Models\NotaryClientWarkah;
 use App\Services\NotaryClientService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class NotaryClientWarkahController extends Controller
@@ -20,48 +24,155 @@ class NotaryClientWarkahController extends Controller
      */
     public function index(Request $request)
     {
-        $filters = $request->only([
-            'registration_code',
-            'notaris_id',
-            'client_id',
-            'product_id',
-            'status'
-        ]);
-        $products = $this->notaryClientservice->listWarkah($filters);
+        // $filters = $request->only([
+        //     'registration_code',
+        //     'notaris_id',
+        //     'client_id',
+        //     'product_id',
+        //     'status'
+        // ]);
+        // $products = $this->notaryClientservice->listWarkah($filters);
 
-        return view('pages.BackOffice.Warkah.index', compact('products', 'filters'));
+        $query = NotaryClientWarkah::with([
+            'client',
+        ]);
+
+        // filter pencarian
+        if ($request->filled('registration_code')) {
+            $query->where('registration_code', 'like', '%' . $request->registration_code . '%');
+        }
+
+        if ($request->filled('client_name')) {
+            $query->whereHas('client', function ($q) use ($request) {
+                $q->where('fullname', 'like', '%' . $request->client_name . '%');
+            });
+        }
+
+        $clients = Client::where('deleted_at', null)->get();
+
+        $notarisId = auth()->user()->notaris_id;
+        $documents = Documents::where('notaris_id', $notarisId)->get();
+
+        // Misal kita ingin cek dokumen yang belum diupload oleh klien tertentu
+        $clientId = $request->client_id ?? null;
+
+        if ($clientId) {
+            $uploadedDocCodes = NotaryClientWarkah::where('client_id', $clientId)
+                ->pluck('warkah_code')
+                ->toArray();
+
+            // Dokumen yang harus diisi (belum diupload)
+            $requiredDocuments = $documents->whereNotIn('code', $uploadedDocCodes);
+        } else {
+            $requiredDocuments = $documents; // semua dokumen ditampilkan
+        }
+
+        $products = $query->paginate(10); // pakai paginate biar rapi
+
+        return view('pages.BackOffice.Warkah.index', [
+            'products' => $products,
+            'clients'  => $clients,
+            'documents' => $documents,
+            'requiredDocuments' => $requiredDocuments
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
     {
-        $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
+        $today = Carbon::now()->format('Ymd');
+
+        // Hitung jumlah konsultasi notaris ini hari ini
+        $countToday = NotaryClientWarkah::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        $countToday += 1; // untuk konsultasi baru ini
+
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    }
+
+
+    public function addDocument(Request $request)
+    {
+        $notarisId = auth()->user()->notaris_id;
+
+        $clients = Client::where('notaris_id', $notarisId)->get();
+        $firstClient = $clients->first();
+
+        $registrationCode = $firstClient
+            ? $this->generateRegistrationCode($notarisId, $firstClient->id)
+            : null;
 
         $validated = $request->validate([
-            'warkah_code' => 'nullable',
-            'warkah_name' => 'required',
+            'client_id' => 'required',
+            'warkah_code' => 'required|string',
+            'warkah_link' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'note' => 'nullable|string',
-            'warkah_link' => 'nullable|file|mimes:pdf,jpg,jpeg,png,doc,docx|max:5120',
-            'uploaded_at' => 'nullable|date',
-            'status' => 'nullable|string',
         ]);
 
-        // handle file upload kalau ada
+        // Cari document_name dari tabel documents
+        $document = Documents::where('code', $validated['warkah_code'])
+            ->where('notaris_id', $notarisId)
+            ->firstOrFail();
+
+        $path = null;
         if ($request->hasFile('warkah_link')) {
-            $validated['warkah_link'] = $request->file('warkah_link')->storeAs('documents', $request->file('warkah_link')->getClientOriginalName());
+            $path = $request->file('warkah_link')
+                ->storeAs('documents', $request->file('warkah_link')->getClientOriginalName());
         }
 
-        // status set new
-        $validated['status'] = 'new';
+        NotaryClientWarkah::create([
+            'registration_code' => $registrationCode,
+            'client_id' => $request->client_id,
+            'notaris_id' => $notarisId,
+            'warkah_code' => $document->code,
+            'warkah_name' => $document->name, // ambil dari table documents
+            'warkah_link' => $path,
+            'note' => $request->note,
+            'status' => 'new',
+            'uploaded_at' => now(),
+        ]);
 
-        $this->notaryClientservice->addWarkah($keys, $validated);
         // dd($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Data warkah berhasil ditambahkan');
-        return redirect()->back();
+        return back();
     }
+
+
+    /**
+     * Update status dokumen (valid / invalid)
+     */ public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'registration_code' => 'required',
+            'client_id' => 'required',
+            'status' => 'required|in:valid,invalid', // hanya boleh valid atau invalid
+        ]);
+
+        $clientDoc = NotaryClientWarkah::where('registration_code', $request->registration_code)
+            ->where('client_id', $request->client_id)
+            ->first();
+
+        if ($clientDoc) {
+            $clientDoc->status = $request->status;
+            $clientDoc->save();
+        }
+
+        $msg = $request->status === 'valid'
+            ? 'Dokumen berhasil divalidasi'
+            : 'Dokumen ditandai tidak valid';
+
+        notyf()->position('x', 'right')->position('y', 'top')->success($msg);
+        return back();
+    }
+
+
+
 
     public function markDones(Request $request)
     {

@@ -189,15 +189,19 @@ class ClientController extends Controller
     public function showByUuid($uuid)
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
-        $notaryCost = NotaryCost::where('client_id', $client->id)->get();
-        $notaryPayment = NotaryPayment::where('client_id', $client->id)->get();
-        $picDocuments = PicDocuments::with('processes')
+
+        $notaryCost     = NotaryCost::where('client_id', $client->id)->get();
+        $notaryPayment  = NotaryPayment::where('client_id', $client->id)->get();
+        $picDocuments   = PicDocuments::with('processes')
             ->where('client_id', $client->id)
             ->get();
         $clientDocuments = NotaryClientDocument::where('client_id', $client->id)->get();
 
-        // Tambahkan daftar dokumen yang bisa diupload
-        $documents = Documents::where('notaris_id', $client->notaris_id)->get();
+        // Ambil semua dokumen yang belum diupload oleh client
+        $uploadedCodes = $clientDocuments->pluck('document_code')->toArray();
+        $documents = Documents::where('notaris_id', $client->notaris_id)
+            ->whereNotIn('code', $uploadedCodes)
+            ->get();
 
         return view('pages.Client.detail', compact(
             'client',
@@ -205,7 +209,7 @@ class ClientController extends Controller
             'notaryPayment',
             'picDocuments',
             'clientDocuments',
-            'documents' // jangan lupa kirim ke view
+            'documents'
         ));
     }
 
@@ -230,32 +234,32 @@ class ClientController extends Controller
         $client = Client::where('uuid', $uuid)->firstOrFail();
 
         $validated = $request->validate([
-            'document_name' => 'required|string',
-            'document_code' => 'required',
-            'document_file' => 'required|file|mimes:pdf,jpg,jpeg,png',
-            'note' => 'nullable',
+            'document_code' => 'required|exists:documents,code',
+            'document_file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'note' => 'nullable|string',
         ]);
 
-        // Simpan file di storage
-        $filePath = $request->file('document_file')->storeAs('documents', $request->file('document_file')->getClientOriginalName());
+        // Ambil data dokumen dari tabel documents
+        $document = Documents::where('code', $validated['document_code'])->firstOrFail();
 
-        // Ambil nama dokumen dari table documents
-        $documentName = Documents::where('code', $validated['document_code'])->value('name');
+        // Simpan file dengan nama unik
+        $fileName = time() . '_' . $request->file('document_file')->getClientOriginalName();
+        $filePath = $request->file('document_file')->storeAs('client-documents', $fileName, 'public');
 
         // Simpan ke notary_client_document
         NotaryClientDocument::create([
-            'notaris_id' => $client->notaris_id,
-            'client_id' => $client->id,
+            'notaris_id'       => $client->notaris_id,
+            'client_id'        => $client->id,
             'registration_code' => $this->generateRegistrationCode($client->notaris_id, $client->id),
-            'document_code' => $validated['document_code'],
-            'document_name' => $documentName,
-            'note' => $validated['note'] ?? null,
-            'document_link' => $filePath,
-            'uploaded_at' => now(),
-            'status' => 'new', // otomatis new
+            'document_code'    => $document->code,
+            'document_name'    => $document->name,
+            'note'             => $validated['note'] ?? null,
+            'document_link'    => $filePath,
+            'uploaded_at'      => now(),
+            'status'           => 'new', // default new
         ]);
 
-        return redirect()->back()->with('success', 'Dokumen berhasil diupload, menunggu validasi admin.');
+        return back()->with('success', 'Dokumen berhasil diupload, menunggu validasi admin.');
     }
 
     // public function showProcessClient($uuid)

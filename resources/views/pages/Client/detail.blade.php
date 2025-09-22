@@ -143,17 +143,27 @@
                     <div class="card-header pb-0">
                         <h6>Upload Dokumen</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pt-1">
                         <form action="{{ route('client.uploadDocument', $client->uuid) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label class="form-label">Nama Dokumen</label>
                                 <input type="text" name="document_name" class="form-control" required />
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Kode Dokumen</label>
                                 <input type="text" name="document_code" class="form-control" required />
+                            </div> --}}
+
+                            <div class="mb-3">
+                                <label class="form-label">Jenis Dokumen</label>
+                                <select name="document_code" class="form-select" required>
+                                    <option value="" hidden>Pilih Dokumen</option>
+                                    @foreach($documents as $doc)
+                                    <option value="{{ $doc->code }}">{{ $doc->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">File Dokumen</label>

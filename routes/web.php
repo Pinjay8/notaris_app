@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -46,6 +47,7 @@ use Milon\Barcode\Facades\DNS2DFacade;
 
 
 
+
 Route::middleware('guest')->group(function () {
     // LoginController routes
     Route::controller(LoginController::class)->group(function () {
@@ -82,7 +84,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     // HomeController routes
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('consultation', NotaryConsultationController::class);
     Route::get('/consultation/client/{id}', [NotaryConsultationController::class, 'getConsultationByClient'])->name('consultation.getConsultationByClient');
     Route::put('consultation/{id}', [NotaryConsultationController::class, 'update'])->name('consultation.update');
@@ -136,6 +138,7 @@ Route::middleware('auth')->group(function () {
     Route::post('management-document/mark-done', [NotaryClientDocumentController::class, 'markDone'])->name(
         'management-document.markDone'
     );
+    Route::post('management-document/status', [NotaryClientDocumentController::class, 'updateStatus'])->name('management-document.updateStatus');
     // update status
     // Route::post('management-document/mark-done', [NotaryClientProductController::class, 'markDone'])->name(
     //     'management-document.markDone'
@@ -144,20 +147,22 @@ Route::middleware('auth')->group(function () {
     //     'management-document.addDocument'
     // );
     // Update status document
-    Route::post('management-document/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
-        'management-document.updateStatus'
-    );
+    // Route::post('management-document/update-status', [NotaryClientProductController::class, 'updateStatusValid'])->name(
+    //     'management-document.updateStatus'
+    // );
 
     // Warkah
     Route::resource('warkah', NotaryClientWarkahController::class);
-    Route::post('warkah/mark-done', [NotaryClientWarkahController::class, 'markDone'])->name(
-        'warkah.markDone'
-    );
-    // Update status document
-    Route::post('warkah/update-status', [NotaryClientWarkahController::class, 'updateStatusValid'])->name(
-        'warkah.updateStatus'
-    );
-    // End
+    Route::post('warkah/store', [NotaryClientWarkahController::class, 'addDocument'])->name('warkah.addDocument');
+    Route::post('warkah/status', [NotaryClientWarkahController::class, 'updateStatus'])->name('warkah.updateStatus');
+    // Route::post('warkah/mark-done', [NotaryClientWarkahController::class, 'markDone'])->name(
+    //     'warkah.markDone'
+    // );
+    // // Update status document
+    // Route::post('warkah/update-status', [NotaryClientWarkahController::class, 'updateStatusValid'])->name(
+    //     'warkah.updateStatus'
+    // );
+    // // End
     // Partij Akta
     Route::resource('akta-types', NotaryAktaTypesController::class);
     Route::resource('akta-transactions', NotaryAktaTransactionController::class);

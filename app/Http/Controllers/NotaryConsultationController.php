@@ -26,7 +26,8 @@ class NotaryConsultationController extends Controller
             $query->where('fullname', 'like', '%' . $request->search . '%');
         }
 
-        $clients = $query->get();
+        // gunakan paginate, bukan get
+        $clients = $query->paginate(10);
 
         return view('pages.Client.Consultation.selectClient', compact('clients'));
     }
@@ -36,11 +37,12 @@ class NotaryConsultationController extends Controller
     {
         $query = Client::where('notaris_id', auth()->user()->notaris_id);
 
-        if ($request->has('search') && !empty($request->search)) {
+        if ($request->filled('search')) {
             $query->where('fullname', 'like', '%' . $request->search . '%');
         }
 
-        $clients = $query->get();
+        // paginate + bawa query string pencarian
+        $clients = $query->paginate(10)->withQueryString();
 
         return view('pages.Client.Consultation.index', compact('clients'));
     }

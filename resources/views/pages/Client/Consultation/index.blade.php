@@ -2,11 +2,12 @@
 
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Konsultasi'])
+
 <div class="container p-0">
     <div class="row mt-4">
         <div class="card mb-4 shadow-sm border-0 rounded-3">
             <div class="card-header px-3 pb-2 d-flex justify-content-between align-items-center bg-white border-0">
-                <h4 class="mb-lg-1 fw-bold">Konsultasi</h4>
+                <h5 class="mb-lg-1 fw-bold">Konsultasi</h5>
                 {{-- search --}}
                 <div class="w-md-25">
                     <form method="GET" action="{{ route('consultation.index') }}">
@@ -18,30 +19,47 @@
                     </form>
                 </div>
             </div>
-            <div class="row mt-3 px-3 pb-3">
-                @forelse ($clients as $client)
-                <div class="col-md-4 col-sm-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 rounded-3 hover-card">
-                        <div class="card-body text-center p-4">
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3"
-                                style="width:60px; height:60px; font-size:20px; font-weight:600;">
-                                {{ strtoupper(substr($client->fullname, 0, 1)) }}
-                            </div>
-                            <h5 class="fw-semibold mb-1 text-capitalize">{{ $client->fullname }}</h5>
-                            <h6 class="text-muted mb-3 text-capitalize">{{ $client->company_name }}</h6>
-                            <a href="{{ route('consultation.getConsultationByClient', $client->id) }}"
-                                class="btn btn-outline-primary w-100 rounded-pill">Lihat Konsultasi</a>
-                        </div>
-                    </div>
+            <div class="card-body px-3">
+                @if($clients->count())
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Klien</th>
+                                <th>Perusahaan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($clients as $index => $client)
+                            <tr class="text-sm text-center">
+                                <td>{{ $loop->iteration }}</td>
+                                <td class="text-capitalize">{{ $client->fullname }}</td>
+                                <td class="text-capitalize">{{ $client->company_name }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('consultation.getConsultationByClient', $client->id) }}"
+                                        class="btn btn-outline-primary btn-sm rounded-pill">
+                                        Lihat Konsultasi
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                @empty
-                <div class="col-12 text-center text-muted py-5">
+
+                {{-- pagination --}}
+                <div class="d-flex justify-content-center mt-3">
+                    {{ $clients->links() }}
+                </div>
+                @else
+                <div class="text-center text-muted py-5">
                     <p class="mb-0">Belum ada data klien untuk konsultasi.</p>
                 </div>
-                @endforelse
+                @endif
             </div>
         </div>
     </div>
 </div>
-
 @endsection

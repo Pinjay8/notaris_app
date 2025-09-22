@@ -18,9 +18,6 @@ class NotaryClientDocumentController extends Controller
     {
         $query = NotaryClientDocument::with([
             'client',
-            // 'product',
-            // 'product.documents', // daftar dokumen yang dibutuhkan
-            // 'documentHistory',   // histori dokumen yang sudah diupload
         ]);
 
         // filter pencarian
@@ -84,72 +81,72 @@ class NotaryClientDocumentController extends Controller
         $notarisId = auth()->user()->notaris_id;
 
         $clients = Client::where('notaris_id', $notarisId)->get();
-
-
-
         $firstClient = $clients->first();
 
         $registrationCode = $firstClient
             ? $this->generateRegistrationCode($notarisId, $firstClient->id)
             : null;
 
-
         $validated = $request->validate([
-            // 'registration_code' => 'required',
             'client_id' => 'required',
-            'document_name' => 'required|string',
             'document_code' => 'required|string',
             'document_link' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'note' => 'nullable|string',
         ]);
 
-        // $validated['registration_code'] = $registrationCode;
-        // $validated['notaris_id'] = auth()->user()->notaris_id;
+        // Cari document_name dari tabel documents
+        $document = Documents::where('code', $validated['document_code'])
+            ->where('notaris_id', $notarisId)
+            ->firstOrFail();
 
         $path = null;
         if ($request->hasFile('document_link')) {
-            $path = $request->file('document_link')->storeAS('documents', $request->file('document_link')->getClientOriginalName());
+            $path = $request->file('document_link')
+                ->storeAs('documents', $request->file('document_link')->getClientOriginalName());
         }
 
         NotaryClientDocument::create([
             'registration_code' => $registrationCode,
             'client_id' => $request->client_id,
-            'notaris_id' => auth()->user()->notaris_id,
-            'document_code' => $request->document_code,
-            'document_name' => $request->document_name,
+            'notaris_id' => $notarisId,
+            'document_code' => $document->code,
+            'document_name' => $document->name, // ambil dari table documents
             'document_link' => $path,
             'note' => $request->note,
             'status' => 'new',
-            'uploaded_at' => $request->uploaded_at ?? now(),
+            'uploaded_at' => now(),
         ]);
-
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Data berhasil ditambahkan');
         return back();
     }
 
+
     /**
      * Update status dokumen (valid / invalid)
-     */
-    public function updateStatus(Request $request)
+     */ public function updateStatus(Request $request)
     {
         $request->validate([
             'registration_code' => 'required',
             'client_id' => 'required',
-            'status' => 'required|in:valid,invalid',
+            'status' => 'required|in:valid,invalid', // hanya boleh valid atau invalid
         ]);
 
-        $doc = NotaryClientDocument::where('registration_code', $request->registration_code)
+        $clientDoc = NotaryClientDocument::where('registration_code', $request->registration_code)
             ->where('client_id', $request->client_id)
-            ->where('document_code', $request->document_code ?? '')
             ->first();
 
-        if ($doc) {
-            $doc->status = $request->status;
-            $doc->save();
+        if ($clientDoc) {
+            $clientDoc->status = $request->status;
+            $clientDoc->save();
         }
 
-        return back()->with('success', 'Status dokumen berhasil diupdate');
+        $msg = $request->status === 'valid'
+            ? 'Dokumen berhasil divalidasi'
+            : 'Dokumen ditandai tidak valid';
+
+        notyf()->position('x', 'right')->position('y', 'top')->success($msg);
+        return back();
     }
 
     /**
