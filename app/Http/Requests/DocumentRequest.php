@@ -25,7 +25,7 @@ class DocumentRequest extends FormRequest
 
         $rules = [
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
             // 'notaris_id' => 'required',
             'status' => 'required',
         ];
@@ -49,7 +49,7 @@ class DocumentRequest extends FormRequest
         return [
             'code.required' => 'Kode dokumen harus diisi.',
             'code.unique' => 'Kode dokumen harus unik',
-            'description.required' => 'Deskripsi dokumen harus diisi.',
+            // 'description.required' => 'Deskripsi dokumen harus diisi.',
             'name.required' => 'Nama dokumen harus diisi.',
             // 'image.required' => 'Gambar dokumen harus diisi.',
             'status.required' => 'Status dokumen harus diisi.',

@@ -12,7 +12,7 @@
             <div class="card-body">
                 <form method="GET" action="{{ route('pic_handovers.index') }}"
                     class="d-flex justify-content-between gap-2">
-                    <div class="input-group input-group-sm" style="max-width: 400px;">
+                    <div class="input-group input-group-sm" style="max-width: 400px;" class="no-spinner">
                         <input type="text" name="search" class="form-control"
                             placeholder="Cari berdasarkan kode dokumen" value="{{ request('search') }}">
                         <button class="btn btn-primary mb-0" type="submit">Cari</button>

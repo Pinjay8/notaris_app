@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
                 <form method="GET" action="{{ route('akta-logs.index') }}" class="d-flex gap-2 mb-3 justify-content-end"
-                    style="max-width: 500px; margin-left: auto;">
+                    style="max-width: 500px; margin-left: auto;" class="no-spinner">
                     <input type="text" name="registration_code" class="form-control"
                         placeholder="Cari kode registrasi..." value="{{ $filters['registration_code'] ?? '' }}">
                     <input type="text" name="step" class="form-control" placeholder="Cari step..."

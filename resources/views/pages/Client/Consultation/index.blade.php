@@ -3,14 +3,14 @@
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Konsultasi'])
 
-<div class="container p-0">
-    <div class="row mt-4">
-        <div class="card mb-4 shadow-sm border-0 rounded-3">
-            <div class="card-header px-3 pb-2 d-flex justify-content-between align-items-center bg-white border-0">
+<<div class="row mt-4 mx-4 ">
+    <div class="col-md-12">
+        <div class="card mb-4 p-3 shadow-lg">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-2 flex-wrap">
                 <h5 class="mb-lg-1 fw-bold">Konsultasi</h5>
                 {{-- search --}}
                 <div class="w-md-25">
-                    <form method="GET" action="{{ route('consultation.index') }}">
+                    <form method="GET" action="{{ route('consultation.index') }}" class="no-spinner">
                         <div class="input-group mb-3">
                             <input type="text" name="search" value="{{ request('search') }}" class="form-control"
                                 placeholder="Cari nama klien...">
@@ -61,5 +61,6 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+    </div>
+
+    @endsection

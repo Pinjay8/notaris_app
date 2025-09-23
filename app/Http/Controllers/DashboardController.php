@@ -18,8 +18,8 @@ class DashboardController extends Controller
         // Statistik utama
         $totalClients = Client::where('notaris_id', $notarisId)->count();
         // $inProgressDocs = NotaryClientDocument::where('status', 'valid')->count();
-        $doneDocs = NotaryClientDocument::where('status', 'valid')->count();
-        $activeConsultations = NotaryConsultation::where('status', 'open')->count();
+        $doneDocs = NotaryClientDocument::where('notaris_id', $notarisId)->count();
+        $activeConsultations = NotaryConsultation::where('notaris_id', $notarisId)->count();
         $paymentsCount = NotaryPayment::where('notaris_id', $notarisId)->count();
 
         // Dokumen masuk per bulan (untuk chart)

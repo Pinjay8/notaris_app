@@ -72,11 +72,21 @@ Route::middleware('guest')->group(function () {
     });
     // Public Access
     // Route untuk akses form update dari link revisi (menggunakan encrypted id)
-    Route::get('/client/{encryptedId}', [ClientController::class, 'editCLient'])->name('client.editCLient');
-    // Route untuk submit update dari form revisi
-    Route::put('/client/{encryptedId}', [ClientController::class, 'updateClient'])->name('client.updateClient');
-    Route::get('/client/{notaris_id}', [ClientController::class, 'publicForm'])->name('client.public.create');
-    Route::post('/client/{notaris_id}/store', [ClientController::class, 'storeClient'])->name('client.public.store');
+    // revisi / edit (link untuk revisi klien)
+    Route::get('/client/revisi/{encryptedClientId}', [ClientController::class, 'editClient'])
+        ->name('client.editClient');
+    Route::put('/client/revisi/{encryptedClientId}', [ClientController::class, 'updateClient'])
+        ->name('client.public.update');
+
+
+    // public form (link yang dikirim ke klien) — jelas beda URI
+    Route::get('/client/public/{encryptedNotarisId}', [ClientController::class, 'publicForm'])
+        ->name('client.public.create');
+
+
+    Route::post('/client/public/{encryptedNotarisId}/store', [ClientController::class, 'storeClient'])
+        ->name('client.public.store');
+
     Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
     Route::post('/client/{uuid}/upload-document', [ClientController::class, 'uploadDocument'])
         ->name('client.uploadDocument');
@@ -120,6 +130,14 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('clients', ClientController::class);
     Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');
+    Route::put('/clients/{id}/set-revision', [ClientController::class, 'setRevision'])
+        ->name('clients.setRevision');
+    Route::get('/client/revision/{encryptedClientId}', [ClientController::class, 'showRevisionForm'])
+        ->name('client.public.revision');
+
+    Route::post('/client/revision/{encryptedClientId}', [ClientController::class, 'submitRevision'])
+        ->name('client.revision.submit');
+
 
     Route::get('/clients-info', [ClientController::class, 'indexClient'])->name('clients-info.index');
 

@@ -14,7 +14,7 @@
 
                 {{-- Filter & Search --}}
                 <form method="GET" action="{{ route('relaas-aktas.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
-                    style="max-width:500px;" onchange="this.submit()">
+                    style="max-width:500px;" onchange="this.submit()" class="no-spinner">
                     <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
                         value="{{ request('registration_code') }}" class="form-control">
                     <select name="status" class="form-select">

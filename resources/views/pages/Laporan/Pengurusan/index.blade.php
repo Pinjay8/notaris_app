@@ -11,7 +11,8 @@
 
             <div class="card-body pt-0">
                 {{-- Filter --}}
-                <form method="GET" action="{{ route('report-progress.index') }}" class="row g-3 mb-4">
+                <form method="GET" action="{{ route('report-progress.index') }}" class="row g-3 mb-4"
+                    class="no-spinner">
                     <div class="col-xl-4">
                         <label for="start_date" class="form-label fw-semibold text-sm">Tanggal Mulai</label>
                         <input type="date" class="form-control form-control" id="start_date" name="start_date"
@@ -33,12 +34,12 @@
                             <option value="done" {{ request('status')=='done' ? 'selected' : '' }}>Selesai</option>
                         </select>
                     </div>
-                    <div class="col-xl-2 d-flex align-items-end gap-2 justify-content-center flex-wrap">
-                        <button type="submit" class="btn btn-xl-sm btn-primary mb-0 d-flex align-items-center gap-2">
-                            <i class="bi bi-funnel"></i> Tampilkan
-                        </button>
+                    <div class="col-md-2 d-flex align-items-end gap-1 flex-wrap">
+                        <button type="submit" class="btn btn-primary btn-sm mb-0">
+                            <i class="bi bi-funnel"></i>
+                            Tampilkan</button>
                         <a href="{{ route('report-progress.print', request()->all()) }}" target="_blank"
-                            class="btn btn-xl-sm btn-danger mb-0 d-flex align-items-center gap-2">
+                            class="btn btn-danger mb-0 btn-sm">
                             <i class="bi bi-file-earmark-pdf"></i> PDF
                         </a>
                     </div>
@@ -70,15 +71,24 @@
                                 <td>{{ $process->step_name ?? '-' }}</td>
                                 <td>
                                     @php
-                                    $statusClass = match(strtolower($process->step_status)) {
-                                    'done' => 'success',
-                                    'progress' => 'info',
-                                    'pending' => 'warning',
-                                    default => 'secondary'
-                                    };
+                                    switch ($process->step_status) {
+                                    case 'done':
+                                    $statusText = 'Selesai';
+                                    $statusColor = 'success';
+                                    break;
+                                    case 'in_progress':
+                                    $statusText = 'Sedang Diproses';
+                                    $statusColor = 'info';
+                                    break;
+                                    case 'pending':
+                                    default:
+                                    $statusText = 'Pending';
+                                    $statusColor = 'warning';
+                                    break;
+                                    }
                                     @endphp
-                                    <span class="badge bg-{{ $statusClass }}">
-                                        {{ ucfirst($process->step_status) }}
+                                    <span class="badge bg-{{ $statusColor }}">
+                                        {{ $statusText }}
                                     </span>
                                 </td>
                                 <td>{{ $process->step_date->format('d-m-Y') }}</td>

@@ -1,8 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
+{{-- Background Section --}}
 
+<div class="position-absolute w-100 min-height-300 top-0"
+    style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+    <span class="mask bg-primary opacity-6"></span>
+</div>
+<div class="container mt-4">
+    <div class="position-absolute w-100 min-height-250 top-0"
+        style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+        <span class="mask bg-primary opacity-6"></span>
+    </div>
     <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
         {{-- Card Header --}}
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center flex-wrap">
@@ -30,30 +39,32 @@
         </div>
 
         {{-- Nav Tabs --}}
-        <div class="bg-light border-bottom">
-            <ul class="nav nav-tabs px-3" id="clientTab" role="tablist">
-                <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#info">
+        <div class=" ">
+            <ul class="nav nav-pills gap-2 mb-3 bg-white mt-3 ms-3" id="clientTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active rounded-pill" data-bs-toggle="tab" data-bs-target="#info"
+                        type="button">
                         <i class="fas fa-id-card me-1"></i> Info
                     </button>
                 </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#dokumen">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill" id="dokumen-tab" data-bs-toggle="tab"
+                        data-bs-target="#dokumen" type="button">
                         <i class="fas fa-file-alt me-1"></i> Dokumen
                     </button>
                 </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tracking">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill" data-bs-toggle="tab" data-bs-target="#tracking" type="button">
                         <i class="fas fa-map-marker-alt me-1"></i> Tracking
                     </button>
                 </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#biaya">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill" data-bs-toggle="tab" data-bs-target="#biaya" type="button">
                         <i class="fas fa-money-bill me-1"></i> Biaya
                     </button>
                 </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#pajak">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link rounded-pill" data-bs-toggle="tab" data-bs-target="#pajak" type="button">
                         <i class="fas fa-chart-line me-1"></i> Pembayaran
                     </button>
                 </li>
@@ -65,82 +76,118 @@
             {{-- Info --}}
             <div class="tab-pane fade show active" id="info">
                 <div class="row g-3">
+                    <h5 class="fw-bold fs-5 text-primary mb-3 border-bottom pb-2">
+                        <i class="fa-solid fa-user me-2"></i> Informasi Pribadi
+                    </h5>
+
                     <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-regular fa-id-card me-2"></i> NIK</p>
-                        <p>{{ $client->nik ?? '-' }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-building me-2"></i> NPWP</p>
-                        <p>{{ $client->npwp ?? '-' }}</p>
+                        <h6 class="mb-1  fw-bold">
+                            <i class="fa-regular fa-id-card me-1"></i> NIK
+                        </h6>
+                        <p class="fs-6 fw-medium">{{ $client->nik ?? '-' }}</p>
                     </div>
 
                     <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-location-dot me-2"></i> Alamat</p>
-                        <p>{{ $client->address ?? '-' }}, {{ $client->city ?? '' }}, {{ $client->province ?? '' }} {{
-                            $client->postcode ?? '' }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-phone me-2"></i> Telepon</p>
-                        <p>{{ $client->phone ?? '-' }}</p>
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-building me-1"></i> NPWP
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->npwp ?? '-' }}</p>
                     </div>
 
                     <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-regular fa-envelope me-2"></i> Email</p>
-                        <p>{{ $client->email ?? '-' }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-venus-mars me-2"></i> Gender</p>
-                        <p>{{ ucfirst($client->gender) ?? '-' }}</p>
-                    </div>
-
-                    <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-briefcase me-2"></i> Pekerjaan</p>
-                        <p>{{ $client->job ?? '-' }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-user-check me-2"></i> Status</p>
-                        <p>{{ ucfirst($client->marital_status) ?? '-' }}</p>
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-location-dot me-1"></i> Alamat
+                        </p>
+                        <p class="fs-6 fw-medium">
+                            {{ $client->address ?? '-' }}, {{ $client->city ?? '' }},
+                            {{ $client->province ?? '' }} {{ $client->postcode ?? '' }}
+                        </p>
                     </div>
 
                     <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-building-user me-2"></i> Tipe</p>
-                        <p>{{ $client->type == 'company' ? 'Perusahaan' : 'Pribadi' }}</p>
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-phone me-1"></i> Telepon
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->phone ?? '-' }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-regular fa-envelope me-1"></i> Email
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->email ?? '-' }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-venus-mars me-1"></i> Gender
+                        </p>
+                        <p class="fs-6 fw-medium">{{ ucfirst($client->gender) ?? '-' }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-briefcase me-1"></i> Pekerjaan
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->job ?? '-' }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-user-check me-1"></i> Status
+                        </p>
+                        <p class="fs-6 fw-medium">{{ ucfirst($client->marital_status) ?? '-' }}</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-building-user me-1"></i> Tipe
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->type == 'company' ? 'Perusahaan' : 'Pribadi' }}</p>
                     </div>
 
                     @if($client->type == 'company')
                     <div class="col-md-6">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-industry me-2"></i> Nama Perusahaan</p>
-                        <p>{{ $client->company_name ?? '-' }}</p>
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-industry me-1"></i> Perusahaan
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->company_name ?? '-' }}</p>
                     </div>
                     @endif
 
                     <div class="col-md-12">
-                        <p class="mb-1 fw-bold text-muted"><i class="fa-solid fa-circle-info me-2"></i> Catatan</p>
-                        <p>{{ $client->note ?? '-' }}</p>
+                        <p class="mb-1  fw-bold text-black">
+                            <i class="fa-solid fa-circle-info me-1"></i> Catatan
+                        </p>
+                        <p class="fs-6 fw-medium">{{ $client->note ?? '-' }}</p>
                     </div>
                 </div>
             </div>
 
+
             {{-- Dokumen --}}
             <div class="tab-pane fade" id="dokumen">
                 {{-- documents --}}
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Dokumen yang harus dikirim</label>
-                    @if($documents->isEmpty())
-                    <p class="text-muted">Tidak ada dokumen yang harus dikirim.</p>
-                    @else
-                    <ul class="list-group">
-                        @foreach($documents as $doc)
-                        <li class="list-group-item list-group-item-secondary">
-                            {{ $doc->name }}
-                        </li>
-                        @endforeach
-                    </ul>
-                    @endif
-                </div>
+
                 {{-- Form Upload Dokumen --}}
                 <div class="card mb-4">
+
                     <div class="card-header pb-0">
+                        <div class="mb-1">
+                            <h6 class="fw-bold">Dokumen yang harus dikirim</h6>
+                            @if($documents->isEmpty())
+                            <p class="text-muted">Belum ada dokumen yang harus dikirim.</p>
+                            @else
+                            <ul class="list-group">
+                                @foreach($documents as $doc)
+                                <li class="list-group-item list-group-item-secondary">
+                                    {{ $doc->name }}
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </div>
+                        <hr>
                         <h6>Upload Dokumen</h6>
                     </div>
                     <div class="card-body pt-1">
@@ -157,7 +204,7 @@
                             </div> --}}
 
                             <div class="mb-3">
-                                <label class="form-label">Jenis Dokumen</label>
+                                <label class="form-label text-sm">Jenis Dokumen</label>
                                 <select name="document_code" class="form-select" required>
                                     <option value="" hidden>Pilih Dokumen</option>
                                     @foreach($documents as $doc)
@@ -166,41 +213,46 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">File Dokumen</label>
+                                <label class="form-label text-sm">File Dokumen</label>
                                 <input type="file" name="document_link" class="form-control" required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Catatan</label>
-                                <input type="text" name="note" class="form-control" required>
+                                <label class="form-label text-sm">Catatan</label>
+                                <textarea name="note" class="form-control"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </form>
                     </div>
+
+                    <div class="card-footer">
+                        <hr>
+                        {{-- Daftar Dokumen yang Sudah Diupload --}}
+                        @if($clientDocuments->isEmpty())
+                        <div class="text-center text-muted py-5">
+                            <i class="fas fa-file-alt fa-2x mb-2"></i>
+                            <p>Belum ada dokumen yang diunggah</p>
+                        </div>
+                        @else
+                        <ul class="list-group">
+                            <div class="mb-2 fw-bold">Dokumen yang sudah diupload</div>
+                            @foreach($clientDocuments as $doc)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <h6> {{ $doc->document_name }}</h6>
+                                @if($doc->status == 'new')
+                                <span class="badge bg-warning">Menunggu Validasi</span>
+                                @elseif($doc->status == 'valid')
+                                <span class="badge bg-success">Valid</span>
+                                @elseif($doc->status == 'invalid')
+                                <span class="badge bg-danger">Invalid - Upload Ulang</span>
+                                @endif
+                            </li>
+                            @endforeach
+                        </ul>
+                        @endif
+                    </div>
                 </div>
 
-                {{-- Daftar Dokumen yang Sudah Diupload --}}
-                @if($clientDocuments->isEmpty())
-                <div class="text-center text-muted py-5">
-                    <i class="fas fa-file-alt fa-2x mb-2"></i>
-                    <p>Belum ada dokumen yang diunggah</p>
-                </div>
-                @else
-                <ul class="list-group">
-                    <div class="mb-2 fw-bold">Dokumen yang sudah diupload</div>
-                    @foreach($clientDocuments as $doc)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $doc->document_name }}
-                        @if($doc->status == 'new')
-                        <span class="badge bg-warning">Menunggu Validasi</span>
-                        @elseif($doc->status == 'valid')
-                        <span class="badge bg-success">Valid</span>
-                        @elseif($doc->status == 'invalid')
-                        <span class="badge bg-danger">Invalid - Upload Ulang</span>
-                        @endif
-                    </li>
-                    @endforeach
-                </ul>
-                @endif
+
             </div>
 
 
@@ -484,3 +536,15 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('active_tab'))
+            var activeTab = "{{ session('active_tab') }}";
+            var tab = new bootstrap.Tab(document.querySelector('#' + activeTab + '-tab'));
+            tab.show();
+        @endif
+    });
+</script>
+@endpush

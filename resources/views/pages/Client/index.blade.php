@@ -6,15 +6,42 @@
     <div class="col-md-12">
         <div class="card mb-4 p-3 shadow-lg">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-2 flex-wrap">
-                <h6 class="mb-0">Klien</h6>
+                <h5 class="mb-0">Klien</h5>
                 <div class="d-flex gap-2 flex-wrap">
                     @php
                     $encryptedId = Crypt::encrypt(auth()->user()->notaris_id);
-                    $shareUrl = route('client.public.create', ['notaris_id' => $encryptedId]);
+                    $shareUrl = route('client.public.create', ['encryptedNotarisId' => $encryptedId]);
                     @endphp
-                    <button class="btn btn-outline-primary btn-sm mb-0" onclick="copyToClipboard('{{ $shareUrl }}')">
+                    <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
+                        data-bs-target="#shareLinkModal">
                         <i class="fas fa-link"></i> Salin Link Form Klien
                     </button>
+                    <div class="modal fade" id="shareLinkModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content p-3 text-center">
+                                <h5 class="modal-title w-100 text-center mb-3">Link Form Klien</h5>
+                                <p class="text-muted mb-2 px-3">
+                                    Bagikan link berikut kepada klien agar mereka dapat mengisi form secara langsung.
+                                </p>
+                                <button type="button" class="btn-close btn-close-white position-absolute end-0 me-4 p-2"
+                                    style="background-color: var(--bs-primary); border-radius: 50%;"
+                                    data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+
+                                <div class="input-group my-4 shadow-sm rounded" style="max-width: 600px; margin:auto;">
+                                    <input type="text" class="form-control" id="shareUrlInput" value="{{ $shareUrl }}"
+                                        readonly onclick="this.select()">
+                                    <button class="btn btn-primary mb-0 d-flex gap-2 align-items-center"
+                                        onclick="copyToClipboard('{{ $shareUrl }}')">
+                                        <i class="fa-regular fa-clipboard"></i> Salin
+                                    </button>
+                                </div>
+
+                                <small class="text-muted">Klik tombol <strong>Salin</strong> untuk menyalin link ke
+                                    clipboard.</small>
+                            </div>
+                        </div>
+                    </div>
                     <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm mb-0">
                         + Tambah Klien
                     </a>
@@ -26,7 +53,7 @@
                         <div class="d-flex justify-content-end">
                             <form method="GET" action="{{ route('clients.index') }}"
                                 class="d-flex flex-wrap gap-2 ms-auto mb-3 w-100 justify-content-end"
-                                style="max-width: 500px;">
+                                style="max-width: 500px;" class="no-spinner">
 
                                 <input type="text" name="search" placeholder="Cari Nama, NIK/No KTP"
                                     value="{{ request('search') }}" class="form-control w-100 w-md-auto"
@@ -56,7 +83,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        Id
+                                        #
                                     </th>
                                     {{-- <th>
                                         UUID
@@ -130,7 +157,48 @@
                                         </span>
                                     </td>
                                     <td class="text-center align-middle">
+                                        @If($client->status != 'valid')
+                                        <form action="{{ route('clients.setRevision', $client->id) }}" method="POST"
+                                            class="d-inline-block">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-warning btn-xs mb-0">
+                                                <i class="fa fa-rotate-left"></i> Revisi
+                                            </button>
+                                        </form>
+                                        @endif
+                                        @php
+                                        $encryptedClientId = encrypt($client->id);
+                                        $revisionLink = url("/client/public/{$encryptedClientId}?mode=revision");
 
+
+                                        @endphp
+                                        <div class="modal fade" id="revisionModal" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content p-3 text-center">
+                                                    <h5 class="modal-title mb-3">Link Revisi Klien</h5>
+                                                    <button type="button"
+                                                        class="btn-close btn-close-white position-absolute end-0 me-4 p-2"
+                                                        style="background-color: var(--bs-primary); border-radius: 50%;"
+                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                    </button>
+
+                                                    <p class="text-muted">Bagikan link berikut ke klien untuk
+                                                        memperbaiki data mereka.</p>
+
+                                                    <div class="input-group my-4 shadow-sm rounded">
+                                                        <input type="text" class="form-control"
+                                                            value="{{ $revisionLink }}" readonly
+                                                            onclick="this.select()">
+                                                        <button
+                                                            class="btn btn-primary d-flex gap-2 align-items-center mb-0"
+                                                            onclick="copyToClipboard('{{ $revisionLink }}')">
+                                                            <i class="fa-regular fa-clipboard"></i> Salin
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         @if($client->uuid != null)
                                         <button type="button" class="btn btn-dark btn-xs mb-0" data-bs-toggle="modal"
                                             data-bs-target="#qrModal{{ $client->id }}">
@@ -155,9 +223,9 @@
                                                     $png = $dns2d->getBarcodePNG($link, 'QRCODE', 5, 5, [0,0,0], true);
                                                     @endphp
                                                     <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
-                                                        class="img-fluid w-50 mx-auto mt-3" />
+                                                        class="img-fluid w-50 mx-auto mt-4" />
                                                     {{-- Tampilkan link di bawah QR Code --}}
-                                                    <h5 class="mt-3">Link Klien</h5>
+                                                    <h6 class="mt-4">Link Klien</h6>
                                                     <div class="input-group my-2" style="max-width: 600px;">
 
                                                         <input type="text" class="form-control" value="{{ $link }}"
@@ -230,7 +298,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted">Belum ada data klien.</td>
+                                    <td colspan="8" class="text-center text-muted">Belum ada data klien.</td>
                                 </tr>
                                 @endforelse
                             </tbody>
@@ -266,5 +334,13 @@
                 }
             });
     }
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        @if(session('revisionLink'))
+            let modal = new bootstrap.Modal(document.getElementById('revisionModal'));
+            modal.show();
+        @endif
+    });
 </script>
 @endpush

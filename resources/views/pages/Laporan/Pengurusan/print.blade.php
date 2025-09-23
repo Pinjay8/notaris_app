@@ -62,7 +62,28 @@
                 <td>{{ $process->pic_document->client->fullname ?? '-' }}</td>
                 <td>{{ $process->step_name ?? '-' }}</td>
                 <td>{{ \Carbon\Carbon::parse($process->step_date)->format('d-m-Y') }}</td>
-                <td>{{ ucfirst($process->step_status) }}</td>
+                <td>
+                    @php
+                    switch ($process->step_status) {
+                    case 'done':
+                    $statusText = 'Selesai';
+                    $statusColor = 'success';
+                    break;
+                    case 'in_progress':
+                    $statusText = 'Sedang Diproses';
+                    $statusColor = 'info';
+                    break;
+                    case 'pending':
+                    default:
+                    $statusText = 'Pending';
+                    $statusColor = 'warning';
+                    break;
+                    }
+                    @endphp
+                    <span class="badge bg-{{ $statusColor }}">
+                        {{ $statusText }}
+                    </span>
+                </td>
                 <td>{{ $process->note }}</td>
             </tr>
             @empty

@@ -45,6 +45,7 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
                 </a>
+
                 {{-- <a href="{{ route('products.index') }}"
                     class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
                     <div

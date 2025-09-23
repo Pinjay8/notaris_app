@@ -14,7 +14,7 @@
 
                 {{-- Filter & Search --}}
                 <form method="GET" action="{{ route('relaas-logs.index') }}"
-                    class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width:600px;" onchange="this.submit()">
+                    class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width:600px;" onchange="this.submit()" class="no-spinner">
                     <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
                         value="{{ request('registration_code') }}" class="form-control">
                     <input type="text" name="step" placeholder="Cari step..." value="{{ request('step') }}"

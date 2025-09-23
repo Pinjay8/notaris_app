@@ -12,7 +12,7 @@
             <div class="card-body">
                 {{-- Form Pencarian --}}
                 <form method="GET" action="{{ route('akta-documents.index') }}"
-                    class="d-flex gap-2 mb-3 justify-content-end">
+                    class="d-flex gap-2 mb-3 justify-content-end" class="no-spinner">
                     <input type="text" name="registration_code" class="form-control"
                         placeholder="Cari kode registrasi..." value="{{ $filters['registration_code'] ?? '' }}">
                     <input type="text" name="akta_number" class="form-control" placeholder="Cari nomor akta..."

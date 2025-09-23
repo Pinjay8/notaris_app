@@ -7,61 +7,32 @@ use Illuminate\Http\Request;
 
 class SubscriptionsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $subscriptions = Subscriptions::with('user', 'plan')->where('user_id', auth()->user()->id)->latest('start_date')->get();
-        // dd($subscriptions);
+        $search = $request->input('search');
+
+        $subscriptions = Subscriptions::with(['user', 'plan'])
+            ->where('user_id', auth()->user()->id)
+            ->when($search, function ($query, $search) {
+                $query->whereHas('plan', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                    ->orWhere('status', 'like', "%{$search}%");
+            })
+            ->latest('start_date')
+            ->get();
+
         return view('pages.Subscription.index', compact('subscriptions'));
     }
+    public function create() {}
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    public function store(Request $request) {}
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function show(Subscriptions $subscriptions) {}
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Subscriptions $subscriptions)
-    {
-        //
-    }
+    public function edit(Subscriptions $subscriptions) {}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Subscriptions $subscriptions)
-    {
-        //
-    }
+    public function update(Request $request, Subscriptions $subscriptions) {}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Subscriptions $subscriptions)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Subscriptions $subscriptions)
-    {
-        //
-    }
+    public function destroy(Subscriptions $subscriptions) {}
 }

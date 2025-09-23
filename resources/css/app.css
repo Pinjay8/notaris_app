@@ -45,6 +45,7 @@ th {
     background-color: #fff !important;
     border: 1px solid #dee2e6 !important;
     transition: all 0.2s ease-in-out !important;
+    border-radius: 30px !important;
 }
 
 /* Hover effect */
@@ -67,8 +68,25 @@ th {
     color: #fff !important;
 }
 
-
 .sidenav .nav-link.active {
     background-color: #f1f1f1 !important; /* warna terang, bisa diganti sesuai kebutuhan */
     color: #000; /* teks menjadi hitam agar kontras */
+}
+.spinner-overlay {
+    position: fixed; /* fixed supaya menutupi seluruh viewport */
+    top: 0;
+    left: 0;
+    width: 100vw; /* full width */
+    height: 100vh; /* full height */
+    background: rgba(255, 255, 255, 1); /* semi-transparent */
+    z-index: 9999; /* pastikan di atas semua elemen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spinner-overlay.show {
+    opacity: 1;
 }

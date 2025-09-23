@@ -10,7 +10,7 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
 
-                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3">
+                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3" class="no-spinner">
                     <div class="col-md-4">
                         <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                         <input type="date" class="form-control" id="start_date" name="start_date"

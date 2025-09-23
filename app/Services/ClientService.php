@@ -50,12 +50,13 @@ class ClientService
     }
 
     protected function validate($id = null, array $data)
+
     {
         $rules = [
             'fullname' => 'required|string|max:255',
-            'nik' => 'required|string|max:20|unique:clients,nik,' . ($id ?? 'null') . ',id',
+            'nik' => 'required',
             'birth_place' => 'required|string|max:255',
-            'gender' => 'required|in:male,female',
+            'gender' => 'required',
             'marital_status' => 'required|string',
             'job' => 'required|string',
             'address' => 'required|string',
@@ -64,10 +65,10 @@ class ClientService
             'postcode' => 'required|string',
             'phone' => 'required|string',
             'email' => 'required|email',
-            'npwp' => 'nullable|string',
+            'npwp' => 'required|string',
             'type' => 'required|in:personal,company',
             'company_name' => 'nullable|string',
-            'status' => 'required|in:pending,valid,revisi',
+            'status' => 'required',
             'note' => 'nullable|string',
         ];
 
@@ -77,6 +78,6 @@ class ClientService
             throw new ValidationException($validator);
         }
 
-        return $validator->validated(); // ✅ Tambahkan ini
+        return $validator->validated();
     }
 }

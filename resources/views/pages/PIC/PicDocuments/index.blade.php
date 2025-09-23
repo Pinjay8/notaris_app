@@ -17,7 +17,7 @@
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <form method="GET" action="{{ route('pic_documents.index') }}"
-                            class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;">
+                            class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
                             <input type="text" name="search" class="form-control form-control-sm"
                                 placeholder="Cari kode registrasi / PIC" value="{{ request('search') }}">
                             <select name="status" class="form-select form-select-sm">

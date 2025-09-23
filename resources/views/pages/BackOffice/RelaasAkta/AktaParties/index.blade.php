@@ -12,7 +12,7 @@
             <div class="card-body pt-1">
 
                 {{-- Form Pencarian --}}
-                <form method="GET" action="{{ route('relaas-parties.index') }}" class="mb-3">
+                <form method="GET" action="{{ route('relaas-parties.index') }}" class="mb-3" class="no-spinner">
                     <div class="input-group">
                         <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Registrasi"
                             value="{{ request('search') }}">

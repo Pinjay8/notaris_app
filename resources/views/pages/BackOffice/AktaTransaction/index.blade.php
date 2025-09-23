@@ -12,7 +12,7 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <form method="GET" action="{{ route('akta-transactions.index') }}"
-                    class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width:500px;">
+                    class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width:500px;" class="no-spinner">
                     <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
                         value="{{ request('registration_code') }}" class="form-control">
                     <select name="status" class="form-select">

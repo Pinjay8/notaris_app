@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
                 <h5>List Notaris Produk</h5>
-                <form method="GET" action="{{ route('management-process.index') }}" class=" row g-3">
+                <form method="GET" action="{{ route('management-process.index') }}" class=" row g-3" class="no-spinner">
                     <div class="col-md-4">
                         <input type="text" name="registration_code" value="{{ request('registration_code') }}"
                             class="form-control" placeholder="Registration Code">

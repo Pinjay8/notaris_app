@@ -22,7 +22,7 @@
 
                         {{-- Form Search --}}
                         <form method="GET" action="{{ route('pic_process.index') }}"
-                            class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;">
+                            class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
                             <input type="text" name="pic_document_code" class="form-control form-control-sm"
                                 placeholder="Cari PIC Document Code..." value="{{ request('pic_document_code') }}">
                             <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
@@ -46,14 +46,28 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $process->step_name }}</td>
                                     <td>
-                                        <span
-                                            class="badge bg-{{ $process->step_status == 'done' ? 'success' : 'warning' }}">
-                                            {{ ucfirst($process->step_status) }}
+                                        @php
+                                        switch ($process->step_status) {
+                                        case 'done':
+                                        $statusText = 'Selesai';
+                                        $statusColor = 'success';
+                                        break;
+                                        case 'in_progress':
+                                        $statusText = 'Sedang Diproses';
+                                        $statusColor = 'info';
+                                        break;
+                                        case 'pending':
+                                        default:
+                                        $statusText = 'Pending';
+                                        $statusColor = 'warning';
+                                        break;
+                                        }
+                                        @endphp
+                                        <span class="badge bg-{{ $statusColor }}">
+                                            {{ $statusText }}
                                         </span>
-
                                     </td>
-                                    {{-- step date datetime --}}
-                                    <td>{{ $process->step_date }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($process->step_date)->format('d-m-Y') }}</td>
                                     <td>{{ $process->note ?? '-' }}</td>
                                     <td>
                                         <a href="{{ route('pic_process.edit', $process->id) }}"
@@ -71,7 +85,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="5" class="text-center text-muted text-sm">
+                                    <td colspan="6" class="text-center text-muted text-sm">
                                         Belum ada proses pengurusan untuk PIC Document ini.
                                     </td>
                                 </tr>

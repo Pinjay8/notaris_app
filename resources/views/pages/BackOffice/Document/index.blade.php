@@ -26,7 +26,7 @@
                             </div>
 
                             <form method="POST" action="{{ route('management-document.addDocument') }}"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" class="no-spinner">
                                 @csrf
                                 <div class="modal-body">
                                     {{-- <div class="mb-3">
@@ -103,7 +103,8 @@
 
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="d-flex justify-content-end w-100 px-2">
-                    <form method="GET" action="{{ route('management-document.index') }}" class="row g-3">
+                    <form method="GET" action="{{ route('management-document.index') }}" class="row g-3"
+                        class="no-spinner">
                         <div class="col-md-5">
                             <input type="text" name="registration_code" value="{{ request('registration_code') }}"
                                 class="form-control" placeholder="Kode Registrasi">

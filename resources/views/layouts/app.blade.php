@@ -26,6 +26,11 @@
 
 <body class="bg-light">
 
+    {{-- <div id="loadingSpinner" class="spinner-overlay d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div> --}}
     @guest
     @yield('content')
     @endguest
@@ -74,6 +79,53 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const spinner = document.getElementById('loadingSpinner');
+
+    function showSpinner() {
+        spinner.classList.remove('d-none');
+        spinner.classList.add('show');
+        const sidebar = document.querySelector('.navbar-vertical');
+        if (sidebar) sidebar.style.display = 'none';
+    }
+
+    function hideSpinner() {
+        spinner.classList.add('d-none');
+        spinner.classList.remove('show');
+        const sidebar = document.querySelector('.navbar-vertical');
+        if (sidebar) sidebar.style.display = '';
+    }
+
+    // Semua link internal
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (link.href && !link.href.includes('#') && !link.target && !link.dataset.noSpinner) {
+                showSpinner();
+            }
+        });
+    });
+
+    // Semua form
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            if (form.classList.contains('no-spinner')) {
+                // cegah refresh
+                e.preventDefault();
+                console.log('Form no-spinner, tidak melakukan refresh');
+
+                // kalau mau, bisa trigger AJAX atau proses manual di sini
+                return false; // pastikan submit dihentikan
+            } else {
+                showSpinner();
+            }
+        });
+    });
+});
+
+
+
+    </script>
     @stack('js')
 </body>
 

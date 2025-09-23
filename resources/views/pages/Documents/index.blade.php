@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th class="th-title">
-                                    Id
+                                    #
                                 </th>
                                 <th class="th-title">
                                     Nama Dokumen

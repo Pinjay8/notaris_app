@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ClientRequest extends FormRequest
 {
@@ -23,22 +24,27 @@ class ClientRequest extends FormRequest
     {
         return [
             'fullname' => 'required|string|max:255',
-            'nik' => 'required|string|max:20|unique:clients,nik',
-            'birth_place' => 'required|string',
-            'gender' => 'required|in:male,female',
-            'marital_status' => 'required|string',
-            'job' => 'required|string',
-            'address' => 'required|string',
-            'city' => 'required|string',
-            'province' => 'required|string',
-            'postcode' => 'required|string',
-            'phone' => 'required|string',
+            'nik' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('clients', 'nik')->ignore($this->client),
+            ],
+            'birth_place' => 'required',
+            'gender' => 'required',
+            'marital_status' => 'required',
+            'job' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'province' => 'required',
+            'postcode' => 'required',
+            'phone' => 'required',
             'email' => 'required|email',
             'type' => 'required|in:personal,company',
             'status' => 'nullable|in:pending,valid,revisi',
-            'note' => 'required|string',
-            'company_name' => 'required|string',
-            'npwp' => 'required|string',
+            'note' => 'nullable',
+            'company_name' => 'required',
+            'npwp' => 'required',
         ];
     }
 

@@ -48,9 +48,11 @@
                             <label for="gender" class="form-label text-sm">Jenis Kelamin</label>
                             <select name="gender" class="form-select">
                                 <option value="" hidden>Pilih</option>
-                                <option value="male" {{ old('gender', $client->gender ?? '') == 'male' ? 'selected' : ''
+                                <option value="Laki-Laki" {{ old('gender', $client->gender ?? '') == 'Laki-Laki' ?
+                                    'selected' : ''
                                     }}>Laki-laki</option>
-                                <option value="female" {{ old('gender', $client->gender ?? '') == 'female' ? 'selected'
+                                <option value="Perempuan" {{ old('gender', $client->gender ?? '') == 'Perempuan' ?
+                                    'selected'
                                     : '' }}>Perempuan</option>
                             </select>
                             @error('gender')

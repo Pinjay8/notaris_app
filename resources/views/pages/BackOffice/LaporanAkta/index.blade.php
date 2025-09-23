@@ -7,7 +7,7 @@
     <div class="col md-12">
         <div class="card mb-4">
             <div class="card-body">
-                <form method="GET" action="{{ route('laporan-akta.index') }}">
+                <form method="GET" action="{{ route('laporan-akta.index') }}" class="no-spinner">
                     <div class="row g-3 align-items-end">
                         {{-- Pilih Type --}}
                         <div class="col-md-3">
