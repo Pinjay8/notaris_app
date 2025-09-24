@@ -88,6 +88,7 @@ Route::middleware('guest')->group(function () {
         ->name('client.public.store');
 
     Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+    // Route::post('/client/search', [ClientController::class, 'searchByRegistrationCode'])->name('client.search');
     Route::post('/client/{uuid}/upload-document', [ClientController::class, 'uploadDocument'])
         ->name('client.uploadDocument');
 });

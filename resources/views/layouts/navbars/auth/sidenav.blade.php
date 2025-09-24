@@ -5,7 +5,7 @@
         <i class="fas fa-times p-2 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="{{ route('dashboard') }}" target="_blank">
-            <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+            {{-- <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
             <span class="ms-1 font-weight-bold text-center">Notaris App</span>
         </a>
     </div>
@@ -419,7 +419,7 @@
                 </a>
 
                 <div class="collapse" id="collapseBiaya">
-                    <ul class="nav nav-collapse mb-0 pb-0">
+                    <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                         <li>
                             <a href="{{ route('notary_costs.index') }}"
                                 class="nav-link {{ request()->is('notary_costs*') ? 'active' : '' }}">

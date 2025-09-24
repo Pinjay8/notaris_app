@@ -23,7 +23,7 @@ return new class extends Migration
             $table->double('total_cost');
             $table->double('amount_paid')->nullable();
             $table->string('payment_status');
-            $table->date('paid_date');
+            $table->date('paid_date')->nullable();
             $table->date('due_date');
             $table->text('note')->nullable();
             $table->timestamps();

@@ -28,7 +28,7 @@
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr class="text-center text-sm">
-                                <th>No</th>
+                                <th>#</th>
                                 <th>Kode Pembayaran</th>
                                 <th>Klien</th>
                                 <th>Kode Dokumen</th>
@@ -52,7 +52,7 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('notary_costs.print',$cost->id) }}"
-                                        class="btn btn-outline-danger btn-xs mb-0" target="_blank" title="Cetak PDF">
+                                        class="btn btn-danger   btn-xs mb-0" target="_blank" title="Cetak PDF">
                                         <i class="bi bi-filetype-pdf " style="font-size:14px;"></i>
                                     </a>
                                     <button type="button" class="btn btn-dark btn-xs mb-0" data-bs-toggle="modal"

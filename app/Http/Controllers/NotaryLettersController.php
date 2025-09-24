@@ -35,13 +35,19 @@ class NotaryLettersController extends Controller
             'client_id'     => 'required|exists:clients,id',
             'letter_number' => 'required|string',
             'type'          => 'nullable|string',
-            'recipient'     => 'nullable|string',
-            'subject'       => 'nullable|string',
-            'date'          => 'nullable|date',
+            'recipient'     => 'required|string',
+            'subject'       => 'required|string',
+            'date'          => 'required|date',
             'summary'       => 'nullable|string',
             'attachment'    => 'nullable|string',
             'notes'         => 'nullable|string',
             'file_path'     => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'letter_number.required' => 'Nomor surat harus diisi.',
+            'recipient.required' => 'Penerima harus diisi.',
+            'subject.required'   => 'Perihal harus diisi.',
+            'date.required'      => 'Tanggal harus diisi.',
         ]);
 
         if ($request->hasFile('file_path')) {
@@ -72,13 +78,19 @@ class NotaryLettersController extends Controller
             'client_id'     => 'required|exists:clients,id',
             'letter_number' => 'required|string',
             'type'          => 'nullable|string',
-            'recipient'     => 'nullable|string',
-            'subject'       => 'nullable|string',
-            'date'          => 'nullable|date',
+            'recipient'     => 'required|string',
+            'subject'       => 'required|string',
+            'date'          => 'required|date',
             'summary'       => 'nullable|string',
             'attachment'    => 'nullable|string',
             'notes'         => 'nullable|string',
             'file_path'     => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'letter_number.required' => 'Nomor surat harus diisi.',
+            'recipient.required' => 'Penerima harus diisi.',
+            'subject.required'   => 'Perihal harus diisi.',
+            'date.required'      => 'Tanggal harus diisi.',
         ]);
 
         if ($request->hasFile('file_path')) {

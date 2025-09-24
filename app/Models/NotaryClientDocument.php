@@ -47,4 +47,8 @@ class NotaryClientDocument extends Model
     {
         return Storage::url($this->document_link);
     }
+
+    protected $casts = [
+        'uploaded_at' => 'datetime',
+    ];
 }

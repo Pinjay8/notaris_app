@@ -8,9 +8,10 @@
             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
                 <h5>Laporan Pembayaran</h5>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
+            <div class="card-body px-2 pt-0 pb-2">
 
-                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3" class="no-spinner">
+                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3"
+                    class="no-spinner">
                     <div class="col-md-4">
                         <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                         <input type="date" class="form-control" id="start_date" name="start_date"
@@ -31,10 +32,11 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-flex align-items-end gap-1 flex-wrap">
+                    <div class="col-md-2 d-flex align-items-end gap-1 ">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">
                             <i class="bi bi-funnel"></i>
-                            Tampilkan</button>
+                            Cari
+                        </button>
                         <a href="{{ route('report-payment.print', request()->all()) }}" target="_blank"
                             class="btn btn-danger mb-0 btn-sm">
                             <i class="bi bi-file-earmark-pdf"></i> PDF
@@ -45,10 +47,10 @@
                     <table class="table table-hover align-items-center mb-0">
                         <thead>
                             <tr class="text-center">
-                                <th>No</th>
+                                <th>#</th>
                                 <th>Kode Pembayaran</th>
                                 <th>Nama Klien</th>
-                                <th>Tanggal</th>
+                                <th>Tanggal Lunas</th>
                                 <th>Status</th>
                                 <th>Total Biaya</th>
                             </tr>
@@ -59,7 +61,10 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $cost->payment_code }}</td>
                                 <td>{{ $cost->client->fullname }}</td>
-                                <td>{{ $cost->created_at->format('d-m-Y') }}</td>
+                                <td>
+                                    {{ $cost->paid_date ? \Carbon\Carbon::parse($cost->paid_date)->format('d-m-Y') : '-'
+                                    }}
+                                </td>
                                 <td>
                                     <span class="badge bg-{{ $cost->payment_status == 'Lunas' ? 'success':'warning' }}">
                                         {{ $cost->payment_status }}

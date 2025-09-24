@@ -79,7 +79,7 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
     const spinner = document.getElementById('loadingSpinner');
 
@@ -125,7 +125,7 @@
 
 
 
-    </script>
+    </script> --}}
     @stack('js')
 </body>
 

@@ -43,7 +43,7 @@ class NotaryCostController extends Controller
             'other_cost' => 'nullable',
             'amount_paid' => 'nullable',
             'payment_status' => 'required|string',
-            'paid_date' => 'required|date',
+            'paid_date' => 'nullable|date',
             'due_date' => 'required|date',
             'note' => 'nullable',
         ]);

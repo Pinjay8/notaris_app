@@ -208,21 +208,33 @@ class ClientController extends Controller
     }
 
 
-    public function showByUuid($uuid)
+    public function showByUuid(Request $request, $uuid)
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
 
         $notaryCost     = NotaryCost::where('client_id', $client->id)->get();
         $notaryPayment  = NotaryPayment::where('client_id', $client->id)->get();
-        $picDocuments   = PicDocuments::with('processes')
-            ->where('client_id', $client->id)
-            ->get();
+
+        // default: kosong dulu
+        $picDocuments = collect();
+
+        // kalau ada search, baru filter
+        if ($request->filled('registration_code')) {
+            $picDocuments = PicDocuments::with('processes')
+                ->where('client_id', $client->id)
+                ->where('pic_document_code', $request->registration_code)
+                ->get();
+        }
+
         $clientDocuments = NotaryClientDocument::where('client_id', $client->id)->get();
 
-        // Ambil semua dokumen yang belum diupload oleh client
-        $uploadedCodes = $clientDocuments->pluck('document_code')->toArray();
+        $validUploadedCodes = $clientDocuments
+            ->where('status', 'valid')
+            ->pluck('document_code')
+            ->toArray();
+
         $documents = Documents::where('notaris_id', $client->notaris_id)
-            ->whereNotIn('code', $uploadedCodes)
+            ->whereNotIn('code', $validUploadedCodes)
             ->get();
 
         return view('pages.Client.detail', compact(
@@ -233,6 +245,22 @@ class ClientController extends Controller
             'clientDocuments',
             'documents'
         ));
+    }
+
+
+    public function searchByRegistrationCode(Request $request)
+    {
+        $request->validate([
+            'registration_code' => 'required|string'
+        ]);
+
+        // Cari dokumen berdasarkan registration_code
+        $picDocuments = PicDocuments::with('processes')
+            ->where('pic_document_code', $request->registration_code)
+            ->get();
+
+
+        return view('pages.Client.detail')->with('registration_code', $request->registration_code);
     }
 
     public function generateRegistrationCode(int $notarisId, int $clientId): string

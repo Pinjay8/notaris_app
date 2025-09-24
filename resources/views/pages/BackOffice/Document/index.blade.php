@@ -143,7 +143,12 @@
                                 <td>{{ $product->document_code ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->uploaded_at)->format('d-m-Y') }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
+                                    <span class="badge
+                                        @if($product->status == 'new') bg-primary
+                                        @elseif($product->status == 'valid') bg-success
+                                        @elseif($product->status == 'invalid') bg-danger
+                                        @else bg-secondary
+                                        @endif">
                                         {{ ucfirst($product->status) }}
                                     </span>
                                 </td>
@@ -300,28 +305,30 @@
                                         data-bs-target="#validationModal-{{ $product->registration_code }}">
                                         <i class="fa fa-check"></i>
                                     </button>
-
+                                    <button type="button" class="btn btn-danger btn-xs" data-bs-toggle="modal"
+                                        data-bs-target="#invalidModal-{{ $product->registration_code }}">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
                                     <div class="modal fade" id="validationModal-{{ $product->registration_code }}"
                                         tabindex="-1"
                                         aria-labelledby="validationModalLabel-{{ $product->registration_code }}"
                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-dialog modal-dialog-centered modal-md">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Validasi Dokumen</h5>
                                                     <button type="button" class="btn-close"
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="modal-body text-center">
+                                                <div class="modal-body text-center text-wrap">
                                                     Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
                                                     kode registrasi
                                                     <strong>{{ $product->registration_code }}</strong> <br>
-                                                    dinyatakan <span class="text-success fw-bold">VALID</span> atau
-                                                    <span class="text-danger fw-bold">TIDAK VALID</span>?
+                                                    dinyatakan <span class="text-success fw-bold">VALID?</span>
                                                 </div>
-                                                <div class="modal-footer d-flex justify-content-between">
+                                                <div class="modal-footer d-flex justify-content-end">
                                                     {{-- Tidak Valid --}}
-                                                    <form method="POST"
+                                                    {{-- <form method="POST"
                                                         action="{{ route('management-document.updateStatus') }}">
                                                         @csrf
                                                         <input type="hidden" name="registration_code"
@@ -333,7 +340,7 @@
                                                         <input type="hidden" name="status" value="invalid">
                                                         <button type="submit" class="btn btn-danger">Tidak
                                                             Valid</button>
-                                                    </form>
+                                                    </form> --}}
 
                                                     {{-- Valid --}}
                                                     <form method="POST"
@@ -346,7 +353,42 @@
                                                         <input type="hidden" name="client_id"
                                                             value="{{ $product->client_id }}">
                                                         <input type="hidden" name="status" value="valid">
-                                                        <button type="submit" class="btn btn-success">Valid</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="invalidModal-{{ $product->registration_code }}"
+                                        tabindex="-1"
+                                        aria-labelledby="invalidModalLabel-{{ $product->registration_code }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-md">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Validasi Dokumen</h5>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body text-center text-wrap">
+                                                    Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
+                                                    kode registrasi
+                                                    <strong>{{ $product->registration_code }}</strong> dinyatakan
+                                                    <span class="text-danger fw-bold">TIDAK VALID</span>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form method="POST"
+                                                        action="{{ route('management-document.updateStatus') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="registration_code"
+                                                            value="{{ $product->registration_code }}">
+                                                        <input type="hidden" name="notaris_id"
+                                                            value="{{ $product->notaris_id }}">
+                                                        <input type="hidden" name="client_id"
+                                                            value="{{ $product->client_id }}">
+                                                        <input type="hidden" name="status" value="invalid">
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
                                                     </form>
                                                 </div>
                                             </div>

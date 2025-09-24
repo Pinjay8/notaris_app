@@ -7,11 +7,11 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header pb-0">
-                <h5>Daftar Serah Terima</h5>
+                <h5>Serah Terima Dokumen</h5>
             </div>
             <div class="card-body">
                 <form method="GET" action="{{ route('pic_handovers.index') }}"
-                    class="d-flex justify-content-between gap-2">
+                    class="d-flex justify-content-between gap-2 mb-2">
                     <div class="input-group input-group-sm" style="max-width: 400px;" class="no-spinner">
                         <input type="text" name="search" class="form-control"
                             placeholder="Cari berdasarkan kode dokumen" value="{{ request('search') }}">
@@ -19,14 +19,14 @@
                     </div>
                     <div>
                         <a href="{{ route('pic_handovers.create') }}" class="btn btn-primary btn-sm mb-0">
-                            + Serah Terima
+                            + Tambah Serah Terima
                         </a>
                     </div>
                 </form>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>#</th>
                             <th>Kode Dokumen</th>
                             <th>Tanggal</th>
                             <th>Penerima</th>

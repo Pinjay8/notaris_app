@@ -33,11 +33,13 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="text-center">No</th>
+                                    <th class="text-center">#</th>
                                     <th>Kode PIC Dokumen</th>
                                     <th>PIC</th>
                                     <th>Klien</th>
                                     <th>Tipe Dokumen</th>
+                                    <th>Nomor Dokumen</th>
+                                    <th>Tanggal Diterima</th>
                                     <th>Status</th>
                                     <th>
                                         Aksi</th>
@@ -51,9 +53,32 @@
                                     <td>{{ $doc->pic->full_name ?? '-' }}</td>
                                     <td>{{ $doc->client->fullname ?? '-' }}</td>
                                     <td>{{ $doc->document_type }}</td>
+                                    <td>{{ $doc->document_number }}</td>
                                     <td>
-                                        <span class="badge bg-{{ $doc->status=='selesai' ? 'success' : 'warning' }}">
-                                            {{ ucfirst($doc->status) }}
+                                        {{ $doc->received_date ?
+                                        \Carbon\Carbon::parse($doc->received_date)->format('d-m-Y') : '-' }}
+                                    </td>
+                                    {{-- Badge Status --}}
+                                    {{-- Define badge colors and status text --}}
+                                    @php
+                                    $badgeColors = [
+                                    'delivered' => 'primary', // biru
+                                    'completed' => 'success', // hijau
+                                    'process' => 'warning', // kuning
+                                    'received' => 'info', // biru muda
+                                    ];
+
+                                    $statusText = [
+                                    'delivered' => 'Dikirim',
+                                    'completed' => 'Selesai',
+                                    'process' => 'Proses',
+                                    'received' => 'Diterima',
+                                    ];
+                                    @endphp
+
+                                    <td>
+                                        <span class="badge bg-{{ $badgeColors[$doc->status] ?? 'secondary' }}">
+                                            {{ $statusText[$doc->status] ?? $doc->status }}
                                         </span>
                                     </td>
                                     <td class="text-center">

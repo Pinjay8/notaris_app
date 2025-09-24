@@ -42,7 +42,7 @@
                                     Completed At
                                 </th>
                                 <th class="th-title">
-                                    Action
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>

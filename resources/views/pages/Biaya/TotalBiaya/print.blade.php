@@ -116,8 +116,8 @@
     {{-- Informasi utama --}}
     <div class="info">
         <p><strong>Kode Pembayaran:</strong> {{ $costs->payment_code }}</p>
-        <p><strong>Klien:</strong> {{ $costs->client->name ?? '-' }}</p>
-        <p><strong>Notaris:</strong> {{ $costs->notaris->name ?? '-' }}</p>
+        <p><strong>Klien:</strong> {{ $costs->client->fullname ?? '-' }}</p>
+        <p><strong>Notaris:</strong> {{ $costs->notaris->display_name ?? '-' }}</p>
         <p><strong>Status Pembayaran:</strong>
             @if($costs->payment_status == 'unpaid')
             Belum Dibayar

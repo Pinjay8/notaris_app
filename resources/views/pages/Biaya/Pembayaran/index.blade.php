@@ -72,7 +72,7 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10%">No</th>
+                                        <th style="width: 10%">#</th>
                                         <th>Payment File</th>
                                         <th style="width: 20%">Status</th>
                                         <th style="width: 15%">Aksi</th>

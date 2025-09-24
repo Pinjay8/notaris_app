@@ -9,7 +9,7 @@
             {{-- Card Utama --}}
             <div class="card mb-4">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="mb-0">Daftar Proses Pengurusan</h5>
+                    <h5 class="mb-0">Proses Pengurusan</h5>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -26,7 +26,7 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr class="text-center">
-                                    <th>No</th>
+                                    <th>#</th>
                                     <th>Nama Proses</th>
                                     <th>Status</th>
                                     <th>Tanggal Proses</th>

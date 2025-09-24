@@ -95,12 +95,14 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     <a href="{{ route('documents.edit', $document->id) }}"
-                                        class="btn btn-info btn-sm mb-0">Edit</a>
+                                        class="btn btn-info btn-sm mb-0 "> <i class="fa-solid fa-pencil"
+                                            style="font-size: 14px">
+                                        </i></a>
                                     <form action="{{ route('documents.deactivate', $document->id) }}" method="POST"
                                         class="d-inline-block">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="btn btn-warning btn-sm mb-0">Nonaktifkan</button>
+                                        <button type="submit" class="btn btn-dark btn-sm mb-0">Nonaktif</button>
                                     </form>
                                     {{-- <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $product->id }}">

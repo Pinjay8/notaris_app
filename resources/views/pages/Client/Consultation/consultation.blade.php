@@ -17,11 +17,11 @@
                         <thead>
                             <tr>
                                 <th class="th-title">
-                                    Id
+                                    #
                                 </th>
-                                <th class="th-title">
+                                {{-- <th class="th-title">
                                     Notaris
-                                </th>
+                                </th> --}}
                                 <th class="th-title">
                                     Klien
                                 </th>
@@ -38,7 +38,7 @@
                                     Status
                                 </th>
                                 <th class="th-title">
-                                    Action
+                                    Aksi
                                 </th>
                             </tr>
                         </thead>
@@ -48,12 +48,12 @@
                                 <td>
                                     <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <p class="text-sm mb-0  text-center"> {{
                                         $notaryconsultation->notaris->display_name
                                         }}
                                     </p>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <p class="text-sm mb-0  text-center">{{
                                         $notaryconsultation->client->fullname
@@ -72,15 +72,23 @@
                                 </td>
                                 <td>
                                     <p class="text-sm mb-0  text-center">{{
-                                        $notaryconsultation->description }}
+                                        $notaryconsultation->description ?? '-' }}
                                     </p>
                                 </td>
                                 <td>
                                     <span
-                                        class="badge text-center d-block mx-auto bg-{{ $notaryconsultation->status == 'done' ? 'success' : 'secondary' }}">
+                                        class="badge badge-sm   py-2 text-center d-block w-50 mx-auto
+                                        bg-{{ $notaryconsultation->status == 'done' ? 'success' : ($notaryconsultation->status == 'progress' ? 'warning' : 'secondary') }}">
+                                        @if ($notaryconsultation->status == 'done')
+                                        Selesai
+                                        @elseif ($notaryconsultation->status == 'progress')
+                                        Sedang Diproses
+                                        @else
                                         {{ ucfirst($notaryconsultation->status) }}
+                                        @endif
                                     </span>
                                 </td>
+
                                 <td class="text-center">
                                     <a href="{{ route('consultation.edit', $notaryconsultation->id) }}"
                                         class="btn btn-info btn-xs mb-0">
@@ -88,11 +96,11 @@
                                         </i>
                                     </a>
                                     {{-- get product by consultation --}}
-                                    <a href="{{ route('consultation.detail', $notaryconsultation->id) }}"
-                                        class="btn btn-info btn-xs mb-0">
+                                    {{-- <a href="{{ route('consultation.detail', $notaryconsultation->id) }}"
+                                        class="btn btn-warning btn-xs mb-0">
                                         <i class="fa-solid fa-list" style="font-size: 14px">
                                         </i>
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                             @empty

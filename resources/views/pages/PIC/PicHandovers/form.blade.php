@@ -43,8 +43,9 @@
                         <label class="form-label">File (Opsional)</label>
                         <input type="file" name="file_path" class="form-control">
                     </div>
-                    <button class="btn btn-primary">Simpan</button>
+
                     <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button class="btn btn-primary">Simpan</button>
                 </form>
             </div>
         </div>

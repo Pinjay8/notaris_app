@@ -157,7 +157,7 @@
 </div>
 
 @endsection
-@push('js')
+
 @push('js')
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -41,20 +41,60 @@
             border: 1px solid #000;
             padding: 8px;
         }
+
+        .handover-info {
+            max-width: 500px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Grid untuk label dan value */
+        .handover-info .info-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            /* label tetap, value fleksibel */
+            margin-bottom: 8px;
+        }
+
+        .handover-info .label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .handover-info .value {
+            color: #333;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
         <h2>Berita Acara Serah Terima Dokumen</h2>
-        <p>Notaris: {{ $handover->notaris_id->display_name ?? '-' }}</p>
+        <p>Notaris: {{ $handover->notaris->display_name ?? '-' }}</p>
     </div>
 
     <div class="section">
-        <span class="label">Kode Dokumen:</span> {{ $handover->picDocument->pic_document_code ?? '-' }} <br>
-        <span class="label">Tanggal Serah Terima:</span> {{ $handover->handover_date }} <br>
-        <span class="label">Nama Penerima:</span> {{ $handover->recipient_name }} <br>
-        <span class="label">Kontak Penerima:</span> {{ $handover->recipient_contact ?? '-' }} <br>
+        <div class="handover-info">
+            <div class="info-row">
+                <span class="label">Kode Dokumen:</span>
+                <span class="value">{{ $handover->picDocument->pic_document_code ?? '-' }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Tanggal Serah Terima:</span>
+                <span class="value">{{ $handover->handover_date }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Nama Penerima:</span>
+                <span class="value">{{ $handover->recipient_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Kontak Penerima:</span>
+                <span class="value">{{ $handover->recipient_contact ?? '-' }}</span>
+            </div>
+        </div>
     </div>
 
     <div class="section">
@@ -75,7 +115,27 @@
                 <td>1</td>
                 <td>{{ $handover->picDocument->document_type ?? '-' }} ({{ $handover->picDocument->document_number ??
                     '-' }})</td>
-                <td>{{ $handover->picDocument->status ?? '-' }}</td>
+                @php
+                $badgeColors = [
+                'delivered' => 'primary', // biru
+                'received' => 'info', // biru muda
+                'process' => 'warning', // kuning/oranye
+                'completed' => 'success', // hijau
+                ];
+
+                $statusText = [
+                'delivered' => 'Dikirim',
+                'received' => 'Diterima',
+                'process' => 'Proses',
+                'completed' => 'Selesai',
+                ];
+                @endphp
+
+                <td>
+                    <span class="badge bg-{{ $badgeColors[$handover->picDocument->status] ?? 'secondary' }}">
+                        {{ $statusText[$handover->picDocument->status] ?? $handover->picDocument->status ?? '-' }}
+                    </span>
+                </td>
             </tr>
         </tbody>
     </table>

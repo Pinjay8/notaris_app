@@ -90,3 +90,7 @@ th {
 .spinner-overlay.show {
     opacity: 1;
 }
+
+.accordion-button::after {
+    filter: invert(1) !important; /* membuat panah gelap */
+}

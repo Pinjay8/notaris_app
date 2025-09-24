@@ -112,9 +112,9 @@
                             </option>
                             <option value="process" {{ old('status', $picDocument->status ?? '') == 'process' ?
                                 'selected' : '' }}>Proses</option>
-                            <option value="received" {{ old('status', $picDocument->status ?? '') == 'diterima' ?
+                            <option value="received" {{ old('status', $picDocument->status ?? '') == 'received' ?
                                 'selected' : '' }}>Diterima</option>
-                            <option value="completed" {{ old('status', $picDocument->status ?? '') == 'selesai' ?
+                            <option value="completed" {{ old('status', $picDocument->status ?? '') == 'completed' ?
                                 'selected' : '' }}>Selesai</option>
                         </select>
                         @error('status')

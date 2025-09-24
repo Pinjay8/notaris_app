@@ -50,7 +50,7 @@ class NotaryConsultationController extends Controller
     public function getConsultationByClient($id)
     {
         $client = Client::findOrFail($id);
-        $notaryConsultations = NotaryConsultation::where('client_id', $client->id)->get();
+        $notaryConsultations = NotaryConsultation::where('client_id', $client->id)->latest()->get();
         return view('pages.Client.Consultation.consultation', compact('notaryConsultations', 'client'));
     }
 

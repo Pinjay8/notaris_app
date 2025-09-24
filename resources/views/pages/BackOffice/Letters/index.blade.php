@@ -35,16 +35,16 @@
                         </thead>
                         <tbody>
                             @forelse ($notaryLetters as $letter)
-                            <tr>
-                                <td class="text-center">{{ $loop->iteration }}</td>
-                                <td class="text-center">{{ $letter->letter_number }}</td>
-                                <td class="text-center">{{ $letter->type ?? '-' }}</td>
-                                <td class="text-center">{{ $letter->recipient ?? '-' }}</td>
-                                <td class="text-center">{{ $letter->subject ?? '-' }}</td>
-                                <td class="text-center">{{ $letter->date ?
+                            <tr class="text-sm text-center">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $letter->letter_number }}</td>
+                                <td>{{ $letter->type ?? '-' }}</td>
+                                <td>{{ $letter->recipient ?? '-' }}</td>
+                                <td>{{ $letter->subject ?? '-' }}</td>
+                                <td>{{ $letter->date ?
                                     \Carbon\Carbon::parse($letter->date)->format('d-m-Y') : '-' }}</td>
-                                <td class="text-center">{{ $letter->attachment ?? '-' }}</td>
-                                <td class="text-center">
+                                <td>{{ $letter->attachment ?? '-' }}</td>
+                                <td>
                                     @if($letter->file_path)
                                     <a href="{{ asset('storage/'.$letter->file_path) }}" target="_blank"
                                         class="btn btn-info btn-sm mb-0">Lihat File</a>
@@ -54,7 +54,7 @@
                                 </td>
                                 <td class="text-center">
                                     <a href="{{ route('notary-letters.edit', $letter->id) }}"
-                                        class="btn btn-warning btn-sm mb-0">Edit</a>
+                                        class="btn btn-info btn-sm mb-0">Edit</a>
                                     <form action="{{ route('notary-letters.destroy', $letter->id) }}" method="POST"
                                         class="d-inline-block">
                                         @csrf

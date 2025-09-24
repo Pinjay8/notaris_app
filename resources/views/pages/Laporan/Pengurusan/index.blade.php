@@ -37,7 +37,7 @@
                     <div class="col-md-2 d-flex align-items-end gap-1 flex-wrap">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">
                             <i class="bi bi-funnel"></i>
-                            Tampilkan</button>
+                            Cari</button>
                         <a href="{{ route('report-progress.print', request()->all()) }}" target="_blank"
                             class="btn btn-danger mb-0 btn-sm">
                             <i class="bi bi-file-earmark-pdf"></i> PDF
@@ -50,7 +50,7 @@
                     <table class="table table-hover align-items-center mb-0">
                         <thead>
                             <tr class="text-center">
-                                <th>No</th>
+                                <th>#</th>
                                 <th>Kode Proses</th>
                                 <th>Pic</th>
                                 <th>Nama Klien</th>

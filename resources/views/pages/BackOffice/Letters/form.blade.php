@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Klien</label>
-                        <select name="client_id" class="form-select">
+                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id
@@ -29,12 +29,18 @@
                             </option>
                             @endforeach
                         </select>
+                        @error('client_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label">Nomor Surat</label>
-                        <input type="text" name="letter_number" class="form-control"
+                        <input type="text" name="letter_number"
+                            class="form-control @error('letter_number') is-invalid @enderror"
                             value="{{ old('letter_number', $data->letter_number ?? '') }}">
+                        @error('letter_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -45,20 +51,30 @@
 
                     <div class="mb-3">
                         <label class="form-label">Penerima</label>
-                        <input type="text" name="recipient" class="form-control"
+                        <input type="text" name="recipient"
+                            class="form-control @error('recipient') is-invalid @enderror"
                             value="{{ old('recipient', $data->recipient ?? '') }}">
+                        @error('recipient')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Subjek</label>
-                        <input type="text" name="subject" class="form-control"
+                        <input type="text" name="subject" class="form-control @error('subject') is-invalid @enderror"
                             value="{{ old('subject', $data->subject ?? '') }}">
+                        @error('subject')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Tanggal Surat</label>
-                        <input type="date" name="date" class="form-control"
+                        <input type="date" name="date" class="form-control @error('date') is-invalid @enderror"
                             value="{{ old('date', isset($data->date) ? \Carbon\Carbon::parse($data->date)->format('Y-m-d') : '') }}">
+                        @error('date')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -100,9 +116,10 @@
                         @endif
                     </div>
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
+                    <div>
                         <a href="{{ route('notary-letters.index') }}" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
+
                     </div>
 
                 </form>
