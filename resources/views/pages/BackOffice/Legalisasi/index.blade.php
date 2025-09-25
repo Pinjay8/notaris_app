@@ -13,20 +13,21 @@
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('notary-legalisasi.index') }}"
-                        class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
-                        <input type="text" name="legalisasi_number" placeholder="Cari nomor legalisasi..."
-                            value="{{ request('legalisasi_number') }}" class="form-control">
-                        <select name="sort" class="form-select">
-                            <option value="" {{ request('sort')=='' ? 'selected' : '' }}>Urutkan</option>
-                            <option value="asc" {{ request('sort')=='asc' ? 'selected' : '' }}>Tanggal Awal</option>
-                            <option value="desc" {{ request('sort')=='desc' ? 'selected' : '' }}>Tanggal Terbaru
-                            </option>
-                        </select>
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                    </form>
+                <form method="GET" action="{{ route('notary-legalisasi.index') }}"
+                    class="d-flex justify-content-end flex-nowrap gap-2 ms-auto me-4 mb-3">
+                    <input type="text" name="legalisasi_number" placeholder="Cari nomor legalisasi..."
+                        value="{{ request('legalisasi_number') }}" class="form-control" style="max-width: 200px;">
 
+                    <select name="sort" class="form-select flex-shrink-0" style="max-width: 150px;">
+                        <option value="" {{ request('sort')=='' ? 'selected' : '' }}>Urutkan</option>
+                        <option value="asc" {{ request('sort')=='asc' ? 'selected' : '' }}>Tanggal Awal</option>
+                        <option value="desc" {{ request('sort')=='desc' ? 'selected' : '' }}>Tanggal Terbaru
+                        </option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary btn-sm flex-shrink-0 mb-0">Cari</button>
+                </form>
+                <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr class="text-center">

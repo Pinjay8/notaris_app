@@ -53,15 +53,21 @@ class NotaryAktaTransactionController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            // 'notaris_id' => 'required|exists:notaris,id',
-            // 'registration_code' => 'required|string',
-            'client_id' => 'required|exists:clients,id',
-            'akta_type_id' => 'required|exists:notary_akta_types,id',
-            'date_submission' => 'nullable|date',
-            'date_finished' => 'nullable|date',
-            'note' => 'nullable|string',
-        ]);
+        $data = $request->validate(
+            [
+                // 'notaris_id' => 'required|exists:notaris,id',
+                // 'registration_code' => 'required|string',
+                'client_id' => 'required|exists:clients,id',
+                'akta_type_id' => 'required|exists:notary_akta_types,id',
+                'date_submission' => 'nullable|date',
+                'date_finished' => 'nullable|date',
+                'note' => 'nullable|string',
+            ],
+            [
+                'client_id.required' => 'Klien harus dipilih.',
+                'akta_type_id.required' => 'Jenis akta harus dipilih.',
+            ]
+        );
 
         $data['status'] = 'draft';
         $data['year'] = null;
@@ -88,15 +94,21 @@ class NotaryAktaTransactionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            // 'notaris_id' => 'required|exists:notaris,id',
-            // 'registration_code' => 'required|string',
-            'client_id' => 'required|exists:clients,id',
-            'akta_type_id' => 'required|exists:notary_akta_types,id',
-            'date_submission' => 'required|date',
-            'date_finished' => 'required|date',
-            'note' => 'nullable|string',
-        ]);
+        $data = $request->validate(
+            [
+                // 'notaris_id' => 'required|exists:notaris,id',
+                // 'registration_code' => 'required|string',
+                'client_id' => 'required|exists:clients,id',
+                'akta_type_id' => 'required|exists:notary_akta_types,id',
+                'date_submission' => 'required|date',
+                'date_finished' => 'required|date',
+                'note' => 'nullable|string',
+            ],
+            [
+                'client_id.required' => 'Klien harus dipilih.',
+                'akta_type_id.required' => 'Jenis akta harus dipilih.',
+            ]
+        );
 
 
         $data['status'] = 'draft';

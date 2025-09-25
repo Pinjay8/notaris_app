@@ -32,13 +32,19 @@ class NotaryAktaTypesController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            // 'notaris_id' => 'required|exists:notaris,id',
-            'category' => 'required|in:pendirian,perubahan,pemutusan',
-            'type' => 'required|string',
-            'description' => 'nullable|string',
-            'documents' => 'nullable|string',
-        ]);
+        $data = $request->validate(
+            [
+                // 'notaris_id' => 'required|exists:notaris,id',
+                'category' => 'required|in:pendirian,perubahan,pemutusan',
+                'type' => 'required|string',
+                'description' => 'nullable|string',
+                'documents' => 'nullable|string',
+            ],
+            [
+                'category.required' => 'Kategori akta harus dipilih.',
+                'type.required' => 'Tipe akta harus diisi.',
+            ]
+        );
 
         $data['notaris_id'] = auth()->user()->notaris_id;
 
@@ -57,15 +63,17 @@ class NotaryAktaTypesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'category' => 'nullable|in:pendirian,perubahan,pemutusan',
             'type' => 'nullable|string',
             'description' => 'nullable|string',
             'documents' => 'required|string',
         ]);
 
+        $data['notaris_id'] = auth()->user()->notaris_id;
+
         $this->service->update($id, $data);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta type.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui tipe akta.');
         return redirect()->route('akta-types.index');
     }
     public function destroy($id)

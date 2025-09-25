@@ -12,13 +12,13 @@
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
+                <form method="GET" action="{{ route('notary-letters.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
+                    style="max-width: 300px;" class="no-spinner">
+                    <input type="text" name="search" placeholder="Cari nomor surat..." value="{{ request('search') }}"
+                        class="form-control">
+                    <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                </form>
                 <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('notary-letters.index') }}"
-                        class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 300px;" class="no-spinner">
-                        <input type="text" name="search" placeholder="Cari nomor surat..."
-                            value="{{ request('search') }}" class="form-control">
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                    </form>
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>

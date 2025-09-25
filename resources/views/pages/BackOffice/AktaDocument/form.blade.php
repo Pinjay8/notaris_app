@@ -23,47 +23,75 @@
                         <input type="text" name="registration_code" class="form-control"
                             value="{{ $document->registration_code ?? old('registration_code') }}" required>
                     </div> --}}
-
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama Dokumen</label>
-                        <input type="text" name="name" class="form-control" value="{{ $document->name ?? old('name') }}"
-                            required>
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror"
+                            value="{{ old('name', $document->name ?? '') }}">
+
+                        @error('name')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="type" class="form-label">Tipe</label>
-                        <input type="text" name="type" class="form-control" value="{{ $document->type ?? old('type') }}"
-                            required>
-                    </div>
+                        <input type="text" name="type" id="type"
+                            class="form-control @error('type') is-invalid @enderror"
+                            value="{{ old('type', $document->type ?? '') }}">
 
-                    <div class="mb-3">
+                        @error('type')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    {{-- <div class="mb-3">
                         <label for="file_name" class="form-label">Nama File</label>
                         <input type="text" name="file_name" class="form-control"
                             value="{{ $document->file_name ?? old('file_name') }}" required>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
-                        <label for="file_url" class="form-label">File</label>
-                        <input type="file" name="file_url" class="form-control">
+                        <label for="file_url" class="form-label">File Akta Dokumen</label>
+                        <input type="file" name="file_url" id="file_url"
+                            class="form-control @error('file_url') is-invalid @enderror">
+
+                        @error('file_url')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+
                         @if(isset($document) && $document->file_url)
-                        <a href="{{ asset('storage/'.$document->file_url) }}" target="_blank" class="mt-1 d-block">Lihat
-                            File</a>
+                        <a href="{{ asset('storage/'.$document->file_url) }}" target="_blank"
+                            class="btn btn-outline-primary btn-sm mt-2 mb-0">
+                            📂 Lihat File
+                        </a>
                         @endif
                     </div>
 
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="file_type" class="form-label">Tipe Dokumen</label>
                         <input type="text" name="file_type" class="form-control"
                             value="{{ $document->file_type ?? old('file_type') }}" required>
-                    </div>
+                    </div> --}}
 
                     {{-- uploaded_at --}}
                     <div class="mb-3">
                         <label for="uploaded_at" class="form-label">Tanggal Upload</label>
-                        <input type="datetime-local" name="uploaded_at" class="form-control"
-                            value="{{ isset($document) && $document->uploaded_at ? $document->uploaded_at->format('Y-m-d\TH:i') : old('uploaded_at') }}"
-                            required>
+                        <input type="datetime-local" name="uploaded_at" id="uploaded_at"
+                            class="form-control @error('uploaded_at') is-invalid @enderror"
+                            value="{{ old('uploaded_at', isset($document) && $document->uploaded_at ? \Carbon\Carbon::parse($document->uploaded_at)->format('Y-m-d\TH:i') : '') }}">
+
+                        @error('uploaded_at')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     {{--
@@ -77,8 +105,9 @@
                         </select>
                     </div> --}}
 
-                    <button type="submit" class="btn btn-primary">{{ isset($document) ? 'Update' : 'Simpan' }}</button>
+
                     <a href="{{ route('akta-documents.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">{{ isset($document) ? 'Update' : 'Simpan' }}</button>
                 </form>
             </div>
         </div>

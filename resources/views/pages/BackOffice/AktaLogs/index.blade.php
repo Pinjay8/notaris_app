@@ -20,71 +20,74 @@
                     <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                 </form>
 
-                <table class="table align-items-center mb-0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Notaris</th>
-                            <th>Client</th>
-                            <th>Transaksi Akta</th>
-                            <th>Registration Code</th>
-                            <th>Step</th>
-                            <th>Note</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($logs as $log)
-                        <tr class="text-center text-sm">
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $log->notaris->display_name ?? '-' }}</td>
-                            <td>{{ $log->client->fullname ?? '-' }}</td>
-                            <td>{{ $log->akta_transaction->registration_code ?? '-' }}</td>
-                            <td>{{ $log->registration_code }}</td>
-                            <td>{{ $log->step }}</td>
-                            <td>{{ $log->note }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('akta-logs.edit', $log->id) }}" class="btn btn-info btn-sm">Edit</a>
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal{{ $log->id }}">
-                                    Hapus
-                                </button>
-                            </td>
-                        </tr>
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Notaris</th>
+                                <th>Klien</th>
+                                <th>Transaksi Akta</th>
+                                <th>Kode Registrasi</th>
+                                <th>Step</th>
+                                <th>Note</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($logs as $log)
+                            <tr class="text-center text-sm">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $log->notaris->display_name ?? '-' }}</td>
+                                <td>{{ $log->client->fullname ?? '-' }}</td>
+                                <td>{{ $log->akta_transaction->registration_code ?? '-' }}</td>
+                                <td>{{ $log->registration_code }}</td>
+                                <td>{{ $log->step }}</td>
+                                <td>{{ $log->note }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('akta-logs.edit', $log->id) }}"
+                                        class="btn btn-info btn-sm">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal{{ $log->id }}">
+                                        Hapus
+                                    </button>
+                                </td>
+                            </tr>
 
-                        <!-- Delete Modal -->
-                        <div class="modal fade" id="deleteModal{{ $log->id }}" tabindex="-1"
-                            aria-labelledby="deleteModalLabel{{ $log->id }}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel{{ $log->id }}">Hapus Log</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Apakah Anda yakin ingin menghapus log ini?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Batal</button>
-                                        <form action="{{ route('akta-logs.destroy', $log->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Hapus</button>
-                                        </form>
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal{{ $log->id }}" tabindex="-1"
+                                aria-labelledby="deleteModalLabel{{ $log->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel{{ $log->id }}">Hapus Log</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah Anda yakin ingin menghapus log ini?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Batal</button>
+                                            <form action="{{ route('akta-logs.destroy', $log->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @empty
-                        <tr>
-                            <td colspan="8" class="text-center text-muted text-sm">Belum ada data log.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center text-muted text-sm">Belum ada data log.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

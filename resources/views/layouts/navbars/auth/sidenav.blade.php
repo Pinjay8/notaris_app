@@ -206,7 +206,7 @@
                         </li>
                         <li>
                             <a href="{{ route('akta_number.index') }}"
-                                class="nav-link {{ request()->is('akta_number*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('akta-number*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>
@@ -278,7 +278,7 @@
                         </li>
                         <li>
                             <a href="{{ route('relaas_akta.indexNumber') }}"
-                                class="nav-link {{ request()->is('relaas_akta*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('relaas-akta*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>

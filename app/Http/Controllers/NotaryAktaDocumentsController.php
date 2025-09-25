@@ -64,10 +64,15 @@ class NotaryAktaDocumentsController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'type' => 'required|string',
-            'file_name' => 'required|string',
+            // 'file_name' => 'required|string',
             'file_url' => 'required|file|max:10240',
-            'file_type' => 'required|string',
+            // 'file_type' => 'required|string',
             'uploaded_at' => 'required|date',
+        ], [
+            'name.required' => 'Nama dokumen harus diisi.',
+            'type.required' => 'Tipe dokumen harus diisi.',
+            'file_url.required' => 'File dokumen harus diupload.',
+            'uploaded_at.required' => 'Tanggal upload harus diisi.',
         ]);
 
         $data['notaris_id'] = $transaction->notaris_id;
@@ -77,12 +82,24 @@ class NotaryAktaDocumentsController extends Controller
         $data['akta_number'] = $transaction->akta_number;
 
         if ($request->hasFile('file_url')) {
-            $data['file_url'] = $request->file('file_url')->storeAs('documents', $request->file('file_url')->getClientOriginalName());
+            $file = $request->file('file_url');
+            $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
+            $fileExtension = $file->getClientOriginalExtension(); // pdf
+
+            // simpan file ke storage/app/documents
+            $storedPath = $file->storeAs('documents', $originalName);
+
+            // isi otomatis
+            $data['file_url'] = $storedPath;
+            $data['file_name'] = $fileNameOnly;
+            $data['file_type'] = $fileExtension;
         }
 
         NotaryAktaDocuments::create($data);
 
-        return redirect()->route('akta-documents.index', ['registration_code' => $transaction->registration_code, 'akta_number' => $transaction->akta_number])->with('success', 'Akta Dokumen berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta document.');
+        return redirect()->route('akta-documents.index', ['registration_code' => $transaction->registration_code, 'akta_number' => $transaction->akta_number]);
     }
 
     public function edit($id)
@@ -93,24 +110,58 @@ class NotaryAktaDocumentsController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $document = NotaryAktaDocuments::findOrFail($id);
+        $transaction = NotaryAktaTransaction::findOrFail($document->akta_transaction_id);
+
         $data = $request->validate([
-            'document_name' => 'required|string',
-            'file' => 'nullable|file',
-            'status' => 'required|in:draft,uploaded,verified'
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'file_url' => 'nullable|file|max:10240',
+            'uploaded_at' => 'required|date',
+        ], [
+            'name.required' => 'Nama dokumen harus diisi.',
+            'type.required' => 'Tipe dokumen harus diisi.',
+            'file_url.required' => 'File dokumen harus diupload.',
+            'uploaded_at.required' => 'Tanggal upload harus diisi.',
         ]);
 
-        if ($request->hasFile('file')) {
-            $data['file'] = $request->file('file')->store('akta_documents', 'public');
+
+        $data['notaris_id'] = $transaction->notaris_id;
+        $data['client_id'] = $transaction->client_id;
+        $data['akta_transaction_id'] = $transaction->id;
+        $data['registration_code'] = $transaction->registration_code;
+        $data['akta_number'] = $transaction->akta_number;
+
+
+        if ($request->hasFile('file_url')) {
+            $file = $request->file('file_url');
+            $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
+            $fileExtension = $file->getClientOriginalExtension(); // pdf
+
+            // simpan file ke storage/app/documents
+            $storedPath = $file->storeAs('documents', $originalName);
+
+            // isi otomatis
+            $data['file_url'] = $storedPath;
+            $data['file_name'] = $fileNameOnly;
+            $data['file_type'] = $fileExtension;
         }
 
         $this->service->update($id, $data);
 
-        return redirect()->route('akta-documents.index')->with('success', 'Akta Dokumen berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta document.');
+        return redirect()->route('akta-documents.index', [
+            'registration_code' => $transaction->registration_code,
+            'akta_number' => $transaction->akta_number
+        ]);
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
-        return redirect()->route('akta-documents.index')->with('success', 'AktaDokumen berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta document.');
+        return redirect()->route('akta-documents.index');
     }
 }

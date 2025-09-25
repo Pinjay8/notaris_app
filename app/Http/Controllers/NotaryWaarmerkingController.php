@@ -35,14 +35,21 @@ class NotaryWaarmerkingController extends Controller
     {
         $validated = $request->validate([
             'client_id'        => 'required|exists:clients,id',
-            'waarmerking_number' => 'nullable|string',
-            'officer_name'     => 'nullable|string',
-            'document_type'    => 'nullable|string',
+            'waarmerking_number' => 'required|string',
+            'applicant_name'   => 'required|string',
+            'officer_name'     => 'required|string',
+            'document_type'    => 'required|string',
             'document_number'  => 'nullable|string',
             'request_date'     => 'nullable|date',
             'release_date'     => 'nullable|date',
             'notes'            => 'nullable|string',
             'file_path'        => 'nullable|file',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
+            'officer_name.required' => 'Nama Petugas harus diisi.',
+            'document_type.required' => 'Jenis Dokumen harus diisi.',
+            'applicant_name.required' => 'Nama Pemohon harus diisi.',
         ]);
 
         if ($request->hasFile('file_path')) {
@@ -68,14 +75,21 @@ class NotaryWaarmerkingController extends Controller
     {
         $validated = $request->validate([
             'client_id'        => 'required|exists:clients,id',
-            'waarmerking_number' => 'nullable|string',
-            'officer_name'     => 'nullable|string',
-            'document_type'    => 'nullable|string',
+            'waarmerking_number' => 'required|string',
+            'applicant_name'   => 'required|string',
+            'officer_name'     => 'required|string',
+            'document_type'    => 'required|string',
             'document_number'  => 'nullable|string',
             'request_date'     => 'nullable|date',
             'release_date'     => 'nullable|date',
             'notes'            => 'nullable|string',
             'file_path'        => 'nullable|file',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
+            'officer_name.required' => 'Nama Petugas harus diisi.',
+            'document_type.required' => 'Jenis Dokumen harus diisi.',
+            'applicant_name.required' => 'Nama Pemohon harus diisi.',
         ]);
 
         if ($request->hasFile('file_path')) {
@@ -84,7 +98,7 @@ class NotaryWaarmerkingController extends Controller
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
-        
+
         $this->service->update($id, $validated);
         notyf()->position('x', 'right')->position('y', 'top')->success('Waarmerking berhasil diubah.');
         return redirect()->route('notary-waarmerking.index');

@@ -31,13 +31,13 @@
                             <tr>
                                 <th>#</th>
                                 <th>Klien</th>
-                                <th>Jenis Akta</th>
-                                <th>Status</th>
-                                <th>Tahun</th>
-                                <th>Nomor Akta</th>
                                 <th>Kode Registrasi</th>
+                                <th>Nomor Akta</th>
+                                <th>Jenis Akta</th>
+                                <th>Tahun</th>
                                 <th>Waktu Dibuat</th>
                                 <th>Waktu Selesai</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -46,11 +46,11 @@
                             <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $transaction->client->fullname }}</td>
-                                <td>{{ $transaction->akta_type->type ?? '-' }}</td>
-                                <td>{{ ucfirst($transaction->status) }}</td>
-                                <td>{{ $transaction->year ?? '-' }}</td>
-                                <td>{{ $transaction->akta_number ?? '-' }}</td>
                                 <td>{{ $transaction->registration_code ?? '-' }}</td>
+                                <td>{{ $transaction->akta_number ?? '-' }}</td>
+                                <td>{{ $transaction->akta_type->type ?? '-' }}</td>
+
+                                <td>{{ $transaction->year ?? '-' }}</td>
                                 <td>
                                     {{ $transaction->date_submission ?
                                     \Illuminate\Support\Carbon::parse($transaction->date_submission)->format('d F Y
@@ -62,10 +62,11 @@
                                     H:i:s')
                                     : '-' }}
                                 </td>
+                                <td>{{ ucfirst($transaction->status) }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('akta-transactions.edit', $transaction->id) }}"
-                                        class="btn btn-info btn-sm">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        class="btn btn-info btn-sm mb-0">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         data-url="{{ route('akta-transactions.destroy', $transaction->id) }}">
                                         Hapus
@@ -75,7 +76,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted text-sm">Belum ada transaksi akta.</td>
+                                <td colspan="10" class="text-center text-muted text-sm">Belum ada transaksi akta.</td>
                             </tr>
                             @endforelse
                         </tbody>

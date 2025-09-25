@@ -34,8 +34,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Notaris</th>
-                                <th>Client</th>
+                                <th>Klien</th>
                                 <th>Kode Registrasi</th>
                                 <th>Tahun</th>
                                 <th>Angka Relaas</th>
@@ -50,7 +49,7 @@
                             @forelse($data as $akta)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $akta->notaris->display_name ?? '-' }}</td>
+                                {{-- <td>{{ $akta->notaris->display_name ?? '-' }}</td> --}}
                                 <td>{{ $akta->client->fullname ?? '-' }}</td>
                                 <td>{{ $akta->registration_code ?? '-' }}</td>
                                 <td>{{ $akta->year ?? '-' }}</td>

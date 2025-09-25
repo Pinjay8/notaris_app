@@ -55,6 +55,10 @@ class NotaryRelaasDocumentController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
+            'uploaded_at' => 'required|date',
+        ], [
+            'name.required' => 'Nama dokumen harus diisi.',
+            'type.required' => 'Tipe dokumen harus diisi.',
         ]);
 
         if ($request->hasFile('file')) {
@@ -68,7 +72,7 @@ class NotaryRelaasDocumentController extends Controller
         $validated['registration_code'] = $relaas->registration_code;
         $validated['notaris_id'] = $relaas->notaris_id;
         $validated['client_id'] = $relaas->client_id;
-        $validated['uploaded_at'] = now();
+        // $validated['uploaded_at'] = now();
 
         $this->service->store($validated);
 
@@ -84,6 +88,9 @@ class NotaryRelaasDocumentController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
+        ], [
+            'name.required' => 'Nama dokumen harus diisi.',
+            'type.required' => 'Jenis dokumen harus diisi.',
         ]);
 
         if ($request->hasFile('file')) {

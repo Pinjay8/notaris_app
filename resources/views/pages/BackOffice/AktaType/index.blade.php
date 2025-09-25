@@ -14,7 +14,7 @@
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
                     <form method="GET" action="{{ route('akta-types.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
-                        style="max-width: 500px;" class="no-spinner">
+                        style="max-width: 350px;" class="no-spinner">
                         <input type="text" name="search" placeholder="Cari tipe..." value="{{ request('search') }}"
                             class="form-control">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
@@ -86,7 +86,7 @@
                                         class="btn btn-info btn-sm mb-0">Edit</a>
                                     <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $aktaType->id }}">
-                                        <i class="fas fa-trash"></i> Hapus
+                                        Hapus
                                     </button>
                                     @include('pages.BackOffice.AktaType.modal.index')
                                 </td>

@@ -30,9 +30,8 @@
                         </select>
                     </div> --}}
 
-                    {{-- Client --}}
                     <div class="mb-3">
-                        <label for="client_id" class="form-label">Client</label>
+                        <label for="client_id" class="form-label">Klien</label>
                         <select name="client_id" id="client_id" class="form-select" required>
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
@@ -100,10 +99,9 @@
                         </select>
                     </div>
                     @endif
-
+                    <a href="{{ route('akta-transactions.index') }}" class="btn btn-secondary">Kembali</a>
                     <button type="submit" class="btn btn-primary">{{ isset($transaction) ? 'Update' : 'Simpan'
                         }}</button>
-                    <a href="{{ route('akta-transactions.index') }}" class="btn btn-secondary">Kembali</a>
                 </form>
             </div>
         </div>

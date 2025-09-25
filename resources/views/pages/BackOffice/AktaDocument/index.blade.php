@@ -29,24 +29,24 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Kode Registrasi</strong></p>
-                                <p class="text-muted">{{ $transaction->registration_code }}</p>
+                                <h6 class="mb-1"><strong>Kode Registrasi</strong></h6>
+                                <p class="text-muted text-sm">{{ $transaction->registration_code }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Nomor Akta</strong></p>
-                                <p class="text-muted">{{ $transaction->akta_number ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $transaction->akta_number ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Jenis Akta</strong></p>
-                                <p class="text-muted">{{ $transaction->akta_type->type ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Jenis Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $transaction->akta_type->type ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Notaris</strong></p>
-                                <p class="text-muted">{{ $transaction->notaris->display_name ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Notaris</strong></h6>
+                                <p class="text-muted text-sm">{{ $transaction->notaris->display_name ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Client</strong></p>
-                                <p class="text-muted">{{ $transaction->client->fullname ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Klien</strong></h6>
+                                <p class="text-muted text-sm">{{ $transaction->client->fullname ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1"><strong>Status</strong></p>
@@ -78,7 +78,8 @@
                                 <th>#</th>
                                 <th>Nama Dokumen</th>
                                 <th>Tipe</th>
-                                <th>File</th>
+                                <th>Tanggal Upload</th>
+                                <th>File Dokumen</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -87,31 +88,36 @@
                             <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $doc->name }}</td>
-                                <td>{{ $doc->file_type }}</td>
+                                <td>{{ $doc->type }}</td>
+                                <td>
+                                    {{ $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('d-m-Y H:i')
+                                    : '-' }}
+                                </td>
                                 <td class="text-center">
                                     @if($doc->file_url)
                                     <a href="{{ asset('storage/'.$doc->file_url) }}" target="_blank"
-                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center">
+                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center mb-0">
                                         <i class="bi bi-file-earmark-text me-1"></i> Lihat File
                                     </a>
                                     @else
                                     <span class="badge bg-secondary">Tidak Ada File</span>
                                     @endif
                                 </td>
+
                                 <td>
                                     <a href="{{ route('akta-documents.edit', $doc->id) }}"
-                                        class="btn btn-info btn-sm">Edit</a>
+                                        class="btn btn-info btn-sm mb-0">Edit</a>
                                     <form action="{{ route('akta-documents.destroy', $doc->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                        <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="text-center">Belum ada dokumen.</td>
+                                <td colspan="6" class="text-center">Belum ada akta dokumen.</td>
                             </tr>
                             @endforelse
                         </tbody>

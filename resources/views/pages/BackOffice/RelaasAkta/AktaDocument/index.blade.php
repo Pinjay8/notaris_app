@@ -9,7 +9,7 @@
             <div class="card-header pb-0">
                 <h6>Dokumen Relaas</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body pt-1">
 
                 {{-- Form Pencarian --}}
                 <form method="GET" action="{{ route('relaas-documents.index') }}" class="mb-3" class="no-spinner">
@@ -29,20 +29,20 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <p><strong>Kode Registrasi</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->registration_code }}</p>
+                                <h6><strong>Kode Registrasi</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->registration_code }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Nomor Relaas</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->relaas_number ?? '-' }}</p>
+                                <h6><strong>Nomor Relaas</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->relaas_number ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Notaris</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->notaris->display_name ?? '-' }}</p>
+                                <h6><strong>Notaris</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->notaris->display_name ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Client</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->client->fullname ?? '-' }}</p>
+                                <h6><strong>Klien</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->client->fullname ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="d-flex justify-content-end mb-2">
                         <a href="{{ route('relaas-documents.create', $relaasInfo->id) }}"
                             class="btn btn-primary btn-sm">+
-                            Tambah Dokumen</a>
+                            Tambah Dokumen Relaas</a>
                     </div>
 
                     <table class="table">
@@ -61,29 +61,29 @@
                                 <th>#</th>
                                 <th>Nama Dokumen</th>
                                 <th>Tipe</th>
+                                <th>Tanggal Upload</th>
                                 <th>File</th>
-                                <th>Uploaded At</th>
                                 {{-- <th>Status</th> --}}
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($documents as $doc)
-                            <tr class="text-center">
+                            <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $doc->name }}</td>
                                 <td>{{ $doc->type ?? '-' }}</td>
+                                <td>{{ $doc->uploaded_at ? $doc->uploaded_at->format('d-m-Y H:i') : '-' }}</td>
                                 <td class="text-center">
                                     @if($doc->file_url)
                                     <a href="{{ asset('storage/'.$doc->file_url) }}" target="_blank"
-                                        class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center">
+                                        class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center mb-0">
                                         <i class="bi bi-eye me-1"></i> Lihat
                                     </a>
                                     @else
                                     <span class="text-muted">-</span>
                                     @endif
                                 </td>
-                                <td>{{ $doc->uploaded_at ? $doc->uploaded_at->format('d-m-Y H:i') : '-' }}</td>
                                 {{-- <td>
                                     <form action="{{ route('relaas-documents.toggleStatus', $doc->id) }}" method="POST"
                                         class="d-inline">
@@ -96,25 +96,24 @@
                                 </td> --}}
                                 <td>
                                     <a href="{{ route('relaas-documents.edit', [$relaasInfo->id, $doc->id]) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-info btn-sm mb-0">Edit</a>
                                     <form action="{{ route('relaas-documents.destroy', $doc->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus dokumen ini?')">Hapus</button>
+                                        <button class="btn btn-danger btn-sm mb-0">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">Belum ada dokumen</td>
+                                <td colspan="7" class="text-center text-muted text-sm">Belum ada dokumen relaas.</td>
                             </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
                 @else
-                <p class="text-center text-muted">Silakan cari kode registrasi atau nomor relaas terlebih dahulu.</p>
+                <p class="text-center text-muted text-sm">Silakan cari kode registrasi terlebih dahulu.</p>
                 @endif
 
             </div>

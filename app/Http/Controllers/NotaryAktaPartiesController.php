@@ -54,7 +54,15 @@ class NotaryAktaPartiesController extends Controller
             'id_number' => 'required|string',
             'id_type' => 'nullable|string',
             'note' => 'nullable|string',
-        ]);
+        ],
+        [
+            'registration_code.required' => 'Nomor akta harus diisi.',
+            'name.required' => 'Nama harus diisi.',
+            'role.required' => 'Peran harus diisi.',
+            'address.required' => 'Alamat harus diisi.',
+            'id_number.required' => 'Nomor identitas harus diisi.',
+        ]
+    );
 
         $this->service->store($request->all());
 

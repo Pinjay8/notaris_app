@@ -17,37 +17,31 @@
                     @if(isset($aktaType))
                     @method('PUT')
                     @endif
-
-                    {{-- <div class="mb-3">
-                        <label for="notaris_id" class="form-label">Notaris</label>
-                        <select name="notaris_id" id="notaris_id" class="form-select" required>
-                            <option value="" hidden>-- Pilih Notaris --</option>
-                            @foreach($notaris as $notary)
-                            <option value="{{ $notary->id }}" {{ isset($aktaType) && $aktaType->notaris_id ==
-                                $notary->id ? 'selected' : '' }}>
-                                {{ $notary->display_name }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-
                     <div class="mb-3">
                         <label for="category" class="form-label">Kategori</label>
-                        <select name="category" id="category" class="form-select">
+                        <select name="category" id="category"
+                            class="form-select @error('category') is-invalid @enderror">
                             <option value="" hidden>Pilih Kategori</option>
                             @foreach(['pendirian','perubahan','pemutusan'] as $cat)
-                            <option value="{{ $cat }}" {{ isset($aktaType) && $aktaType->category == $cat ? 'selected' :
-                                '' }}>
+                            <option value="{{ $cat }}" {{ old('category', $aktaType->category ?? '') == $cat ?
+                                'selected' : '' }}>
                                 {{ ucfirst($cat) }}
                             </option>
                             @endforeach
                         </select>
+                        @error('category')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="type" class="form-label">Tipe</label>
-                        <input type="text" name="type" id="type" class="form-control"
-                            value="{{ $aktaType->type ?? old('type') }}">
+                        <input type="text" name="type" id="type"
+                            class="form-control @error('type') is-invalid @enderror"
+                            value="{{ old('type', $aktaType->type ?? '') }}">
+                        @error('type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -58,8 +52,8 @@
 
                     <div class="mb-3">
                         <label for="documents" class="form-label">Dokumen yang diperlukan</label>
-                        <textarea name="documents" id="documents" class="form-control"
-                            required>{{ $aktaType->documents ?? old('documents') }}</textarea>
+                        <textarea name="documents" id="documents"
+                            class="form-control">{{ $aktaType->documents ?? old('documents') }}</textarea>
                     </div>
 
 

@@ -75,9 +75,9 @@
                                         $notaryconsultation->description ?? '-' }}
                                     </p>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <span
-                                        class="badge badge-sm   py-2 text-center d-block w-50 mx-auto
+                                        class="badge px-2  py-2 text-center d-inline-block
                                         bg-{{ $notaryconsultation->status == 'done' ? 'success' : ($notaryconsultation->status == 'progress' ? 'warning' : 'secondary') }}">
                                         @if ($notaryconsultation->status == 'done')
                                         Selesai

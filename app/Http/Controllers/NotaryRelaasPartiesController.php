@@ -61,6 +61,11 @@ class NotaryRelaasPartiesController extends Controller
             'address'    => 'required|string',
             'id_number'  => 'required',
             'id_type'    => 'nullable',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'role.required' => 'Peran harus diisi.',
+            'address.required' => 'Alamat harus diisi.',
+            'id_number.required' => 'Nomor identitas harus diisi.',
         ]);
 
         $validated['relaas_id'] = $relaas->id;
@@ -87,7 +92,12 @@ class NotaryRelaasPartiesController extends Controller
             'role'       => 'required|string|max:255',
             'address'    => 'nullable|string',
             'id_number'  => 'required',
-            'id_type'    => 'required',
+            'id_type'    => 'nullable',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'role.required' => 'Peran harus diisi.',
+            'id_number.required' => 'Nomor identitas harus diisi.',
+            'id_type.required' => 'Jenis identitas harus diisi.',
         ]);
 
 

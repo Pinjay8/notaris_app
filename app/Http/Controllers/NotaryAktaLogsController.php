@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Notaris;
+use App\Models\NotaryAktaLogs;
 use App\Models\NotaryAktaTransaction;
 use App\Services\NotaryAktaLogService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class NotaryAktaLogsController extends Controller
 {
@@ -33,16 +35,40 @@ class NotaryAktaLogsController extends Controller
         return view('pages.BackOffice.AktaLogs.form', compact('notaris', 'clients', 'transactions'));
     }
 
+
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
+
+        // Hitung jumlah konsultasi notaris ini hari ini
+        $countToday = NotaryAktaLogs::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        $countToday += 1; // untuk konsultasi baru ini
+
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    }
+
+
     public function store(Request $request)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'client_id' => 'required|exists:clients,id',
             'akta_transaction_id' => 'required|exists:notary_akta_transactions,id',
             'registration_code' => 'nullable|string',
             'step' => 'required|string',
             'note' => 'nullable|string',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'step.required' => 'Step harus diisi.',
+            'akta_transaction_id.required' => 'Transaksi akta harus dipilih.',
         ]);
+
+        $data['notaris_id'] = auth()->user()->notaris_id;
+        $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
 
         $this->service->create($data);
 
@@ -62,12 +88,16 @@ class NotaryAktaLogsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
+            // 'notaris_id' => 'required|exists:notaris,id',
             'client_id' => 'required|exists:clients,id',
             'akta_transaction_id' => 'required|exists:notary_akta_transactions,id',
             'registration_code' => 'nullable|string',
             'step' => 'required|string',
             'note' => 'nullable|string',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'step.required' => 'Step harus diisi.',
+            'akta_transaction_id.required' => 'Transaksi akta harus dipilih.',
         ]);
 
         $this->service->update($id, $data);

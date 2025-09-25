@@ -104,9 +104,9 @@
                         @endif
                     </div>
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
+                    <div class="">
                         <a href="{{ route('notary-legalisasi.index') }}" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
                     </div>
 
                 </form>

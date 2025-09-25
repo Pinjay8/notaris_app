@@ -36,10 +36,10 @@
 
                     {{-- Client --}}
                     <div class="mb-3">
-                        <label for="client_id" class="form-label">Client</label>
+                        <label for="client_id" class="form-label">Klien</label>
                         <select name="client_id" id="client_id"
                             class="form-select @error('client_id') is-invalid @enderror">
-                            <option value="" hidden>-- Pilih Client --</option>
+                            <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id
                                 ? 'selected' : '' }}>
@@ -53,7 +53,7 @@
                     </div>
 
                     {{-- Registration Code --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="registration_code" class="form-label">Kode Registrasi</label>
                         <input type="text" name="registration_code" id="registration_code"
                             class="form-control @error('registration_code') is-invalid @enderror"
@@ -61,7 +61,7 @@
                         @error('registration_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     {{-- title --}}
                     <div class="mb-3">
@@ -115,7 +115,7 @@
                         <label for="status" class="form-label">Status</label>
                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                             @foreach(['draft','diproses','selesai','dibatalkan'] as $status)
-                            <option value="" hidden>-- Pilih Status --</option>
+                            <option value="" hidden>Pilih Status</option>
                             <option value="{{ $status }}" {{ old('status', $data->status ?? '') == $status ? 'selected'
                                 : '' }}>
                                 {{ ucfirst($status) }}
@@ -138,8 +138,8 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
                     <a href="{{ route('relaas-aktas.index') }}" class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
                 </form>
             </div>
         </div>

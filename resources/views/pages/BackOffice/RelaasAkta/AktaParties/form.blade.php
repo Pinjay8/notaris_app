@@ -81,9 +81,10 @@
                         @enderror
                     </div> --}}
 
-                    <button type="submit" class="btn btn-primary">{{ isset($party) ? 'Update' : 'Simpan' }}</button>
+
                     <a href="{{ route('relaas-parties.index', ['search' => $relaas->registration_code]) }}"
                         class="btn btn-secondary">Kembali</a>
+                    <button type="submit" class="btn btn-primary">{{ isset($party) ? 'Update' : 'Simpan' }}</button>
                 </form>
             </div>
         </div>

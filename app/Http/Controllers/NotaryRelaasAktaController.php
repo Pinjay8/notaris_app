@@ -7,6 +7,7 @@ use App\Models\Notaris;
 use App\Models\NotaryRelaasAkta;
 use App\Services\NotaryRelaasAktaService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class NotaryRelaasAktaController extends Controller
 {
@@ -39,12 +40,28 @@ class NotaryRelaasAktaController extends Controller
         return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris'));
     }
 
+    public function generateRegistrationCode(int $notarisId, int $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
+
+        // Hitung jumlah konsultasi notaris ini hari ini
+        $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
+            ->where('client_id', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+
+        $countToday += 1; // untuk konsultasi baru ini
+
+        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    }
+
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
             'client_id' => 'required|exists:clients,id',
-            'registration_code' => 'required|string',
+            // 'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
             'relaas_number' => 'nullable',
             'relaas_number_created_at' => 'nullable',
@@ -54,9 +71,17 @@ class NotaryRelaasAktaController extends Controller
             'story_location' => 'required|string',
             'status' => 'required|string',
             'note' => 'nullable|string',
+        ], [
+            'client_id.required' => 'Klien harus dipilih.',
+            'title.required' => 'Judul harus diisi.',
+            'story.required' => 'Cerita harus diisi.',
+            'story_date.required' => 'Tanggal cerita harus diisi.',
+            'story_location.required' => 'Lokasi Story harus diisi.',
+            'status.required' => 'Status harus diisi.',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
+        $validated['registration_code'] = $this->generateRegistrationCode($validated['notaris_id'], $validated['client_id']);
 
         $this->service->create($validated);
 

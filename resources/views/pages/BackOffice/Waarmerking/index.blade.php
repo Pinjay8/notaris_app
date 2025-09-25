@@ -13,20 +13,19 @@
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
+                <form method="GET" action="{{ route('notary-waarmerking.index') }}"
+                    class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
+                    <input type="text" name="waarmerking_number" placeholder="Cari nomor waarmerking..."
+                        value="{{ request('waarmerking_number') }}" class="form-control">
+                    <select name="sort" class="form-select">
+                        <option value="" {{ request('sort')=='' ? 'selected' : '' }}>Urutkan</option>
+                        <option value="asc" {{ request('sort')=='asc' ? 'selected' : '' }}>Tanggal Awal</option>
+                        <option value="desc" {{ request('sort')=='desc' ? 'selected' : '' }}>Tanggal Terbaru
+                        </option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                </form>
                 <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('notary-waarmerking.index') }}"
-                        class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
-                        <input type="text" name="waarmerking_number" placeholder="Cari nomor waarmerking..."
-                            value="{{ request('waarmerking_number') }}" class="form-control">
-                        <select name="sort" class="form-select">
-                            <option value="" {{ request('sort')=='' ? 'selected' : '' }}>Urutkan</option>
-                            <option value="asc" {{ request('sort')=='asc' ? 'selected' : '' }}>Tanggal Awal</option>
-                            <option value="desc" {{ request('sort')=='desc' ? 'selected' : '' }}>Tanggal Terbaru
-                            </option>
-                        </select>
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                    </form>
-
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr class="text-center">
@@ -82,8 +81,7 @@
                                     <a href="{{ route('notary-waarmerking.edit', $item->id) }}"
                                         class="btn btn-info btn-sm mb-0">Edit</a>
                                     <form action="{{ route('notary-waarmerking.destroy', $item->id) }}" method="POST"
-                                        class="d-inline-block"
-                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        class="d-inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
@@ -92,7 +90,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted">Belum ada data waarmerking.</td>
+                                <td colspan="10 text-sm" class="text-center text-muted">Belum ada data waarmerking.</td>
                             </tr>
                             @endforelse
                         </tbody>

@@ -20,7 +20,7 @@
 
                     <div class="mb-3">
                         <label class="form-label">Klien</label>
-                        <select name="client_id" class="form-select">
+                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id
@@ -29,25 +29,41 @@
                             </option>
                             @endforeach
                         </select>
+                        @error('client_id')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nomor Waarmerking</label>
-                        <input type="text" name="waarmerking_number" class="form-control"
-                            value="{{ old('waarmerking_number', $data->waarmerking_number ?? '') }}" {{ isset($data)
-                            ? '' : '' }}>
+                        <input type="text" name="waarmerking_number"
+                            class="form-control @error('waarmerking_number') is-invalid @enderror"
+                            value="{{ old('waarmerking_number', $data->waarmerking_number ?? '') }}">
+                        @error('waarmerking_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nama Pemohon</label>
-                        <input type="text" name="applicant_name" class="form-control"
+                        <input type="text" name="applicant_name"
+                            class="form-control @error('applicant_name') is-invalid @enderror"
                             value="{{ old('applicant_name', $data->applicant_name ?? '') }}">
+                        @error('applicant_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nama Petugas</label>
-                        <input type="text" name="officer_name" class="form-control"
+                        <input type="text" name="officer_name"
+                            class="form-control @error('officer_name') is-invalid @enderror"
                             value="{{ old('officer_name', $data->officer_name ?? '') }}">
+                        @error('officer_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -65,8 +81,7 @@
                     <div class="mb-3">
                         <label class="form-label">Tanggal Permintaan</label>
                         <input type="date" name="request_date" class="form-control"
-                            value="{{ old('request_date', isset($data->request_date) ? \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') : '') }}"
-                            required>
+                            value="{{ old('request_date', isset($data->request_date) ? \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') : '') }}">
                     </div>
 
                     <div class="mb-3">
@@ -104,9 +119,9 @@
                         @endif
                     </div>
 
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
+                    <div class="">
                         <a href="{{ route('notary-waarmerking.index') }}" class="btn btn-secondary">Batal</a>
+                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
                     </div>
 
                 </form>

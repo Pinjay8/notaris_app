@@ -24,21 +24,21 @@
                 @if($relaasInfo)
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h6 class="mb-0 text-white">Detail Relaas</h6>
+                        <h6 class="mb-0 text-white">Detail Pihak Akta</h6>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <p><strong>Kode Registrasi</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->registration_code }}</p>
+                                <h6><strong>Kode Registrasi</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->registration_code }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Notaris</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->notaris->display_name ?? '-' }}</p>
+                                <h6><strong>Notaris</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->notaris->display_name ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p><strong>Client</strong></p>
-                                <p class="text-muted">{{ $relaasInfo->client->fullname ?? '-' }}</p>
+                                <h6><strong>Klien</strong></h6>
+                                <p class="text-muted text-sm">{{ $relaasInfo->client->fullname ?? '-' }}</p>
                             </div>
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-end mb-2">
                         <a href="{{ route('relaas-parties.create', $relaasInfo->id) }}" class="btn btn-primary btn-sm">+
-                            Tambah Pihak Relaas</a>
+                            Tambah Pihak Akta</a>
                     </div>
 
                     <table class="table">
@@ -58,29 +58,28 @@
                                 <th>Peran</th>
                                 <th>Alamat</th>
                                 <th>No Identitas</th>
-                                <th>Jenis ID</th>
-                                <th>Catatan</th>
+                                <th>Tipe</th>
+                                {{-- <th>Catatan</th> --}}
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($parties as $party)
-                            <tr class="text-center">
+                            <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $party->name }}</td>
                                 <td>{{ $party->role }}</td>
                                 <td>{{ $party->address ?? '-' }}</td>
                                 <td>{{ $party->id_number ?? '-' }}</td>
                                 <td>{{ $party->id_type ?? '-' }}</td>
-                                <td>{{ $party->note ?? '-' }}</td>
+                                {{-- <td>{{ $party->note ?? '-' }}</td> --}}
                                 <td>
                                     <a href="{{ route('relaas-parties.edit', [$relaasInfo->id, $party->id]) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
+                                        class="btn btn-info btn-sm btn-sm mb-0">Edit</a>
                                     <form action="{{ route('relaas-parties.destroy', $party->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf @method('DELETE')
-                                        <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus pihak ini?')">Hapus</button>
+                                        <button class="btn btn-danger btn-sm mb-0">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

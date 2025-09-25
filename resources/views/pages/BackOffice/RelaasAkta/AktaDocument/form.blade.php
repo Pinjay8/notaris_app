@@ -17,16 +17,22 @@
                     @if($doc)
                     @method('PUT')
                     @endif
-
                     <div class="mb-3">
                         <label class="form-label">Nama Dokumen</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name', $doc->name ?? '') }}"
-                            required>
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                            value="{{ old('name', $doc->name ?? '') }}">
+                        @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Tipe Dokumen</label>
-                        <input type="text" name="type" class="form-control" value="{{ old('type', $doc->type ?? '') }}">
+                        <input type="text" name="type" class="form-control @error('type') is-invalid @enderror"
+                            value="{{ old('type', $doc->type ?? '') }}">
+                        @error('type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -37,11 +43,26 @@
                         @endif
                     </div>
 
-                    <div class="d-flex justify-content-end">
-                        <a href="{{ route('relaas-documents.index', ['search' => $relaas->registration_code]) }}"
-                            class="btn btn-secondary btn-sm me-2">Batal</a>
-                        <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                    <div class="mb-3">
+                        <label for="uploaded_at" class="form-label">Tanggal Upload</label>
+                        <input type="datetime-local" name="uploaded_at" id="uploaded_at"
+                            class="form-control @error('uploaded_at') is-invalid @enderror"
+                            value="{{ old('uploaded_at', isset($document) && $document->uploaded_at ? \Carbon\Carbon::parse($document->uploaded_at)->format('Y-m-d\TH:i') : '') }}">
+
+                        @error('uploaded_at')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
                     </div>
+
+
+                    <a href="{{ route('relaas-documents.index', ['search' => $relaas->registration_code]) }}"
+                        class="btn btn-secondary btn-sm ">Batal</a>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        {{ $doc ? 'Update' : 'Simpan' }}
+                    </button>
+
                 </form>
             </div>
         </div>

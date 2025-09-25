@@ -55,9 +55,9 @@ Konsultasi'])
                                 <option value="" hidden>Pilih Status</option>
                                 <option value="progress" {{ old('status', $notaryConsultation->status ?? '') ==
                                     'progress'
-                                    ? 'selected' : '' }}>Progress</option>
+                                    ? 'selected' : '' }}>Proses</option>
                                 <option value="done" {{ old('status', $notaryConsultation->status ?? '') == 'done' ?
-                                    'selected' : '' }}>Done</option>
+                                    'selected' : '' }}>Selesai</option>
                             </select>
                         </div>
 

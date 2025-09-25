@@ -17,7 +17,7 @@ return new class extends Migration
             $table->enum('category', ['pendirian', 'perubahan', 'pemutusan'])->nullable();
             $table->string('type')->nullable();
             $table->text('description')->nullable();
-            $table->text('documents');
+            $table->text('documents')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -9,11 +9,11 @@
             <div class="card-header d-flex justify-content-between align-items-center mb-0 pb-0">
                 <h6>Penomoran Akta</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body pt-1">
 
                 {{-- Nomor Akta Terakhir --}}
                 @if($lastAkta)
-                <div class="mb-2 bg-warning p-3 rounded-3 text-white">
+                <div class="mb-3 bg-warning p-3 rounded-3 text-white">
 
                     <h6 class="text-white"> Nomor Akta Terakhir: {{ $lastAkta->relaas_number }}</h6>
                     <h6 class="text-white">
@@ -43,20 +43,20 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Kode Registrasi</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->registration_code }}</p>
+                                <h6 class="mb-1"><strong>Kode Registrasi</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->registration_code }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Nomor Akta</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->akta_number ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->akta_number ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Jenis Akta</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->akta_type->type ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Jenis Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->akta_type->type ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Notaris</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->notaris->display_name ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Notaris</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->notaris->display_name ?? '-' }}</p>
                             </div>
                         </div>
                     </div>

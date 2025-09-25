@@ -36,6 +36,9 @@ class NotaryRelaasLogsController extends Controller
             'relaas_id' => 'required|integer',
             'step' => 'required|string',
             'note' => 'nullable|string',
+        ], [
+            'relaas_id.required' => 'Relaas Akta harus dipilih.',
+            'step.required' => 'Langkah harus diisi.',
         ]);
 
         $relaas = NotaryRelaasAkta::find(
@@ -67,6 +70,9 @@ class NotaryRelaasLogsController extends Controller
             'relaas_id' => 'required|integer',
             'step' => 'required|string',
             'note' => 'nullable|string',
+        ], [
+            'relaas_id.required' => 'Relaas Akta harus dipilih.',
+            'step.required' => 'Langkah harus diisi.',
         ]);
 
         $this->service->update($id, $validated);

@@ -24,29 +24,29 @@
                 @if($aktaInfo && $aktaInfo->count() > 0)
                 <div class="card mb-4 shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h6 class="mb-0 text-white">Detail Akta</h6>
+                        <h6 class="mb-0 text-white">Detail Pihak Akta</h6>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Kode Registrasi</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->first()->registration_code }}</p>
+                                <h6 class="mb-1"><strong>Kode Registrasi</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->first()->registration_code }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Nomor Akta</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->first()->akta_number ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->first()->akta_number ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Jenis Akta</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->first()->akta_type->type ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Jenis Akta</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->first()->akta_type->type ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Notaris</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->first()->notaris->display_name ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Notaris</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->first()->notaris->display_name ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
-                                <p class="mb-1"><strong>Client</strong></p>
-                                <p class="text-muted">{{ $aktaInfo->first()->client->fullname ?? '-' }}</p>
+                                <h6 class="mb-1"><strong>Klien</strong></h6>
+                                <p class="text-muted text-sm">{{ $aktaInfo->first()->client->fullname ?? '-' }}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="mb-1"><strong>Status</strong></p>
@@ -82,7 +82,7 @@
                                 <th>Peran</th>
                                 <th>Alamat</th>
                                 <th>No Identitas</th>
-                                <th>Jenis ID</th>
+                                <th>Tipe</th>
                                 <th>Catatan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -99,21 +99,20 @@
                                 <td>{{ $party->note ?? '-' }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('akta-parties.edit', $party->id) }}"
-                                        class="btn btn-warning btn-sm">
+                                        class="btn btn-info btn-sm mb-0">
                                         Edit
                                     </a>
                                     <form action="{{ route('akta-parties.destroy', $party->id) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Yakin ingin menghapus pihak ini?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
                                     </form>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted">Belum ada pihak terdaftar.</td>
+                                <td colspan="8" class="text-center text-muted">Belum ada pihak akta.</td>
                             </tr>
                             @endforelse
                         </tbody>

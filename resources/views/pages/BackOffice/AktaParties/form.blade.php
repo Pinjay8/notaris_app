@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Jenis Identitas</label>
+                        <label class="form-label">Tipe Identitas</label>
                         <input type="text" name="id_type" class="form-control"
                             value="{{ old('id_type', $aktaParty->id_type ?? '') }}">
                         @error('id_type') <small class="text-danger">{{ $message }}</small> @enderror
@@ -72,10 +72,11 @@
                     </div>
 
                     <div class="mt-3">
+
+                        <a href="{{ route('akta-parties.index') }}" class="btn btn-secondary btn-sm">Batal</a>
                         <button type="submit" class="btn btn-primary btn-sm">
                             {{ isset($aktaParty) ? 'Update' : 'Simpan' }}
                         </button>
-                        <a href="{{ route('akta-parties.index') }}" class="btn btn-secondary btn-sm">Batal</a>
                     </div>
                 </form>
             </div>
