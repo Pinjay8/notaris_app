@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\NotaryClientDocument;
 use App\Models\NotaryConsultation;
+use App\Models\NotaryCost;
 use App\Models\NotaryPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,13 @@ class DashboardController extends Controller
         // 5 klien terbaru (untuk tabel)
         $latestClients = Client::where('notaris_id', $notarisId)->latest()->take(5)->get();
 
-        $payments = NotaryPayment::where('notaris_id', $notarisId)->latest()->take(5)->get();
+        // $payments = NotaryPayment::where('notaris_id', $notarisId)->get();
+        // $paidCount = $payments->where('is_valid', true)->count();
+        // $pendingCount = $payments->where('is_valid', false)->count();
+
+        $payments = NotaryCost::where('notaris_id', $notarisId)->get();
+        $paidCount = $payments->where('payment_status', 'paid')->count();
+        $pendingCount = $payments->where('payment_status', false)->count();
 
         return view('pages.dashboard', compact(
             'totalClients',
@@ -59,6 +66,8 @@ class DashboardController extends Controller
             'data',
             'payments',
             'paymentsCount',
+            'paidCount',
+            'pendingCount'
         ));
     }
 }

@@ -64,7 +64,7 @@
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="paymentFilesModalLabel">Daftar Payment File</h5>
+                            <h5 class="modal-title" id="paymentFilesModalLabel">Daftar File Pembayaran</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -73,7 +73,7 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10%">#</th>
-                                        <th>Payment File</th>
+                                        <th>Bukti Pembayaran</th>
                                         <th style="width: 20%">Status</th>
                                         <th style="width: 15%">Aksi</th>
                                     </tr>
@@ -82,10 +82,11 @@
                                     @forelse ($cost->payments as $index => $file)
                                     <tr class="text-center">
                                         <td>{{ $index + 1 }}</td>
-                                        <td class="mx-auto">
-                                            <img src="{{ asset('storage/' . $file->payment_file) }}" class="img-fluid"
-                                                style="max-width: 150px">
-                                            </img>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <img src="{{ asset('storage/' . $file->payment_file) }}"
+                                                    class="img-fluid" style="max-width: 150px">
+                                            </div>
                                         </td>
                                         <td>
                                             @if($file->is_valid)
@@ -151,7 +152,7 @@
                             <!-- Kekurangan -->
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link d-flex align-items-center gap-2 px-3 py-2 shadow-sm"
-                                    id="pills-remaining-tab" data-bs-toggle="pill" data-bs-target="#pills-remaining"
+                                    id="pills-remaining-tab" data-bs-toggle="pill" data-bs-target="#pills-partial"
                                     type="button" role="tab">
                                     <i class="fa-solid fa-wallet"></i>
                                     <span class="text-sm">Kekurangan</span>
@@ -187,7 +188,7 @@
                             </div>
 
                             {{-- Kekurangan --}}
-                            <div class="tab-pane fade" id="pills-remaining" role="tabpanel">
+                            <div class="tab-pane fade" id="pills-partial" role="tabpanel">
                                 <div class="d-flex align-items-center gap-2">
                                     <p class="mb-2">Sisa yang harus dibayar:
                                         <strong>
@@ -203,7 +204,7 @@
                                         </strong>
                                     </p>
                                 </div>
-                                @include('pages.Biaya.Pembayaran.form', ['type' => 'partial', 'cost' =>
+                                @include('pages.Biaya.Pembayaran.form', ['type' => 'remaining', 'cost' =>
                                 $cost])
                             </div>
 

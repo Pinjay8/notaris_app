@@ -18,21 +18,22 @@
                     @endif
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
+                    {{-- Form Search --}}
+                    <form method="GET" action="{{ route('pic_process.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
+                        style="max-width: 500px;" class="no-spinner">
+                        <input type="text" name="pic_document_code" class="form-control form-control-sm"
+                            placeholder="Cari PIC Document Code..." value="{{ request('pic_document_code') }}">
+                        <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
+                    </form>
                     <div class="table-responsive p-0">
 
-                        {{-- Form Search --}}
-                        <form method="GET" action="{{ route('pic_process.index') }}"
-                            class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
-                            <input type="text" name="pic_document_code" class="form-control form-control-sm"
-                                placeholder="Cari PIC Document Code..." value="{{ request('pic_document_code') }}">
-                            <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
-                        </form>
+
 
                         @if(request('pic_document_code'))
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr class="text-center">
-                                    <th>No</th>
+                                    <th>#</th>
                                     <th>Nama</th>
                                     <th>Status</th>
                                     <th>Tanggal Progress</th>

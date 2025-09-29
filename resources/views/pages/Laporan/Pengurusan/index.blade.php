@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card shadow-sm border-0 pb-0">
             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold">Laporan Pengurusan</h5>
+                <h6 class="mb-0 fw-bold">Laporan Pengurusan</h6>
             </div>
 
             <div class="card-body pt-0">

@@ -6,7 +6,10 @@
 <div class="row mt-4 mx-4">
     <div class="col md-12">
         <div class="card mb-4">
-            <div class="card-body">
+            <div class="card-header mb-0 pb-0">
+                <h6>Laporan Akta</h6>
+            </div>
+            <div class="card-body pt-1">
                 <form method="GET" action="{{ route('laporan-akta.index') }}" class="no-spinner">
                     <div class="row g-3 align-items-end">
                         {{-- Pilih Type --}}

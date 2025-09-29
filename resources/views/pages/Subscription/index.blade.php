@@ -76,7 +76,7 @@
 
                                 <td>
                                     <span
-                                        class="badge  d-block mx-auto bg-{{ $subscription->status == 'active' ? 'success' : 'secondary' }}">
+                                        class="badge  bg-{{ $subscription->status == 'active' ? 'success' : 'secondary' }}">
                                         {{ $subscription->status == 'active' ? 'Aktif' : 'Non Aktif' }}
                                     </span>
                                 </td>

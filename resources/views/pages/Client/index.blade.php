@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card mb-4 p-3 shadow-lg">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-2 flex-wrap">
-                <h5 class="mb-0">Klien</h5>
+                <h6 class="mb-0">Klien</h6>
                 <div class="d-flex gap-2 flex-wrap">
                     @php
                     $encryptedId = Crypt::encrypt(auth()->user()->notaris_id);
@@ -286,12 +286,14 @@
 
                                         <a href="{{ route('clients.edit', $client->id) }}"
                                             class="btn btn-info btn-xs mb-0">
-                                            <i class="fa-solid fa-pencil" style="font-size: 14px">
-                                            </i>
+                                            {{-- <i class="fa-solid fa-pencil" style="font-size: 14px">
+                                            </i> --}}
+                                            Edit
                                         </a>
                                         <button type="button" class="btn btn-danger btn-xs mb-0" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal{{ $client->id }}">
-                                            <i class="fas fa-trash"></i>
+                                            {{-- <i class="fas fa-trash"></i> --}}
+                                            Hapus
                                         </button>
                                         @include('pages.Client.modal.index')
                                     </td>

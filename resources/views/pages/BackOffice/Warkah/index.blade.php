@@ -7,8 +7,8 @@
     <div class="col md-12">
         {{-- Table List --}}
         <div class="card">
-            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
-                <h5>Warkah</h5>
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-3 flex-wrap">
+                <h6>Warkah</h6>
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                     data-bs-target="#uploadModal">
                     + Tambah Warkah
@@ -207,7 +207,8 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10" class="text-center text-muted text-sm">Data dokumen tidak ditemukan.
+                                <td colspan="10" class="text-center text-muted text-sm">Data dokumen warkah tidak
+                                    ditemukan.
                                 </td>
                             </tr>
                             @endforelse

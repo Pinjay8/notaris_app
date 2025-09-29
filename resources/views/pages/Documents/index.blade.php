@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h5 class="mb-0">Dokumen</h5>
+                <h6 class="mb-0">Dokumen</h6>
                 <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Dokumen
                 </a>
@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                             @forelse ($documents as $document)
-                            <tr>
+                            <tr class="text-center">
                                 <td>
                                     <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
                                 </td>
@@ -89,15 +89,17 @@
                                 </td> --}}
                                 <td>
                                     <span
-                                        class="badge text-center d-block mx-auto bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
+                                        class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
                                         {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
                                     </span>
                                 </td>
                                 <td class="text-center align-middle">
                                     <a href="{{ route('documents.edit', $document->id) }}"
-                                        class="btn btn-info btn-sm mb-0 "> <i class="fa-solid fa-pencil"
-                                            style="font-size: 14px">
-                                        </i></a>
+                                        class="btn btn-info btn-sm mb-0 ">
+                                        {{-- <i class="fa-solid fa-pencil" style="font-size: 14px">
+                                        </i> --}}
+                                        Edit
+                                    </a>
                                     <form action="{{ route('documents.deactivate', $document->id) }}" method="POST"
                                         class="d-inline-block">
                                         @csrf

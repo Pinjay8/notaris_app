@@ -9,7 +9,7 @@
             <div class="card-header pb-0">
                 <h5>Serah Terima Dokumen</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body pb-0">
                 <form method="GET" action="{{ route('pic_handovers.index') }}"
                     class="d-flex justify-content-between gap-2 mb-2">
                     <div class="input-group input-group-sm" style="max-width: 400px;" class="no-spinner">
@@ -45,14 +45,15 @@
                             <td>
                                 {{-- Tombol PDF --}}
                                 <a href="{{ route('pic_handovers.print', $handover->id) }}"
-                                    class="btn btn-sm  btn btn-dark" target="_blank" title="Cetak PDF">
+                                    class="btn btn-sm  btn btn-dark mb-0" target="_blank" title="Cetak PDF">
                                     <i class="fas fa-file-pdf" style="font-size: 15px;"></i>
                                 </a>
 
                                 {{-- Tombol Hapus (buka modal) --}}
-                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-danger mb-0" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal{{ $handover->id }}" title="Hapus">
-                                    <i class="fas fa-trash-alt"></i>
+                                    {{-- <i class="fas fa-trash-alt"></i> --}}
+                                    Hapus
                                 </button>
 
                                 {{-- Modal Konfirmasi Hapus --}}

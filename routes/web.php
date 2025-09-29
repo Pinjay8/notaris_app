@@ -211,7 +211,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/relaas-parties/store/{relaas_id}', [NotaryRelaasPartiesController::class, 'store'])->name('relaas-parties.store');
     Route::get('/relaas-parties/edit/{relaas_id}/{id}', [NotaryRelaasPartiesController::class, 'edit'])->name('relaas-parties.edit');
     Route::put('/relaas-parties/update/{relaas_id}/{id}', [NotaryRelaasPartiesController::class, 'update'])->name('relaas-parties.update');
-    Route::get('/relaas-akta/number_akta',  [NotaryRelaasAktaController::class, 'indexNumber'])->name('relaas_akta.indexNumber');
+    Route::get('/relaas-number/number_akta',  [NotaryRelaasAktaController::class, 'indexNumber'])->name('relaas_akta.indexNumber');
     Route::post('/relaas-akta/store', [NotaryRelaasAktaController::class, 'storeNumber'])->name(
         'relaas-akta.store'
     );

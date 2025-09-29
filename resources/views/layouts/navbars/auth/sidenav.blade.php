@@ -278,7 +278,7 @@
                         </li>
                         <li>
                             <a href="{{ route('relaas_akta.indexNumber') }}"
-                                class="nav-link {{ request()->is('relaas-akta*') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('relaas-number*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-hashtag text-dark text-sm opacity-10 pb-0"></i>

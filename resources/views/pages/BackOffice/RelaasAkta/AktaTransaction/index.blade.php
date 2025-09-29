@@ -63,8 +63,8 @@
                                 <td>{{ $akta->story_location ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('relaas-aktas.edit', $akta->id) }}"
-                                        class="btn btn-info btn-sm">Edit</a>
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        class="btn btn-info btn-sm mb-0">Edit</a>
+                                    <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $akta->id }}">
                                         Hapus
                                     </button>

@@ -48,18 +48,18 @@
 @push('js')
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector('#pills-{{ $type }} form'); // form di tab ini aja
-    const amountInput = form.querySelector('[name="amount"]');
+    document.querySelectorAll('form').forEach(form => {
+        const amountInput = form.querySelector('[name="amount"]');
+        if (!amountInput) return;
 
-    // format input
-    amountInput.addEventListener('input', function () {
-        let value = this.value.replace(/\D/g, '');
-        this.value = value ? new Intl.NumberFormat('id-ID').format(value) : '';
-    });
+        amountInput.addEventListener('input', function () {
+            let value = this.value.replace(/\D/g, '');
+            this.value = value ? new Intl.NumberFormat('id-ID').format(value) : '';
+        });
 
-    // sebelum submit → hapus titik
-    form.addEventListener('submit', function () {
-        amountInput.value = amountInput.value.replace(/\./g, '');
+        form.addEventListener('submit', function () {
+            amountInput.value = amountInput.value.replace(/\./g, '');
+        });
     });
 });
 </script>

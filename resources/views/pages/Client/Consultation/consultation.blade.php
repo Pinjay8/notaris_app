@@ -77,7 +77,7 @@
                                 </td>
                                 <td class="text-center">
                                     <span
-                                        class="badge px-2  py-2 text-center d-inline-block
+                                        class="badge px-2  py-2 text-center d-inline-block text-capitalize
                                         bg-{{ $notaryconsultation->status == 'done' ? 'success' : ($notaryconsultation->status == 'progress' ? 'warning' : 'secondary') }}">
                                         @if ($notaryconsultation->status == 'done')
                                         Selesai
@@ -92,7 +92,8 @@
                                 <td class="text-center">
                                     <a href="{{ route('consultation.edit', $notaryconsultation->id) }}"
                                         class="btn btn-info btn-xs mb-0">
-                                        <i class="fa-solid fa-pencil" style="font-size: 14px">
+                                        {{-- <i class="fa-solid fa-pencil" style="font-size: 14px"> --}}
+                                            Edit
                                         </i>
                                     </a>
                                     {{-- get product by consultation --}}

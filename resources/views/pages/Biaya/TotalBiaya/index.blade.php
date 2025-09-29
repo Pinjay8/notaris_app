@@ -45,9 +45,20 @@
                                 <td>{{ $cost->client->fullname }}</td>
                                 <td>{{ $cost->picDocument->pic_document_code }}</td>
                                 <td>Rp {{ number_format($cost->total_cost,0,',','.') }}</td>
+                                @php
+                                $statusMap = [
+                                'paid' => ['class' => 'success', 'label' => 'Lunas'],
+                                'partial' => ['class' => 'warning', 'label' => 'Sebagian'],
+                                'unpaid' => ['class' => 'danger', 'label' => 'Belum Bayar'],
+                                ];
+
+                                $status = $statusMap[$cost->payment_status] ?? ['class' => 'secondary', 'label' =>
+                                ucfirst($cost->payment_status)];
+                                @endphp
+
                                 <td>
-                                    <span class="badge bg-{{ $cost->payment_status == 'Lunas' ? 'success':'warning' }}">
-                                        {{ $cost->payment_status }}
+                                    <span class="badge bg-{{ $status['class'] }} px-3 py-2 text-capitalize" style="font-size: 12px">
+                                        {{ $status['label'] }}
                                     </span>
                                 </td>
                                 <td>

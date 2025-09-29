@@ -46,7 +46,7 @@
                         </thead>
                         <tbody>
                             @forelse ($data as $item)
-                            <tr class="text-center">
+                            <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->legalisasi_number }}</td>
                                 <td>{{ $item->applicant_name }}</td>
@@ -83,11 +83,8 @@
                                     <a href="{{ route('notary-legalisasi.edit', $item->id) }}"
                                         class="btn btn-info btn-sm mb-0">Edit</a>
                                     <form action="{{ route('notary-legalisasi.destroy', $item->id) }}" method="POST"
-                                        class="d-inline-block"
-                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
+                                        class="d-inline-block" @csrf @method('DELETE') <button type="submit"
+                                        class="btn btn-danger btn-sm mb-0">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

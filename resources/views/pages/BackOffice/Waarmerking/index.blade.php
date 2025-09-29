@@ -90,7 +90,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10 text-sm" class="text-center text-muted">Belum ada data waarmerking.</td>
+                                <td colspan="10 text-sm" class="text-center text-muted text-sm">Belum ada data waarmerking.</td>
                             </tr>
                             @endforelse
                         </tbody>

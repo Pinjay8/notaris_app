@@ -113,7 +113,7 @@
                     </table>
                 </div>
                 @else
-                <p class="text-center text-muted text-sm">Silakan cari kode registrasi terlebih dahulu.</p>
+                <p class="text-center text-muted text-sm">Masukkan kode registrasi untuk melihat daftar dokumen relaas.</p>
                 @endif
 
             </div>

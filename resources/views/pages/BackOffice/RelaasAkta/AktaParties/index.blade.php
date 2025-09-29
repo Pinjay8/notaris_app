@@ -92,7 +92,7 @@
                     </table>
                 </div>
                 @else
-                <p class="text-center text-muted">Silakan cari kode registrasi terlebih dahulu.</p>
+                <p class="text-center text-muted text-sm">Masukkan kode registrasi untuk melihat daftar pihak.</p>
                 @endif
 
             </div>

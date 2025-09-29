@@ -22,7 +22,7 @@
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>#</th>
                                 <th>Nama Lengkap</th>
                                 <th>Email</th>
                                 <th>No. HP</th>

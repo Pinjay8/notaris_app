@@ -110,7 +110,7 @@
 
 <body>
     <div class="header">
-        <h2>Notary Cost Estimation</h2>
+        <h2>Hasil Total Biaya</h2>
     </div>
 
     {{-- Informasi utama --}}
@@ -127,13 +127,13 @@
             Lunas
             @endif
         </p>
-        <p><strong>Tanggal Jatuh Tempo:</strong>
+        {{-- <p><strong>Tanggal Jatuh Tempo:</strong>
             {{ $costs->due_date ? \Carbon\Carbon::parse($costs->due_date)->format('d/m/Y') : '-' }}
         </p>
         <p><strong>Tanggal Bayar:</strong>
             {{ $costs->paid_date ? \Carbon\Carbon::parse($costs->paid_date)->format('d/m/Y') : '-' }}
         </p>
-        <p><strong>Catatan:</strong> {{ $costs->note ?? '-' }}</p>
+        <p><strong>Catatan:</strong> {{ $costs->note ?? '-' }}</p> --}}
     </div>
 
     {{-- Rincian biaya --}}
