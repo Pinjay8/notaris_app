@@ -9,6 +9,7 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($document) ? 'Edit' : 'Tambah' }} Dokumen</h6>
             </div>
+            <hr>
             <div class="card-body px-4 pt-3 pb-2">
                 <form action="{{ isset($document) ? route('documents.update', $document) : route('documents.store') }}"
                     method="POST" enctype="multipart/form-data">

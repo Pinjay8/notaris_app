@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($transaction) ? 'Edit Transaksi' : 'Tambah Transaksi' }}</h6>
             </div>
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form
                     action="{{ isset($transaction) ? route('akta-transactions.update', $transaction->id) : route('akta-transactions.store') }}"
                     method="POST">
@@ -31,7 +32,7 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label for="client_id" class="form-label">Klien</label>
+                        <label for="client_id" class="form-label text-sm">Klien</label>
                         <select name="client_id" id="client_id" class="form-select" required>
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
@@ -45,7 +46,7 @@
 
                     {{-- Jenis Akta --}}
                     <div class="mb-3">
-                        <label for="akta_type_id" class="form-label">Jenis Akta</label>
+                        <label for="akta_type_id" class="form-label text-sm">Jenis Akta</label>
                         <select name="akta_type_id" id="akta_type_id" class="form-select" required>
                             <option value="" hidden>Pilih Jenis Akta</option>
                             @foreach($aktaTypes as $aktaType)
@@ -66,14 +67,14 @@
                     </div> --}}
                     {{-- Date Submission --}}
                     <div class="mb-3">
-                        <label for="date_submission" class="form-label">Tanggal Pengajuan</label>
+                        <label for="date_submission" class="form-label text-sm">Tanggal Pengajuan</label>
                         <input type="datetime-local" name="date_submission" id="date_submission" class="form-control"
                             value="{{ isset($transaction) && $transaction->date_submission ? \Illuminate\Support\Carbon::parse($transaction->date_submission)->format('Y-m-d\TH:i') : old('date_submission') }}">
                     </div>
 
                     {{-- Date Finish --}}
                     <div class="mb-3">
-                        <label for="date_finished" class="form-label">Tanggal Selesai</label>
+                        <label for="date_finished" class="form-label text-sm">Tanggal Selesai</label>
                         <input type="datetime-local" name="date_finished" id="date_finished" class="form-control"
                             value="{{ isset($transaction) && $transaction->date_finished ? \Illuminate\Support\Carbon::parse($transaction->date_finished)->format('Y-m-d\TH:i') : old('date_finished') }}">
                     </div>
@@ -81,7 +82,7 @@
 
                     {{-- Note --}}
                     <div class="mb-3">
-                        <label for="note" class="form-label">Catatan</label>
+                        <label for="note" class="form-label text-sm">Catatan</label>
                         <textarea name="note" id="note"
                             class="form-control">{{ isset($transaction) ? $transaction->note : old('note') }}</textarea>
                     </div>

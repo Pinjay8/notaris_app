@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center mb-0 pb-0">
-                <h6>Penomoran Akta</h6>
+                <h5>Penomoran Akta</h5>
             </div>
             <div class="card-body pt-1">
 

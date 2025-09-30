@@ -7,7 +7,7 @@
     <div class="col md-12">
         {{-- Table List --}}
         <div class="card">
-            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-2 flex-wrap">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-3 flex-wrap">
 
                 <h5>Dokumen</h5>
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
@@ -45,7 +45,7 @@
                                     </div> --}}
                                     {{-- client_id --}}
                                     <div class="mb-3">
-                                        <label class="form-label">Klien</label>
+                                        <label class="form-label text-sm">Klien</label>
                                         @php
                                         $clients = $clients ?? collect();
                                         @endphp
@@ -63,7 +63,7 @@
                                     </div> --}}
 
                                     <div class="mb-3">
-                                        <label class="form-label">Pilih Jenis Dokumen</label>
+                                        <label class="form-label text-sm">Pilih Jenis Dokumen</label>
                                         <select name="document_code" class="form-select" required>
                                             <option value="" hidden>Pilih Dokumen</option>
                                             @foreach($documents as $doc)
@@ -74,18 +74,18 @@
 
 
                                     <div class="mb-3">
-                                        <label class="form-label">File Dokumen</label>
+                                        <label class="form-label text-sm">File Dokumen</label>
                                         <input type="file" name="document_link" class="form-control"
                                             accept=".jpg,.jpeg,.png,.pdf">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Catatan</label>
+                                        <label class="form-label text-sm">Catatan</label>
                                         <textarea name="note" class="form-control"></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Tanggal Upload</label>
+                                        <label class="form-label text-sm">Tanggal Upload</label>
                                         <input type="date" name="uploaded_at" class="form-control">
                                     </div>
                                 </div>

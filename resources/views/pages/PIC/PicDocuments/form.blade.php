@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($picDocument) ? 'Edit' : 'Tambah' }} PIC Dokumen</h6>
             </div>
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form
                     action="{{ isset($picDocument) ? route('pic_documents.update', $picDocument) : route('pic_documents.store') }}"
                     method="POST">

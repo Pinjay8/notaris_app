@@ -32,7 +32,7 @@ class ClientService
 
     public function create(array $data)
     {
-        $validated = $this->validate($id = null, $data);
+        $validated = $this->validate($data, $id = null);
         $validated['notaris_id'] = auth()->user()->notaris_id;
         return $this->clientRepository->create($validated);
     }
@@ -49,8 +49,7 @@ class ClientService
         return $this->clientRepository->delete($id);
     }
 
-    protected function validate($id = null, array $data)
-
+    protected function validate(array $data, $id = null,)
     {
         $rules = [
             'fullname' => 'required|string|max:255',
@@ -72,7 +71,28 @@ class ClientService
             'note' => 'nullable|string',
         ];
 
-        $validator = Validator::make($data, $rules);
+        $messages = [
+            'fullname.required' => 'Nama lengkap wajib diisi.',
+            'fullname.max'      => 'Nama lengkap maksimal 255 karakter.',
+            'nik.required'      => 'NIK wajib diisi.',
+            'birth_place.required' => 'Tempat lahir wajib diisi.',
+            'gender.required'   => 'Jenis kelamin wajib dipilih.',
+            'marital_status.required' => 'Status pernikahan wajib dipilih.',
+            'job.required'      => 'Pekerjaan wajib diisi.',
+            'address.required'  => 'Alamat wajib diisi.',
+            'city.required'     => 'Kota wajib diisi.',
+            'province.required' => 'Provinsi wajib diisi.',
+            'postcode.required' => 'Kode pos wajib diisi.',
+            'phone.required'    => 'Nomor telepon wajib diisi.',
+            'email.required'    => 'Email wajib diisi.',
+            'email.email'       => 'Format email tidak valid.',
+            'npwp.required'     => 'NPWP wajib diisi.',
+            'type.required'     => 'Tipe klien wajib dipilih.',
+            'type.in'           => 'Tipe klien hanya boleh "personal" atau "company".',
+            'status.required'   => 'Status wajib diisi.',
+        ];
+
+        $validator = Validator::make($data, $rules, $messages);
 
         if ($validator->fails()) {
             throw new ValidationException($validator);

@@ -6,11 +6,11 @@
     <div class="col-md-12">
         <div class="card mb-4 p-3 shadow-lg">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-2 flex-wrap">
-                <h6 class="mb-0">Klien</h6>
+                <h5 class="mb-0">Klien</h5>
                 <div class="d-flex gap-2 flex-wrap">
                     @php
                     $encryptedId = Crypt::encrypt(auth()->user()->notaris_id);
-                    $shareUrl = route('client.public.create', ['encryptedNotarisId' => $encryptedId]);
+                    $shareUrl = route('client.public.created', ['encryptedNotarisId' => $encryptedId]);
                     @endphp
                     <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
                         data-bs-target="#shareLinkModal">
@@ -42,43 +42,44 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm mb-0">
-                        + Tambah Klien
-                    </a>
+
+                    <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm mb-0">+ Tambah Klien</a>
+
                 </div>
+
             </div>
             <div class="card-body px-0 pt-0 pb-2">
+                <div class="d-flex justify-content-end">
+                    <form method="GET" action="{{ route('clients.index') }}"
+                        class="d-flex flex-wrap gap-2 ms-auto mb-3 w-100 justify-content-end" style="max-width: 500px;"
+                        class="no-spinner">
+
+                        <input type="text" name="search" placeholder="Cari Nama, NIK/No KTP"
+                            value="{{ request('search') }}" class="form-control w-100 w-md-auto"
+                            style="flex: 1 1 auto;">
+
+                        <select name="status" class="form-select w-100 w-md-auto" style="flex: 1 1 auto;">
+                            <option value="">Semua Status</option>
+                            <option value="pending" {{ request('status')=='pending' ? 'selected' : '' }}>Pending
+                            </option>
+                            <option value="valid" {{ request('status')=='valid' ? 'selected' : '' }}>Valid
+                            </option>
+                            <option value="revisi" {{ request('status')=='revisi' ? 'selected' : '' }}>Revisi
+                            </option>
+                        </select>
+
+                        <button type="submit" id="searchBtn"
+                            class="btn btn-primary btn-sm mb-0 d-flex align-items-center justify-content-center"
+                            style="width: 90px; height: 38px;">
+                            <span id="searchBtnText">Cari</span>
+                            <div id="searchSpinner" class="spinner-border spinner-border-sm text-light ms-2 d-none"
+                                role="status" aria-hidden="true"></div>
+                        </button>
+                    </form>
+                </div>
                 <div class="table-responsive p-0">
                     <div style="min-width: max-content;">
-                        <div class="d-flex justify-content-end">
-                            <form method="GET" action="{{ route('clients.index') }}"
-                                class="d-flex flex-wrap gap-2 ms-auto mb-3 w-100 justify-content-end"
-                                style="max-width: 500px;" class="no-spinner">
 
-                                <input type="text" name="search" placeholder="Cari Nama, NIK/No KTP"
-                                    value="{{ request('search') }}" class="form-control w-100 w-md-auto"
-                                    style="flex: 1 1 auto;">
-
-                                <select name="status" class="form-select w-100 w-md-auto" style="flex: 1 1 auto;">
-                                    <option value="">Semua Status</option>
-                                    <option value="pending" {{ request('status')=='pending' ? 'selected' : '' }}>Pending
-                                    </option>
-                                    <option value="valid" {{ request('status')=='valid' ? 'selected' : '' }}>Valid
-                                    </option>
-                                    <option value="revisi" {{ request('status')=='revisi' ? 'selected' : '' }}>Revisi
-                                    </option>
-                                </select>
-
-                                <button type="submit" id="searchBtn"
-                                    class="btn btn-primary btn-sm mb-0 d-flex align-items-center justify-content-center"
-                                    style="width: 90px; height: 38px;">
-                                    <span id="searchBtnText">Cari</span>
-                                    <div id="searchSpinner"
-                                        class="spinner-border spinner-border-sm text-light ms-2 d-none" role="status"
-                                        aria-hidden="true"></div>
-                                </button>
-                            </form>
-                        </div>
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
@@ -148,7 +149,7 @@
                                         }}
                                     </td>
                                     <td>
-                                        <span class="badge
+                                        <span class="badge text-capitalize text-xs
                                         bg-{{
                                           $client->status == 'valid' ? 'success' :
                                           ($client->status == 'revisi' ? 'warning' : 'secondary')

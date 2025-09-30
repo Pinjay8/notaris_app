@@ -81,13 +81,13 @@ Route::middleware('guest')->group(function () {
 
     // public form (link yang dikirim ke klien) — jelas beda URI
     Route::get('/client/public/{encryptedNotarisId}', [ClientController::class, 'publicForm'])
-        ->name('client.public.create');
+        ->name('client.public.created');
 
 
     Route::post('/client/public/{encryptedNotarisId}/store', [ClientController::class, 'storeClient'])
         ->name('client.public.store');
 
-    Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+    Route::get('/client/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
     // Route::post('/client/search', [ClientController::class, 'searchByRegistrationCode'])->name('client.search');
     Route::post('/client/{uuid}/upload-document', [ClientController::class, 'uploadDocument'])
         ->name('client.uploadDocument');
@@ -129,7 +129,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{document}', [ProductDocumentsController::class, 'destroy'])->name('destroy');
     });
 
-    Route::resource('clients', ClientController::class);
+    Route::resource('clients', ClientController::class)->except('show');
     Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');
     Route::put('/clients/{id}/set-revision', [ClientController::class, 'setRevision'])
         ->name('clients.setRevision');
@@ -140,7 +140,7 @@ Route::middleware('auth')->group(function () {
         ->name('client.revision.submit');
 
 
-    Route::get('/clients-info', [ClientController::class, 'indexClient'])->name('clients-info.index');
+    // Route::get('/clients-info', [ClientController::class, 'indexClient'])->name('clients-info.index');
 
 
     // Proses pEngurusan

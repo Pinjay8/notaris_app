@@ -9,6 +9,7 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($party) ? 'Edit Pihak Akta' : 'Tambah Pihak Akta' }}</h6>
             </div>
+            <hr>
             <div class="card-body px-4 pt-3 pb-2">
                 <form action="{{ isset($party)
                         ? route('relaas-parties.update', [$relaas->id, $party->id])
@@ -18,7 +19,7 @@
 
                     {{-- Nama --}}
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Pihak</label>
+                        <label for="name" class="form-label text-sm">Nama Pihak</label>
                         <input type="text" name="name" id="name"
                             class="form-control @error('name') is-invalid @enderror"
                             value="{{ old('name', $party->name ?? '') }}">
@@ -29,7 +30,7 @@
 
                     {{-- Role --}}
                     <div class="mb-3">
-                        <label for="role" class="form-label">Peran</label>
+                        <label for="role" class="form-label text-sm">Peran</label>
                         <input type="text" name="role" id="role"
                             class="form-control @error('role') is-invalid @enderror"
                             value="{{ old('role', $party->role ?? '') }}">
@@ -40,7 +41,7 @@
 
                     {{-- Alamat --}}
                     <div class="mb-3">
-                        <label for="address" class="form-label">Alamat</label>
+                        <label for="address" class="form-label text-sm">Alamat</label>
                         <textarea name="address" id="address"
                             class="form-control @error('address') is-invalid @enderror"
                             rows="2">{{ old('address', $party->address ?? '') }}</textarea>
@@ -51,7 +52,7 @@
 
                     {{-- Nomor Identitas --}}
                     <div class="mb-3">
-                        <label for="id_number" class="form-label">Nomor Identitas</label>
+                        <label for="id_number" class="form-label text-sm">Nomor Identitas</label>
                         <input type="text" name="id_number" id="id_number"
                             class="form-control @error('id_number') is-invalid @enderror"
                             value="{{ old('id_number', $party->id_number ?? '') }}">
@@ -62,7 +63,7 @@
 
                     {{-- Jenis Identitas --}}
                     <div class="mb-3">
-                        <label for="id_type" class="form-label">Jenis Identitas</label>
+                        <label for="id_type" class="form-label text-sm">Jenis Identitas</label>
                         <input type="text" name="id_type" id="id_type"
                             class="form-control @error('id_type') is-invalid @enderror"
                             value="{{ old('id_type', $party->id_type ?? '') }}">

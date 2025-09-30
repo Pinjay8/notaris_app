@@ -33,7 +33,7 @@ class ProfileRequest extends FormRequest
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(\+?\d{1,3}[- ]?)?\d{10,14}$/'],
             'email' => ['required', 'email', 'max:255'],
             'gender' => ['required', 'string', 'max:100'],
-            'information' => ['required']
+            'information' => ['nullable']
         ];
     }
 

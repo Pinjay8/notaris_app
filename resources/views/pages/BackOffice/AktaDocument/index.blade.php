@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center  mb-0 pb-0">
-                <h6>Dokumen Akta</h6>
+                <h5>Dokumen Akta</h5>
             </div>
             <div class="card-body">
                 {{-- Form Pencarian --}}
@@ -124,7 +124,8 @@
                     </table>
                 </div>
                 @else
-                <p class="text-center text-muted">Silakan cari kode registrasi atau nomor akta untuk menampilkan
+                <p class="text-center text-muted text-sm mt-5">Silakan cari kode registrasi atau nomor akta untuk
+                    menampilkan
                     transaksi.</p>
                 @endif
             </div>

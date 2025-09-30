@@ -9,8 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($cost) ? 'Edit' : 'Tambah' }} Biaya</h6>
             </div>
-
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form action="{{ isset($cost) ? route('notary_costs.update',$cost->id) : route('notary_costs.store') }}"
                     method="POST">
                     @csrf
@@ -146,8 +146,8 @@
                     </div>
 
                     <div class="mt-4">
-                        <a href="{{ route('notary_costs.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
-                        <button type="submit" class="btn btn-primary btn-sm">{{ isset($cost) ? 'Ubah' : 'Simpan'
+                        <a href="{{ route('notary_costs.index') }}" class="btn btn-secondary">Kembali</a>
+                        <button type="submit" class="btn btn-primary">{{ isset($cost) ? 'Ubah' : 'Simpan'
                             }}</button>
                     </div>
                 </form>

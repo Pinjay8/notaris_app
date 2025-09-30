@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center pb-0">
-                <h6>Transaksi Akta</h6>
+                <h5>Transaksi Akta</h5>
                 <a href="{{ route('akta-transactions.create') }}" class="btn btn-primary btn-sm">+ Tambah Transaksi</a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

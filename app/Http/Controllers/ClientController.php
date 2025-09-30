@@ -30,11 +30,11 @@ class ClientController extends Controller
         $this->clientService = $clientService;
     }
 
-    public function indexClient(Request $request)
-    {
-        $clients = Client::where('id',)->get();
-        return view('pages.Info.index', compact('clients'));
-    }
+    // public function indexClient(Request $request)
+    // {
+    //     $clients = Client::where('id',)->get();
+    //     return view('pages.Info.index', compact('clients'));
+    // }
 
     public function index(Request $request)
     {
@@ -42,17 +42,25 @@ class ClientController extends Controller
         return view('pages.Client.index', compact('clients'));
     }
 
-    public function show($id)
-    {
-        // $client = $this->clientService->getById($id);
-        // return view('pages.Client.detail', compact('client'));
-    }
+    // public function show($id)
+    // {
+    //     // $client = $this->clientService->getById($id);
+    //     // return view('pages.Client.detail', compact('client'));
+    // }
 
     public function create()
     {
         return view('pages.Client.form');
     }
 
+    /*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    /*******  c5b1255b-21b5-4cb6-953a-9d54c1094470  *******/
     public function store(Request $request)
     {
         $this->clientService->create($request->all());

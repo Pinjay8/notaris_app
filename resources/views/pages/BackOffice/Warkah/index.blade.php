@@ -27,23 +27,10 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
-                                    {{-- <div class="mb-3">
-                                        <label class="form-label">Dokumen yang Harus Diisi</label>
-                                        @if($requiredDocuments->isEmpty())
-                                        <p class="text-muted">Semua dokumen sudah diisi.</p>
-                                        @else
-                                        <ul class="list-group">
-                                            @foreach($requiredDocuments->pluck('name') as $docName)
-                                            <li class="list-group-item list-group-item-secondary">
-                                                {{ $docName }}
-                                            </li>
-                                            @endforeach
-                                        </ul>
-                                        @endif
-                                    </div> --}}
+
                                     {{-- client_id --}}
                                     <div class="mb-3">
-                                        <label class="form-label">Klien</label>
+                                        <label class="form-label text-sm">Klien</label>
                                         @php
                                         $clients = $clients ?? collect();
                                         @endphp
@@ -61,7 +48,7 @@
                                     </div> --}}
 
                                     <div class="mb-3">
-                                        <label class="form-label">Pilih Jenis Dokumen</label>
+                                        <label class="form-label text-sm">Dokumen</label>
                                         <select name="warkah_code" class="form-select" required>
                                             <option value="" hidden>Pilih Dokumen</option>
                                             @foreach($documents as $doc)
@@ -72,18 +59,18 @@
 
 
                                     <div class="mb-3">
-                                        <label class="form-label">File Dokumen</label>
+                                        <label class="form-label text-sm">File Dokumen</label>
                                         <input type="file" name="warkah_link" class="form-control"
                                             accept=".jpg,.jpeg,.png,.pdf">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Catatan</label>
+                                        <label class="form-label text-sm">Catatan</label>
                                         <textarea name="note" class="form-control"></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Tanggal Upload</label>
+                                        <label class="form-label text-sm">Tanggal Upload</label>
                                         <input type="date" name="uploaded_at" class="form-control">
                                     </div>
                                 </div>

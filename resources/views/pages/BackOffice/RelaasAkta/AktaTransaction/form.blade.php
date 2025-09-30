@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($data) ? 'Edit Relaas Akta' : 'Tambah Relaas Akta' }}</h6>
             </div>
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form
                     action="{{ isset($data) ? route('relaas-aktas.update', $data->id) : route('relaas-aktas.store') }}"
                     method="POST">
@@ -36,7 +37,7 @@
 
                     {{-- Client --}}
                     <div class="mb-3">
-                        <label for="client_id" class="form-label">Klien</label>
+                        <label for="client_id" class="form-label text-sm">Klien</label>
                         <select name="client_id" id="client_id"
                             class="form-select @error('client_id') is-invalid @enderror">
                             <option value="" hidden>Pilih Klien</option>
@@ -65,7 +66,7 @@
 
                     {{-- title --}}
                     <div class="mb-3">
-                        <label for="title" class="form-label">Judul</label>
+                        <label for="title" class="form-label text-sm">Judul</label>
                         <input type="text" name="title" id="title"
                             class="form-control @error('title') is-invalid @enderror"
                             value="{{ old('title', $data->title ?? '') }}">
@@ -76,7 +77,7 @@
 
                     {{-- story --}}
                     <div class="mb-3">
-                        <label for="story" class="form-label">Cerita</label>
+                        <label for="story" class="form-label text-sm">Cerita</label>
                         {{-- textarea --}}
                         <textarea name="story" id="story" class="form-control @error('story') is-invalid @enderror"
                             rows="3">{{ old('story', $data->story ?? '') }}</textarea>
@@ -88,7 +89,7 @@
 
                     {{-- Story Date --}}
                     <div class="mb-3">
-                        <label for="story_date" class="form-label">Tanggal Cerita</label>
+                        <label for="story_date" class="form-label text-sm">Tanggal Cerita</label>
                         <input type="datetime-local" name="story_date" id="story_date"
                             class="form-control @error('story_date') is-invalid @enderror"
                             value="{{ old('story_date', isset($data->story_date) ? \Carbon\Carbon::parse($data->story_date)->format('Y-m-d\TH:i') : '') }}">
@@ -99,7 +100,7 @@
 
                     {{-- Story Location --}}
                     <div class="mb-3">
-                        <label for="story_location" class="form-label">Lokasi Cerita</label>
+                        <label for="story_location" class="form-label text-sm">Lokasi Cerita</label>
                         <input type="text" name="story_location" id="story_location"
                             class="form-control @error('story_location') is-invalid @enderror"
                             value="{{ old('story_location', $data->story_location ?? '') }}">
@@ -112,7 +113,7 @@
 
                     {{-- Status --}}
                     <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
+                        <label for="status" class="form-label text-sm">Status</label>
                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
                             @foreach(['draft','diproses','selesai','dibatalkan'] as $status)
                             <option value="" hidden>Pilih Status</option>
@@ -130,7 +131,7 @@
 
                     {{-- Note --}}
                     <div class="mb-3">
-                        <label for="note" class="form-label">Catatan</label>
+                        <label for="note" class="form-label text-sm">Catatan</label>
                         <textarea name="note" id="note" class="form-control @error('note') is-invalid @enderror"
                             rows="3">{{ old('note', $data->note ?? '') }}</textarea>
                         @error('note')

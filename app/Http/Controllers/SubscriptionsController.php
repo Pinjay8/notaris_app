@@ -19,7 +19,7 @@ class SubscriptionsController extends Controller
                 })
                     ->orWhere('status', 'like', "%{$search}%");
             })
-            ->latest('start_date')
+            ->latest()
             ->get();
 
         return view('pages.Subscription.index', compact('subscriptions'));

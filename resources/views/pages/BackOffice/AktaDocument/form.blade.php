@@ -9,6 +9,7 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($document) ? 'Edit Akta Dokumen' : 'Tambah Akta Dokumen' }}</h6>
             </div>
+            <hr>
             <div class="card-body px-4 pt-3 pb-0">
                 <form
                     action="{{ isset($document) ? route('akta-documents.update', $document->id) : route('akta-documents.storeData', $transaction->id) }}"
@@ -24,7 +25,7 @@
                             value="{{ $document->registration_code ?? old('registration_code') }}" required>
                     </div> --}}
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Dokumen</label>
+                        <label for="name" class="form-label text-sm">Nama Dokumen</label>
                         <input type="text" name="name" id="name"
                             class="form-control @error('name') is-invalid @enderror"
                             value="{{ old('name', $document->name ?? '') }}">
@@ -37,7 +38,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="type" class="form-label">Tipe</label>
+                        <label for="type" class="form-label text-sm">Tipe</label>
                         <input type="text" name="type" id="type"
                             class="form-control @error('type') is-invalid @enderror"
                             value="{{ old('type', $document->type ?? '') }}">
@@ -55,7 +56,7 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label for="file_url" class="form-label">File Akta Dokumen</label>
+                        <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
                         <input type="file" name="file_url" id="file_url"
                             class="form-control @error('file_url') is-invalid @enderror">
 
@@ -82,7 +83,7 @@
 
                     {{-- uploaded_at --}}
                     <div class="mb-3">
-                        <label for="uploaded_at" class="form-label">Tanggal Upload</label>
+                        <label for="uploaded_at" class="form-label text-sm">Tanggal Upload</label>
                         <input type="datetime-local" name="uploaded_at" id="uploaded_at"
                             class="form-control @error('uploaded_at') is-invalid @enderror"
                             value="{{ old('uploaded_at', isset($document) && $document->uploaded_at ? \Carbon\Carbon::parse($document->uploaded_at)->format('Y-m-d\TH:i') : '') }}">

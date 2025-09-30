@@ -16,7 +16,7 @@
                     <label for="product_id" class="form-label">Pilih Produk</label>
                     <select name="product_id" id="product_id"
                         class="form-select @error('product_id') is-invalid @enderror" required>
-                        <option value="">-- Pilih Produk --</option>
+                        <option value="">Pilih Produk</option>
                         @foreach($products as $product)
                         <option value="{{ $product->id }}" {{ old('product_id')==$product->id ? 'selected' : '' }}>
                             {{ $product->name }}

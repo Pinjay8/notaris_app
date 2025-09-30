@@ -9,6 +9,7 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($client) ? 'Edit' : 'Tambah' }} Klien</h6>
             </div>
+            <hr>
             <div class="card-body px-4 pt-3 pb-2">
                 <form action="{{ isset($client) ? route('clients.update', $client->id) : route('clients.store') }}"
                     method="POST">

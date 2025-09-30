@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($data) ? 'Edit Relaas Log' : 'Tambah Relaas Log' }}</h6>
             </div>
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form action="{{ isset($data) ? route('relaas-logs.update', $data->id) : route('relaas-logs.store') }}"
                     method="POST">
                     @csrf
@@ -18,7 +19,7 @@
 
                     {{-- Relaas ID --}}
                     <div class="mb-3">
-                        <label for="relaas_id" class="form-label">Relaas Akta</label>
+                        <label for="relaas_id" class="form-label text-sm">Relaas Akta</label>
                         <select name="relaas_id" id="relaas_id"
                             class="form-select @error('relaas_id') is-invalid @enderror">
                             <option value="" hidden>Pilih Relaas Akta</option>
@@ -36,7 +37,7 @@
 
                         {{-- Step --}}
                         <div class="mb-3">
-                            <label for="step" class="form-label">Step</label>
+                            <label for="step" class="form-label text-sm">Step</label>
                             <input type="text" name="step" id="step"
                                 class="form-control @error('step') is-invalid @enderror"
                                 value="{{ old('step', $data->step ?? '') }}">
@@ -47,7 +48,7 @@
 
                         {{-- Note --}}
                         <div class="mb-3">
-                            <label for="note" class="form-label">Catatan</label>
+                            <label for="note" class="form-label text-sm">Catatan</label>
                             <textarea name="note" id="note" rows="3"
                                 class="form-control @error('note') is-invalid @enderror">{{ old('note', $data->note ?? '') }}</textarea>
                             @error('note')

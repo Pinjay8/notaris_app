@@ -6,14 +6,14 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                <h6>Subscription</h6>
+                <h5>Subscription</h5>
                 <form action="{{ route('subscriptions') }}" method="GET" class="d-flex" class="no-spinner">
                     <input type="text" name="search" class="form-control form-control-sm me-2"
                         placeholder="Cari subscription..." value="{{ request('search') }}">
                     <button type="submit" class="btn btn-sm btn-primary mb-0">Cari</button>
                 </form>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
+            <div class="card-body px-0  pb-2">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>
@@ -22,7 +22,7 @@
                                     #
                                 </th>
                                 <th class="th-title">
-                                    Nama Paket
+                                    Nama
                                 </th>
                                 <th class="th-title">
                                     Harga
@@ -55,9 +55,8 @@
                                     </p>
                                 </td>
                                 <td>
-                                    <p class="text-sm mb-0  ">Rp. {{
-                                        $subscription->plan->price
-                                        }}
+                                    <p class="text-sm mb-0">
+                                        Rp. {{ number_format($subscription->plan->price, 0, ',', '.') }}
                                     </p>
                                 </td>
                                 <td>

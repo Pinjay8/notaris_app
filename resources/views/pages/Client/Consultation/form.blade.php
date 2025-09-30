@@ -10,6 +10,7 @@ Konsultasi'])
             <div class="card-header pb-0">
                 <h6>{{ isset($notaryConsultation) ? 'Edit Konsultasi' : 'Tambah Konsultasi' }}</h6>
             </div>
+            <hr>
             <div class="card-body px-4 pt-3 pb-2">
                 <form
                     action="{{ isset($notaryConsultation) ? route('consultation.update', $notaryConsultation->id) : route('consultation.store') }}"
@@ -24,14 +25,14 @@ Konsultasi'])
                     <div class="row">
 
                         <div class="mb-3 col-md-6">
-                            <label class="form-label fw-bold">Kode Registrasi</label>
+                            <label class="form-label fw-bold text-sm">Kode Registrasi</label>
                             <input type="text" name="registration_code" class="form-control"
                                 value="{{ old('registration_code', $registrationCode ?? $notaryConsultation->registration_code ?? '') }}"
                                 readonly>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="client_id" class="form-label">Klien</label>
+                            <label for="client_id" class="form-label text-sm">Klien</label>
                             <select name="client_id" class="form-select" required>
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach($clients as $client)
@@ -44,13 +45,13 @@ Konsultasi'])
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="subject" class="form-label">Subjek</label>
+                            <label for="subject" class="form-label text-sm">Subjek</label>
                             <input type="text" name="subject" class="form-control"
                                 value="{{ old('subject', $notaryConsultation->subject ?? '') }}">
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="status" class="form-label">Status</label>
+                            <label for="status" class="form-label text-sm">Status</label>
                             <select name="status" class="form-select">
                                 <option value="" hidden>Pilih Status</option>
                                 <option value="progress" {{ old('status', $notaryConsultation->status ?? '') ==
@@ -62,7 +63,7 @@ Konsultasi'])
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label for="description" class="form-label">Deskripsi</label>
+                            <label for="description" class="form-label text-sm">Deskripsi</label>
                             <textarea name="description" class="form-control"
                                 rows="3">{{ old('description', $notaryConsultation->description ?? '') }}</textarea>
                         </div>

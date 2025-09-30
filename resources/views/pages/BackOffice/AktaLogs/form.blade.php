@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($log) ? 'Edit Log Akta' : 'Tambah Log Akta' }}</h6>
             </div>
-            <div class="card-body px-4 pt-0 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-1 pb-2">
                 <form action="{{ isset($log) ? route('akta-logs.update', $log->id) : route('akta-logs.store') }}"
                     method="POST">
                     @csrf
@@ -31,7 +32,7 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label for="client_id" class="form-label">Klien</label>
+                        <label for="client_id" class="form-label text-sm">Klien</label>
                         <select name="client_id" id="client_id" class="form-select" required>
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
@@ -43,7 +44,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="akta_transaction_id" class="form-label">Transaksi Akta</label>
+                        <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta</label>
                         <select name="akta_transaction_id" id="akta_transaction_id" class="form-select" required>
                             <option value="" hidden>Pilih Transaksi</option>
                             @foreach($transactions as $trx)
@@ -62,13 +63,13 @@
                     </div> --}}
 
                     <div class="mb-3">
-                        <label for="step" class="form-label">Step</label>
+                        <label for="step" class="form-label text-sm">Step</label>
                         <input type="text" name="step" id="step" class="form-control"
                             value="{{ $log->step ?? old('step') }}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="note" class="form-label">Catatan</label>
+                        <label for="note" class="form-label text-sm ">Catatan</label>
                         <textarea name="note" id="note" class="form-control">{{ $log->note ?? old('note') }}</textarea>
                     </div>
 

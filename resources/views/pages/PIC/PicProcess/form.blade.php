@@ -12,7 +12,8 @@
                 <div class="card-header pb-0">
                     <h5 class="mb-0">{{ isset($process) ? 'Edit' : 'Tambah' }} Proses Pengurusan</h5>
                 </div>
-                <div class="card-body px-4 pt-3 pb-2">
+                <hr>
+                <div class="card-body px-4 pt-0 pb-2">
                     <form action="{{ isset($process)
                                     ? route('pic_process.update', $process->id)
                                     : route('pic_process.store') }}" method="POST">

@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Tipe Akta</h6>
+                <h5 class="mb-0">Tipe Akta</h5>
                 <a href="{{ route('akta-types.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Tipe Akta
                 </a>

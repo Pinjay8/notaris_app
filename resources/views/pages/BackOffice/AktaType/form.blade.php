@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6 class="mb-0">{{ isset($aktaType) ? 'Edit Tipe Akta' : 'Tambah Tipe Akta' }}</h6>
             </div>
-            <div class="card-body px-4 pt-3 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form
                     action="{{ isset($aktaType) ? route('akta-types.update', $aktaType->id) : route('akta-types.store') }}"
                     method="POST">
@@ -18,7 +19,7 @@
                     @method('PUT')
                     @endif
                     <div class="mb-3">
-                        <label for="category" class="form-label">Kategori</label>
+                        <label for="category" class="form-label text-sm">Kategori</label>
                         <select name="category" id="category"
                             class="form-select @error('category') is-invalid @enderror">
                             <option value="" hidden>Pilih Kategori</option>
@@ -35,7 +36,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="type" class="form-label">Tipe</label>
+                        <label for="type" class="form-label text-sm">Tipe</label>
                         <input type="text" name="type" id="type"
                             class="form-control @error('type') is-invalid @enderror"
                             value="{{ old('type', $aktaType->type ?? '') }}">
@@ -45,13 +46,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="description" class="form-label">Deskripsi</label>
+                        <label for="description" class="form-label text-sm">Deskripsi</label>
                         <textarea name="description" id="description"
                             class="form-control">{{ $aktaType->description ?? old('description') }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="documents" class="form-label">Dokumen yang diperlukan</label>
+                        <label for="documents" class="form-label text-sm">Dokumen yang diperlukan</label>
                         <textarea name="documents" id="documents"
                             class="form-control">{{ $aktaType->documents ?? old('documents') }}</textarea>
                     </div>
