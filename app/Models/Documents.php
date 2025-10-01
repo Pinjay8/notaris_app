@@ -10,16 +10,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 
 class Documents extends Model
 {
+
+    protected $table = 'documents';
     use LogsActivityCustom, SoftDeletes;
 
-    protected $fillable = [
-        'notaris_id',
-        'code',
-        'name',
-        'description',
-        'status'
-    ];
-
+    protected $fillable = ['name', 'code', 'description', 'status', 'notaris_id'];
     public function getImageDocument()
     {
         if (!$this->image || !Storage::exists($this->image)) {

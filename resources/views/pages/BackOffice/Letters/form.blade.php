@@ -9,7 +9,8 @@
             <div class="card-header pb-0">
                 <h6>{{ isset($data) ? 'Edit Surat Keluar' : 'Tambah Surat Keluar' }}</h6>
             </div>
-            <div class="card-body px-4 pt-4 pb-2">
+            <hr>
+            <div class="card-body px-4 pt-0 pb-2">
                 <form method="POST"
                     action="{{ isset($data) ? route('notary-letters.update', $data->id) : route('notary-letters.store') }}"
                     enctype="multipart/form-data">
@@ -19,7 +20,7 @@
                     @endif
 
                     <div class="mb-3">
-                        <label class="form-label">Klien</label>
+                        <label class="form-label text-sm">Klien</label>
                         <select name="client_id" class="form-select @error('client_id') is-invalid @enderror">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
@@ -34,7 +35,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nomor Surat</label>
+                        <label class="form-label text-sm">Nomor Surat</label>
                         <input type="text" name="letter_number"
                             class="form-control @error('letter_number') is-invalid @enderror"
                             value="{{ old('letter_number', $data->letter_number ?? '') }}">
@@ -44,13 +45,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Jenis Surat</label>
+                        <label class="form-label text-sm">Jenis Surat</label>
                         <input type="text" name="type" class="form-control"
                             value="{{ old('type', $data->type ?? '') }}">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Penerima</label>
+                        <label class="form-label text-sm">Penerima</label>
                         <input type="text" name="recipient"
                             class="form-control @error('recipient') is-invalid @enderror"
                             value="{{ old('recipient', $data->recipient ?? '') }}">
@@ -60,7 +61,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Subjek</label>
+                        <label class="form-label text-sm">Subjek</label>
                         <input type="text" name="subject" class="form-control @error('subject') is-invalid @enderror"
                             value="{{ old('subject', $data->subject ?? '') }}">
                         @error('subject')
@@ -69,7 +70,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Tanggal Surat</label>
+                        <label class="form-label text-sm">Tanggal Surat</label>
                         <input type="date" name="date" class="form-control @error('date') is-invalid @enderror"
                             value="{{ old('date', isset($data->date) ? \Carbon\Carbon::parse($data->date)->format('Y-m-d') : '') }}">
                         @error('date')
@@ -78,24 +79,24 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Ringkasan</label>
+                        <label class="form-label text-sm">Ringkasan</label>
                         <textarea name="summary"
                             class="form-control">{{ old('summary', $data->summary ?? '') }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Lampiran</label>
+                        <label class="form-label text-sm">Lampiran</label>
                         <input type="text" name="attachment" class="form-control"
                             value="{{ old('attachment', $data->attachment ?? '') }}">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Catatan</label>
+                        <label class="form-label text-sm">Catatan</label>
                         <textarea name="notes" class="form-control">{{ old('notes', $data->notes ?? '') }}</textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Upload File</label>
+                        <label class="form-label text-sm">Upload File</label>
                         <input type="file" name="file_path" class="form-control">
 
                         @if(isset($data) && $data->file_path)
@@ -116,12 +117,10 @@
                         @endif
                     </div>
 
-                    <div>
+                    <div class="mt-4">
                         <a href="{{ route('notary-letters.index') }}" class="btn btn-secondary">Batal</a>
                         <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
-
                     </div>
-
                 </form>
             </div>
         </div>

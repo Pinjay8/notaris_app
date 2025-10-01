@@ -24,7 +24,7 @@
                         <input type="text" name="full_name" id="full_name" class="form-control"
                             value="{{ old('full_name', $pic_staff->full_name ?? '') }}">
                         @error('full_name')
-                        <p class="text-danger mt-2">{{ $message }}</p>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -33,7 +33,7 @@
                         <input type="email" name="email" id="email" class="form-control"
                             value="{{ old('email', $pic_staff->email ?? '') }}">
                         @error('email')
-                        <p class="text-danger mt-2">{{ $message }}</p>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -43,7 +43,7 @@
                             value="{{ old('phone_number', $pic_staff->phone_number ?? '') }}"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         @error('phone_number')
-                        <p class="text-danger mt-2">{{ $message }}</p>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -52,7 +52,7 @@
                         <input type="text" name="position" id="position" class="form-control"
                             value="{{ old('position', $pic_staff->position ?? '') }}">
                         @error('position')
-                        <p class="text-danger mt-2">{{ $message }}</p>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -61,7 +61,7 @@
                         <textarea name="address" id="address" rows="2"
                             class="form-control">{{ old('address', $pic_staff->address ?? '') }}</textarea>
                         @error('address')
-                        <p class="text-danger mt-2">{{ $message }}</p>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                         @enderror
                     </div>
 

@@ -11,7 +11,7 @@ Konsultasi'])
                 <h6>{{ isset($notaryConsultation) ? 'Edit Konsultasi' : 'Tambah Konsultasi' }}</h6>
             </div>
             <hr>
-            <div class="card-body px-4 pt-3 pb-2">
+            <div class="card-body px-4 pt-0  pb-2">
                 <form
                     action="{{ isset($notaryConsultation) ? route('consultation.update', $notaryConsultation->id) : route('consultation.store') }}"
                     method="POST">
@@ -33,7 +33,7 @@ Konsultasi'])
 
                         <div class="col-md-6 mb-3">
                             <label for="client_id" class="form-label text-sm">Klien</label>
-                            <select name="client_id" class="form-select" required>
+                            <select name="client_id" class="form-select">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach($clients as $client)
                                 <option value="{{ $client->id }}" {{ old('client_id', $notaryConsultation->client_id ??
@@ -42,12 +42,18 @@ Konsultasi'])
                                 </option>
                                 @endforeach
                             </select>
+                            @error('client_id')
+                            <div class="text-danger text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="subject" class="form-label text-sm">Subjek</label>
                             <input type="text" name="subject" class="form-control"
                                 value="{{ old('subject', $notaryConsultation->subject ?? '') }}">
+                            @error('subject')
+                            <div class="text-danger text-sm mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-md-6 mb-3">

@@ -66,7 +66,7 @@ class NotaryConsultationService
     public function validate(array $data, $id = null)
     {
         $rules = [
-            'notaris_id' =>  'required|exists:notaris,id',
+            // 'notaris_id' =>  'required|exists:notaris,id',
             'client_id' => 'required|exists:clients,id',
             'subject' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -75,11 +75,11 @@ class NotaryConsultationService
         ];
 
         $messages = [
-            'notaris_id.required' => 'Notaris harus dipilih.',
-            'notaris_id.exists' => 'Notaris tidak ditemukan.',
+            // 'notaris_id.required' => 'Notaris harus dipilih.',
+            // 'notaris_id.exists' => 'Notaris tidak ditemukan.',
             'client_id.required' => 'Klien harus dipilih.',
             'client_id.exists' => 'Klien tidak ditemukan.',
-            'subject.required' => 'Subjek konsultasi wajib diisi.',
+            'subject.required' => 'Subjek konsultasi harus diisi.',
             'status.in' => 'Status tidak valid.'
         ];
 

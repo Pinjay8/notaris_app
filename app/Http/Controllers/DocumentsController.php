@@ -50,29 +50,20 @@ class DocumentsController extends Controller
         }
     }
 
-    public function edit(Documents $document)
+    public function edit($id)
     {
+        $document = $this->documentService->findProduct($id);
         return view('pages.Documents.form', compact('document'));
     }
 
-    public function update(DocumentRequest $request, Documents $documents)
+    public function update(DocumentRequest $request, $id)
     {
-        // dd($request->all());
         $validated = $request->validated();
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
-        // $dokumenPath = $documents->image;
+        // dd($document, $validated);
 
-        // if ($request->hasFile('image')) {
-        //     if ($dokumenPath) {
-        //         Storage::delete($dokumenPath);
-        //     }
-        //     $validated['image'] = $request->file('image')->storeAs("img", $request->file('image')->getClientOriginalName());
-        // } else {
-        //     $validated['image'] = $dokumenPath;
-        // }
-
-        $this->documentService->updateDocument($documents, $validated);
+        Documents::where('id', $id)->update($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil mengubah data dokumen');
         return redirect()->route('documents.index');

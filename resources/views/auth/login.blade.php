@@ -1,33 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-        <div class="col-12">
-            @include('layouts.navbars.guest.navbar')
-        </div>
-    </div>
-</div> --}}
 <main class="main-content  mt-0">
     <section>
         <div class="page-header min-vh-100">
             <div class="container d-flex justify-content-center align-items-center min-vh-100">
                 <div class="row justify-content-center w-100">
-                    <div class="col-xl-6  col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                    <div class="col-xl-6  col-lg-5 col-md-12 d-flex flex-column mx-lg-0 mx-auto">
                         <div class="card shadow-sm rounded-4">
                             <div class="card-header pb-0 text-start">
                                 <div class="text-center mb-2 ">
                                     <img src="{{ asset('img/logo-ct-dark.png') }}" alt="" class="mx-auto"
                                         style="width: 60px; height: 60px">
                                 </div>
-                                <h4 class="font-weight-bolder">Sign In</h4>
-                                <p class="mb-0">Enter your email and password to sign in</p>
+                                <h4 class="font-weight-bolder text-center mt-3">Sign In</h4>
+                                <p class="mb-0 text-center">Masukkan email dan password anda.</p>
                             </div>
                             <div class="card-body">
                                 <form role="form" method="POST" action="{{ route('login.perform') }}">
                                     @csrf
                                     <div class="flex flex-col mb-3">
-                                        <label for="email" class="form-label text-sm">Email <span
+                                        <label for="email" class="form-label text-md m-0 mb-2">Email <span
                                                 class="text-danger">*</span></label>
                                         <input type="email" name="email" class="form-control form-control-lg"
                                             aria-label="Email">
@@ -36,7 +29,7 @@
                                         @enderror
                                     </div>
                                     <div class="flex flex-col mb-3">
-                                        <label for="email" class="form-label text-sm">Password <span
+                                        <label for="email" class="form-label text-md m-0 mb-2">Password <span
                                                 class="text-danger">*</span></label>
                                         <div class="input-group border-end">
                                             <input type="password" name="password" id="password"
@@ -54,18 +47,18 @@
                                         <label class="form-check-label" for="rememberMe">Remember me</label>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign
-                                            in</button>
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0 text-sm">Masuk</button>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-1 text-sm mx-auto">
-                                    Forgot you password? Reset your password
+                                    Anda lupa password? Hubungi admin dengan klik
                                     {{-- <a href="{{ route('reset-password') }}"
                                         class="text-primary text-gradient font-weight-bold">here</a> --}}
                                     <a href="{{ route('alertForgotPassword') }}"
-                                        class="text-primary text-gradient font-weight-bold">here</a>
+                                        class="text-primary text-gradient font-weight-bold">disini</a>
                                 </p>
                             </div>
                             {{-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -77,18 +70,7 @@
                             </div> --}}
                         </div>
                     </div>
-                    {{-- <div
-                        class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                        <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
-                            style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-              background-size: cover;">
-                            <span class="mask bg-gradient-primary opacity-6"></span>
-                            <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new
-                                currency"</h4>
-                            <p class="text-white position-relative">The more effortless the writing looks, the more
-                                effort the writer actually put into the process.</p>
-                        </div>
-                    </div> --}}
+
                 </div>
             </div>
         </div>

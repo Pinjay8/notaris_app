@@ -118,16 +118,19 @@ Route::middleware('auth')->group(function () {
     Route::put('products/{product}/deactivate', [ProductsController::class, 'deactivate'])->name('products.deactivate');
 
     Route::resource('documents', DocumentsController::class)->except('show');
+    // Route::get('documents/{document}/edit', [DocumentsController::class, 'edit'])->name('documents.edit');
+    // Route::put('documents/{document}/update', [DocumentsController::class, 'update'])->name('documents.update');
+    // Route::put('/documents/{document}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::put('documents/{document}/deactivate', [DocumentsController::class, 'deactivate'])->name('documents.deactivate');
 
-    Route::get('/product-documents', [ProductDocumentsController::class, 'selectProduct'])->name('products.documents.selectProduct');
+    // Route::get('/product-documents', [ProductDocumentsController::class, 'selectProduct'])->name('products.documents.selectProduct');
 
-    Route::prefix('products/{product}/documents')->name('products.documents.')->group(function () {
-        Route::get('/', [ProductDocumentsController::class, 'index'])->name('index');
-        Route::post('/', [ProductDocumentsController::class, 'store'])->name('store');
-        Route::put('/{document}', [ProductDocumentsController::class, 'update'])->name('update');
-        Route::delete('/{document}', [ProductDocumentsController::class, 'destroy'])->name('destroy');
-    });
+    // Route::prefix('products/{product}/documents')->name('products.documents.')->group(function () {
+    //     Route::get('/', [ProductDocumentsController::class, 'index'])->name('index');
+    //     Route::post('/', [ProductDocumentsController::class, 'store'])->name('store');
+    //     Route::put('/{document}', [ProductDocumentsController::class, 'update'])->name('update');
+    //     Route::delete('/{document}', [ProductDocumentsController::class, 'destroy'])->name('destroy');
+    // });
 
     Route::resource('clients', ClientController::class)->except('show');
     Route::put('/clients/{id}/valid', [ClientController::class, 'markAsValid'])->name('clients.markAsValid');

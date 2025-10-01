@@ -6,23 +6,27 @@
     <div class="col-12">
         <div class="card shadow-sm border-0 pb-0">
             <div class="card-header pb-3 d-flex justify-content-between align-items-center">
-                <h6>Laporan Pembayaran</h6>
+                <h5>Laporan Pembayaran</h5>
+                <a href="{{ route('report-payment.print', request()->all()) }}" target="_blank"
+                    class="btn btn-danger mb-0 btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> PDF
+                </a>
             </div>
-            <div class="card-body px-2 pt-0 pb-2">
-
-                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3"
-                    class="no-spinner">
-                    <div class="col-md-4">
+            <div class="card-body px-2 pt-1 pb-2">
+                <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3 no-spinner">
+                    <div class="col-md-4 col-xl-5">
                         <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                         <input type="date" class="form-control" id="start_date" name="start_date"
                             value="{{ request('start_date') }}">
                     </div>
-                    <div class="col-md-4">
+
+                    <div class=" col-md-4 col-xl-5">
                         <label for="end_date" class="form-label text-sm">Tanggal Akhir</label>
                         <input type="date" class="form-control" id="end_date" name="end_date"
                             value="{{ request('end_date') }}">
                     </div>
-                    <div class="col-md-2">
+
+                    <div class=" col-md-2 col-xl-1">
                         <label for="status" class="form-label text-sm">Status</label>
                         <select class="form-select" name="status" id="status">
                             <option value="all" {{ request('status')=='all' ? 'selected' : '' }}>Semua</option>
@@ -32,15 +36,11 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-flex align-items-end gap-1 ">
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">
-                            <i class="bi bi-funnel"></i>
-                            Cari
+
+                    <div class=" col-md-2 col-xl-1 d-lg-flex align-items-end py-2">
+                        <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
+                            <i class="bi bi-funnel"></i> Cari
                         </button>
-                        <a href="{{ route('report-payment.print', request()->all()) }}" target="_blank"
-                            class="btn btn-danger mb-0 btn-sm">
-                            <i class="bi bi-file-earmark-pdf"></i> PDF
-                        </a>
                     </div>
                 </form>
                 <div class="table-responsive p-0">

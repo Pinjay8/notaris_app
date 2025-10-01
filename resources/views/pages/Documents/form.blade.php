@@ -10,9 +10,10 @@
                 <h6>{{ isset($document) ? 'Edit' : 'Tambah' }} Dokumen</h6>
             </div>
             <hr>
-            <div class="card-body px-4 pt-3 pb-2">
-                <form action="{{ isset($document) ? route('documents.update', $document) : route('documents.store') }}"
-                    method="POST" enctype="multipart/form-data">
+            <div class="card-body px-4 pt-0 pb-2">
+                <form
+                    action="{{ isset($document) ? route('documents.update', $document->id) : route('documents.store') }}"
+                    method="POST">
                     @csrf
                     @if(isset($document))
                     @method('PUT')

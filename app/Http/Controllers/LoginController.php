@@ -62,6 +62,6 @@ class LoginController extends Controller
     public function alertForgotPassword()
     {
         notyf()->position('x', 'right')->position('y', 'top')->info('Harus menghubungi admin untuk mengatur ulang kata sandi Anda.');
-        return view('auth.login');
+        return redirect()->route('login');
     }
 }

@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-3 flex-wrap">
-                <h6>Konsultasi</h6>
+                <h5>Konsultasi</h5>
                 <a href="{{ route('consultation.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Konsultasi
                 </a>

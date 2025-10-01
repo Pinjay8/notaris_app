@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                             @forelse ($documents as $document)
-                            <tr class="text-center">
+                            <tr class="text-center text-sm">
                                 <td>
                                     <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
                                 </td>

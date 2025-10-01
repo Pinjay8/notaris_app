@@ -10,7 +10,7 @@
                 <h6>{{ isset($data) ? 'Edit Waarmerking' : 'Tambah Waarmerking' }}</h6>
             </div>
             <hr>
-            <div class="card-body px-4 pt-4 pb-2">
+            <div class="card-body px-4 pt-0 pb-2">
                 <form method="POST"
                     action="{{ isset($data) ? route('notary-waarmerking.update', $data->id) : route('notary-waarmerking.store') }}"
                     enctype="multipart/form-data">
