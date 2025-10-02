@@ -7,6 +7,7 @@ use App\Models\NotaryClientDocument;
 use App\Models\NotaryConsultation;
 use App\Models\NotaryCost;
 use App\Models\NotaryPayment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $notarisId = Auth::user()->notaris_id;
+        $notarisId = User::where('notaris_id', Auth::user()->notaris_id)->first();
 
         // Statistik utama
         $totalClients = Client::where('notaris_id', $notarisId)->count();

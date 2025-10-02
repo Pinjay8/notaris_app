@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,9 @@ class UserProfileController extends Controller
 
     public function show()
     {
-        $user = Auth::user()->load('notaris');
+        // $user = Auth::user()->load('notaris');
+        // $notaris = $user->notaris;
+        $user = User::where('id', Auth::user()->id)->first();
         $notaris = $user->notaris;
 
         return view('pages.user-profile', compact('user', 'notaris'));
@@ -23,25 +26,25 @@ class UserProfileController extends Controller
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();
-        $notaris = $user->notaris;
 
         $credential = $request->validated();
 
-        $notaris_image = $notaris->image;
+        // Jika user belum ada notaris_id, buat notaris baru atau update relasi
+        if (!$user->notaris_id) {
+            // Misal kita buat record notaris baru
+            $notaris = $user->notaris()->create($credential);
 
-        if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada dan bukan gambar default
-            if ($notaris->image && Storage::disk('public')->exists($notaris->image)) {
-                Storage::delete($notaris->image);
-            }
-            // Simpan gambar baru
             $credential['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
+
+            // Update notaris_id di user
+            $user->notaris_id = $notaris->id;
+            $user->save();
         } else {
-            $credential['image'] = $notaris_image;
+            // Update notaris existing
+            $notaris = $user->notaris;
+            $credential['image'] = $request->file('image')->storeAs('img', $request->file('image')->getClientOriginalName());
+            $notaris->update($credential);
         }
-
-
-        $notaris->update($credential);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil mengubah profil');
         return redirect()->route('profile');
