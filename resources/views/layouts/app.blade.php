@@ -21,6 +21,10 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -60,7 +64,7 @@
     @endauth
 
     <!--   Core JS Files   -->
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+
 
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script> --}}
@@ -79,6 +83,20 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // otomatis apply Select2 ke semua select yang punya class .select2
+            $('.select2').select2({
+                placeholder: "Pilih Klien",
+                allowClear: true,
+                theme: 'bootstrap-5',
+                width: '100%'
+            });
+        });
+    </script>
+
     {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
     const spinner = document.getElementById('loadingSpinner');

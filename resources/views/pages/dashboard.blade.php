@@ -10,7 +10,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Klien</p>
+                                <p class="text-md mb-0 text-capitalize font-weight-bold">Total Klien</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $totalClients }}
                                 </h5>
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Pembayaran</p>
+                                <p class="text-md mb-0 text-capitalize font-weight-bold">Pembayaran</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $paymentsCount }}
                                 </h5>
@@ -60,7 +60,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Dokumen Klien</p>
+                                <p class="text-md mb-0 text-capitalize font-weight-bold">Dokumen Klien</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $doneDocs }}
                                 </h5>
@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Konsultasi</p>
+                                <p class="text-md mb-0 text-capitalize font-weight-bold">Konsultasi</p>
                                 <h5 class="font-weight-bolder">
                                     {{ $activeConsultations }}
                                 </h5>
@@ -190,14 +190,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($latestClients as $client)
+                            @forelse($latestClients as $client)
                             <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $client->fullname }}</td>
                                 <td>{{ $client->company_name ?? '-' }}</td>
                                 <td>{{ $client->created_at->format('d M Y') }}</td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr></tr>
+                            <td colspan="4" class="text-center text-sm text-muted">Tidak ada data klien terbaru
+                            </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
 

@@ -24,7 +24,7 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                            <tr>
+                            <tr class="">
                                 <th>#</th>
                                 <th>Nama Klien</th>
                                 <th>Perusahaan</th>

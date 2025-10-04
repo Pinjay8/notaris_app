@@ -21,7 +21,7 @@
 
                     <div class="mb-3">
                         <label class="form-label text-sm">Klien</label>
-                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror">
+                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror select2">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id

@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Daftar Legalisasi</h6>
+                <h6 class="mb-0">Legalisasi</h6>
                 <a href="{{ route('notary-legalisasi.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Legalisasi
                 </a>
@@ -32,6 +32,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>#</th>
+                                <th>Nama Klien</th>
                                 <th>Nomor Legalisasi</th>
                                 <th>Nama Pemohon</th>
                                 <th>Nama Petugas</th>
@@ -39,7 +40,7 @@
                                 <th>Nomor Dokumen</th>
                                 <th>Tanggal Permintaan</th>
                                 <th>Tanggal Rilis</th>
-                                <th>Catatan</th>
+                                {{-- <th>Catatan</th> --}}
                                 <th>File</th>
                                 <th>Aksi</th>
                             </tr>
@@ -48,6 +49,7 @@
                             @forelse ($data as $item)
                             <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->client->fullname }}</td>
                                 <td>{{ $item->legalisasi_number }}</td>
                                 <td>{{ $item->applicant_name }}</td>
                                 <td>{{ $item->officer_name }}</td>
@@ -57,7 +59,7 @@
                                     : '-' }}</td>
                                 <td>{{ $item->release_date ? \Carbon\Carbon::parse($item->release_date)->format('d-m-Y')
                                     : '-' }}</td>
-                                <td>{{ $item->notes }}</td>
+                                {{-- <td>{{ $item->notes }}</td> --}}
                                 {{-- file image --}}
                                 <td>
                                     @if ($item->file_path)

@@ -13,8 +13,8 @@
                                     <img src="{{ asset('img/logo-ct-dark.png') }}" alt="" class="mx-auto"
                                         style="width: 60px; height: 60px">
                                 </div>
-                                <h4 class="font-weight-bolder text-center mt-3">Sign In</h4>
-                                <p class="mb-0 text-center">Masukkan email dan password anda.</p>
+                                <h4 class="font-weight-bolder text-center mt-3">Notaris App</h4>
+                                {{-- <p class="mb-0 text-center">Masukkan email dan password anda.</p> --}}
                             </div>
                             <div class="card-body">
                                 <form role="form" method="POST" action="{{ route('login.perform') }}">

@@ -27,9 +27,9 @@
                 <li class="nav-item d-flex align-items-center">
                     <form method="post" action="{{ route('logout') }}" id="logout-form">
                         @csrf
-                        <button type="submit" class="btn btn-primary text-white mb-0 shadow">
+                        <button type="submit" class="btn btn-white text-primary mb-0 shadow">
                             <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Logout</span>
+                            <span class="d-sm-inline d-none">Keluar</span>
                         </button>
                     </form>
                 </li>

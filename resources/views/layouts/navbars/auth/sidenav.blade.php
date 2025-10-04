@@ -2,14 +2,15 @@
     class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 h-100"
     id="sidenav-main">
     <div class="sidenav-header">
-        <i class="fas fa-times p-2 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+        <i class="fas fa-times p-1 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="{{ route('dashboard') }}" target="_blank">
-            {{-- <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
-            <span class="ms-1 font-weight-bold text-center">Notaris App</span>
+            <img src={{ asset('img/logo-ct-dark.png') }} class="navbar-brand-img h-100 " alt="main_logo"
+                style="width: 30px; height: 30px">
+            <h6 class="ms-1 font-weight-bold text-start mb-0 ">Notaris App</h6>
         </a>
     </div>
-    <hr class="horizontal dark mt-0">
+    <hr class="horizontal dark mt-1">
     <div class="collapse navbar-collapse vh-100 h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">

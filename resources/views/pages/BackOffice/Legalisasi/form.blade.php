@@ -18,10 +18,9 @@
                     @if(isset($data))
                     @method('PUT')
                     @endif
-
                     <div class="mb-3">
                         <label class="form-label text-sm">Klien</label>
-                        <select name="client_id" class="form-select">
+                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror select2">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id
@@ -30,25 +29,38 @@
                             </option>
                             @endforeach
                         </select>
+                        @error('client_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label text-sm">Nomor Legalisasi</label>
-                        <input type="text" name="legalisasi_number" class="form-control"
-                            value="{{ old('legalisasi_number', $data->legalisasi_number ?? '') }}" {{ isset($data) ? ''
-                            : '' }}>
+                        <input type="text" name="legalisasi_number"
+                            class="form-control @error('legalisasi_number') is-invalid @enderror"
+                            value="{{ old('legalisasi_number', $data->legalisasi_number ?? '') }}">
+                        @error('legalisasi_number')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
                     <div class="mb-3">
                         <label class="form-label text-sm">Nama Pemohon</label>
-                        <input type="text" name="applicant_name" class="form-control"
+                        <input type="text" name="applicant_name"
+                            class="form-control @error('applicant_name') is-invalid @enderror"
                             value="{{ old('applicant_name', $data->applicant_name ?? '') }}">
+                        @error('applicant_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label text-sm">Nama Petugas</label>
-                        <input type="text" name="officer_name" class="form-control"
+                        <input type="text" name="officer_name"
+                            class="form-control @error('officer_name') is-invalid @enderror"
                             value="{{ old('officer_name', $data->officer_name ?? '') }}">
+                        @error('officer_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -66,8 +78,7 @@
                     <div class="mb-3">
                         <label class="form-label text-sm">Tanggal Permintaan</label>
                         <input type="date" name="request_date" class="form-control"
-                            value="{{ old('request_date', isset($data->request_date) ? \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') : '') }}"
-                            required>
+                            value="{{ old('request_date', isset($data->request_date) ? \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') : '') }}">
                     </div>
 
                     <div class="mb-3">
@@ -116,3 +127,15 @@
     </div>
 </div>
 @endsection
+
+{{-- @push('js')
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Pilih Klien",
+            allowClear: true,
+            theme: 'bootstrap-5'
+        });
+    });
+</script>
+@endpush --}}

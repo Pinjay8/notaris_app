@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\NotaryLegalisasi;
-use Illuminate\Http\Request;
 use App\Services\NotaryLegalisasiService;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class NotaryLegalisasiController extends Controller
 {
@@ -45,18 +46,27 @@ class NotaryLegalisasiController extends Controller
     {
         //    dd($request->all());
         // Validasi input
-        $validated = $request->validate([
-            'client_id'         => 'required|exists:clients,id',
-            'legalisasi_number' => 'required|string|max:255|unique:notary_legalisasis,legalisasi_number',
-            'applicant_name'    => 'nullable|string|max:255',
-            'officer_name'      => 'nullable|string|max:255',
-            'document_type'     => 'nullable|string|max:255',
-            'document_number'   => 'nullable|string|max:255',
-            'request_date'      => 'required|date',
-            'release_date'      => 'nullable|date|after_or_equal:request_date',
-            'notes'             => 'nullable|string',
-            'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048', // misal file upload
-        ]);
+        $validated = $request->validate(
+            [
+                'client_id'         => 'required|exists:clients,id',
+                'legalisasi_number' => 'required|string|max:255|unique:notary_legalisasis,legalisasi_number',
+                'applicant_name'    => 'required|string|max:255',
+                'officer_name'      => 'required|string|max:255',
+                'document_type'     => 'nullable|string|max:255',
+                'document_number'   => 'nullable|string|max:255',
+                'request_date'      => 'nullable|date',
+                'release_date'      => 'nullable|date|after_or_equal:request_date',
+                'notes'             => 'nullable|string',
+                'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5000', // misal file upload
+            ],
+            [
+                'client_id.required' => 'Klien harus dipilih.',
+                'legalisasi_number.required' => 'Nomor Legalisasi harus diisi.',
+                'legalisasi_number.unique' => 'Nomor Legalisasi sudah ada.',
+                'applicant_name.required' => 'Nama Pemohon harus diisi.',
+                'officer_name.required' => 'Nama Petugas harus diisi.',
+            ]
+        );
 
         // Handle file upload jika ada
         if ($request->hasFile('file_path')) {
@@ -94,30 +104,46 @@ class NotaryLegalisasiController extends Controller
         return view('pages.BackOffice.Legalisasi.form', compact('data', 'clients'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'applicant_name'    => 'nullable|string|max:255',
-            'officer_name'      => 'nullable|string|max:255',
-            'document_type'     => 'nullable|string|max:255',
-            'document_number'   => 'nullable|string|max:255',
-            'request_date'      => 'required|date',
-            'release_date'      => 'nullable|date|after_or_equal:request_date',
-            'notes'             => 'nullable|string',
-            'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5000', // misal file upload
-        ]);
+        $validated = $request->validate(
+            [
+                'client_id'         => 'required|exists:clients,id',
+                'legalisasi_number' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('notary_legalisasis', 'legalisasi_number')->ignore($id),
+                ],
+                'applicant_name'    => 'nullable|string|max:255',
+                'officer_name'      => 'nullable|string|max:255',
+                'document_type'     => 'nullable|string|max:255',
+                'document_number'   => 'nullable|string|max:255',
+                'request_date'      => 'nullable|date',
+                'release_date'      => 'nullable|date|after_or_equal:request_date',
+                'notes'             => 'nullable|string',
+                'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5000',
+            ],
+            [
+                'client_id.required' => 'Klien harus dipilih.',
+                'legalisasi_number.required' => 'Nomor Legalisasi harus diisi.',
+                'legalisasi_number.unique' => 'Nomor Legalisasi sudah ada.',
+            ]
+        );
 
-        // Handle file upload jika ada
         if ($request->hasFile('file_path')) {
-            $validated['file_path'] = $request->file('file_path')->storeAs('documents', $request->file('file_path')->getClientOriginalName());
+            $validated['file_path'] = $request->file('file_path')->storeAs(
+                'documents',
+                $request->file('file_path')->getClientOriginalName()
+            );
         }
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->update($id, $validated);
+
         notyf()->position('x', 'right')->position('y', 'top')->success('Legalisasi berhasil diubah.');
         return redirect()->route('notary-legalisasi.index');
     }

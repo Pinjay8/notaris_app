@@ -7,7 +7,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Daftar Waarmerking</h6>
+                <h6 class="mb-0">Waarmerking</h6>
                 <a href="{{ route('notary-waarmerking.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Waarmerking
                 </a>
@@ -30,6 +30,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>#</th>
+                                <th>Nama Klien</th> 
                                 <th>Nomor Legalisasi</th>
                                 <th>Nama Pemohon</th>
                                 <th>Nama Petugas</th>
@@ -44,8 +45,9 @@
                         </thead>
                         <tbody>
                             @forelse ($data as $item)
-                            <tr class="text-center">
+                            <tr class="text-center text-sm">
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->client->fullname }}</td>
                                 <td>{{ $item->waarmerking_number }}</td>
                                 <td>{{ $item->applicant_name }}</td>
                                 <td>{{ $item->officer_name }}</td>
@@ -90,7 +92,8 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="10 text-sm" class="text-center text-muted text-sm">Belum ada data waarmerking.</td>
+                                <td colspan="10 text-sm" class="text-center text-muted text-sm">Belum ada data
+                                    waarmerking.</td>
                             </tr>
                             @endforelse
                         </tbody>
