@@ -37,14 +37,14 @@ class ClientRequest extends FormRequest
             'address' => 'required',
             'city' => 'required',
             'province' => 'required',
-            'postcode' => 'required',
+            'postcode' => 'nullable',
             'phone' => 'required',
-            'email' => 'required|email',
-            'type' => 'required|in:personal,company',
+            'email' => 'nullable|email',
+            'type' => 'nullable|in:personal,company',
             'status' => 'nullable|in:pending,valid,revisi',
             'note' => 'nullable',
-            'company_name' => 'required',
-            'npwp' => 'required',
+            'company_name' => 'nullable',
+            'npwp' => 'nullable',
         ];
     }
 

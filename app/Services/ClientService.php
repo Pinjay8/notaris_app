@@ -39,7 +39,7 @@ class ClientService
 
     public function update($id, array $data)
     {
-        $validated = $this->validate($id, $data);
+        $validated = $this->validate($data, $id);
         $validated['notaris_id'] = auth()->user()->notaris_id ?? null;
         return $this->clientRepository->update($id, $validated);
     }
@@ -49,7 +49,7 @@ class ClientService
         return $this->clientRepository->delete($id);
     }
 
-    protected function validate(array $data, $id = null,)
+    protected function validate(array $data, $id = null)
     {
         $rules = [
             'fullname' => 'required|string|max:255',
@@ -61,11 +61,11 @@ class ClientService
             'address' => 'required|string',
             'city' => 'required|string',
             'province' => 'required|string',
-            'postcode' => 'required|string',
+            'postcode' => 'nullable|string',
             'phone' => 'required|string',
-            'email' => 'required|email',
-            'npwp' => 'required|string',
-            'type' => 'required|in:personal,company',
+            'email' => 'nullable|email',
+            'npwp' => 'nullable|string',
+            'type' => 'nullable|in:personal,company',
             'company_name' => 'nullable|string',
             'status' => 'required',
             'note' => 'nullable|string',

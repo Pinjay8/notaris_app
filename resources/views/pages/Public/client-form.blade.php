@@ -106,16 +106,6 @@
                                         @error('job') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
 
-                                    {{-- Nama Perusahaan --}}
-                                    <div class="col-md-6">
-                                        <label class="form-label">Nama Perusahaan</label>
-                                        <input type="text" name="company_name"
-                                            class="form-control @error('company_name') is-invalid @enderror"
-                                            value="{{ $mode === 'revision' ? $client->company_name : old('company_name') }}">
-                                        @error('company_name') <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
                                     {{-- Kota --}}
                                     <div class="col-md-6">
                                         <label class="form-label">Kota</label>
@@ -134,16 +124,6 @@
                                         @error('province') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
 
-                                    {{-- Kode Pos --}}
-                                    <div class="col-md-6">
-                                        <label class="form-label">Kode Pos</label>
-                                        <input type="text" name="postcode" inputmode="numeric" pattern="\d*"
-                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');"
-                                            class="form-control @error('postcode') is-invalid @enderror"
-                                            value="{{ $mode === 'revision' ? $client->postcode : old('postcode') }}">
-                                        @error('postcode') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
-
                                     {{-- Nomor Telepon --}}
                                     <div class="col-md-6">
                                         <label class="form-label">Nomor Telepon</label>
@@ -153,28 +133,51 @@
                                         @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
 
+                                    {{-- Kode Pos --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label">Kode Pos</label>
+                                        <input type="text" name="postcode" inputmode="numeric" pattern="\d*"
+                                            oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="form-control"
+                                            value="{{ $mode === 'revision' ? $client->postcode : old('postcode') }}">
+                                        {{-- @error('postcode') <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror --}}
+                                    </div>
+
+
+
                                     {{-- Email --}}
                                     <div class="col-md-6">
                                         <label class="form-label">Email</label>
-                                        <input type="email" name="email"
-                                            class="form-control @error('email') is-invalid @enderror"
+                                        <input type="email" name="email" class="form-control"
                                             value="{{ $mode === 'revision' ? $client->email : old('email') }}">
-                                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        {{-- @error('email') <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror --}}
                                     </div>
 
                                     {{-- NPWP --}}
                                     <div class="col-md-6">
                                         <label class="form-label">NPWP</label>
-                                        <input type="text" name="npwp"
-                                            class="form-control @error('npwp') is-invalid @enderror"
+                                        <input type="text" name="npwp" class="form-control"
                                             value="{{ $mode === 'revision' ? $client->npwp : old('npwp') }}">
-                                        @error('npwp') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        {{-- @error('npwp') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        --}}
                                     </div>
+
+
+                                    {{-- Nama Perusahaan --}}
+                                    <div class="col-md-6">
+                                        <label class="form-label">Nama Perusahaan</label>
+                                        <input type="text" name="company_name" class="form-control"
+                                            value="{{ $mode === 'revision' ? $client->company_name : old('company_name') }}">
+                                        {{-- @error('company_name') <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror --}}
+                                    </div>
+
 
                                     {{-- Tipe Klien --}}
                                     <div class="col-md-6">
                                         <label class="form-label">Tipe Klien</label>
-                                        <select name="type" class="form-select @error('type') is-invalid @enderror">
+                                        <select name="type" class="form-select">
                                             <option value="" hidden>Pilih Tipe</option>
                                             <option value="personal" {{ ($mode==='revision' ? $client->type :
                                                 old('type')) == 'personal' ? 'selected' : '' }}>
@@ -185,16 +188,16 @@
                                                 Perusahaan
                                             </option>
                                         </select>
-                                        @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        {{-- @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        --}}
                                     </div>
 
                                     {{-- Alamat --}}
                                     <div class="col-md-6">
                                         <label class="form-label">Alamat</label>
-                                        <textarea name="address"
-                                            class="form-control @error('address') is-invalid @enderror"
+                                        <textarea name="address" class="form-control"
                                             rows="3">{{ $mode === 'revision' ? $client->address : old('address') }}</textarea>
-                                        @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
+
                                     </div>
 
                                     {{-- Catatan --}}

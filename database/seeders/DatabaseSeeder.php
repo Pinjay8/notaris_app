@@ -16,27 +16,76 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('notaris')->insert([
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'display_name' => 'John Doe',
-            'office_name' => 'Doe Notary Office',
-            'office_address' => '123 Notary Lane, Cityville',
-            'image' => 'https://randomuser.me/api/portraits/men/32.jpg',
-            'background' => 'S1',
-            'address' => '456 Main St, Cityville',
-            'phone' => '123-456-7890',
-            'email' => 'john@gmail.com',
-            'gender' => 'Laki-Laki'
+            [
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+                'display_name' => 'John Doe',
+                'office_name' => 'Doe Notary Office',
+                'office_address' => '123 Notary Lane, Cityville',
+                'image' => 'https://randomuser.me/api/portraits/men/32.jpg',
+                'background' => 'S1 Hukum',
+                'address' => '456 Main St, Cityville',
+                'phone' => '081234567890',
+                'email' => 'john@gmail.com',
+                'gender' => 'Laki-Laki'
+            ],
+            [
+                'first_name' => 'Maria',
+                'last_name' => 'Santoso',
+                'display_name' => 'Maria Santoso',
+                'office_name' => 'Santoso & Partners',
+                'office_address' => 'Jl. Merdeka No. 10, Bandung',
+                'image' => 'https://randomuser.me/api/portraits/women/44.jpg',
+                'background' => 'S2 Kenotariatan',
+                'address' => 'Jl. Mawar No. 7, Bandung',
+                'phone' => '082134567890',
+                'email' => 'maria@gmail.com',
+                'gender' => 'Perempuan'
+            ],
+            [
+                'first_name' => 'Ahmad',
+                'last_name' => 'Hakim',
+                'display_name' => 'Ahmad Hakim',
+                'office_name' => 'Hakim Notary & Law',
+                'office_address' => 'Jl. Diponegoro No. 8, Surabaya',
+                'image' => 'https://randomuser.me/api/portraits/men/55.jpg',
+                'background' => 'S1 Hukum Bisnis',
+                'address' => 'Jl. Melati No. 2, Surabaya',
+                'phone' => '083145678901',
+                'email' => 'ahmad@gmail.com',
+                'gender' => 'Laki-Laki'
+            ],
         ]);
 
+        // === INSERT USERS (masing-masing notaris 1 user) ===
         DB::table('users')->insert([
-            'notaris_id' => 1, // Assuming a Notaris with ID 1 exists
-            'username' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('secret'),
-            'signup_at' => now(),
-            'active_at' => now(),
-            'status' => 'active',
+            [
+                'notaris_id' => 1,
+                'username' => 'admin_john',
+                'email' => 'admin@gmail.com',
+                'password' => bcrypt('secret'),
+                'signup_at' => now(),
+                'active_at' => now(),
+                'status' => 'active',
+            ],
+            [
+                'notaris_id' => 2,
+                'username' => 'admin_maria',
+                'email' => 'admin2@gmail.com',
+                'password' => bcrypt('secret'),
+                'signup_at' => now(),
+                'active_at' => now(),
+                'status' => 'active',
+            ],
+            [
+                'notaris_id' => 3,
+                'username' => 'admin_ahmad',
+                'email' => 'admin3@gmail.com',
+                'password' => bcrypt('secret'),
+                'signup_at' => now(),
+                'active_at' => now(),
+                'status' => 'active',
+            ],
         ]);
 
         DB::table('plans')->insert([
@@ -58,14 +107,14 @@ class DatabaseSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        DB::table('products')->insert([
-            'id' => 1,
-            'code_products' => 'abc-1',
-            'name' => 'abc',
-            'description' => 'abc abc abc',
-            'image' => 'https://example.com/images/abc.jpg',
-            'status' => true
-        ]);
+        // DB::table('products')->insert([
+        //     'id' => 1,
+        //     'code_products' => 'abc-1',
+        //     'name' => 'abc',
+        //     'description' => 'abc abc abc',
+        //     'image' => 'https://example.com/images/abc.jpg',
+        //     'status' => true
+        // ]);
 
         DB::table('clients')->insert([
             [

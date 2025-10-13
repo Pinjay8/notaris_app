@@ -135,12 +135,12 @@
                                     </td>
                                     <td>
                                         {{
-                                        $client->npwp
+                                        $client->npwp ?? '-'
                                         }}
                                     </td>
                                     <td>
                                         {{
-                                        $client->company_name
+                                        $client->company_name ?? '-'
                                         }}
                                     </td>
                                     <td>

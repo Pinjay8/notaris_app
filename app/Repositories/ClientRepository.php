@@ -28,6 +28,11 @@ class ClientRepository implements ClientRepositoryInterface
     {
         $query = Client::query();
 
+        // 🔒 Filter berdasarkan notaris_id yang login
+        if (!empty($filters['notaris_id'])) {
+            $query->where('notaris_id', $filters['notaris_id']);
+        }
+
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {
                 $q->where('fullname', 'like', '%' . $filters['search'] . '%')
@@ -39,7 +44,9 @@ class ClientRepository implements ClientRepositoryInterface
             $query->where('status', $filters['status']);
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate(5);
+        return $query->orderBy('created_at', 'desc')
+            ->paginate(5)
+            ->withQueryString();
     }
 
     public function create(array $data): Client

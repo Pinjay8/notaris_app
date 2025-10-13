@@ -27,7 +27,7 @@
                             <tr class="">
                                 <th>#</th>
                                 <th>Nama Klien</th>
-                                <th>Perusahaan</th>
+                                <th>Nama Perusahaan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -36,7 +36,7 @@
                             <tr class="text-sm text-center">
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-capitalize">{{ $client->fullname }}</td>
-                                <td class="text-capitalize">{{ $client->company_name }}</td>
+                                <td class="text-capitalize">{{ $client->company_name ?? '-' }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('consultation.getConsultationByClient', $client->id) }}"
                                         class="btn btn-outline-primary btn-sm rounded-pill">
