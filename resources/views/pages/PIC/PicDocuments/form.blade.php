@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Pic Dokumen')
+
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => isset($picDocument) ? 'Edit PIC Dokumen' : 'Tambah PIC Dokumen'])
+@include('layouts.navbars.auth.topnav', ['title' => 'PIC Dokumen'])
 
 <div class="row mt-4 mx-4">
     <div class="col-12">

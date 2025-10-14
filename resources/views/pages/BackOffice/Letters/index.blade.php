@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Surat Keluar')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Surat Keluar'])
 <div class="row mt-4 mx-4">

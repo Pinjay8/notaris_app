@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Dokumen Akta')
+
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen Relaas'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen Akta'])
 
 <div class="row mt-4 mx-4">
     <div class="col-12">
@@ -113,7 +115,8 @@
                     </table>
                 </div>
                 @else
-                <p class="text-center text-muted text-sm">Masukkan kode registrasi untuk melihat daftar dokumen relaas.</p>
+                <p class="text-center text-muted text-sm">Masukkan kode registrasi untuk melihat daftar dokumen relaas.
+                </p>
                 @endif
 
             </div>

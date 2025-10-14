@@ -1,5 +1,7 @@
 @extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
+@section('title', 'Dashboard')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
 <div class="container-fluid py-4">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Klien')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => isset($client) ? 'Edit Klien' : 'Tambah Klien'])
 

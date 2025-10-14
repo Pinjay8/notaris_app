@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Proses Pengurusan')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Proses Pengurusan'])
 

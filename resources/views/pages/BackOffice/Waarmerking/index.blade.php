@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Waarmerking')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'Waarmerking'])
 
@@ -30,7 +32,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>Nama Klien</th> 
+                                <th>Nama Klien</th>
                                 <th>Nomor Legalisasi</th>
                                 <th>Nama Pemohon</th>
                                 <th>Nama Petugas</th>

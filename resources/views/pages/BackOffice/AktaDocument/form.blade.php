@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Dokumen Akta')
+
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => isset($transaction) ? 'Edit Transaksi' : 'Tambah Transaksi'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen Akta'])
 
 <div class="row mt-4 mx-4">
     <div class="col-12">

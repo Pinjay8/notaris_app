@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'PIC Proses Pengurusan')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', ['title' => 'PIC Proses Pengurusan'])
 

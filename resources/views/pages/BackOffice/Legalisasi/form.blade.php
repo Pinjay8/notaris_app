@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'Legalisasi')
+
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => isset($data) ? 'Edit Legalisasi' : 'Tambah Legalisasi'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Legalisasi'])
 
 <div class="row mt-4 mx-4">
     <div class="col-12">

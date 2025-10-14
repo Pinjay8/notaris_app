@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'PIC Proses Pengurusan')
+
 @section('content')
 @include('layouts.navbars.auth.topnav', [
-'title' => isset($process) ? 'Edit Proses Pengurusan' : 'Tambah Proses Pengurusan'
+'title' => 'PIC Proses Pengurusan'
 ])
 
 <div class="container-fluid py-4">

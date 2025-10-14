@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'Serah Terima Dokumen')
+
+
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Form Serah Terima Dokumen'])
+@include('layouts.navbars.auth.topnav', ['title' => 'Serah Terima Dokumen'])
 
 <div class="row mt-4 mx-4">
     <div class="col-md-12 mx-auto">
