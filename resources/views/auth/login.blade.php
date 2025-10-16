@@ -3,7 +3,59 @@
 @section('title', 'Login | Notaris App')
 
 @section('content')
+<style>
+    .octagon-wrapper {
+        width: 350px;
+        height: 350px;
+        overflow: hidden;
+        /* background: #fff; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+    }
 
+    .octagon-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        clip-path: polygon(30% 0%,
+                70% 0%,
+                100% 30%,
+                100% 70%,
+                70% 100%,
+                30% 100%,
+                0% 70%,
+                0% 30%);
+        transition: transform 0.4s ease;
+    }
+
+    .octagon-img:hover {
+        transform: scale(1.05);
+    }
+
+    .octagon-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        clip-path: polygon(30% 0%,
+                70% 0%,
+                100% 30%,
+                100% 70%,
+                70% 100%,
+                30% 100%,
+                0% 70%,
+                0% 30%);
+        border: 3px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .octagon-img:hover {
+        transform: scale(1.05);
+    }
+</style>
 <main class="main-content mt-0">
     <section>
         <div class="page-header min-vh-100 d-flex align-items-center justify-content-center bg-light">
@@ -22,20 +74,10 @@
                                     Kelola data dan dokumen notaris Anda dengan mudah melalui Notaris App.
                                 </p>
 
-                                <div class="position-relative d-flex justify-content-center align-items-center mt-4">
-                                    <div class="octagon-wrapper position-relative" style="width: 300px; height: 300px;">
+                                <div class="d-flex justify-content-center align-items-center mt-4">
+                                    <div style="width: 300px; height: 250px; overflow: hidden; border-radius: 30%;">
                                         <img src="https://images.pexels.com/photos/8730981/pexels-photo-8730981.jpeg"
-                                            alt="Notary Office" class="octagon-img position-absolute"
-                                            style="top: 0; left: 40px;" data-aos="fade-up"
-                                            data-aos-easing="ease-in-back" data-aos-delay="220">
-                                        <img src="https://images.pexels.com/photos/8730981/pexels-photo-8730981.jpeg"
-                                            alt="Notary Office" class="octagon-img position-absolute"
-                                            style="top: 90px; left: 100px;" data-aos="fade-up"
-                                            data-aos-easing="ease-in-back" data-aos-delay="200">
-                                        {{-- <img
-                                            src=" https://images.pexels.com/photos/8730981/pexels-photo-8730981.jpeg"
-                                            alt="Notary Office" class="octagon-img position-absolute"
-                                            style="top: 180px; left: 160px;"> --}}
+                                            alt="Notary Office" style="width: 100%; height: 100%; object-fit: cover;">
                                     </div>
                                 </div>
 
