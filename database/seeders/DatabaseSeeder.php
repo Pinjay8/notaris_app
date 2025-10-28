@@ -104,14 +104,27 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('subscriptions')->insert([
-            'id' => 1,
-            'user_id' => 1,
-            'plan_id' => 1,
-            'start_date' => now(),
-            'end_date' => now()->addMonth(),
-            'payment_date' => now(),
-            'status' => 'active',
+            [
+                'id' => 1,
+                'user_id' => 1,
+                'plan_id' => 1,
+                'start_date' => now(),
+                'end_date' => now()->addMonth(),
+                'payment_date' => now(),
+                'status' => 'active',
+            ],
+            [
+                'id' => 2,
+                'user_id' => 1,
+                'plan_id' => 1,
+                'start_date' => now(),
+                'end_date' => now()->addMonth(),
+                'payment_date' => now(),
+                'status' => 'active',
+            ],
         ]);
+
+
 
         // DB::table('products')->insert([
         //     'id' => 1,

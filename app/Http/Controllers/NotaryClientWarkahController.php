@@ -24,20 +24,7 @@ class NotaryClientWarkahController extends Controller
      */
     public function index(Request $request)
     {
-        // $filters = $request->only([
-        //     'registration_code',
-        //     'notaris_id',
-        //     'client_id',
-        //     'product_id',
-        //     'status'
-        // ]);
-        // $products = $this->notaryClientservice->listWarkah($filters);
-
-        $query = NotaryClientWarkah::with([
-            'client',
-        ]);
-
-        // filter pencarian
+        $query = NotaryClientWarkah::with('client');
         if ($request->filled('registration_code')) {
             $query->where('registration_code', 'like', '%' . $request->registration_code . '%');
         }
@@ -48,32 +35,27 @@ class NotaryClientWarkahController extends Controller
             });
         }
 
-        $clients = Client::where('deleted_at', null)->get();
-
         $notarisId = auth()->user()->notaris_id;
-        $documents = Documents::where('notaris_id', $notarisId)->get();
 
-        // Misal kita ingin cek dokumen yang belum diupload oleh klien tertentu
-        $clientId = $request->client_id ?? null;
-
-        if ($clientId) {
-            $uploadedDocCodes = NotaryClientWarkah::where('client_id', $clientId)
-                ->pluck('warkah_code')
-                ->toArray();
-
-            // Dokumen yang harus diisi (belum diupload)
-            $requiredDocuments = $documents->whereNotIn('code', $uploadedDocCodes);
-        } else {
-            $requiredDocuments = $documents; // semua dokumen ditampilkan
-        }
-
-        $products = $query->paginate(10); // pakai paginate biar rapi
+        $documents = $query->where('notaris_id', $notarisId)->orderBy('created_at', 'desc')->paginate(10);
+        $clients = Client::where('notaris_id', $notarisId)->get();
 
         return view('pages.BackOffice.Warkah.index', [
-            'products' => $products,
-            'clients'  => $clients,
+            'clients' => $clients,
             'documents' => $documents,
-            'requiredDocuments' => $requiredDocuments
+        ]);
+    }
+
+    public function create()
+    {
+        $notarisId = auth()->user()->notaris_id;
+
+        $clients = Client::where('notaris_id', $notarisId)->get();
+        $documents = Documents::where('notaris_id', $notarisId)->get();
+
+        return view('pages.BackOffice.Warkah.form', [
+            'clients' => $clients,
+            'documents' => $documents,
         ]);
     }
 
@@ -171,22 +153,44 @@ class NotaryClientWarkahController extends Controller
         return back();
     }
 
+    public function store(Request $request)
+    {
+        $notarisId = auth()->user()->notaris_id;
 
+        $validated = $request->validate([
+            'client_id' => 'required|exists:clients,id',
+            'warkah_code' => 'required|string|exists:documents,code',
+            'warkah_link' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'note' => 'nullable|string|max:500',
+            'uploaded_at' => 'required|date',
+        ], [
+            'client_id.exists' => 'Klien harus dipilih.',
+            'warkah_code.exists' => 'Dokumen harus dipilih.',
+        ]);
 
+        $document = Documents::where('code', $validated['warkah_code'])
+            ->where('notaris_id', $notarisId)
+            ->firstOrFail();
 
-    // public function markDones(Request $request)
-    // {
-    //     $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
-    //     $this->notaryClientservice->markCompleteds($keys);
-    //     notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi done');
-    //     return redirect()->back();
-    // }
+        $path = null;
+        if ($request->hasFile('warkah_link')) {
+            $path = $request->file('warkah_link')
+                ->storeAs('documents', $request->file('warkah_link')->getClientOriginalName());
+        }
 
-    // public function updateStatusValid(Request $request)
-    // {
-    //     $keys = $request->only(['registration_code', 'notaris_id', 'client_id', 'product_id']);
-    //     $this->notaryClientservice->updateStatusWarkah($keys);
-    //     notyf()->position('x', 'right')->position('y', 'top')->success('Status berhasil diubah menjadi valid');
-    //     return redirect()->back();
-    // }
+        NotaryClientWarkah::create([
+            'registration_code' => $this->generateRegistrationCode($notarisId, $validated['client_id']),
+            'client_id' => $validated['client_id'],
+            'notaris_id' => $notarisId,
+            'warkah_code' => $document->code,
+            'warkah_name' => $document->name,
+            'warkah_link' => $path,
+            'note' => $validated['note'],
+            'status' => 'new',
+            'uploaded_at' => $validated['uploaded_at'],
+        ]);
+
+        notyf()->position('x', 'right')->position('y', 'top')->success('Warkah berhasil ditambahkan');
+        return redirect()->route('warkah.index');
+    }
 }

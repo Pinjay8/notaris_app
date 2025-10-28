@@ -129,15 +129,3 @@
     </div>
 </div>
 @endsection
-
-{{-- @push('js')
-<script>
-    $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: "Pilih Klien",
-            allowClear: true,
-            theme: 'bootstrap-5'
-        });
-    });
-</script>
-@endpush --}}

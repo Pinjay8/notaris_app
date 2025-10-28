@@ -17,21 +17,25 @@ class NotaryAktaPartiesController extends Controller
 
     public function index(Request $request)
     {
-        $parties = [];
+        $filters = $request->only(['registration_code', 'akta_number']);
         $aktaInfo = null;
+        $parties = collect();
 
-        if ($request->filled('search')) {
-            $aktaInfo = $this->service->searchAkta($request->search);
+        // Jika ada input pencarian
+        if (!empty($filters['registration_code']) || !empty($filters['akta_number'])) {
+            $aktaInfo = $this->service->searchAkta($filters);
 
             if ($aktaInfo && $aktaInfo->count() > 0) {
-                $aktaTransactionId = $aktaInfo->first()->id; // pakai id, bukan akta_transaction_id
+                $aktaTransactionId = $aktaInfo->first()->id;
 
                 if (!empty($aktaTransactionId)) {
-                    $parties = $this->service->getPartiesByAkta($aktaTransactionId);
+                    // Ambil data pihak (parties) dengan pagination
+                    $parties = $this->service->getPartiesByAkta($aktaTransactionId, true);
                 }
             }
         }
-        return view('pages.BackOffice.AktaParties.index', compact('aktaInfo', 'parties'));
+
+        return view('pages.BackOffice.AktaParties.index', compact('aktaInfo', 'parties', 'filters'));
     }
 
     public function createData($akta_transaction_id)
@@ -46,28 +50,32 @@ class NotaryAktaPartiesController extends Controller
     }
     public function storeData(Request $request)
     {
-        $request->validate([
-            'registration_code' => 'required',
-            'name' => 'required|string',
-            'role' => 'required|string',
-            'address' => 'required|string',
-            'id_number' => 'required|string',
-            'id_type' => 'nullable|string',
-            'note' => 'nullable|string',
-        ],
-        [
-            'registration_code.required' => 'Nomor akta harus diisi.',
-            'name.required' => 'Nama harus diisi.',
-            'role.required' => 'Peran harus diisi.',
-            'address.required' => 'Alamat harus diisi.',
-            'id_number.required' => 'Nomor identitas harus diisi.',
-        ]
-    );
+        $request->validate(
+            [
+                'registration_code' => 'required',
+                'name' => 'required|string',
+                'role' => 'required|string',
+                'address' => 'required|string',
+                'id_number' => 'required|string',
+                'id_type' => 'nullable|string',
+                'note' => 'nullable|string',
+            ],
+            [
+                'registration_code.required' => 'Nomor akta harus diisi.',
+                'name.required' => 'Nama harus diisi.',
+                'role.required' => 'Peran harus diisi.',
+                'address.required' => 'Alamat harus diisi.',
+                'id_number.required' => 'Nomor identitas harus diisi.',
+            ]
+        );
 
         $this->service->store($request->all());
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Pihak berhasil ditambahkan.');
-        return redirect()->route('akta-parties.index', ['search' => $request->registration_code]);
+        return redirect()->route('akta-parties.index', [
+            'registration_code' => $request->registration_code,
+            'akta_number' => $request->akta_number ?? null,
+        ]);
     }
 
     public function edit($id)
@@ -85,7 +93,10 @@ class NotaryAktaPartiesController extends Controller
         $this->service->updateParty($id, $request->all());
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Pihak berhasil diperbarui.');
-        return redirect()->route('akta-parties.index', ['search' => $request->registration_code]);
+        return redirect()->route('akta-parties.index', [
+            'registration_code' => $request->registration_code,
+            'akta_number' => $request->akta_number ?? null,
+        ]);
     }
 
     public function destroy($id)

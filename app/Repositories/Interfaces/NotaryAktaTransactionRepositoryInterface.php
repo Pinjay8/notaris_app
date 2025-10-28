@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 interface NotaryAktaTransactionRepositoryInterface
 {
-    public function all(array $filters = []): Collection;
+    public function all(array $filters = [], int $perPage = 10);
     public function find(int $id);
     public function create(array $data);
     public function update(int $id, array $data);

@@ -135,7 +135,7 @@ class NotaryAktaTransactionController extends Controller
     // Penomoran Akta
     public function indexNumber(Request $request)
     {
-        $lastAkta = NotaryAktaTransaction::orderBy('akta_number_created_at', 'desc')->first();
+        $lastAkta = NotaryAktaTransaction::orderBy('created_at', 'desc')->first();
         $aktaInfo = null;
 
         if ($request->filled('search')) {
@@ -143,6 +143,13 @@ class NotaryAktaTransactionController extends Controller
                 ->where('registration_code', $request->search)
                 ->orWhere('akta_number', $request->search)
                 ->first();
+
+            if (!$aktaInfo) {
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->error('Kode Registrasi tidak ditemukan');
+            }
         }
 
         return view('pages.BackOffice.AktaNumber.index', compact('lastAkta', 'aktaInfo'));
@@ -165,7 +172,7 @@ class NotaryAktaTransactionController extends Controller
         ]);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil ditambahkan.');
-        return redirect()->route('akta_number.index');
+        return redirect()->route('akta_number.index', ['search' => $akta->registration_code]);
     }
 
 

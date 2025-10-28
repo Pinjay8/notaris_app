@@ -8,20 +8,18 @@ use Illuminate\Database\Eloquent\Collection;
 
 class NotaryAktaTypeRepository implements NotaryAktaTypeRepositoryInterface
 {
-    public function all(array $filters = []): Collection
+    public function all(array $filters = [], int $perPage = 10)
     {
         $query = NotaryAktaTypes::query();
 
         if (!empty($filters['search'])) {
-            $query->where('type', 'like', '%' . $filters['search'] . '%')
-                ->orWhere('description', 'like', '%' . $filters['search'] . '%');
+            $query->where(function ($q) use ($filters) {
+                $q->where('type', 'like', '%' . $filters['search'] . '%')
+                    ->orWhere('description', 'like', '%' . $filters['search'] . '%');
+            });
         }
 
-        // if (isset($filters['status'])) {
-        //     $query->where('status', $filters['status']);
-        // }
-
-        return $query->latest()->get();
+        return $query->latest()->paginate($perPage)->withQueryString();
     }
 
     public function find(int $id): ?NotaryAktaTypes

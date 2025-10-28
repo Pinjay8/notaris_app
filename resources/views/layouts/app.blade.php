@@ -59,7 +59,7 @@
             </div>
         </div> --}}
     </main>
-    @include('components.fixed-plugin')
+    {{-- @include('components.fixed-plugin') --}}
     {{-- @endif --}}
     @endauth
 

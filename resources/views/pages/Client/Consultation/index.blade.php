@@ -22,7 +22,7 @@
                     </form>
                 </div>
             </div>
-            <div class="card-body px-3">
+            <div class="card-body pb-0 px-0">
                 @if($clients->count())
                 <div class="table-responsive">
                     <table class="table">
@@ -37,12 +37,12 @@
                         <tbody>
                             @foreach($clients as $index => $client)
                             <tr class="text-sm text-center">
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $clients->firstItem() + $loop->index }}</td>
                                 <td class="text-capitalize">{{ $client->fullname }}</td>
                                 <td class="text-capitalize">{{ $client->company_name ?? '-' }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('consultation.getConsultationByClient', $client->id) }}"
-                                        class="btn btn-outline-primary btn-sm rounded-pill">
+                                        class="btn btn-outline-primary btn-sm rounded-pill mb-0">
                                         Lihat Konsultasi
                                     </a>
                                 </td>
@@ -53,7 +53,7 @@
                 </div>
 
                 {{-- pagination --}}
-                <div class="d-flex justify-content-center mt-3">
+                <div class="d-flex justify-content-end ">
                     {{ $clients->links() }}
                 </div>
                 @else

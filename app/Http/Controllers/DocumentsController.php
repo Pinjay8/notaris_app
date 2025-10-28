@@ -19,6 +19,7 @@ class DocumentsController extends Controller
         $status = $request->input('status', '1');
 
         $documents = $this->documentService->getAll($search, $status);
+        $documents->appends($request->query());
 
         return view('pages.Documents.index', compact('documents'));
     }

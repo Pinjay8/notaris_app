@@ -18,9 +18,9 @@ class DocumentService
         return $this->documentRepo->all($status);
     }
 
-    public function searchDocuments(string $keyword, bool $includeInactive = false)
+    public function searchDocuments(string $keyword, string $status = '1')
     {
-        return $this->documentRepo->search($keyword, $includeInactive);
+        return $this->documentRepo->search($keyword, $status);
     }
 
     public function createDocument(array $data): Documents

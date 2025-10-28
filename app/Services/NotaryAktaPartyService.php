@@ -15,21 +15,31 @@ class NotaryAktaPartyService
         $this->repo = $repo;
     }
 
-    public function searchAkta(string $search)
+    public function searchAkta(array $filters)
     {
         return NotaryAktaTransaction::query()
-            ->where('registration_code', $search)
-            ->orWhere('akta_number', $search)
+            ->when(!empty($filters['registration_code']), function ($query) use ($filters) {
+                $query->where('registration_code', $filters['registration_code']);
+            })
+            ->when(!empty($filters['akta_number']), function ($query) use ($filters) {
+                $query->orWhere('akta_number', $filters['akta_number']);
+            })
             ->get();
     }
+
     public function findParty(int $id)
     {
         return NotaryAktaParties::findOrFail($id);
     }
 
-    public function getPartiesByAkta($aktaTransactionId)
+    public function getPartiesByAkta(int $aktaTransactionId, bool $paginate = false)
     {
-        return NotaryAktaParties::where('akta_transaction_id', $aktaTransactionId)->get();
+        $query = NotaryAktaParties::where('akta_transaction_id', $aktaTransactionId)
+            ->orderBy('created_at', 'desc');
+
+        return $paginate
+            ? $query->paginate(10)->withQueryString()
+            : $query->get();
     }
 
     public function addParty(array $data)

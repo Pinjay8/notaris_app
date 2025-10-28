@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepositoryInterface
 {
-    public function all(array $filters = []): Collection
+    public function all(array $filters = [], int $perPage = 10)
     {
         $query = NotaryAktaTransaction::with(['client', 'akta_type']);
 
@@ -22,7 +22,7 @@ class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepository
             $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');
         }
 
-        return $query->latest()->get();
+        return $query->latest()->paginate($perPage)->withQueryString();
     }
 
     public function find(int $id)

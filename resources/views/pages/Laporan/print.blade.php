@@ -46,21 +46,48 @@
                 <th>No</th>
                 <th>Kode Pembayaran</th>
                 <th>Nama Klien</th>
-                <th>Tanggal Bayar</th>
+                <th>Tanggal Pelunasan</th>
+                <th>Total Biaya</th>
+                <th>Total Pembayaran</th>
+                <th>Piutang</th>
                 <th>Status</th>
-                <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($costs as $cost)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $cost->payment_code }}</td>
-                <td>{{ $cost->client->fullname }}</td>
-                <td>{{ $cost->created_at->format('d-m-Y') }}</td>
-                <td>{{ ucfirst($cost->payment_status) ?? '-'}}</td>
-                <td>Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
-            </tr>
+            @foreach ($costs as $payment)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $payment->payment_code }}</td>
+                    <td>{{ $payment->client->fullname ?? '-' }}</td>
+                    <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') : '-' }}
+                    </td>
+                    <td>Rp
+                        {{ number_format($payment->cost->total_cost, 0, ',', '.') }}
+                    </td>
+                    <td>Rp {{ number_format($payment->cost->amount_paid, 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($payment->cost->total_cost - $payment->cost->amount_paid, 0, ',', '.') }}
+                    </td>
+                    <td>
+                        @php
+                            $status = $payment->payment_type;
+                            $badgeColor = match ($status) {
+                                'full' => 'success',
+                                'partial' => 'warning',
+                                'dp' => 'info',
+                                default => 'secondary',
+                            };
+                            $statusText = match ($status) {
+                                'full' => 'Lunas',
+                                'partial' => 'Bayar sebagian',
+                                'dp' => 'DP',
+                                default => $status,
+                            };
+                        @endphp
+                        <span class="badge bg-{{ $badgeColor }} text-capitalize">
+                            {{ $statusText }}
+                        </span>
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

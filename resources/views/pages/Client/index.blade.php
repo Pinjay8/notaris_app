@@ -47,15 +47,12 @@
                     </div>
 
                     <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm mb-0">+ Tambah Klien</a>
-
                 </div>
-
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-                <div class="d-flex justify-content-end">
+                <div class="d-flex  justify-content-end w-100">
                     <form method="GET" action="{{ route('clients.index') }}"
-                        class="d-flex flex-wrap gap-2 ms-auto mb-3 w-100 justify-content-end" style="max-width: 500px;"
-                        class="no-spinner">
+                        class="d-flex flex-wrap gap-2  mb-3 justify-content-end" style="max-width: 500px; width: 100%;">
 
                         <input type="text" name="search" placeholder="Cari Nama, NIK/No KTP"
                             value="{{ request('search') }}" class="form-control w-100 w-md-auto"
@@ -119,7 +116,7 @@
                                 @forelse ($clients as $client)
                                 <tr class="text-sm mb-0 text-center">
                                     <td>
-                                        {{ $loop->iteration }}
+                                        {{ $clients->firstItem() + $loop->index }}
                                     </td>
                                     {{-- <td>
                                         <p class="text-sm mb-0 text-center">{{ $client->uuid }}</p>
@@ -310,7 +307,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-end mt-3 px-4">
-                            {{ $clients->withQueryString()->links() }}
+                            {{ $clients->links() }}
                         </div>
 
                     </div>

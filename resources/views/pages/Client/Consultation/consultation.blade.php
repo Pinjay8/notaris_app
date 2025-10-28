@@ -10,8 +10,9 @@
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-3 flex-wrap">
                 <h5>Konsultasi</h5>
-                <a href="{{ route('consultation.create') }}" class="btn btn-primary btn-sm mb-0">
-                    + Tambah Konsultasi
+                <a href="{{ route('consultation.create', ['client_id' => $client->id]) }}"
+                    class="btn btn-primary btn-sm">
+                     + Tambah Konsultasi
                 </a>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
@@ -22,9 +23,6 @@
                                 <th class="th-title">
                                     #
                                 </th>
-                                {{-- <th class="th-title">
-                                    Notaris
-                                </th> --}}
                                 <th class="th-title">
                                     Klien
                                 </th>
@@ -47,9 +45,9 @@
                         </thead>
                         <tbody>
                             @forelse ($notaryConsultations as $notaryconsultation)
-                            <tr>
+                            <tr class="text-center">
                                 <td>
-                                    <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
+                                    {{ $notaryConsultations->firstItem() + $loop->index }}
                                 </td>
                                 {{-- <td>
                                     <p class="text-sm mb-0  text-center"> {{
@@ -115,6 +113,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-end mt-3 px-4">
+                        {{ $notaryConsultations->links() }}
+                    </div>
                 </div>
             </div>
         </div>

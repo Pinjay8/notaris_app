@@ -23,7 +23,7 @@
                     {{-- Client --}}
                     <div class="mb-3">
                         <label for="client_id" class="form-label text-sm">Klien</label>
-                        <select name="client_id" id="client_id" class="form-control form-control-sm">
+                        <select name="client_id" id="client_id" class="form-control form-control-sm select2">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach ($clients as $client)
                             <option value="{{ $client->id }}" {{ old('client_id', $cost->client_id ?? '') == $client->id

@@ -20,7 +20,7 @@ class PicProcess extends Model
 
     public function pic_document()
     {
-        return $this->belongsTo(PicDocuments::class);
+        return $this->belongsTo(PicDocuments::class, 'pic_document_id');
     }
 
     public function notaris()

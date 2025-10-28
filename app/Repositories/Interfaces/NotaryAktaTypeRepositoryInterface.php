@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface NotaryAktaTypeRepositoryInterface
 {
-    public function all(array $filters = []): Collection;
+    public function all(array $filters = []);
 
     public function find(int $id): ?Model;
 

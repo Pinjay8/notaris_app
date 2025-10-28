@@ -3,59 +3,6 @@
 @section('title', 'Login | Notaris App')
 
 @section('content')
-<style>
-    .octagon-wrapper {
-        width: 350px;
-        height: 350px;
-        overflow: hidden;
-        /* background: #fff; */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 20px;
-    }
-
-    .octagon-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        clip-path: polygon(30% 0%,
-                70% 0%,
-                100% 30%,
-                100% 70%,
-                70% 100%,
-                30% 100%,
-                0% 70%,
-                0% 30%);
-        transition: transform 0.4s ease;
-    }
-
-    .octagon-img:hover {
-        transform: scale(1.05);
-    }
-
-    .octagon-img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        clip-path: polygon(30% 0%,
-                70% 0%,
-                100% 30%,
-                100% 70%,
-                70% 100%,
-                30% 100%,
-                0% 70%,
-                0% 30%);
-        border: 3px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        transition: transform 0.3s ease;
-    }
-
-    .octagon-img:hover {
-        transform: scale(1.05);
-    }
-</style>
 <main class="main-content mt-0">
     <section>
         <div class="page-header min-vh-100 d-flex align-items-center justify-content-center bg-light">
@@ -123,7 +70,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary w-100 btn-lg shadow-sm">
-                                        Sign In
+                                        Masuk
                                     </button>
 
                                     <div class="text-center mt-3">

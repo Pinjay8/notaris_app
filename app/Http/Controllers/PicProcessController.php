@@ -18,16 +18,17 @@ class PicProcessController extends Controller
     public function index(Request $request)
     {
         $processes = collect();
+        $doc = null;
 
         if ($request->filled('pic_document_code')) {
-            $doc = PicDocuments::where('pic_document_code', $request->pic_document_code)->first();
+            $doc = PicDocuments::with(['pic', 'client'])->where('pic_document_code', $request->pic_document_code)->first();
 
             if ($doc) {
                 $processes = $this->service->listProcesses(['pic_document_id' => $doc->id]);
             }
         }
 
-        return view('pages.PIC.PicProcess.index', compact('processes'));
+        return view('pages.PIC.PicProcess.index', compact('processes', 'doc'));
     }
 
     public function create(Request $request)
@@ -68,13 +69,14 @@ class PicProcessController extends Controller
     public function edit($id)
     {
         $process = $this->service->getProcessById($id);
+        $process->load('pic_document');
         return view('pages.PIC.PicProcess.form', compact('process'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'pic_document_id'   => 'required',
+            'pic_document_id'   => 'nullable',
             'step_name'      => 'required',
             'step_status'            => 'required',
             'step_date'              => 'required',
@@ -86,7 +88,12 @@ class PicProcessController extends Controller
         $this->service->updateProcess($id, $validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Proses pengurusan berhasil diperbarui.');
-        return redirect()->route('pic_process.index');
+        return redirect()->route(
+            'pic_process.index',
+            [
+                'pic_document_code' => $request->pic_document_code
+            ]
+        );
     }
 
     public function destroy($id)

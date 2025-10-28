@@ -23,6 +23,8 @@
                     @endif
 
                     <input type="hidden" name="notaris_id" value="{{ auth()->user()->notaris_id }}">
+                    <input type="hidden" name="client_id"
+                        value="{{ $notaryConsultation->client_id ?? request('client_id') }}">
 
                     <div class="row">
 
@@ -33,7 +35,7 @@
                                 readonly>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        {{-- <div class="col-md-6 mb-3">
                             <label for="client_id" class="form-label text-sm">Klien</label>
                             <select name="client_id" class="form-select">
                                 <option value="" hidden>Pilih Klien</option>
@@ -47,7 +49,7 @@
                             @error('client_id')
                             <div class="text-danger text-sm mt-1">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-6 mb-3">
                             <label for="subject" class="form-label text-sm">Subjek</label>

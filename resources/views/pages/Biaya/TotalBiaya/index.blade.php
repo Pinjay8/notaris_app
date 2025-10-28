@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h6 class="mb-0">Total Biaya</h6>
+                <h5 class="mb-0">Total Biaya</h5>
                 <a href="{{ route('notary_costs.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Biaya
                 </a>
@@ -50,7 +50,7 @@
                                 @php
                                 $statusMap = [
                                 'paid' => ['class' => 'success', 'label' => 'Lunas'],
-                                'partial' => ['class' => 'warning', 'label' => 'Sebagian'],
+                                'partial' => ['class' => 'warning', 'label' => 'Bayar Sebagian'],
                                 'unpaid' => ['class' => 'danger', 'label' => 'Belum Bayar'],
                                 ];
 

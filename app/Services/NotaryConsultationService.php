@@ -66,21 +66,19 @@ class NotaryConsultationService
     public function validate(array $data, $id = null)
     {
         $rules = [
-            // 'notaris_id' =>  'required|exists:notaris,id',
-            'client_id' => 'required|exists:clients,id',
             'subject' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'nullable',
-            'registration_code' => 'nullable|string|max:50'
+            'status' => 'nullable|in:progress,done',
+            'registration_code' => 'nullable|string|max:50',
+            'client_id' => 'required|integer|exists:clients,id',
+            'notaris_id' => 'required',
         ];
 
         $messages = [
-            // 'notaris_id.required' => 'Notaris harus dipilih.',
-            // 'notaris_id.exists' => 'Notaris tidak ditemukan.',
-            'client_id.required' => 'Klien harus dipilih.',
-            'client_id.exists' => 'Klien tidak ditemukan.',
             'subject.required' => 'Subjek konsultasi harus diisi.',
-            'status.in' => 'Status tidak valid.'
+            'status.in' => 'Status tidak valid.',
+            'client_id.required' => 'Klien harus dipilih.',
+            'notaris_id.required' => 'Notaris tidak valid.',
         ];
 
         $validator = Validator::make($data, $rules, $messages);
@@ -91,6 +89,7 @@ class NotaryConsultationService
 
         return $validator->validated();
     }
+
 
     public function getProductByConsultation(int $consultationId)
     {

@@ -10,99 +10,21 @@
         {{-- Table List --}}
         <div class="card">
             <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-2 px-3 flex-wrap">
-                <h6>Warkah</h6>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#uploadModal">
+                <h5>Warkah</h5>
+                <a href="{{ route('warkah.create') }}" class="btn btn-primary btn-sm mb-0">
                     + Tambah Warkah
-                </button>
-                <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="uploadModalLabel">Tambah Dokumen Warkah Klien</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Tutup"></button>
-                            </div>
-
-                            <form method="POST" action="{{ route('warkah.addDocument') }}"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-body">
-
-                                    {{-- client_id --}}
-                                    <div class="mb-3">
-                                        <label class="form-label text-sm">Klien</label>
-                                        @php
-                                        $clients = $clients ?? collect();
-                                        @endphp
-                                        <select name="client_id" class="form-select" required>
-                                            <option value="" hidden>Pilih Klien</option>
-                                            @foreach($clients as $client)
-                                            <option value="{{ $client->id }}">{{ $client->fullname }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    {{-- <div class="mb-3">
-                                        <label class="form-label">Kode Regsitrasi</label>
-                                        <input type="text" name="registration_code" class="form-control" required>
-                                    </div> --}}
-
-                                    <div class="mb-3">
-                                        <label class="form-label text-sm">Dokumen</label>
-                                        <select name="warkah_code" class="form-select" required>
-                                            <option value="" hidden>Pilih Dokumen</option>
-                                            @foreach($documents as $doc)
-                                            <option value="{{ $doc->code }}">{{ $doc->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label class="form-label text-sm">File Dokumen</label>
-                                        <input type="file" name="warkah_link" class="form-control"
-                                            accept=".jpg,.jpeg,.png,.pdf">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label text-sm">Catatan</label>
-                                        <textarea name="note" class="form-control"></textarea>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label text-sm">Tanggal Upload</label>
-                                        <input type="date" name="uploaded_at" class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn btn-primary">Tambah</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+                </a>
             </div>
 
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="d-flex justify-content-end w-100 px-2">
-                    <form method="GET" action="{{ route('warkah.index') }}" class="row g-3" class="no-spinner">
-                        <div class="col-md-5">
-                            <input type="text" name="registration_code" value="{{ request('registration_code') }}"
-                                class="form-control" placeholder="Kode Registrasi">
-                        </div>
-                        <div class="col-md-5">
-                            <input type="text" name="client_name" value="{{ request('client_name') }}"
-                                class="form-control" placeholder="Nama Klien">
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary ">Cari</button>
-                        </div>
+            <div class="card-body px-0 pt-0 pb-2 mt-2">
+                <div class="d-flex justify-content-lg-end w-100 px-2">
+                    <form method="GET" action="{{ route('warkah.index') }}" class=" g-2 w-100 no-spinner d-flex gap-2"
+                        style="max-width: 500px;">
+                        <input type="text" name="registration_code" value="{{ request('registration_code') }}"
+                            class="form-control" placeholder="Kode Registrasi">
+                        <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
+                            placeholder="Nama Klien">
+                        <button type="submit" class="btn btn-primary mb-0 btn-sm">Cari</button>
                     </form>
                 </div>
                 <div class="table-responsive p-0">
@@ -121,61 +43,67 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($products as $product)
+                            @forelse ($documents as $product)
                             <tr class="text-center text-sm">
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $documents->firstItem() + $loop->index }}</td>
                                 <td>{{ $product->registration_code }}</td>
                                 <td>{{ $product->client->fullname ?? '-' }}</td>
                                 <td>{{ $product->warkah_name ?? '-' }}</td>
                                 <td>{{ $product->warkah_code ?? '-' }}</td>
                                 <td>{{ \Carbon\Carbon::parse($product->uploaded_at)->format('d-m-Y') }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $product->status == 'done' ? 'success' : 'warning' }}">
+                                    <span class="badge text-capitalize mb-0
+                                        @if($product->status == 'new') bg-primary
+                                        @elseif($product->status == 'valid') bg-success
+                                        @elseif($product->status == 'invalid') bg-danger
+                                        @else bg-secondary
+                                        @endif">
+                                        @if($product->status == 'new')
+                                        Baru
+                                        @elseif($product->status == 'invalid')
+                                        Tidak Valid
+                                        @else
                                         {{ ucfirst($product->status) }}
+                                        @endif
                                     </span>
                                 </td>
                                 <td>{{ $product->note ?? '-' }}</td>
                                 <td>
-                                    @if($product->status !== 'done' && $product->status !== 'valid')
-                                    <button type="button" class="btn btn-success btn-xs" data-bs-toggle="modal"
+                                    @if($product->status !== 'done' && $product->status !== 'valid' && $product->status
+                                    !== 'invalid')
+                                    <button type="button" class="btn btn-success btn-xs mb-0" data-bs-toggle="modal"
                                         data-bs-target="#validationModal-{{ $product->registration_code }}">
-                                        <i class="fa fa-check"></i>
+                                        <i class="fa fa-check me-1"></i> Valid
                                     </button>
-
+                                    <button type="button" class="btn btn-danger btn-xs mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#invalidModal-{{ $product->registration_code }}">
+                                        <i class="fa-solid fa-x me-1"></i>
+                                        Tidak Valid
+                                    </button>
                                     <div class="modal fade" id="validationModal-{{ $product->registration_code }}"
                                         tabindex="-1"
                                         aria-labelledby="validationModalLabel-{{ $product->registration_code }}"
                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Validasi Dokumen</h5>
-                                                    <button type="button" class="btn-close"
+                                                    <button type="button" class="btn-close btn-close-white"
                                                         data-bs-dismiss="modal"></button>
                                                 </div>
-                                                <div class="modal-body text-center">
+                                                {{-- <div class="modal-body text-center text-wrap text-sm">
                                                     Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
                                                     kode registrasi
                                                     <strong>{{ $product->registration_code }}</strong> <br>
-                                                    dinyatakan <span class="text-success fw-bold">VALID</span> atau
-                                                    <span class="text-danger fw-bold">TIDAK VALID</span>?
+                                                    dinyatakan <span class="text-success fw-bold">VALID?</span>
+                                                </div> --}}
+                                                <div class="modal-body text-center text-wrap">
+                                                    Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
+                                                    kode registrasi
+                                                    <strong>{{ $product->registration_code }}</strong> dinyatakan
+                                                    <span class="text-success fw-bold">Valid</span>?
                                                 </div>
-                                                <div class="modal-footer d-flex justify-content-between">
-                                                    {{-- Tidak Valid --}}
-                                                    <form method="POST" action="{{ route('warkah.updateStatus') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="registration_code"
-                                                            value="{{ $product->registration_code }}">
-                                                        <input type="hidden" name="notaris_id"
-                                                            value="{{ $product->notaris_id }}">
-                                                        <input type="hidden" name="client_id"
-                                                            value="{{ $product->client_id }}">
-                                                        <input type="hidden" name="status" value="invalid">
-                                                        <button type="submit" class="btn btn-danger">Tidak
-                                                            Valid</button>
-                                                    </form>
-
-                                                    {{-- Valid --}}
+                                                <div class="modal-footer d-flex justify-content-end">
                                                     <form method="POST" action="{{ route('warkah.updateStatus') }}">
                                                         @csrf
                                                         <input type="hidden" name="registration_code"
@@ -185,7 +113,43 @@
                                                         <input type="hidden" name="client_id"
                                                             value="{{ $product->client_id }}">
                                                         <input type="hidden" name="status" value="valid">
-                                                        <button type="submit" class="btn btn-success">Valid</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm mb-0">Submit</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" id="invalidModal-{{ $product->registration_code }}"
+                                        tabindex="-1"
+                                        aria-labelledby="invalidModalLabel-{{ $product->registration_code }}"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Validasi Dokumen</h5>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body text-center text-wrap">
+                                                    Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
+                                                    kode registrasi
+                                                    <strong>{{ $product->registration_code }}</strong> dinyatakan
+                                                    <span class="text-danger fw-bold">TIDAK VALID</span>?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form method="POST" action="{{ route('warkah.updateStatus') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="registration_code"
+                                                            value="{{ $product->registration_code }}">
+                                                        <input type="hidden" name="notaris_id"
+                                                            value="{{ $product->notaris_id }}">
+                                                        <input type="hidden" name="client_id"
+                                                            value="{{ $product->client_id }}">
+                                                        <input type="hidden" name="status" value="invalid">
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm mb-0">Submit</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -203,6 +167,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="mt-3 d-flex justify-content-end">
+                        {{ $documents->withQueryString()->links() }}
+                    </div>
                 </div>
             </div>
         </div>

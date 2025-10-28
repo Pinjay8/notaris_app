@@ -50,7 +50,13 @@ class NotaryConsultationController extends Controller
     public function getConsultationByClient($id)
     {
         $client = Client::findOrFail($id);
-        $notaryConsultations = NotaryConsultation::where('client_id', $client->id)->latest()->get();
+
+        // Gunakan paginate untuk pagination
+        $notaryConsultations = NotaryConsultation::where('client_id', $client->id)
+            ->latest()
+            ->paginate(10) // tampilkan 10 per halaman
+            ->withQueryString();
+
         return view('pages.Client.Consultation.consultation', compact('notaryConsultations', 'client'));
     }
 

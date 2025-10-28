@@ -14,13 +14,12 @@ class DocumentRepository implements DocumentRepositoryInterface
         $query = Documents::query();
 
         if ($status === '1') {
-            $query->where('status', 1); // hanya aktif
+            $query->where('status', 1);
         } elseif ($status === '0') {
-            $query->where('status', 0); // hanya nonaktif
+            $query->where('status', 0);
         }
-        // jika 'all', tampilkan semua
 
-        return $query->get();
+        return $query->paginate(10)->appends(request()->query());
     }
 
     public function search(string $keyword, string $status = '1')
@@ -37,7 +36,7 @@ class DocumentRepository implements DocumentRepositoryInterface
             $query->where('status', 0);
         }
 
-        return $query->get();
+        return $query->paginate(10)->appends(request()->query());
     }
 
     public function create(array $data): Documents

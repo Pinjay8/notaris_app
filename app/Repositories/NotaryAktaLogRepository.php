@@ -10,17 +10,18 @@ class NotaryAktaLogRepository implements NotaryAktaLogRepositoryInterface
 {
     public function all(array $filters = [])
     {
-        $query = NotaryAktaLogs::query();
+        $query = NotaryAktaLogs::with(['notaris', 'client', 'akta_transaction']);
 
         if (!empty($filters['registration_code'])) {
             $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');
         }
 
         if (!empty($filters['step'])) {
-            $query->where('step', $filters['step']);
+            $query->where('step', 'like', '%' . $filters['step'] . '%');
         }
 
-        return $query->latest()->get();
+        // Pagination (10 data per halaman)
+        return $query->latest()->paginate(10)->withQueryString();
     }
 
     public function getById($id)

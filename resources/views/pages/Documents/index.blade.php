@@ -7,25 +7,28 @@
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-4">
-            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                <h5 class="mb-0">Dokumen</h5>
-                <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
-                    + Tambah Dokumen
-                </a>
+            <div class="card-header pb-0-center mb-0 ">
+                <div class=" d-flex justify-content-between align-items">
+                    <h5 class="mb-0">Dokumen</h5>
+                    <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
+                        + Tambah Dokumen
+                    </a>
+                </div>
+                <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto mt-3"
+                    style="max-width: 500px;">
+                    <input type="text" name="search" placeholder="Cari kode/nama dokumen..."
+                        value="{{ request('search') }}" class="form-control">
+                    <select name="status" class="form-select">
+                        <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Aktif</option>
+                        <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Nonaktif</option>
+                        </option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                </form>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
-                    <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-3"
-                        style="max-width: 500px;">
-                        <input type="text" name="search" placeholder="Cari kode/nama dokumen..."
-                            value="{{ request('search') }}" class="form-control">
-                        <select name="status" class="form-select">
-                            <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Aktif</option>
-                            <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Nonaktif</option>
-                            </option>
-                        </select>
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                    </form>
+
                     <table class="table align-items-center mb-0">
                         <thead>
                             <tr>
@@ -59,7 +62,7 @@
                             @forelse ($documents as $document)
                             <tr class="text-center text-sm">
                                 <td>
-                                    <p class="text-sm mb-0 text-center">{{ $loop->iteration }}</p>
+                                    <p class="text-sm mb-0 text-center">{{ $documents->firstItem() + $loop->index }}</p>
                                 </td>
                                 <td>
                                     <p class="text-sm mb-0  text-center"> {{
@@ -122,6 +125,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        {{ $documents->withQueryString()->links() }}
+                    </div>
                 </div>
             </div>
         </div>

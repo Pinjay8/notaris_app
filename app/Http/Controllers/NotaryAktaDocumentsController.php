@@ -36,7 +36,8 @@ class NotaryAktaDocumentsController extends Controller
             if ($transaction) {
                 $documents = NotaryAktaDocuments::where('akta_transaction_id', $transaction->id)
                     ->orderBy('created_at', 'desc')
-                    ->get();
+                    ->paginate(10)
+                    ->withQueryString();
             }
         }
 

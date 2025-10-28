@@ -45,8 +45,8 @@ class ClientRepository implements ClientRepositoryInterface
         }
 
         return $query->orderBy('created_at', 'desc')
-            ->paginate(5)
-            ->withQueryString();
+            ->paginate(10)
+            ->appends(request()->query());
     }
 
     public function create(array $data): Client
