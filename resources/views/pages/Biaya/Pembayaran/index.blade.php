@@ -41,6 +41,11 @@
                                 <td class="text-sm">Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
                             </tr>
                             <tr>
+                                <th class="text-capitalize">Kekurangan</th>
+                                <td class="text-sm">Rp
+                                    {{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
                                 <th class="text-capitalize">Status</th>
                                 <td>
                                     @if ($cost->payment_status === 'unpaid')
@@ -157,8 +162,8 @@
                                     <!-- Kekurangan -->
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link d-flex align-items-center gap-2 px-3 py-2 shadow-sm"
-                                            id="pills-remaining-tab" data-bs-toggle="pill" data-bs-target="#pills-partial"
-                                            type="button" role="tab">
+                                            id="pills-remaining-tab" data-bs-toggle="pill"
+                                            data-bs-target="#pills-partial" type="button" role="tab">
                                             <i class="fa-solid fa-wallet"></i>
                                             <span class="text-sm">Kekurangan</span>
                                         </button>
@@ -205,7 +210,7 @@
                                                     {{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}
                                                 </strong>
                                             </p>
-                                           
+
                                             <p class="mb-2 text-sm">Jatuh Tempo:
                                                 <strong>
                                                     {{ $cost->due_date ? \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}

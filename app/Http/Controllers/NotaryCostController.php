@@ -52,7 +52,7 @@ class NotaryCostController extends Controller
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($validated);
-        notyf()->position('x', 'right')->position('y', 'top')->success("Pembayaran berhasil ditambahkan.");
+        notyf()->position('x', 'right')->position('y', 'top')->success("Biaya berhasil ditambahkan.");
         return redirect()->route('notary_costs.index');
     }
 
@@ -90,14 +90,14 @@ class NotaryCostController extends Controller
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->update($id, $validated);
-        notyf()->position('x', 'right')->position('y', 'top')->success("Pembayaran berhasil diubah.");
+        notyf()->position('x', 'right')->position('y', 'top')->success("Biaya berhasil diubah.");
         return redirect()->route('notary_costs.index');
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
-        notyf()->success("Data berhasil dihapus.");
+        notyf()->position('x', 'right')->position('y', 'top')->success("Biaya berhasil dihapus.");
         return back();
     }
 

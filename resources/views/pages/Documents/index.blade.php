@@ -1,88 +1,83 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumen')
+@section('title', 'Jenis Warkah')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Dokumen'])
-<div class="row mt-4 mx-4">
-    <div class="col-12">
-        <div class="card mb-4">
-            <div class="card-header pb-0-center mb-0 ">
-                <div class=" d-flex justify-content-between align-items">
-                    <h5 class="mb-0">Dokumen</h5>
-                    <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
-                        + Tambah Dokumen
-                    </a>
+    @include('layouts.navbars.auth.topnav', ['title' => 'Jenis Warkah'])
+    <div class="row mt-4 mx-4">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header pb-0-center mb-0 ">
+                    <div class=" d-flex justify-content-between align-items">
+                        <h5 class="mb-0">Jenis Warkah</h5>
+                        <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
+                            + Tambah Jenis Warkah
+                        </a>
+                    </div>
+                    <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto mt-3"
+                        style="max-width: 500px;">
+                        <input type="text" name="search" placeholder="Cari nama jenis warkah"
+                            value="{{ request('search') }}" class="form-control">
+                        <select name="status" class="form-select">
+                            <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Nonaktif</option>
+                            </option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                    </form>
                 </div>
-                <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto mt-3"
-                    style="max-width: 500px;">
-                    <input type="text" name="search" placeholder="Cari kode/nama dokumen..."
-                        value="{{ request('search') }}" class="form-control">
-                    <select name="status" class="form-select">
-                        <option value="1" {{ request('status')=='1' ? 'selected' : '' }}>Aktif</option>
-                        <option value="0" {{ request('status')=='0' ? 'selected' : '' }}>Nonaktif</option>
-                        </option>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                </form>
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
 
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-                                <th class="th-title">
-                                    #
-                                </th>
-                                <th class="th-title">
-                                    Nama Dokumen
-                                </th>
-                                <th class="th-title">
-                                    Kode Dokumen
-                                </th>
-                                <th class="th-title">
-                                    Deskripsi
-                                </th>
-                                {{-- <th class="th-title">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="th-title">
+                                        #
+                                    </th>
+                                    <th class="th-title">
+                                        Nama
+                                    </th>
+                                    <th class="th-title">
+                                        Kode
+                                    </th>
+                                    <th class="th-title">
+                                        Deskripsi
+                                    </th>
+                                    {{-- <th class="th-title">
                                     Link
                                 </th>
                                 <th class="th-title">
                                     Gambar
                                 </th> --}}
-                                <th class="th-title">
-                                    Status
-                                </th>
-                                <th class="th-title">
-                                    Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($documents as $document)
-                            <tr class="text-center text-sm">
-                                <td>
-                                    <p class="text-sm mb-0 text-center">{{ $documents->firstItem() + $loop->index }}</p>
-                                </td>
-                                <td>
-                                    <p class="text-sm mb-0  text-center"> {{
-                                        $document->name
-                                        }}
-                                    </p>
-                                </td>
-                                <td>
-                                    <p class="text-sm mb-0  text-center">{{
-                                        $document->code
-                                        }}
-                                    </p>
-                                </td>
-                                <td>
-                                    <p class="text-sm mb-0  text-center">{{
-                                        $document->description
-                                        }}
-                                    </p>
-                                </td>
-                                {{-- <td>
+                                    <th class="th-title">
+                                        Status
+                                    </th>
+                                    <th class="th-title">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($documents as $document)
+                                    <tr class="text-center text-sm">
+                                        <td>
+                                            <p class="text-sm mb-0 text-center">{{ $documents->firstItem() + $loop->index }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm mb-0  text-center"> {{ $document->name }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm mb-0  text-center">{{ $document->code }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-sm mb-0  text-center">{{ $document->description }}
+                                            </p>
+                                        </td>
+                                        {{-- <td>
                                     <p class="text-sm mb-0  text-center">{{
                                         $document->link
                                         }}
@@ -92,45 +87,46 @@
                                     <img src="{{asset('storage/'.$document->image) }}" alt="Gambar Layanan" width="100"
                                         class="rounded-circle img-fluid">
                                 </td> --}}
-                                <td>
-                                    <span
-                                        class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
-                                        {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
-                                    </span>
-                                </td>
-                                <td class="text-center align-middle">
-                                    <a href="{{ route('documents.edit', $document->id) }}"
-                                        class="btn btn-info btn-sm mb-0 ">
-                                        {{-- <i class="fa-solid fa-pencil" style="font-size: 14px">
+                                        <td>
+                                            <span
+                                                class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
+                                                {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center align-middle">
+                                            <a href="{{ route('documents.edit', $document->id) }}"
+                                                class="btn btn-info btn-sm mb-0 ">
+                                                {{-- <i class="fa-solid fa-pencil" style="font-size: 14px">
                                         </i> --}}
-                                        Edit
-                                    </a>
-                                    <form action="{{ route('documents.deactivate', $document->id) }}" method="POST"
-                                        class="d-inline-block">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="submit" class="btn btn-dark btn-sm mb-0">Nonaktif</button>
-                                    </form>
-                                    {{-- <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('documents.deactivate', $document->id) }}"
+                                                method="POST" class="d-inline-block">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-dark btn-sm mb-0">Nonaktif</button>
+                                            </form>
+                                            {{-- <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal{{ $product->id }}">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
                                     @include('pages.Products.modal.index') --}}
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="8" class="text-center text-muted text-sm">Belum ada data dokumen.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-end mt-3">
-                        {{ $documents->withQueryString()->links() }}
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8" class="text-center text-muted text-sm">Belum ada data dokumen.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end mt-3">
+                            {{ $documents->withQueryString()->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

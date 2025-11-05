@@ -123,7 +123,7 @@
                                                                 break;
                                                             default:
                                                                 $statusText = 'Pending';
-                                                                $statusColor = 'warning';
+                                                                $statusColor = 'secondary';
                                                                 break;
                                                         }
                                                     @endphp
@@ -131,17 +131,17 @@
                                                         {{ $statusText }}
                                                     </span>
                                                 </td>
-                                                <td>{{ \Carbon\Carbon::parse($process->step_date)->format('d-m-Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($process->step_date)->format('d F Y') }}</td>
                                                 <td>{{ $process->note ?? '-' }}</td>
                                                 <td>
                                                     <a href="{{ route('pic_process.edit', $process->id) }}"
-                                                        class="btn btn-sm btn-info">Edit</a>
+                                                        class="btn btn-sm btn-info mb-0">Edit</a>
                                                     <form action="{{ route('pic_process.destroy', $process->id) }}"
                                                         method="POST" style="display:inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Yakin hapus proses ini?')">
+                                                        <button type="submit" class="btn btn-sm btn-danger mb-0"
+                                                            >
                                                             Hapus
                                                         </button>
                                                     </form>
@@ -150,7 +150,7 @@
                                         @empty
                                             <tr>
                                                 <td colspan="6" class="text-center text-muted text-sm py-3">
-                                                    Belum ada proses pengurusan untuk PIC Document ini.
+                                                    Belum ada proses pengurusan untuk PIC dokumen.
                                                 </td>
                                             </tr>
                                         @endforelse

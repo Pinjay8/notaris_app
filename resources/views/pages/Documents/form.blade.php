@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumen')
+@section('title', 'Jenis Warkah')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => isset($document) ? 'Edit Dokumen' : 'Tambah Dokumen'])
+@include('layouts.navbars.auth.topnav', ['title' => isset($document) ? 'Edit Jenis Warkah' : 'Tambah Jenis Warkah'])
 
 <div class="row mt-4 mx-4">
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0">
-                <h6>{{ isset($document) ? 'Edit' : 'Tambah' }} Dokumen</h6>
+                <h6>{{ isset($document) ? 'Edit' : 'Tambah' }} Jenis Warkah</h6>
             </div>
             <hr>
             <div class="card-body px-4 pt-0 pb-2">
@@ -22,7 +22,7 @@
                     @endif
 
                     <div class="mb-3">
-                        <label for="name" class="form-label text-sm">Nama Dokumen</label>
+                        <label for="name" class="form-label text-sm">Nama</label>
                         <input type=" text" name="name" id="name" class="form-control "
                             value="{{ old('name', $document->name ?? '') }}">
                         @error('name')
@@ -31,21 +31,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="code" class="form-label text-sm">Kode Dokumen</label>
+                        <label for="code" class="form-label text-sm">Kode</label>
                         <input type="text" name="code" id="code" class="form-control"
                             value="{{ old('code', $document->code ?? '') }}">
                         @error('code')
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="link" class="form-label text-sm">Link</label>
-                        <input type="text" name="link" id="link" class="form-control"
-                            value="{{ old('link', $document->link ?? '') }}">
-                        @error('link')
-                        <p class="text-danger mt-2">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
 
                     <div class="mb-3">
                         <label for="description" class="form-label text-sm">Deskripsi</label>
@@ -55,23 +47,6 @@
                         <p class="text-danger mt-2">{{ $message }}</p>
                         @enderror
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="image" class="form-label text-sm">Gambar</label>
-                        <input type="file" name="image" id="image" class="form-control">
-
-
-                        @if(old('image'))
-
-                        @elseif(isset($document) && $document->image)
-                        <img src="{{ $document->getImageDocument() }}" alt="Preview Gambar" class="img-thumbnail mt-2"
-                            width="150">
-                        @endif
-
-                        @error('image')
-                        <p class="text-danger mt-2">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
-                    {{-- status --}}
                     <div class="mb-3">
                         <label for="status" class="form-label text-sm">Status</label>
                         <select name="status" id="status" class="form-select">

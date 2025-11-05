@@ -26,21 +26,31 @@ class LoginController extends Controller
         $credential = $request->validated();
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+            if ($user->status === 'pending') {
+                Auth::logout(); // logout dulu agar tidak masuk sesi
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Akun kamu belum aktif. Silakan hubungi admin untuk aktivasi.');
+                return redirect()->route('login');
+            }
+
+            if ($user->active_at && $user->active_at < now()) {
+                Auth::logout();
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Akun anda sudah kadaluarsa. Silakan hubungi admin untuk aktivasi kembali.');
+                return redirect()->route('login');
+            }
+            
             $request->session()->regenerate();
 
-            $userId = Auth::id(); // Simpan dulu user_id secara eksplisit
-
-            // ActivityLog::create([
-            //     'user_id'    => $userId,
-            //     'menu'       => 'auth',
-            //     'action'     => 'login',
-            //     'data_type'  => 'users',
-            //     'data_id'    => $userId,
-            //     'ip_address' => $request->ip(),
-            //     'description' => 'Melakukan Login',
-            // ]);
-
-            notyf()->position('x', 'right')->position('y', 'top')->success('Selamat datang, ' . Auth::user()->username . '!');
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->success('Selamat datang, ' . $user->username . '!');
             return redirect()->route('dashboard');
         } else {
             notyf()->position('x', 'right')->position('y', 'top')->error('Email atau kata sandi salah.');

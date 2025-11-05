@@ -24,7 +24,7 @@
 
                     {{-- Tampilkan transaksi jika ada --}}
                     @if ($transaction)
-                        <div class="card mb-4 shadow-sm">
+                        <div class="card mb-4 shadow-sm mt-3">
                             <div class="card-header bg-primary text-white">
                                 <h6 class="mb-0 text-white">Detail Transaksi Akta</h6>
                             </div>
@@ -70,7 +70,7 @@
                         </div>
 
                         {{-- Tabel Dokumen --}}
-                        <div class="mb-3">
+                        <div class="mb-1">
                             <div class="d-flex justify-content-end mb-2">
                                 <a href="{{ route('akta-documents.createData', ['akta_transaction_id' => $transaction->id]) }}"
                                     class="btn btn-primary btn-sm mb-2 ">+ Tambah Dokumen Akta</a>
@@ -97,12 +97,36 @@
                                             </td>
                                             <td class="text-center">
                                                 @if ($doc->file_url)
-                                                    <a href="{{ asset('storage/' . $doc->file_url) }}" target="_blank"
-                                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center mb-0">
-                                                        <i class="bi bi-file-earmark-text me-1"></i> Lihat File
-                                                    </a>
+                                                    <!-- Tombol buka modal -->
+                                                    <button type="button" class="btn btn-sm btn-outline-primary mb-0"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#imageModal{{ $doc->id }}">
+                                                        <i class="bi bi-image me-1"></i> Lihat Akta
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="imageModal{{ $doc->id }}"
+                                                        tabindex="-1" aria-labelledby="imageModalLabel{{ $doc->id }}"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header py-2">
+                                                                    <h6 class="modal-title"
+                                                                        id="imageModalLabel{{ $doc->id }}">File Dokumen Akta
+                                                                        </h6>
+                                                                    <button type="button" class="btn-close btn-close-white"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body text-center d-flex justify-content-center">
+                                                                    <img src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                        alt="Dokumen" class="img-fluid rounded shadow-sm"
+                                                                        style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @else
-                                                    <span class="badge bg-secondary">Tidak Ada File</span>
+                                                    <span class="badge bg-secondary">Tidak Ada Gambar</span>
                                                 @endif
                                             </td>
 
@@ -119,11 +143,12 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">Belum ada akta dokumen.</td>
+                                            <td colspan="6" class="text-center text-sm">Belum ada akta dokumen.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
+
                             <div class="d-flex justify-content-end mt-3">
                                 {{ $documents->links() }}
                             </div>

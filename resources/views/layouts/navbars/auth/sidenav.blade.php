@@ -4,18 +4,26 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-1 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="{{ route('dashboard') }}" target="_blank">
-            <img src={{ asset('img/logo-ct-dark.png') }} class="navbar-brand-img h-100 " alt="main_logo"
-                style="width: 30px; height: 30px">
-            <h6 class="ms-1 font-weight-bold text-start mb-0 ">Notaris App</h6>
-        </a>
+        <div class="d-flex  justify-content-center mt-3 gap-2">
+            <a class="navbar-brand m-0 p-1" href="{{ route('dashboard') }}" target="_blank">
+                <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 40px; height: 40px;">
+                    <img src="{{ asset('img/logo-ct.png') }}" alt="main_logo"
+                        style="width: 24px; height: 24px; object-fit: contain; color:white;">
+                </div>
+            </a>
+            <div>
+                <h6 class="mb-0">Hi, {{ auth()->user()->username }}</h6>
+                <p class="mb-0">{{ auth()->user()->email }}</p>
+            </div>
+        </div>
     </div>
-    <hr class="horizontal dark mt-1">
+    <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse vh-100 h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}"
-                    class="nav-link {{  Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
+                    class="nav-link {{ Route::currentRouteName() == 'dashboard' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
@@ -31,7 +39,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ route('profile') }}"
-                    class="nav-link {{  Route::currentRouteName() == 'profile' ? 'active' : '' }}">
+                    class="nav-link {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
@@ -71,7 +79,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
                     </div>
-                    <span class="nav-link-text ms-1 mt-2">Dokumen</span>
+                    <span class="nav-link-text ms-1 mt-2">Jenis Warkah</span>
                 </a>
             </li>
             <li class="nav-item mt-3 d-flex align-items-center">
@@ -81,7 +89,8 @@
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">CS</h6>
             </li>
             <li class="nav-item">
-                <a href="{{ route('clients.index') }}" class="nav-link {{ request()->is('clients*') ? 'active' : '' }}">
+                <a href="{{ route('clients.index') }}"
+                    class="nav-link {{ request()->is('clients*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-person-add text-dark text-sm opacity-10 pb-0"></i>
@@ -128,7 +137,7 @@
                 </div>
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Back Office</h6>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ route('management-document.index') }}"
                     class="nav-link {{ request()->is('management-document*') ? 'active' : '' }}">
 
@@ -138,7 +147,7 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Dokumen</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a href="{{ route('warkah.index') }}" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
@@ -157,7 +166,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-handshake text-dark text-sm opacity-10 pb-0"></i>
                             </div>
-                            <span class="nav-link-text text-sm">Partij Akta</span>
+                            <span class="nav-link-text text-sm">Akta Notaris</span>
                         </div>
                         <!-- Kanan -->
                         <i class="bi bi-caret-down-fill"></i>
@@ -238,7 +247,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-scroll text-dark text-sm opacity-10 pb-0"></i>
                             </div>
-                            <span class="nav-link-text text-sm">Relaas Akta</span>
+                            <span class="nav-link-text text-sm">PPAT</span>
                         </div>
                         <!-- Kanan -->
                         <i class="bi bi-caret-down-fill"></i>

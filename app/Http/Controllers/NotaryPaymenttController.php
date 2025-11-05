@@ -31,7 +31,16 @@ class NotaryPaymenttController extends Controller
             'payment_date'   => 'required|date',
             'payment_method' => 'required|string',
             'payment_file'   => 'required|file',
-        ]);
+        ],
+        [
+            'payment_code.required'   => 'Kode pembayaran harus diisi.',
+            'payment_type.required'   => 'Tipe pembayaran harus diisi.',
+            'amount.required'         => 'Jumlah pembayaran harus diisi.',
+            'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
+            'payment_method.required' => 'Metode pembayaran harus diisi.',
+            'payment_file.required'   => 'File pembayaran harus diupload.',
+        ]
+    );
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();
 

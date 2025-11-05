@@ -32,12 +32,12 @@
                                 </div>
                             @enderror
                         </div>
-
                         <div class="mb-3">
                             <label for="type" class="form-label text-sm">Tipe</label>
                             <input type="text" name="type" id="type"
                                 class="form-control @error('type') is-invalid @enderror"
-                                value="{{ old('type', $document->type ?? '') }}">
+                                value="{{ old('type', $document->type ?? '') }}"
+                                placeholder="Contoh: Draft, Final, Notariil">
 
                             @error('type')
                                 <div class="invalid-feedback">
@@ -45,11 +45,6 @@
                                 </div>
                             @enderror
                         </div>
-                        {{-- <div class="mb-3">
-                        <label for="file_name" class="form-label">Nama File</label>
-                        <input type="text" name="file_name" class="form-control"
-                            value="{{ $document->file_name ?? old('file_name') }}" required>
-                    </div> --}}
 
                         <div class="mb-3">
                             <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
@@ -104,8 +99,7 @@
 
 
                         <a href="{{ route('akta-documents.index') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit"
-                            class="btn btn-primary">{{ isset($document) ? 'Update' : 'Simpan' }}</button>
+                        <button type="submit" class="btn btn-primary">{{ isset($document) ? 'Ubah' : 'Simpan' }}</button>
                     </form>
                 </div>
             </div>

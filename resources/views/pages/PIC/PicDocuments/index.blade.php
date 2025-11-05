@@ -11,12 +11,12 @@
                 {{-- Card Utama --}}
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="mb-0">Dokumen</h5>
+                        <h5 class="mb-0">PIC Dokumen</h5>
                         <a href="{{ route('pic_documents.create') }}" class="btn btn-sm btn-primary mb-0">
                             + Tambah PIC Dokumen
                         </a>
                     </div>
-                    <div class="card-body px-0 pt-0 pb-2">
+                    <div class="card-body px-0 pt-0 pb-0">
                         <div class="table-responsive p-0">
                             <form method="GET" action="{{ route('pic_documents.index') }}"
                                 class="d-flex gap-2 ms-auto me-4 mb-3" style="max-width: 500px;" class="no-spinner">
@@ -57,7 +57,7 @@
                                             <td>{{ $doc->document_type }}</td>
                                             <td>{{ $doc->document_number }}</td>
                                             <td>
-                                                {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->format('d-m-Y') : '-' }}
+                                                {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->translatedFormat('d F Y H:i') : '-' }}
                                             </td>
                                             {{-- Badge Status --}}
                                             {{-- Define badge colors and status text --}}
@@ -78,7 +78,8 @@
                                             @endphp
 
                                             <td>
-                                                <span class="badge bg-{{ $badgeColors[$doc->status] ?? 'secondary' }}">
+                                                <span
+                                                    class="badge bg-{{ $badgeColors[$doc->status] ?? 'secondary' }} text-capitalize">
                                                     {{ $statusText[$doc->status] ?? $doc->status }}
                                                 </span>
                                             </td>

@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>{{ isset($transaction) ? 'Edit Transaksi' : 'Tambah Transaksi' }}</h6>
+                    <h6>{{ isset($transaction) ? 'Edit Transaksi Akta' : 'Tambah Transaksi Akta' }}</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
@@ -78,7 +78,7 @@
                         @endif
                         <a href="{{ route('akta-transactions.index') }}" class="btn btn-secondary">Kembali</a>
                         <button type="submit"
-                            class="btn btn-primary">{{ isset($transaction) ? 'Update' : 'Simpan' }}</button>
+                            class="btn btn-primary">{{ isset($transaction) ? 'Ubah' : 'Simpan' }}</button>
                     </form>
                 </div>
             </div>

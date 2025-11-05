@@ -44,7 +44,7 @@
 
                         <div class=" col-md-2 col-xl-1 d-lg-flex align-items-end py-2">
                             <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
-                                <i class="bi bi-funnel"></i> Cari
+                                 Cari
                             </button>
                         </div>
                     </form>

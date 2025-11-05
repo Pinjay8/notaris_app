@@ -15,9 +15,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $notarisId = User::where('notaris_id', Auth::user()->notaris_id)->first();
-
-        // Statistik utama
+        $notarisId = Auth::user()->notaris_id;
         $totalClients = Client::where('notaris_id', $notarisId)->count();
         // $inProgressDocs = NotaryClientDocument::where('status', 'valid')->count();
         $doneDocs = NotaryClientDocument::where('notaris_id', $notarisId)->count();
@@ -48,9 +46,6 @@ class DashboardController extends Controller
         // 5 klien terbaru (untuk tabel)
         $latestClients = Client::where('notaris_id', $notarisId)->latest()->take(5)->get();
 
-        // $payments = NotaryPayment::where('notaris_id', $notarisId)->get();
-        // $paidCount = $payments->where('is_valid', true)->count();
-        // $pendingCount = $payments->where('is_valid', false)->count();
 
         $payments = NotaryCost::where('notaris_id', $notarisId)->get();
         $paidCount = $payments->where('payment_status', 'paid')->count();

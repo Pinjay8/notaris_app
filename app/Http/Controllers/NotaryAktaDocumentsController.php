@@ -99,7 +99,7 @@ class NotaryAktaDocumentsController extends Controller
 
         NotaryAktaDocuments::create($data);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta document.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta dokumen.');
         return redirect()->route('akta-documents.index', ['registration_code' => $transaction->registration_code, 'akta_number' => $transaction->akta_number]);
     }
 
@@ -152,7 +152,7 @@ class NotaryAktaDocumentsController extends Controller
 
         $this->service->update($id, $data);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta document.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta dokumen.');
         return redirect()->route('akta-documents.index', [
             'registration_code' => $transaction->registration_code,
             'akta_number' => $transaction->akta_number
@@ -162,7 +162,7 @@ class NotaryAktaDocumentsController extends Controller
     public function destroy($id)
     {
         $this->service->delete($id);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta document.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta dokumen.');
         return redirect()->route('akta-documents.index');
     }
 }

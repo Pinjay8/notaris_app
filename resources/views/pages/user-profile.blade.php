@@ -3,228 +3,232 @@
 @section('title', 'Profile')
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Profile'])
-<div class="card shadow-lg mx-4 card-profile-bottom">
-    <div class="card-body p-3">
-        <div class="row gx-4 p-2">
-            <div class=" d-flex gap-3 align-items-center">
-                <img src="{{ $notaris && $notaris->image
-                    ? (filter_var($notaris->image, FILTER_VALIDATE_URL) ? $notaris->image : asset('storage/' . $notaris->image))
-                    : asset('img/pic_profile.png') }}" alt="profile_image"
-                    style="width:100px; height:100px; object-fit:cover; border-radius:50%;">
-                <div>
-                    <h5 class="mb-1 mt-2 text-capitalize">
-                        {{ $notaris->display_name ?? '-' }}
-                    </h5>
-                    <h6 class="mb-0 font-semibold  text-capitalize">
-                        {{ $notaris->office_name ?? '-'}}
-                    </h6>
+    @include('layouts.navbars.auth.topnav', ['title' => 'Profile'])
+    <div class="card shadow-lg mx-4 card-profile-bottom">
+        <div class="card-body p-3">
+            <div class="row gx-4 p-2">
+                <div class=" d-flex gap-3 align-items-center">
+                    <img src="{{ $notaris && $notaris->image
+                        ? (filter_var($notaris->image, FILTER_VALIDATE_URL)
+                            ? $notaris->image
+                            : asset('storage/' . $notaris->image))
+                        : asset('img/img_profile.png') }}"
+                        alt="profile_image" style="width:100px; height:100px; object-fit:cover; border-radius:50%;">
+                    <div>
+                        <h5 class="mb-1 mt-2 text-capitalize">
+                            {{ $notaris->display_name ?? '-' }}
+                        </h5>
+                        <h6 class="mb-0 font-semibold  text-capitalize">
+                            {{ $notaris->office_name ?? '-' }}
+                        </h6>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-<div id="alert">
-    @include('components.alert')
-</div>
-<div class="container-fluid py-4">
-    <div class="row ">
-        <div class="col-md-12">
-            <div class="card">
-                <form method="POST" action={{ route('profile.update') }} enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="card-header pb-0 rounded-top">
-                        <div class="d-flex align-items-center">
-                            <h5 class="mb-0">Edit Profile</h5>
-                            <button type="submit" class="btn btn-primary btn-md ms-auto">Ubah</button>
+    </div>
+    <div id="alert">
+        @include('components.alert')
+    </div>
+    <div class="container-fluid py-4">
+        <div class="row ">
+            <div class="col-md-12">
+                <div class="card">
+                    <form method="POST" action={{ route('profile.update') }} enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="card-header pb-0 rounded-top">
+                            <div class="d-flex align-items-center">
+                                <h5 class="mb-0">Edit Profile</h5>
+                                <button type="submit" class="btn btn-primary btn-md ms-auto">Ubah</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body pt-3">
-                        <h6 class="text-capitalize mb-3 d-inline-block bg-primary text-white px-3 py-2"
-                            style="border-radius:20px;">
-                            Informasi Pribadi
-                        </h6>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label text-sm">Tanggal Pendaftaran</label>
-                                    <input class="form-control" type="text" name="signup_at"
-                                        value="{{ $user->signup_at ? \Carbon\Carbon::parse($user->signup_at)->format('d-m-Y') : '' }}"
-                                        disabled>
+                        <div class="card-body pt-3">
+                            <h6 class="text-capitalize mb-3 d-inline-block bg-primary text-white px-3 py-2"
+                                style="border-radius:20px;">
+                                Informasi Pribadi
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Nama
+                                            Depan</label>
+                                        <input class="form-control @error('first_name') is-invalid @enderror" type="text"
+                                            name="first_name" value="{{ old('first_name', $notaris->first_name ?? '') }}">
+                                        @error('first_name')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Nama
+                                            Belakang</label>
+                                        <input class="form-control @error('last_name') is-invalid @enderror" type="text"
+                                            name="last_name" value="{{ old('last_name', $notaris->last_name ?? '') }}">
+                                        @error('last_name')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Nama
+                                            Tampilan</label>
+                                        <input class="form-control @error('display_name') is-invalid @enderror"
+                                            type="text" name="display_name"
+                                            value="{{ old('display_name', $notaris->display_name ?? '') }}">
+                                        @error('display_name')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Nama
+                                            Perusahaan</label>
+                                        <input class="form-control @error('office_name') is-invalid @enderror"
+                                            type="text" name="office_name"
+                                            value="{{ old('office_name', $notaris->office_name ?? '') }}">
+                                        @error('office_name')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Alamat
+                                            Perusahaan</label>
+                                        <input class="form-control @error('office_address') is-invalid @enderror"
+                                            type="text" name="office_address"
+                                            value="{{ old('office_address', $notaris->office_address ?? '') }}">
+                                        @error('office_address')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Foto</label>
+                                        <input class="form-control @error('image') is-invalid @enderror" type="file"
+                                            name="image">
+                                        @error('image')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="horizontal dark">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Tanggal Pendaftaran</label>
+                                        <input class="form-control" type="text" name="signup_at"
+                                            value="{{ $user->signup_at ? \Carbon\Carbon::parse($user->signup_at)->format('d-m-Y') : '' }}"
+                                            disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Waktu Aktif</label>
+                                        <input class="form-control" type="text" name="active_at"
+                                            value="{{ $user->active_at ? \Carbon\Carbon::parse($user->active_at)->format('d-m-Y H:i:s') : '' }}"
+                                            disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">
+                                            Waktu Aktif Berakhir</label>
+                                        <input type="text" class="form-control" id="active_at" name="active_at"
+                                            value="" disabled>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label text-sm">Waktu Aktif</label>
-                                    <input class="form-control" type="text" name="active_at"
-                                        value="{{ $user->active_at ? \Carbon\Carbon::parse($user->active_at)->format('d-m-Y H:i:s') : '' }}"
-                                        disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">
-                                        Waktu Aktif Berakhir</label>
-                                    <input type="text" class="form-control" id="active_at" name="active_at" value=""
-                                        disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal dark">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Nama
-                                        Depan</label>
-                                    <input class="form-control @error('first_name') is-invalid @enderror" type="text"
-                                        name="first_name" value="{{ old('first_name', $notaris->first_name  ?? '') }}">
-                                    @error('first_name')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Nama
-                                        Belakang</label>
-                                    <input class="form-control @error('last_name') is-invalid @enderror" type="text"
-                                        name="last_name" value="{{ old('last_name', $notaris->last_name  ?? '') }}">
-                                    @error('last_name')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Nama
-                                        Tampilan</label>
-                                    <input class="form-control @error('display_name') is-invalid @enderror" type="text"
-                                        name="display_name"
-                                        value="{{ old('display_name', $notaris->display_name  ?? '') }}">
-                                    @error('display_name')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Nama
-                                        Perusahaan</label>
-                                    <input class="form-control @error('office_name') is-invalid @enderror" type="text"
-                                        name="office_name"
-                                        value="{{ old('office_name', $notaris->office_name  ?? '') }}">
-                                    @error('office_name')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Alamat
-                                        Perusahaan</label>
-                                    <input class="form-control @error('office_address') is-invalid @enderror"
-                                        type="text" name="office_address"
-                                        value="{{ old('office_address',$notaris->office_address  ?? '') }}">
-                                    @error('office_address')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Foto</label>
-                                    <input class="form-control @error('image') is-invalid @enderror" type="file"
-                                        name="image">
-                                    @error('image')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal dark">
-                        <h6 class="text-capitalize mb-3 d-inline-block bg-primary text-white px-3 py-2"
-                            style="border-radius:20px;">
-                            Informasi Kontak
-                        </h6>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Alamat</label>
-                                    <input class="form-control @error('address') is-invalid @enderror" type="text"
-                                        name="address" value="{{ old('address', $notaris->address  ?? '') }}">
-                                    @error('address')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Nomor
-                                        Telepon</label>
-                                    <input class="form-control @error('phone') is-invalid @enderror" type="text"
-                                        name="phone" value="{{ old('phone', $notaris->phone  ?? '') }}">
-                                    @error('phone')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Email</label>
-                                    <input class="form-control @error('email') is-invalid @enderror" type="email"
-                                        name="email" value="{{ old('email', $notaris->email  ?? '') }}">
-                                    @error('email')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Jenis
-                                        Kelamin</label>
-                                    {{-- select option --}}
-                                    <select name="gender" id=""
-                                        class="form-select @error('gender') is-invalid @enderror">
-                                        <option value="Laki-laki" {{ old('gender', $notaris->gender ?? '') ==
-                                            'Laki-laki' ?
-                                            'selected' : '' }} class="form-control">Laki-laki</option>
-                                        <option value="Perempuan" {{ old('gender', $notaris->gender ?? '') ==
-                                            'Perempuan' ?
-                                            'selected' : '' }} class="form-control">Perempuan</option>
-                                        @error('gender')
-                                        <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                            <h6 class="text-capitalize mb-3 d-inline-block bg-primary text-white px-3 py-2"
+                                style="border-radius:20px;">
+                                Informasi Kontak
+                            </h6>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Alamat</label>
+                                        <input class="form-control @error('address') is-invalid @enderror" type="text"
+                                            name="address" value="{{ old('address', $notaris->address ?? '') }}">
+                                        @error('address')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
                                         @enderror
-                                    </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Nomor
+                                            Telepon</label>
+                                        <input class="form-control @error('phone') is-invalid @enderror" type="text"
+                                            name="phone" value="{{ old('phone', $notaris->phone ?? '') }}">
+                                        @error('phone')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Email</label>
+                                        <input class="form-control @error('email') is-invalid @enderror" type="email"
+                                            name="email" value="{{ old('email', $notaris->email ?? '') }}">
+                                        @error('email')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Jenis
+                                            Kelamin</label>
+                                        {{-- select option --}}
+                                        <select name="gender" id=""
+                                            class="form-select @error('gender') is-invalid @enderror">
+                                            <option value="Laki-laki"
+                                                {{ old('gender', $notaris->gender ?? '') == 'Laki-laki' ? 'selected' : '' }}
+                                                class="form-control">Laki-laki</option>
+                                            <option value="Perempuan"
+                                                {{ old('gender', $notaris->gender ?? '') == 'Perempuan' ? 'selected' : '' }}
+                                                class="form-control">Perempuan</option>
+                                            @error('gender')
+                                                <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                            @enderror
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input"
+                                            class="form-control-label text-sm">Informasi</label>
+                                        <input class="form-control @error('information') is-invalid @enderror"
+                                            type="text" name="information"
+                                            value="{{ old('information', $notaris->information ?? '') }}">
+                                        @error('information')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Latar
+                                            Belakang</label>
+                                        <input class="form-control @error('background') is-invalid @enderror"
+                                            type="text" name="background"
+                                            value="{{ old('background', $notaris->background ?? '') }}">
+                                        @error('background')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Informasi</label>
-                                    <input class="form-control @error('information') is-invalid @enderror" type="text"
-                                        name="information"
-                                        value="{{ old('information', $notaris->information  ?? '') }}">
-                                    @error('information')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">Latar
-                                        Belakang</label>
-                                    <input class="form-control @error('background') is-invalid @enderror" type="text"
-                                        name="background" value="{{ old('background', $notaris->background  ?? '') }}">
-                                    @error('background')
-                                    <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="horizontal dark">
-                        {{-- <p class="text-uppercase text-sm">About me</p>
+
+                            {{-- <p class="text-uppercase text-sm">About me</p>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -234,11 +238,11 @@
                                 </div>
                             </div>
                         </div> --}}
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-        {{-- <div class="col-md-4">
+            {{-- <div class="col-md-4">
             <div class="card card-profile">
                 <img src="/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
                 <div class="row justify-content-center">
@@ -298,7 +302,7 @@
                 </div>
             </div>
         </div> --}}
+        </div>
+        {{-- @include('layouts.footers.auth.footer') --}}
     </div>
-    {{-- @include('layouts.footers.auth.footer') --}}
-</div>
 @endsection

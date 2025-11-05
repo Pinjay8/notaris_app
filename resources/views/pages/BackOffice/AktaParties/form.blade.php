@@ -91,7 +91,7 @@
 
                             <a href="{{ route('akta-parties.index') }}" class="btn btn-secondary">Batal</a>
                             <button type="submit" class="btn btn-primary">
-                                {{ isset($aktaParty) ? 'Update' : 'Simpan' }}
+                                {{ isset($aktaParty) ? 'Ubah' : 'Simpan' }}
                             </button>
                         </div>
                     </form>

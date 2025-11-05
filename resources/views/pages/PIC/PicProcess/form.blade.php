@@ -89,7 +89,7 @@
                                     Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    {{ isset($process) ? 'Update' : 'Simpan' }}
+                                    {{ isset($process) ? 'Ubah' : 'Simpan' }}
                                 </button>
                             </div>
                         </form>

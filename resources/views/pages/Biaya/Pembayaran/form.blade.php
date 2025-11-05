@@ -3,17 +3,21 @@
     <input type="hidden" name="payment_code" value="{{ $cost->payment_code }}">
     <input type="hidden" name="payment_type" value="{{ $type }}">
 
-    <div class="mb-2">
-        <label for="amount-{{ $type }} text-sm">Jumlah Bayar</label>
-        <input type="text" name="amount" id="amount-{{ $type }}"
-            class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount') }}">
-        @error('amount')
-            <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
+    <div class="mb-2 mt-2">
+        <label for="amount-{{ $type }}" class="text-sm">Jumlah Pembayaran</label>
+        <div class="input-group">
+            <span class="input-group-text">Rp</span>
+            <input type="text" name="amount" id="amount-{{ $type }}"
+                class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount') }}"
+                placeholder="1.000.000">
+            @error('amount')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
     </div>
 
     <div class="mb-2">
-        <label for="payment_date-{{ $type }} text-sm">Tanggal Bayar</label>
+        <label for="payment_date-{{ $type }} text-sm">Tanggal Pembayaran</label>
         <input type="date" name="payment_date" id="payment_date-{{ $type }}"
             class="form-control @error('payment_date') is-invalid @enderror" value="{{ old('payment_date') }}">
         @error('payment_date')
@@ -22,10 +26,10 @@
     </div>
 
     <div class="mb-2">
-        <label for="payment_method-{{ $type }}">Metode Bayar</label>
+        <label for="payment_method-{{ $type }}">Metode Pembayaran</label>
         <select name="payment_method" id="payment_method-{{ $type }}"
             class="form-control @error('payment_method') is-invalid @enderror">
-            <option value="" hidden>Pilih Metode</option>
+            <option value="" hidden>Pilih Metode Pembayaran</option>
             <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
             <option value="transfer" {{ old('payment_method') == 'transfer' ? 'selected' : '' }}>Transfer</option>
         </select>

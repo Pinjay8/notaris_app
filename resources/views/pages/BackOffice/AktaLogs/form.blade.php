@@ -63,7 +63,7 @@
                         </div>
 
                         <a href="{{ route('akta-logs.index') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary">{{ isset($log) ? 'Update' : 'Simpan' }}</button>
+                        <button type="submit" class="btn btn-primary">{{ isset($log) ? 'Ubah' : 'Simpan' }}</button>
 
                     </form>
                 </div>

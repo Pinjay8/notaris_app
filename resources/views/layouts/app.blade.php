@@ -29,12 +29,6 @@
 </head>
 
 <body class="bg-light">
-
-    {{-- <div id="loadingSpinner" class="spinner-overlay d-none">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div> --}}
     @guest
     @yield('content')
     @endguest
@@ -52,19 +46,10 @@
     @include('layouts.navbars.auth.sidenav')
     <main class="main-content border-radius-lg">
         @yield('content')
-        {{-- <div id="globalSpinner"
-            class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 z-index-9999 d-flex justify-content-center align-items-center">
-            <div class="spinner-border text-light" style="width: 3rem; height: 3rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div> --}}
     </main>
     {{-- @include('components.fixed-plugin') --}}
     {{-- @endif --}}
     @endauth
-
-    <!--   Core JS Files   -->
-
 
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script> --}}
