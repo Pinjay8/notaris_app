@@ -8,14 +8,15 @@
 <div class="row mt-4 mx-4">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4 px-3 flex-wrap">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-0 px-3 flex-wrap">
                 <h5>Konsultasi</h5>
                 <a href="{{ route('consultation.create', ['client_id' => $client->id]) }}"
-                    class="btn btn-primary btn-sm">
+                    class="btn btn-primary btn-sm mb-0">
                      + Tambah Konsultasi
                 </a>
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
+            <hr>
+            <div class="card-body px-0 pt-0 pb-0">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>

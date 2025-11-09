@@ -15,7 +15,8 @@
                     <button type="submit" class="btn btn-sm btn-primary mb-0">Cari</button>
                 </form>
             </div>
-            <div class="card-body px-0 pb-2">
+            <hr>
+            <div class="card-body px-0 pb-2 pt-0">
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>

@@ -29,6 +29,8 @@ class DocumentsController extends Controller
         return view('pages.Documents.form');
     }
 
+
+
     public function store(DocumentRequest $request)
     {
         $validated = $request->validated();
@@ -42,10 +44,10 @@ class DocumentsController extends Controller
             $result = $this->documentService->createDocument($validated);
 
 
-            notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan data dokumen');
+            notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan data jenis warkah');
             return redirect()->route('documents.index');
         } catch (\Exception $e) {
-            notyf()->position('x', 'right')->position('y', 'top')->error('Gagal menambahkan data dokumen');
+            notyf()->position('x', 'right')->position('y', 'top')->error('Gagal menambahkan data jenis warkah');
             return redirect()->back()->withInput();
             dd($e->getMessage());
         }
@@ -64,9 +66,10 @@ class DocumentsController extends Controller
 
         // dd($document, $validated);
 
-        Documents::where('id', $id)->update($validated);
+        $document = Documents::findOrFail($id);
+        $document->update($validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil mengubah data dokumen');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil mengubah data jenis warkah');
         return redirect()->route('documents.index');
     }
 
@@ -74,7 +77,8 @@ class DocumentsController extends Controller
     {
         try {
             $this->documentService->deactivate($id);
-            return redirect()->route('documents.index')->with('success', 'Dokumen berhasil dinonaktifkan.');
+            notyf()->position('x', 'right')->position('y', 'top')->success('Jenis Warkah berhasil dinonaktifkan.');
+            return redirect()->route('documents.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

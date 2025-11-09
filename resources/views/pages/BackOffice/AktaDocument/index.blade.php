@@ -53,7 +53,7 @@
                                     <div class="col-md-6">
                                         <p class="mb-1"><strong>Status</strong></p>
                                         <span
-                                            class="badge
+                                            class="badge text-capitalize
                                     @switch($transaction->status)
                                         @case('draft') bg-secondary @break
                                         @case('diproses') bg-warning @break

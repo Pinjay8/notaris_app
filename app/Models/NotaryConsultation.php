@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class NotaryConsultation extends Model
 {
 
-    use SoftDeletes;
+    use LogsActivityCustom,SoftDeletes;
 
     protected $table = 'notary_consultations';
 

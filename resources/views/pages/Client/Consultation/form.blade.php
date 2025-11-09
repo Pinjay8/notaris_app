@@ -28,7 +28,7 @@
 
                     <div class="row">
 
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-12">
                             <label class="form-label fw-bold text-sm">Kode Registrasi</label>
                             <input type="text" name="registration_code" class="form-control"
                                 value="{{ old('registration_code', $registrationCode ?? $notaryConsultation->registration_code ?? '') }}"
@@ -51,7 +51,7 @@
                             @enderror
                         </div> --}}
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="subject" class="form-label text-sm">Subjek</label>
                             <input type="text" name="subject" class="form-control"
                                 value="{{ old('subject', $notaryConsultation->subject ?? '') }}">
@@ -60,7 +60,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <label for="status" class="form-label text-sm">Status</label>
                             <select name="status" class="form-select">
                                 <option value="" hidden>Pilih Status</option>
@@ -81,7 +81,7 @@
 
                     <div class="mt-4">
                         <a href="{{ route('consultation.index') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary">{{ isset($notaryConsultation) ? 'Update' :
+                        <button type="submit" class="btn btn-primary">{{ isset($notaryConsultation) ? 'Ubah' :
                             'Simpan' }}</button>
                     </div>
                 </form>

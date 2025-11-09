@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
 class ClientService
 {
@@ -34,6 +35,13 @@ class ClientService
     {
         $validated = $this->validate($data, $id = null);
         $validated['notaris_id'] = auth()->user()->notaris_id;
+        if (
+            (($validated['status'] ?? null) === 'valid') &&
+            (empty($validated['uuid']))
+        ) {
+            $validated['uuid'] = Str::uuid();
+        }
+
         return $this->clientRepository->create($validated);
     }
 

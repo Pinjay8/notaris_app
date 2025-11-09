@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Notary Cost</title>
+    <title>Total Biaya</title>
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -12,9 +12,45 @@
             margin: 20px;
         }
 
+        /* Header dengan logo dan informasi kantor (gunakan tabel agar sejajar di mPDF) */
+        .header-top {
+            width: 100%;
+            /* border-bottom: 2px solid #000; */
+            padding-bottom: 8px;
+            /* border: none; */
+            border-bottom: : 1px solid #000;
+            margin-bottom: 10px;
+        }
+
+        .header-top td {
+            vertical-align: middle;
+            border-bottom: : 1px solid #000;
+            border: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .company-info h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-top: 1px solid #000;
         }
 
         .header h2 {
@@ -22,28 +58,39 @@
             font-size: 18px;
             font-weight: bold;
             text-transform: uppercase;
-            border-bottom: 2px solid #000;
             display: inline-block;
+            margin-top: 10px;
             padding-bottom: 5px;
         }
 
         .info {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
-        .info table {
+        .info-table {
             width: 100%;
+            border-collapse: collapse;
             font-size: 11px;
-            border: none;
         }
 
-        .info td {
-            padding: 4px 6px;
+        .info-table td {
+            padding: 5px 8px;
+            vertical-align: top;
         }
 
-        .info td:first-child {
-            width: 35%;
+        .info-table tr td:first-child,
+        .info-table tr td:nth-child(3) {
+            width: 22%;
             font-weight: bold;
+        }
+
+        .info-table tr td:nth-child(2),
+        .info-table tr td:nth-child(4) {
+            width: 28%;
+        }
+
+        .info-table tr:not(:last-child) td {
+            border-bottom: 1px solid #e0e0e0;
         }
 
         table {
@@ -95,53 +142,60 @@
         .signature-space {
             margin-top: 70px;
         }
-
-        .info p {
-            margin: 3px 0;
-            font-size: 11px;
-        }
-
-        .info strong {
-            display: inline-block;
-            width: 150px;
-        }
     </style>
 </head>
 
 <body>
+    <table class="header-top">
+        <tr>
+            <td class="logo">
+                <img src="file://{{ public_path('img/logo-ct-dark.png') }}" alt="Logo Notaris"
+                    style="width:40px; height:auto;">
+            </td>
+            <td class="company-info">
+                <h3>Notaris App</h3>
+                <p>Jl. Melati No. 45, Jakarta Selatan</p>
+                <p>Telp: (021) 123-4567</p>
+            </td>
+        </tr>
+    </table>
+
     <div class="header">
-        <h2>Hasil Total Biaya</h2>
+        <h2>Total Biaya</h2>
     </div>
 
     {{-- Informasi utama --}}
     <div class="info">
-        <p><strong>Kode Pembayaran:</strong> {{ $costs->payment_code }}</p>
-        <p><strong>Klien:</strong> {{ $costs->client->fullname ?? '-' }}</p>
-        <p><strong>Notaris:</strong> {{ $costs->notaris->display_name ?? '-' }}</p>
-        <p><strong>Status Pembayaran:</strong>
-            @if($costs->payment_status == 'unpaid')
-            Belum Dibayar
-            @elseif($costs->payment_status == 'partial')
-            Sebagian Dibayar
-            @else
-            Lunas
-            @endif
-        </p>
-        {{-- <p><strong>Tanggal Jatuh Tempo:</strong>
-            {{ $costs->due_date ? \Carbon\Carbon::parse($costs->due_date)->format('d/m/Y') : '-' }}
-        </p>
-        <p><strong>Tanggal Bayar:</strong>
-            {{ $costs->paid_date ? \Carbon\Carbon::parse($costs->paid_date)->format('d/m/Y') : '-' }}
-        </p>
-        <p><strong>Catatan:</strong> {{ $costs->note ?? '-' }}</p> --}}
+        <table class="info-table">
+            <tr>
+                <td><strong>Kode Pembayaran</strong></td>
+                <td>{{ $costs->payment_code }}</td>
+                <td><strong>Notaris</strong></td>
+                <td>{{ $costs->notaris->display_name ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Klien</strong></td>
+                <td>{{ $costs->client->fullname ?? '-' }}</td>
+                <td><strong>Status Pembayaran</strong></td>
+                <td>
+                    @if ($costs->payment_status == 'unpaid')
+                        Belum Dibayar
+                    @elseif($costs->payment_status == 'partial')
+                        Sebagian Dibayar
+                    @else
+                        Lunas
+                    @endif
+                </td>
+            </tr>
+        </table>
     </div>
 
     {{-- Rincian biaya --}}
     <table>
         <thead>
             <tr>
-                <th>Deskripsi</th>
-                <th class="amount">Biaya (Rp)</th>
+                <th>Keterangan</th>
+                <th class="amount">Total (Rp)</th>
             </tr>
         </thead>
         <tbody>
@@ -159,11 +213,21 @@
             </tr>
             <tr class="total">
                 <td>Total Biaya</td>
-                <td class="amount">{{ number_format($costs->total_cost, 0, ',', '.') }}</td>
+                <td class="amount" style="text-align: right;">
+                    {{ number_format($costs->total_cost, 0, ',', '.') }}
+                </td>
             </tr>
             <tr>
-                <td>Jumlah Dibayar</td>
-                <td class="amount">{{ number_format($costs->amount_paid, 0, ',', '.') }}</td>
+                <td>Jumlah Pembayaran</td>
+                <td class="amount" style="text-align: right;">
+                    {{ number_format($costs->amount_paid, 0, ',', '.') }}
+                </td>
+            </tr>
+            <tr>
+                <td>Piutang</td>
+                <td class="amount" style="text-align: right;">
+                    {{ number_format($costs->total_cost - $costs->amount_paid, 0, ',', '.') }}
+                </td>
             </tr>
         </tbody>
     </table>

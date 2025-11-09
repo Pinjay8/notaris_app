@@ -27,47 +27,41 @@
                 @if ($cost)
                     <div class="card-body pt-1">
                         <h5 class="mb-3">Detail Biaya</h5>
-                        <table class="table table-bordered table-striped">
-                            <tr>
-                                <th style="width: 25%" class="text-capitalize">Kode Pembayaran</th>
-                                <td class="text-sm">{{ $cost->payment_code }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize">Total Biaya</th>
-                                <td class="text-sm">Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize">Telah Dibayar</th>
-                                <td class="text-sm">Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize">Kekurangan</th>
-                                <td class="text-sm">Rp
-                                    {{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}</td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize">Status</th>
-                                <td>
-                                    @if ($cost->payment_status === 'unpaid')
-                                        <span class="badge bg-danger btn-sm text-capitalize">Belum Dibayar</span>
-                                    @elseif ($cost->payment_status === 'partial')
-                                        <span class="badge bg-warning text-white btn-sm text-capitalize">Bayar
-                                            Sebagian</span>
-                                    @elseif ($cost->payment_status === 'paid')
-                                        <span class="badge bg-success btn-sm text-capitalize">Lunas</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            <tr>
-                                <th class="text-capitalize">File Pembayaran</th>
-                                <td>
-                                    <button type="button" class="btn btn-info btn-sm mb-0" data-bs-toggle="modal"
-                                        data-bs-target="#paymentFilesModal">
-                                        <i class="fa-solid fa-file"></i> Lihat File Pembayaran
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
+                        <div class="table-responsive p-0">
+                            <table class="table table-bordered rounded-3 overflow-hidden shadow">
+                                <thead class="thead-light bg-light text-black">
+                                    <th class="text-capitalize fw-bold text-black">Kode Pembayaran</th>
+                                    <th class="text-capitalize">Total Biaya</th>
+                                    <th class="text-capitalize">Telah Dibayar</th>
+                                    <th class="text-capitalize">Kekurangan</th>
+                                    <th class="text-capitalize">Status</th>
+                                    <th class="text-capitalize">File Pembayaran</th>
+                                </thead>
+                                <tbody class="text-center">
+                                    <td class="text-sm">{{ $cost->payment_code }}</td>
+                                    <td class="text-sm">Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
+                                    <td class="text-sm">Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
+                                    <td class="text-sm">Rp
+                                        {{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($cost->payment_status === 'unpaid')
+                                            <span class="badge bg-danger btn-sm text-capitalize">Belum Dibayar</span>
+                                        @elseif ($cost->payment_status === 'partial')
+                                            <span class="badge bg-warning text-white btn-sm text-capitalize">Bayar
+                                                Sebagian</span>
+                                        @elseif ($cost->payment_status === 'paid')
+                                            <span class="badge bg-success btn-sm text-capitalize">Lunas</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn-sm mb-0" data-bs-toggle="modal"
+                                            data-bs-target="#paymentFilesModal">
+                                            <i class="fa-solid fa-file"></i> File Pembayaran
+                                        </button>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     {{-- Modal --}}
@@ -102,9 +96,9 @@
                                                     </td>
                                                     <td>
                                                         @if ($file->is_valid)
-                                                            <span class="badge bg-success">Valid</span>
+                                                            <span class="badge bg-success text-capitalize">Valid</span>
                                                         @else
-                                                            <span class="badge bg-danger">Belum Valid</span>
+                                                            <span class="badge bg-danger text-capitalize">Belum Valid</span>
                                                         @endif
                                                     </td>
                                                     <td>

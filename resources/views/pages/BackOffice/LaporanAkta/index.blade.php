@@ -10,7 +10,7 @@
         <div class="col md-12">
             <div class="card mb-4">
                 <div class="card-header mb-0 pb-0">
-                    <h6>Laporan Akta</h6>
+                    <h5>Laporan Akta</h5>
                 </div>
                 <hr>
                 <div class="card-body pt-0">
@@ -21,9 +21,10 @@
                                 <label for="type" class="form-label text-sm">Jenis Akta</label>
                                 <select name="type" id="type" class="form-select">
                                     <option value="" hidden>Pilih Jenis</option>
-                                    <option value="partij" {{ request('type') == 'partij' ? 'selected' : '' }}>Partij
+                                    <option value="partij" {{ request('type') == 'akta-notaris' ? 'selected' : '' }}>Akta
+                                        Notaris
                                     </option>
-                                    <option value="relaas" {{ request('type') == 'relaas' ? 'selected' : '' }}>Relaas
+                                    <option value="relaas" {{ request('type') == 'ppat' ? 'selected' : '' }}>PPAT
                                     </option>
                                 </select>
                             </div>

@@ -81,7 +81,7 @@ Route::middleware('guest')->group(function () {
 
     // public form (link yang dikirim ke klien) — jelas beda URI
     Route::get('/client/public/{encryptedNotarisId}', [ClientController::class, 'publicForm'])
-        ->name('client.public.created');
+        ->name('client.public.create');
 
 
     Route::post('/client/public/{encryptedNotarisId}/store', [ClientController::class, 'storeClient'])

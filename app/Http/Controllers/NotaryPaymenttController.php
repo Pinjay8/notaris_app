@@ -12,10 +12,38 @@ class NotaryPaymenttController extends Controller
 {
     public function index(Request $request)
     {
-        $cost = null;
         if ($request->has('pic_document_code')) {
             $cost = NotaryCost::with('payments')
-                ->whereHas('picDocument', fn($q) => $q->where('pic_document_code', $request->pic_document_code))
+                ->whereHas(
+                    'picDocument',
+                    fn($q) =>
+                    $q->where('pic_document_code', $request->pic_document_code)
+                )
+                ->first();
+
+            if ($cost) {
+                notyf()->position('x', 'right')->position('y', 'top')
+                    ->success('Kode dokumen berhasil ditemukan');
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')
+                    ->info('Kode dokumen tidak ditemukan');
+            }
+
+            // 🔁 Redirect ke route index tanpa memicu ulang pencarian
+            return redirect()->route('notary_payments.index', [
+                'pic_document_code' => $request->pic_document_code
+            ]);
+        }
+
+        // Saat pertama kali load, tidak ada pencarian
+        $cost = null;
+        if ($request->pic_document_code) {
+            $cost = NotaryCost::with('payments')
+                ->whereHas(
+                    'picDocument',
+                    fn($q) =>
+                    $q->where('pic_document_code', $request->pic_document_code)
+                )
                 ->first();
         }
 
@@ -24,23 +52,24 @@ class NotaryPaymenttController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'payment_code'   => 'required',
-            'payment_type'   => 'required',
-            'amount'         => 'required',
-            'payment_date'   => 'required|date',
-            'payment_method' => 'required|string',
-            'payment_file'   => 'required|file',
-        ],
-        [
-            'payment_code.required'   => 'Kode pembayaran harus diisi.',
-            'payment_type.required'   => 'Tipe pembayaran harus diisi.',
-            'amount.required'         => 'Jumlah pembayaran harus diisi.',
-            'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
-            'payment_method.required' => 'Metode pembayaran harus diisi.',
-            'payment_file.required'   => 'File pembayaran harus diupload.',
-        ]
-    );
+        $request->validate(
+            [
+                'payment_code'   => 'required',
+                'payment_type'   => 'required',
+                'amount'         => 'required',
+                'payment_date'   => 'required|date',
+                'payment_method' => 'required|string',
+                'payment_file'   => 'required|file',
+            ],
+            [
+                'payment_code.required'   => 'Kode pembayaran harus diisi.',
+                'payment_type.required'   => 'Tipe pembayaran harus diisi.',
+                'amount.required'         => 'Jumlah pembayaran harus diisi.',
+                'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
+                'payment_method.required' => 'Metode pembayaran harus diisi.',
+                'payment_file.required'   => 'File pembayaran harus diupload.',
+            ]
+        );
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();
 
@@ -103,8 +132,8 @@ class NotaryPaymenttController extends Controller
         $mpdf = new Mpdf([
             'default_font' => 'dejavusans',
             'format'       => 'A4',
-            'margin_top'   => 15,
-            'margin_bottom' => 15,
+            'margin_top'   => 10,
+            'margin_bottom' => 0,
             'margin_left'  => 15,
             'margin_right' => 15,
         ]);

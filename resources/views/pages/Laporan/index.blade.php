@@ -42,9 +42,9 @@
                             </select>
                         </div>
 
-                        <div class=" col-md-2 col-xl-1 d-lg-flex align-items-end py-2">
+                        <div class=" col-lg-2 col-xl-1 d-lg-flex align-items-end py-2">
                             <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
-                                 Cari
+                                Cari
                             </button>
                         </div>
                     </form>
@@ -63,7 +63,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($payments as $payment)
+                                @forelse($costs as $payment)
                                     <tr class="text-center text-sm">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $payment->payment_code }}</td>
@@ -71,13 +71,15 @@
                                         <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') : '-' }}
                                         </td>
                                         <td>Rp
-                                            {{ number_format(($payment->cost->total_cost ?? 0), 0, ',', '.') }}
+                                            {{ number_format($payment->total_cost ?? 0, 0, ',', '.') }}
                                         </td>
-                                        <td>Rp {{ number_format($payment->cost->amount_paid, 0, ',', '.') }}</td>
-                                        <td>Rp {{  number_format($payment->cost->total_cost - $payment->cost->amount_paid, 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($payment->amount_paid, 0, ',', '.') }}</td>
+                                        <td>Rp
+                                            {{ number_format($payment->total_cost - $payment->amount_paid, 0, ',', '.') }}
+                                        </td>
                                         <td>
                                             @php
-                                                $status = $payment->payment_type;
+                                                $status = $payment->payment_status;
                                                 $badgeColor = match ($status) {
                                                     'full' => 'success',
                                                     'partial' => 'warning',

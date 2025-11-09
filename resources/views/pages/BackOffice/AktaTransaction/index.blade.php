@@ -7,31 +7,31 @@
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
-            <div class="card mb-4">
+            <div class="card mb-0">
                 <div class="card-header d-flex justify-content-between align-items-center pb-0">
                     <h5>Transaksi Akta</h5>
                     <a href="{{ route('akta-transactions.create') }}" class="btn btn-primary btn-sm">+ Tambah Transaksi</a>
                 </div>
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="d-flex justify-content-md-end w-100 justify-content-center">
-                        <form method="GET" action="{{ route('akta-transactions.index') }}"
-                            class="d-flex  gap-2  mb-3 justify-content-end flex-wrap flex-md-nowrap px-3"
-                            style="max-width: 500px; width: 100%;">
+                <div class="d-flex justify-content-md-end w-100 justify-content-center">
+                    <form method="GET" action="{{ route('akta-transactions.index') }}"
+                        class="d-flex  gap-2  justify-content-end flex-wrap flex-md-nowrap px-3"
+                        style="max-width: 500px; width: 100%;">
 
-                            <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
-                                value="{{ request('registration_code') }}" class="form-control">
-                            <select name="status" class="form-select">
-                                <option value="">Semua Status</option>
-                                @foreach (['draft', 'diproses', 'selesai', 'dibatalkan'] as $status)
-                                    <option value="{{ $status }}"
-                                        {{ request('status') == $status ? 'selected' : '' }}>
-                                        {{ ucfirst($status) }}</option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                        </form>
-                    </div>
+                        <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
+                            value="{{ request('registration_code') }}" class="form-control">
+                        <select name="status" class="form-select">
+                            <option value="">Semua Status</option>
+                            @foreach (['draft', 'diproses', 'selesai', 'dibatalkan'] as $status)
+                                <option value="{{ $status }}" {{ request('status') == $status ? 'selected' : '' }}>
+                                    {{ ucfirst($status) }}</option>
+                            @endforeach
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                    </form>
+                </div>
 
+                <hr>
+                <div class="card-body px-0 pt-0 pb-0">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
@@ -61,13 +61,13 @@
                                         <td>
                                             {{ $transaction->date_submission
                                                 ? \Illuminate\Support\Carbon::parse($transaction->date_submission)->format('d F Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    H:i:s')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        H:i:s')
                                                 : '-' }}
                                         </td>
                                         <td>
                                             {{ $transaction->date_finished
                                                 ? \Illuminate\Support\Carbon::parse($transaction->date_finished)->format('d F Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    H:i:s')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        H:i:s')
                                                 : '-' }}
                                         </td>
                                         <td>{{ ucfirst($transaction->status) }}</td>

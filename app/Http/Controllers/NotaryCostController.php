@@ -100,11 +100,20 @@ class NotaryCostController extends Controller
         notyf()->position('x', 'right')->position('y', 'top')->success("Biaya berhasil dihapus.");
         return back();
     }
-
     public function print($id)
     {
         $costs = $this->service->detail($id);
-        $mpdf = new Mpdf();
+
+        // ✅ Gunakan format A4 (bisa portrait atau landscape)
+        $mpdf = new \Mpdf\Mpdf([
+            'format' => 'A4', // A4 portrait
+            // 'format' => 'A4-L', // jika ingin landscape
+            'margin_left'   => 15,
+            'margin_right'  => 15,
+            'margin_top'    => 10,
+            'margin_bottom' => 0,
+        ]);
+
         $html = view('pages.Biaya.TotalBiaya.print', compact('costs'))->render();
         $mpdf->WriteHTML($html);
         $mpdf->Output("notary_cost_$id.pdf", "I");

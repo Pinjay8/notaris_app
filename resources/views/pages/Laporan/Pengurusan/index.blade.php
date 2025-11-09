@@ -89,7 +89,7 @@
                                                         break;
                                                 }
                                             @endphp
-                                            <span class="badge bg-{{ $statusColor }}">
+                                            <span class="badge bg-{{ $statusColor }} text-capitalize badge-md">
                                                 {{ $statusText }}
                                             </span>
                                         </td>

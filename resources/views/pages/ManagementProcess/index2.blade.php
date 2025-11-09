@@ -15,7 +15,7 @@
                         <form method="GET" action="{{ route('pic-progress.indexProcess') }}" class="d-flex gap-2"
                             style="max-width: 500px;" class="no-spinner">
                             <input type="text" name="pic_document_code" class="form-control form-control-sm"
-                                style="max-width: 350px; width: 350px" placeholder="Cari PIC Document Code..."
+                                style="max-width: 350px; width: 350px" placeholder="Masukkan Kode  Dokumen"
                                 value="{{ request('pic_document_code') }}">
                             <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
                         </form>

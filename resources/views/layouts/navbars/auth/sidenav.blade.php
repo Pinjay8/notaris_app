@@ -366,7 +366,8 @@
                     </div>
                 </a>
 
-                <div class="collapse" id="collapsePic">
+                <div class="collapse {{ request()->is('pic_staff*') || request()->is('pic_documents*') || request()->is('pic_process*') || request()->is('pic_handovers*') ? 'show' : '' }}"
+                    id="collapsePic">
                     <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                         <li>
                             <a href="{{ route('pic_staff.index') }}"
@@ -428,7 +429,8 @@
                     </div>
                 </a>
 
-                <div class="collapse" id="collapseBiaya">
+                <div class="collapse {{ request()->is('notary_costs*') || request()->is('notary_payments*') ? 'show' : '' }}"
+                    id="collapseBiaya">
                     <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                         <li>
                             <a href="{{ route('notary_costs.index') }}"

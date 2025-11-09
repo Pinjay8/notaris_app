@@ -22,12 +22,12 @@ class NotaryLaporanAktaController extends Controller
         $data = collect(); // default kosong
 
         if ($queryType && $startDate && $endDate) {
-            if ($queryType === 'partij') {
+            if ($queryType === 'akta-notaris') {
                 $data = NotaryAktaTransaction::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()
                 ])->get();
-            } elseif ($queryType === 'relaas') {
+            } elseif ($queryType === 'ppat') {
                 $data = NotaryRelaasAkta::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()

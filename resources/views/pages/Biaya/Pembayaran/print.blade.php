@@ -9,43 +9,104 @@
             font-family: DejaVu Sans, sans-serif;
             font-size: 12px;
             color: #000;
+            margin: 20px;
+        }
+
+        /* Header dengan logo dan informasi kantor */
+        .header-top {
+            width: 100%;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #000;
+            margin-bottom: 10px;
+        }
+
+        .header-top td {
+            vertical-align: middle;
+            border: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .company-info h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /* border-top: 1px solid #000; */
         }
 
         .header h2 {
             margin: 0;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 10px;
+            padding-bottom: 5px;
         }
 
+        /* Informasi Utama */
         .info {
-            margin-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
             font-size: 11px;
         }
 
-        .info p {
-            margin: 2px 0;
+        .info-table td {
+            padding: 5px 8px;
+            vertical-align: top;
         }
 
+        .info-table tr td:first-child,
+        .info-table tr td:nth-child(3) {
+            width: 22%;
+            font-weight: bold;
+        }
+
+        .info-table tr td:nth-child(2),
+        .info-table tr td:nth-child(4) {
+            width: 28%;
+        }
+
+        .info-table tr:not(:last-child) td {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Tabel biaya */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         th,
         td {
             border: 1px solid #000;
-            padding: 6px 8px;
+            padding: 7px 10px;
             font-size: 11px;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #eaeaea;
             text-align: center;
         }
 
@@ -55,13 +116,15 @@
 
         .total {
             font-weight: bold;
-            background-color: #f9f9f9;
+            background-color: #f5f5f5;
         }
 
+        /* Footer tanda tangan */
         .footer {
-            margin-top: 40px;
+            margin-top: 60px;
             width: 100%;
             font-size: 11px;
+            clear: both;
         }
 
         .footer .left {
@@ -77,108 +140,70 @@
         }
 
         .signature-space {
-            margin-top: 50px;
-        }
-
-        table.cost-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-
-        .cost-table th,
-        .cost-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .cost-table thead {
-            background-color: #f8f9fa;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .cost-table td.amount {
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .cost-table tr.total td {
-            font-weight: bold;
-            background-color: #f1f1f1;
-        }
-
-        .cost-table tr.balance td {
-            font-weight: bold;
-            color: #dc3545;
-            /* merah untuk sisa */
-            background-color: #fff5f5;
-        }
-
-        .cost-table tr.paid td {
-            font-weight: bold;
-            color: #198754;
-            /* hijau untuk sudah dibayar */
-            background-color: #f5fff8;
+            margin-top: 70px;
         }
     </style>
 </head>
 
 <body>
+
+    <!-- Header -->
+    <table class="header-top">
+        <tr>
+            <td class="logo">
+                <img src="file://{{ public_path('img/logo-ct-dark.png') }}" alt="Logo Notaris"
+                    style="width:40px; height:auto;">
+            </td>
+            <td class="company-info">
+                <h3>Notaris App</h3>
+                <p>Jl. Melati No. 45, Jakarta Selatan</p>
+                <p>Telp: (021) 123-4567</p>
+            </td>
+        </tr>
+    </table>
+
     <div class="header">
-        <h2>DETAIL PEMBAYARAN NOTARIS</h2>
+        <h2 style="text-transform: capitalize">Detail Pembayaran</h2>
     </div>
 
     {{-- Informasi Utama --}}
     <div class="info">
-        <table style="width:100%; border-collapse:collapse; font-size:11px;">
-            <tbody>
-                <tr>
-                    <td style="width:35%; padding:4px 6px; font-weight:bold;">Kode Pembayaran</td>
-                    <td style="padding:4px 6px;"> {{ $cost->payment_code }}</td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Klien</td>
-                    <td style="padding:4px 6px;"> {{ $cost->client->fullname ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Notaris</td>
-                    <td style="padding:4px 6px;"> {{ $cost->notaris->display_name ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Kode Dokumen</td>
-                    <td style="padding:4px 6px;"> {{ $cost->picDocument->pic_document_code ?? '-' }}</td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Status</td>
-                    <td style="padding:4px 6px;">
-                        @if($cost->payment_status == 'unpaid') Belum Dibayar
-                        @elseif($cost->payment_status == 'partial') Sebagian Dibayar
-                        @else Lunas
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Tanggal Jatuh Tempo</td>
-                    <td style="padding:4px 6px;"> {{ $cost->due_date ?
-                        \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}</td>
-                </tr>
-                <tr>
-                    <td style="padding:4px 6px; font-weight:bold;">Catatan</td>
-                    <td style="padding:4px 6px;"> {{ $cost->note ?? '-' }}</td>
-                </tr>
-            </tbody>
+        <table class="info-table">
+            <tr>
+                <td>Kode Pembayaran</td>
+                <td>{{ $cost->payment_code }}</td>
+                <td>Notaris</td>
+                <td>{{ $cost->notaris->display_name ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td>Klien</td>
+                <td>{{ $cost->client->fullname ?? '-' }}</td>
+                <td>Status Pembayaran</td>
+                <td>
+                    @if ($cost->payment_status == 'unpaid')
+                        Belum Dibayar
+                    @elseif($cost->payment_status == 'partial')
+                        Sebagian Dibayar
+                    @else
+                        Lunas
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td>Tanggal Jatuh Tempo</td>
+                <td>{{ $cost->due_date ? \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}</td>
+                <td>Catatan</td>
+                <td>{{ $cost->note ?? '-' }}</td>
+            </tr>
         </table>
     </div>
 
     {{-- Rincian Biaya --}}
-
-    <table class="cost-table">
+    <table>
         <thead>
             <tr>
-                <th>Deskripsi</th>
-                <th class="amount">Biaya (Rp)</th>
+                <th>Keterangan</th>
+                <th class="amount">Total (Rp)</th>
             </tr>
         </thead>
         <tbody>
@@ -198,11 +223,11 @@
                 <td>Total Biaya</td>
                 <td class="amount">{{ number_format($cost->total_cost, 0, ',', '.') }}</td>
             </tr>
-            <tr class="paid">
+            <tr>
                 <td>Jumlah Dibayar</td>
                 <td class="amount">{{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
             </tr>
-            <tr class="balance">
+            <tr>
                 <td>Sisa Pembayaran</td>
                 <td class="amount">{{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}</td>
             </tr>
@@ -218,26 +243,27 @@
                 <th>Tanggal</th>
                 <th>Jenis Pembayaran</th>
                 <th>Metode</th>
-                <th>Bukti</th>
+                {{-- <th>Bukti</th> --}}
                 <th>Jumlah (Rp)</th>
                 <th>Status Validasi</th>
             </tr>
         </thead>
         <tbody>
             @forelse($cost->payments as $payment)
-            <tr>
-                <td style="text-align:center">{{ $loop->iteration }}</td>
-                <td style="text-align:center">{{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}</td>
-                <td>{{ ucfirst($payment->payment_type) }}</td>
-                <td>{{ $payment->payment_method }}</td>
-                <td>{{ $payment->payment_file ? 'Ada' : '-' }}</td>
-                <td class="amount">{{ number_format($payment->amount, 0, ',', '.') }}</td>
-                <td style="text-align:center">{{ $payment->is_valid ? 'Tervalidasi' : 'Menunggu' }}</td>
-            </tr>
+                <tr>
+                    <td style="text-align:center">{{ $loop->iteration }}</td>
+                    <td style="text-align:center">{{ \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y') }}
+                    </td>
+                    <td>{{ ucfirst($payment->payment_type) }}</td>
+                    <td style="text-transform: capitalize">{{ $payment->payment_method }}</td>
+                    {{-- <td>{{ $payment->payment_file ? 'Ada' : '-' }}</td> --}}
+                    <td class="amount">{{ number_format($payment->amount, 0, ',', '.') }}</td>
+                    <td style="text-align:center">{{ $payment->is_valid ? 'Tervalidasi' : 'Menunggu' }}</td>
+                </tr>
             @empty
-            <tr>
-                <td colspan="7" class="text-center">Belum ada pembayaran</td>
-            </tr>
+                <tr>
+                    <td colspan="7" style="text-align:center;">Belum ada pembayaran</td>
+                </tr>
             @endforelse
         </tbody>
     </table>
@@ -253,6 +279,7 @@
             <p class="signature-space">_________________________<br>Klien</p>
         </div>
     </div>
+
 </body>
 
 </html>

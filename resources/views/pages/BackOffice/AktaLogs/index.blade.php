@@ -12,15 +12,17 @@
                     <h5>Log Akta</h5>
                     <a href="{{ route('akta-logs.create') }}" class="btn btn-primary btn-sm">+ Tambah Log</a>
                 </div>
+                <form method="GET" action="{{ route('akta-logs.index') }}" class="d-flex gap-2  justify-content-end me-4"
+                    style="max-width: 500px; margin-left: auto;" class="no-spinner">
+                    <input type="text" name="registration_code" class="form-control"
+                        placeholder="Cari kode registrasi..." value="{{ $filters['registration_code'] ?? '' }}">
+                    <input type="text" name="step" class="form-control" placeholder="Cari step..."
+                        value="{{ $filters['step'] ?? '' }}">
+                    <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+                </form>
+
+                <hr>
                 <div class="card-body pt-0 pb-0">
-                    <form method="GET" action="{{ route('akta-logs.index') }}" class="d-flex gap-2 mb-3 justify-content-end"
-                        style="max-width: 500px; margin-left: auto;" class="no-spinner">
-                        <input type="text" name="registration_code" class="form-control"
-                            placeholder="Cari kode registrasi..." value="{{ $filters['registration_code'] ?? '' }}">
-                        <input type="text" name="step" class="form-control" placeholder="Cari step..."
-                            value="{{ $filters['step'] ?? '' }}">
-                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                    </form>
 
                     <div class="table-responsive">
                         <table class="table align-items-center mb-0">

@@ -12,7 +12,6 @@ use App\Models\NotaryPayment;
 use App\Models\PicDocuments;
 use App\Models\PicProcess;
 use App\Services\ClientService;
-// use client request
 use DNS2D;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
@@ -30,11 +29,6 @@ class ClientController extends Controller
         $this->clientService = $clientService;
     }
 
-    // public function indexClient(Request $request)
-    // {
-    //     $clients = Client::where('id',)->get();
-    //     return view('pages.Info.index', compact('clients'));
-    // }
 
     public function index(Request $request)
     {
@@ -42,25 +36,12 @@ class ClientController extends Controller
         return view('pages.Client.index', compact('clients'));
     }
 
-    // public function show($id)
-    // {
-    //     // $client = $this->clientService->getById($id);
-    //     // return view('pages.Client.detail', compact('client'));
-    // }
 
     public function create()
     {
         return view('pages.Client.form');
     }
 
-    /*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    /*******  c5b1255b-21b5-4cb6-953a-9d54c1094470  *******/
     public function store(Request $request)
     {
         $this->clientService->create($request->all());
@@ -88,9 +69,6 @@ class ClientController extends Controller
         return redirect()->back();
     }
 
-
-    // Share Link
-
     public function publicForm($encryptedId, Request $request)
     {
         try {
@@ -99,9 +77,7 @@ class ClientController extends Controller
             abort(404, 'Link tidak valid atau sudah kadaluarsa.');
         }
 
-        // bedakan: ini bisa notaris_id atau client_id
         if ($request->has('mode') && $request->mode === 'revision') {
-            // ambil client berdasarkan id hasil decrypt
             $client = Client::findOrFail($decrypted);
 
             return view('pages.Public.client-form', [
@@ -111,7 +87,6 @@ class ClientController extends Controller
             ]);
         }
 
-        // kalau bukan revisi → berarti form baru pakai notaris_id
         $notaris_id = $decrypted;
 
         return view('pages.Public.client-form', [
@@ -130,17 +105,14 @@ class ClientController extends Controller
 
     public function updateClient(Request $request, $encryptedClientId)
     {
-        // Dekripsi client ID
         try {
             $clientId = Crypt::decrypt($encryptedClientId);
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
             abort(404, 'Link tidak valid.');
         }
 
-        // Cari client
         $client = Client::findOrFail($clientId);
 
-        // Validasi data (bisa pake FormRequest jika ada)
         $validated = $request->validate([
             'fullname' => 'required|string|max:255',
             'nik' => 'required|string|max:20|unique:clients,nik,' . $client->id,
@@ -161,10 +133,8 @@ class ClientController extends Controller
             'status' => 'nullable|string',
         ]);
 
-        // Update client dengan data valid
         $client->update($validated);
 
-        // Redirect atau response, misalnya kembali ke halaman client dengan pesan sukses
         notyf()->position('x', 'right')->position('y', 'top')->success('Data klien berhasil diperbarui.');
         return redirect()->back();
     }
@@ -178,7 +148,6 @@ class ClientController extends Controller
         } catch (DecryptException $e) {
             abort(403, 'Invalid Notaris ID.');
         }
-        // dd($request->all());
         $validated = $request->validated();
 
         $validated['notaris_id'] = $notaris_id;
@@ -209,7 +178,6 @@ class ClientController extends Controller
 
         $link = url("/clients/{$client->uuid}");
 
-        // Generate QR code (format PNG)
         $qrCode = base64_encode(\Milon\Barcode\Facades\DNS2DFacade::getBarcodePNG($link, 'QRCODE', 10, 10));
 
         return view('pages.Client.modal.qr-code', compact('client', 'link', 'qrCode'));
@@ -223,10 +191,8 @@ class ClientController extends Controller
         $notaryCost     = NotaryCost::where('client_id', $client->id)->get();
         $notaryPayment  = NotaryPayment::where('client_id', $client->id)->get();
 
-        // default: kosong dulu
         $picDocuments = collect();
 
-        // kalau ada search, baru filter
         if ($request->filled('registration_code')) {
             $picDocuments = PicDocuments::with('processes')
                 ->where('client_id', $client->id)
@@ -262,7 +228,6 @@ class ClientController extends Controller
             'registration_code' => 'required|string'
         ]);
 
-        // Cari dokumen berdasarkan registration_code
         $picDocuments = PicDocuments::with('processes')
             ->where('pic_document_code', $request->registration_code)
             ->get();
@@ -275,13 +240,12 @@ class ClientController extends Controller
     {
         $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
         $countToday = NotaryClientDocument::where('notaris_id', $notarisId)
             ->where('client_id', $clientId)
             ->whereDate('created_at', Carbon::today())
             ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+        $countToday += 1;
 
         return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
     }
@@ -297,14 +261,11 @@ class ClientController extends Controller
             'note' => 'nullable|string',
         ]);
 
-        // Ambil data dokumen dari tabel documents
         $document = Documents::where('code', $validated['document_code'])->firstOrFail();
 
-        // Simpan file dengan nama unik
         $fileName = time() . '_' . $request->file('document_link')->getClientOriginalName();
         $filePath = $request->file('document_link')->storeAs('documents', $fileName, 'public');
 
-        // Simpan ke notary_client_document
         NotaryClientDocument::create([
             'notaris_id'       => $client->notaris_id,
             'client_id'        => $client->id,
@@ -314,7 +275,7 @@ class ClientController extends Controller
             'note'             => $validated['note'] ?? null,
             'document_link'    => $filePath,
             'uploaded_at'      => now(),
-            'status'           => 'new', // default new
+            'status'           => 'new',
         ]);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen berhasil diupload');
@@ -325,20 +286,16 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail($id);
 
-        // ubah status jadi revisi
         $client->update(['status' => 'revisi']);
 
-        // encrypt notaris_id (bukan client_id)
         $encryptedId = Crypt::encrypt($client->notaris_id);
 
-        // arahkan ke form publik lagi
         $revisionLink = route('client.public.create', ['encryptedNotarisId' => $encryptedId]);
 
         return redirect()->route('clients.index')->with('revisionLink', $revisionLink);
     }
 
 
-    // Menampilkan form revisi dengan data lama
     public function showRevisionForm($encryptedClientId)
     {
         try {
@@ -355,7 +312,6 @@ class ClientController extends Controller
         ]);
     }
 
-    // Menyimpan revisi (update data lama)
     public function submitRevision(Request $request, $encryptedClientId)
     {
         $clientId = decrypt($encryptedClientId);
@@ -382,8 +338,7 @@ class ClientController extends Controller
 
         $client->update($validated);
 
-        // ubah status jadi submitted kembali
-        $client->status = 'submitted';
+        $client->status = 'revisi';
         $client->save();
 
         return redirect()->route('clients.index')

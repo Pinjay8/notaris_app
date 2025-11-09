@@ -11,17 +11,6 @@ use Illuminate\Http\Request;
 
 class NotaryClientWarkahController extends Controller
 {
-
-    // protected $notaryClientservice;
-
-
-    // public function __construct(NotaryClientService $notaryClientservice)
-    // {
-    //     $this->notaryClientservice = $notaryClientservice;
-    // }
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = NotaryClientWarkah::with('client');
@@ -59,20 +48,16 @@ class NotaryClientWarkahController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function generateRegistrationCode(int $notarisId, int $clientId): string
     {
         $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
         $countToday = NotaryClientWarkah::where('notaris_id', $notarisId)
             ->where('client_id', $clientId)
             ->whereDate('created_at', Carbon::today())
             ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+        $countToday += 1;
 
         return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
     }
@@ -96,7 +81,6 @@ class NotaryClientWarkahController extends Controller
             'note' => 'nullable|string',
         ]);
 
-        // Cari document_name dari tabel documents
         $document = Documents::where('code', $validated['warkah_code'])
             ->where('notaris_id', $notarisId)
             ->firstOrFail();
@@ -112,28 +96,25 @@ class NotaryClientWarkahController extends Controller
             'client_id' => $request->client_id,
             'notaris_id' => $notarisId,
             'warkah_code' => $document->code,
-            'warkah_name' => $document->name, // ambil dari table documents
+            'warkah_name' => $document->name,
             'warkah_link' => $path,
             'note' => $request->note,
             'status' => 'new',
             'uploaded_at' => now(),
         ]);
 
-        // dd($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Data warkah berhasil ditambahkan');
         return back();
     }
 
 
-    /**
-     * Update status dokumen (valid / invalid)
-     */ public function updateStatus(Request $request)
+    public function updateStatus(Request $request)
     {
         $request->validate([
             'registration_code' => 'required',
             'client_id' => 'required',
-            'status' => 'required|in:valid,invalid', // hanya boleh valid atau invalid
+            'status' => 'required|in:valid,invalid',
         ]);
 
         $clientDoc = NotaryClientWarkah::where('registration_code', $request->registration_code)
@@ -158,14 +139,14 @@ class NotaryClientWarkahController extends Controller
         $notarisId = auth()->user()->notaris_id;
 
         $validated = $request->validate([
-            'client_id' => 'required|exists:clients,id',
-            'warkah_code' => 'required|string|exists:documents,code',
+            'client_id' => 'required',
+            'warkah_code' => 'required',
             'warkah_link' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'note' => 'nullable|string|max:500',
             'uploaded_at' => 'required|date',
         ], [
-            'client_id.exists' => 'Klien harus dipilih.',
-            'warkah_code.exists' => 'Dokumen harus dipilih.',
+            'client_id.required' => 'Klien harus dipilih.',
+            'warkah_code.required' => 'Dokumen harus dipilih.',
         ]);
 
         $document = Documents::where('code', $validated['warkah_code'])

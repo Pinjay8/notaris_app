@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('secret'),
                 'phone' => '081234567890',
                 'address' => '456 Main St, Cityville',
-                'signup_at' => now(),
+                'signup_at' => now()->addDay(30),
                 'active_at' => now(),
                 'status' => 'active',
             ],

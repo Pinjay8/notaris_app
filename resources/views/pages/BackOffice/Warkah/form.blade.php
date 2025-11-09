@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="col-md-12 mb-3">
-                            <label class="form-label text-sm">Jenis Dokumen</label>
+                            <label class="form-label text-sm">Jenis Warkah</label>
                             <select name="warkah_code" class="form-select @error('warkah_code') is-invalid @enderror">
                                 <option value="" hidden>Pilih Dokumen</option>
                                 @foreach($documents as $doc)

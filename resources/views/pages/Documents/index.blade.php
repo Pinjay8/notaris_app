@@ -6,8 +6,8 @@
     @include('layouts.navbars.auth.topnav', ['title' => 'Jenis Warkah'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header pb-0-center mb-0 ">
+            <div class="card mb-0">
+                <div class="card-header pb-0 mb-0 ">
                     <div class=" d-flex justify-content-between align-items">
                         <h5 class="mb-0">Jenis Warkah</h5>
                         <a href="{{ route('documents.create') }}" class="btn btn-primary btn-sm mb-0">
@@ -26,7 +26,8 @@
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                     </form>
                 </div>
-                <div class="card-body px-0 pt-0 pb-2">
+                <hr>
+                <div class="card-body px-0 pt-0 pb-0">
                     <div class="table-responsive p-0">
 
                         <table class="table align-items-center mb-0">
@@ -77,40 +78,28 @@
                                             <p class="text-sm mb-0  text-center">{{ $document->description }}
                                             </p>
                                         </td>
-                                        {{-- <td>
-                                    <p class="text-sm mb-0  text-center">{{
-                                        $document->link
-                                        }}
-                                    </p>
-                                </td>
-                                <td>
-                                    <img src="{{asset('storage/'.$document->image) }}" alt="Gambar Layanan" width="100"
-                                        class="rounded-circle img-fluid">
-                                </td> --}}
                                         <td>
                                             <span
-                                                class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'secondary' }}">
+                                                class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'danger' }} text-capitalize">
                                                 {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
                                             </span>
                                         </td>
                                         <td class="text-center align-middle">
-                                            <a href="{{ route('documents.edit', $document->id) }}"
-                                                class="btn btn-info btn-sm mb-0 ">
-                                                {{-- <i class="fa-solid fa-pencil" style="font-size: 14px">
-                                        </i> --}}
-                                                Edit
-                                            </a>
-                                            <form action="{{ route('documents.deactivate', $document->id) }}"
-                                                method="POST" class="d-inline-block">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-dark btn-sm mb-0">Nonaktif</button>
-                                            </form>
-                                            {{-- <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ $product->id }}">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </button>
-                                    @include('pages.Products.modal.index') --}}
+                                            @if ($document->status != 0)
+                                                <a href="{{ route('documents.edit', $document->id) }}"
+                                                    class="btn btn-info btn-sm mb-0">
+                                                    Edit
+                                                </a>
+                                                <form action="{{ route('documents.deactivate', $document->id) }}"
+                                                    method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit"
+                                                        class="btn btn-dark btn-sm mb-0">Nonaktif</button>
+                                                </form>
+                                            @else
+                                                {{-- <span class="badge bg-secondary">Nonaktif</span> --}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

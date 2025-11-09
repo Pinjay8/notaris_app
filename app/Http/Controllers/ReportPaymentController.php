@@ -11,66 +11,66 @@ use Mpdf\Mpdf;
 
 class ReportPaymentController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     $costs = collect(); // default kosong
-
-    //     // cek apakah ada filter
-    //     if ($request->filled('start_date') || $request->filled('end_date') || $request->filled('status')) {
-    //         $query =  NotaryCost::with('client');
-
-    //         if ($request->filled('start_date')) {
-    //             $query->whereDate('created_at', '>=', $request->start_date);
-    //         }
-
-    //         if ($request->filled('end_date')) {
-    //             $query->whereDate('created_at', '<=', $request->end_date);
-    //         }
-
-    //         if ($request->status && $request->status != 'all') {
-    //             $query->where('payment_status', $request->status);
-    //         }
-
-    //         $costs = $query->latest()->get();
-    //     }
-
-    //     return view('pages.Laporan.index', compact('costs'));
-    // }
-
     public function index(Request $request)
     {
-        $payments = collect(); // default kosong
+        $costs = collect(); // default kosong
 
+        // cek apakah ada filter
         if ($request->filled('start_date') || $request->filled('end_date') || $request->filled('status')) {
-            $query = NotaryPayment::with('client');
+            $query =  NotaryCost::with('client');
 
             if ($request->filled('start_date')) {
-                $query->whereDate('payment_date', '>=', $request->start_date);
+                $query->whereDate('created_at', '>=', $request->start_date);
             }
 
             if ($request->filled('end_date')) {
-                $query->whereDate('payment_date', '<=', $request->end_date);
+                $query->whereDate('created_at', '<=', $request->end_date);
             }
 
             if ($request->status && $request->status != 'all') {
-                $query->where('payment_type', $request->status);
+                $query->where('payment_status', $request->status);
             }
 
-            $payments = $query->latest()->get();
+            $costs = $query->latest()->get();
         }
 
-        return view('pages.Laporan.index', compact('payments'));
+        return view('pages.Laporan.index', compact('costs'));
     }
+
+    // public function index(Request $request)
+    // {
+    //     $payments = collect(); // default kosong
+
+    //     if ($request->filled('start_date') || $request->filled('end_date') || $request->filled('status')) {
+    //         $query = NotaryPayment::with('client');
+
+    //         if ($request->filled('start_date')) {
+    //             $query->whereDate('payment_date', '>=', $request->start_date);
+    //         }
+
+    //         if ($request->filled('end_date')) {
+    //             $query->whereDate('payment_date', '<=', $request->end_date);
+    //         }
+
+    //         if ($request->status && $request->status != 'all') {
+    //             $query->where('payment_type', $request->status);
+    //         }
+
+    //         $payments = $query->latest()->get();
+    //     }
+
+    //     return view('pages.Laporan.index', compact('payments'));
+    // }
 
     public function print(Request $request)
     {
-        $query = NotaryPayment::query();
+        $query = NotaryCost::query();
 
         if ($request->filled('start_date')) {
-            $query->whereDate('payment_date', '>=', $request->start_date);
+            $query->whereDate('created_at', '>=', $request->start_date);
         }
         if ($request->filled('end_date')) {
-            $query->whereDate('payment_date', '<=', $request->end_date);
+            $query->whereDate('created_at', '<=', $request->end_date);
         }
 
         if ($request->status && $request->status != 'all') {
@@ -83,7 +83,7 @@ class ReportPaymentController extends Controller
         $html = View::make('pages.Laporan.print', compact('costs'))->render();
 
         // Inisialisasi mPDF (A4 portrait, bisa diubah ke landscape)
-        $mpdf = new Mpdf(['format' => 'A4-L']); // L = landscape
+        $mpdf = new Mpdf(['format' => 'A4']); // L = landscape
 
         $mpdf->WriteHTML($html);
 
