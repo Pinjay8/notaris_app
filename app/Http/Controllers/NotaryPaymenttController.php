@@ -136,6 +136,7 @@ class NotaryPaymenttController extends Controller
             'margin_bottom' => 0,
             'margin_left'  => 15,
             'margin_right' => 15,
+            'tempDir' => storage_path('app/mpdf-temp'),
         ]);
 
         // Tulis HTML ke PDF

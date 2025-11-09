@@ -46,8 +46,10 @@ class ReportProcessController extends Controller
         // Render blade ke HTML
         $html = View::make('pages.Laporan.Pengurusan.print', compact('processes'))->render();
 
-        // Buat instance mPDF
-        $mpdf = new Mpdf(['format' => 'A4']); // L = landscape
+        $mpdf = new Mpdf([
+            'format'  => 'A4',
+            'tempDir' => storage_path('app/mpdf-temp'), // ✅ tambah ini
+        ]);
 
         $mpdf->WriteHTML($html);
         return response($mpdf->Output('Laporan-Pengurusan.pdf', 'I'))

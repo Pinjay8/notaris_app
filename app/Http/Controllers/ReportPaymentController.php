@@ -82,8 +82,10 @@ class ReportPaymentController extends Controller
         // Render Blade ke HTML
         $html = View::make('pages.Laporan.print', compact('costs'))->render();
 
-        // Inisialisasi mPDF (A4 portrait, bisa diubah ke landscape)
-        $mpdf = new Mpdf(['format' => 'A4']); // L = landscape
+        $mpdf = new Mpdf([
+            'format'  => 'A4',
+            'tempDir' => storage_path('app/mpdf-temp'), // ✅ tambah ini
+        ]);
 
         $mpdf->WriteHTML($html);
 

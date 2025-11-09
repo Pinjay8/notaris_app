@@ -112,6 +112,7 @@ class NotaryCostController extends Controller
             'margin_right'  => 15,
             'margin_top'    => 10,
             'margin_bottom' => 0,
+            'tempDir' => storage_path('app/mpdf-temp'),
         ]);
 
         $html = view('pages.Biaya.TotalBiaya.print', compact('costs'))->render();
