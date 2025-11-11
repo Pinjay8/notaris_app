@@ -83,7 +83,7 @@ class UserSyncController extends Controller
         try {
             // Validasi bagian user
             $validatedUser = validator($request->input('user'), [
-                'notaris_id' => 'required|exists:notaris,id',
+                'notaris_id' => 'nullable',
                 'email' => 'required|email|unique:users,email',
                 'username' => 'required|string|max:255|unique:users,username',
                 'password' => 'required|string|min:6',
@@ -94,7 +94,7 @@ class UserSyncController extends Controller
 
             // Validasi bagian subscription
             $validatedSubscription = validator($request->input('user.subscription'), [
-                'plan_id' => 'required|exists:plans,id',
+                'plan_id' => 'required',
                 'start_date' => 'required|date',
                 'end_date' => 'required|date',
                 'status' => 'required|string',
