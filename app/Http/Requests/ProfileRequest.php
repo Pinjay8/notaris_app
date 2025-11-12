@@ -27,7 +27,7 @@ class ProfileRequest extends FormRequest
             'display_name' => ['required', 'max:50'],
             'office_name' => ['required', 'max:50'],
             'office_address' => ['required', 'max:100'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:5000'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:10000'],
             'background' => ['required'],
             'address' => ['required', 'max:100'],
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(\+?\d{1,3}[- ]?)?\d{10,14}$/'],

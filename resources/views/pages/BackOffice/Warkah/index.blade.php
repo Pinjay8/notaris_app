@@ -34,9 +34,9 @@
                                 <tr class="text-center">
                                     <th>#</th>
                                     <th>Kode Registrasi</th>
-                                    <th>Kode Dokumen</th>
-                                    <th>Nama Klien</th>
-                                    <th>Dokumen</th>
+                                    <th>Nama Klien </th>
+                                    <th>Nama Dokumen</th>
+                                    <th>Kode</th>
                                     <th>Tanggal Upload</th>
                                     <th>Status</th>
                                     <th>Catatan</th>

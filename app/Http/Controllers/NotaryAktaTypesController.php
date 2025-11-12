@@ -30,28 +30,28 @@ class NotaryAktaTypesController extends Controller
         return view('pages.BackOffice.AktaType.form', compact('notaris'));
     }
 
-    public function store(Request $request)
-    {
-        $data = $request->validate(
-            [
-                // 'notaris_id' => 'required|exists:notaris,id',
-                'category' => 'required|in:pendirian,perubahan,pemutusan',
-                'type' => 'required|string',
-                'description' => 'nullable|string',
-                'documents' => 'nullable|string',
-            ],
-            [
-                'category.required' => 'Kategori akta harus dipilih.',
-                'type.required' => 'Tipe akta harus diisi.',
-            ]
-        );
+    // public function store(Request $request)
+    // {
+    //     $data = $request->validate(
+    //         [
+    //             // 'notaris_id' => 'required|exists:notaris,id',
+    //             'category' => 'required|in:pendirian,perubahan,pemutusan',
+    //             'type' => 'required|string',
+    //             'description' => 'nullable|string',
+    //             'documents' => 'nullable|string',
+    //         ],
+    //         [
+    //             'category.required' => 'Kategori akta harus dipilih.',
+    //             'type.required' => 'Tipe akta harus diisi.',
+    //         ]
+    //     );
 
-        $data['notaris_id'] = auth()->user()->notaris_id;
+    //     $data['notaris_id'] = auth()->user()->notaris_id;
 
-        $this->service->create($data);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta type.');
-        return redirect()->route('akta-types.index');
-    }
+    //     $this->service->create($data);
+    //     notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta type.');
+    //     return redirect()->route('akta-types.index');
+    // }
 
     public function edit($id)
     {
@@ -64,13 +64,18 @@ class NotaryAktaTypesController extends Controller
     {
         $data = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'category' => 'nullable|in:pendirian,perubahan,pemutusan',
+            'category' => 'nullable',
+            'other_category' => 'nullable|string|max:50',
             'type' => 'nullable|string',
             'description' => 'nullable|string',
             'documents' => 'required|string',
         ]);
 
         $data['notaris_id'] = auth()->user()->notaris_id;
+
+        if ($data['category'] === 'lainnya' && $request->filled('other_category')) {
+            $data['category'] = $request->other_category;
+        }
 
         $this->service->update($id, $data);
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui tipe akta.');
@@ -80,6 +85,38 @@ class NotaryAktaTypesController extends Controller
     {
         $this->service->delete($id);
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta type.');
+        return redirect()->route('akta-types.index');
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate(
+            [
+                'category' => 'required|string',
+                'other_category' => 'nullable|string|max:50',
+                'type' => 'required|string',
+                'description' => 'nullable|string',
+                'documents' => 'nullable|string',
+            ],
+            [
+                'category.required' => 'Kategori akta harus dipilih.',
+                'type.required' => 'Tipe akta harus diisi.',
+            ]
+        );
+
+        // Kalau user pilih "lainnya" dan isi kategori manual,
+        // maka simpan hasil inputnya ke field category
+        if ($data['category'] === 'lainnya' && $request->filled('other_category')) {
+            $data['category'] = $request->other_category;
+        }
+
+        // Tambahkan notaris_id dari user login
+        $data['notaris_id'] = auth()->user()->notaris_id;
+
+        // Simpan data melalui service
+        $this->service->create($data);
+
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta type.');
         return redirect()->route('akta-types.index');
     }
 }

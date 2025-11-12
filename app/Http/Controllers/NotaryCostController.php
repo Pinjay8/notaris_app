@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\NotaryCost;
 use App\Models\PicDocuments;
 use App\Services\NotaryCostService;
 use Illuminate\Http\Request;
@@ -37,7 +38,6 @@ class NotaryCostController extends Controller
         $validated = $request->validate([
             'client_id' => 'required',
             'pic_document_id' => 'required',
-            'payment_code' => 'required|string',
             'product_cost' => 'required',
             'admin_cost' => 'nullable',
             'other_cost' => 'nullable',
@@ -47,11 +47,21 @@ class NotaryCostController extends Controller
             'due_date' => 'required|date',
             'note' => 'nullable',
         ]);
-        // dd($validated);
 
+        // Ambil tanggal hari ini (format: 20251112)
+        $today = now()->format('Ymd');
+
+        // Hitung berapa banyak kode di tanggal ini
+        $countToday = NotaryCost::whereDate('created_at', now())->count() + 1;
+
+        // Generate kode dengan padding 3 digit
+        $paymentCode = 'N-' . $today . '-' . str_pad($countToday, 3, '0', STR_PAD_LEFT);
+
+        $validated['payment_code'] = $paymentCode;
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($validated);
+
         notyf()->position('x', 'right')->position('y', 'top')->success("Biaya berhasil ditambahkan.");
         return redirect()->route('notary_costs.index');
     }
@@ -76,7 +86,7 @@ class NotaryCostController extends Controller
         $validated = $request->validate([
             'client_id' => 'required',
             'pic_document_id' => 'required',
-            'payment_code' => 'required|string',
+            'payment_code' => 'nullable',
             'product_cost' => 'required',
             'admin_cost' => 'nullable',
             'other_cost' => 'nullable',

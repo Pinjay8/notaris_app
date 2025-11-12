@@ -51,12 +51,12 @@
                     </div>
 
                     {{-- Payment Code --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="payment_code" class="form-label text-sm">Kode Pembayaran</label>
                         <input type="text" name="payment_code" id="payment_code" class="form-control form-control-sm"
                             value="{{ old('payment_code', $cost->payment_code ?? '') }}">
                         @error('payment_code') <p class="text-danger mt-2">{{ $message }}</p> @enderror
-                    </div>
+                    </div> --}}
 
                     {{-- Biaya --}}
                     <div class="row">

@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <hr class="horizontal dark mt-0">
+    <hr class="horizontal-dark mt-0">
     <div class="collapse navbar-collapse vh-100 h-100" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">

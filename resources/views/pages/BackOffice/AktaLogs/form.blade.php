@@ -35,7 +35,7 @@
                         <div class="mb-3">
                             <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta</label>
                             <select name="akta_transaction_id" id="akta_transaction_id" class="form-select">
-                                <option value="" hidden>Pilih Transaksi</option>
+                                <option value="" hidden>Pilih Transaksi Akta</option>
                                 @foreach ($transactions as $trx)
                                     <option value="{{ $trx->id }}"
                                         {{ isset($log) && $log->akta_transaction_id == $trx->id ? 'selected' : '' }}>

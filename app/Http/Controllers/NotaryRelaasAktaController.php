@@ -128,16 +128,34 @@ class NotaryRelaasAktaController extends Controller
     }
 
 
+    // public function indexNumber(Request $request)
+    // {
+
+    //     $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
+    //     $aktaInfo = null;
+
+    //     if ($request->filled('search')) {
+    //         $aktaInfo = NotaryRelaasAkta::where('relaas_number', 'like', '%' . $request->search . '%')
+    //             ->orWhere('registration_code', 'like', '%' . $request->search . '%')
+    //             ->first();
+    //     }
+
+    //     return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));
+    // }
+
     public function indexNumber(Request $request)
     {
-
-        $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
         $aktaInfo = null;
+        $lastAkta = null;
 
+        // Kalau user melakukan pencarian
         if ($request->filled('search')) {
             $aktaInfo = NotaryRelaasAkta::where('relaas_number', 'like', '%' . $request->search . '%')
                 ->orWhere('registration_code', 'like', '%' . $request->search . '%')
                 ->first();
+        } else {
+            // Kalau tidak ada pencarian, tampilkan nomor akta terakhir
+            $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
         }
 
         return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));

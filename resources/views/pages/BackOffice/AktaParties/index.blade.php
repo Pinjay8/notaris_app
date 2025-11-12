@@ -69,60 +69,66 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-end mb-2">
+                        <div class="mb-0">
+                            <div class="d-flex justify-content-between align-items-center mb-0">
+                                <h5>Pihak Akta</h5>
                                 <a href="{{ route('akta-parties.createData', ['akta_transaction_id' => $aktaInfo->first()->id]) }}"
                                     class="btn btn-primary btn-sm mb-2">
                                     + Tambah Pihak Akta
                                 </a>
                             </div>
 
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama</th>
-                                        <th>Peran</th>
-                                        <th>Alamat</th>
-                                        <th>No Identitas</th>
-                                        <th>Tipe</th>
-                                        <th>Catatan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($parties as $party)
-                                        <tr class="text-sm text-center">
-                                            <td>{{ $parties->firstItem() + $loop->index }}</td>
-                                            <td>{{ $party->name }}</td>
-                                            <td>{{ $party->role }}</span></td>
-                                            <td>{{ $party->address ?? '-' }}</td>
-                                            <td>{{ $party->id_number ?? '-' }}</td>
-                                            <td>{{ $party->id_type ?? '-' }}</td>
-                                            <td>{{ $party->note ?? '-' }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('akta-parties.edit', $party->id) }}"
-                                                    class="btn btn-info btn-sm mb-0">
-                                                    Edit
-                                                </a>
-                                                <form action="{{ route('akta-parties.destroy', $party->id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @empty
+                            <div class="table-responsive p-0">
+
+                                <table class="table align-items-center mb-0">
+                                    <thead>
                                         <tr>
-                                            <td colspan="8" class="text-center text-muted text-sm">Belum ada pihak akta.
-                                            </td>
+                                            <th>#</th>
+                                            <th>Nama</th>
+                                            <th>Peran</th>
+                                            <th>Alamat</th>
+                                            <th>No Identitas</th>
+                                            <th>Tipe</th>
+                                            <th>Catatan</th>
+                                            <th>Aksi</th>
                                         </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-end mt-3">
-                                {{ $parties->links() }}
+                                    </thead>
+                                    <tbody>
+                                        @forelse($parties as $party)
+                                            <tr class="text-sm text-center">
+                                                <td>{{ $parties->firstItem() + $loop->index }}</td>
+                                                <td>{{ $party->name }}</td>
+                                                <td>{{ $party->role }}</span></td>
+                                                <td>{{ $party->address ?? '-' }}</td>
+                                                <td>{{ $party->id_number ?? '-' }}</td>
+                                                <td>{{ $party->id_type ?? '-' }}</td>
+                                                <td>{{ $party->note ?? '-' }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('akta-parties.edit', $party->id) }}"
+                                                        class="btn btn-info btn-sm mb-0">
+                                                        Edit
+                                                    </a>
+                                                    <form action="{{ route('akta-parties.destroy', $party->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-danger btn-sm mb-0">Hapus</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="8" class="text-center text-muted text-sm">Belum ada pihak
+                                                    akta.
+                                                </td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-end mt-3">
+                                    {{ $parties->links() }}
+                                </div>
                             </div>
                         </div>
                     @else

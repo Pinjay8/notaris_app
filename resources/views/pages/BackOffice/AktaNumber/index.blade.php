@@ -18,7 +18,7 @@
                         <div class="mb-3 bg-warning p-3 rounded-3 text-white my-2">
                             <h6 class="text-white"> Nomor Akta Terakhir: {{ $lastAkta->akta_number }}</h6>
                             <h6 class="text-white"> Waktu Dibuat:
-                                {{ $lastAkta->akta_number_created_at ? $lastAkta->akta_number_created_at->format('d-m-Y') : '-' }}
+                                {{ $lastAkta->akta_number_created_at ? $lastAkta->akta_number_created_at->format('d-m-Y H:i:s') : '-' }}
                             </h6>
                         </div>
                     @else
@@ -66,7 +66,7 @@
                     {{-- Form Input Nomor Akta Baru --}}
                     @if ($aktaInfo)
                         <div class="card">
-                            <div class="card-header pb-0 text-bold">
+                            <div class="card-header pb-0 text-bold d-flex justify-content-between align-items-center">
                                 <h6>Input Penomoran Akta</h6>
                             </div>
                             <hr>
@@ -81,14 +81,26 @@
                                             value="{{ now()->year }}" readonly>
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mb-3 position-relative">
                                         <label for="akta_number" class="form-label text-sm">Nomor Akta</label>
-                                        <input type="text"
-                                            class="form-control @error('akta_number') is-invalid @enderror" id="akta_number"
-                                            name="akta_number" value="{{ old('akta_number') }}" required>
-                                        @error('akta_number')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
+                                        <div class="input-group">
+                                            <input type="text"
+                                                class="form-control @error('akta_number') is-invalid @enderror"
+                                                id="akta_number" name="akta_number"
+                                                value="{{ old('akta_number', $aktaInfo->akta_number ?? '') }}"
+                                                {{ $aktaInfo->akta_number ? 'disabled' : '' }} required>
+
+                                            {{-- Tampilkan tombol edit hanya jika sudah ada data --}}
+                                            @if ($aktaInfo->akta_number)
+                                                <button type="button" id="editButton" class="btn btn-primary mb-0">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            @endif
+
+                                            @error('akta_number')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -102,3 +114,20 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButton = document.getElementById('editButton');
+            const aktaNumberInput = document.getElementById('akta_number');
+
+            if (editButton) {
+                editButton.addEventListener('click', function() {
+                    aktaNumberInput.disabled = false; // aktifkan kembali input
+                    aktaNumberInput.focus();
+                    // this.remove(); // hapus tombol edit setelah diklik
+                });
+            }
+        });
+    </script>
+@endpush

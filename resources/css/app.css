@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* .input-group
+    > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+    ):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-left: #000 !important;
+    border-right: #000 !important;
+} */
+
 th {
     text-transform: uppercase;
     text-align: center;

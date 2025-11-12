@@ -71,86 +71,97 @@
 
                         {{-- Tabel Dokumen --}}
                         <div class="mb-1">
-                            <div class="d-flex justify-content-end mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5>Dokumen Akta</h5>
                                 <a href="{{ route('akta-documents.createData', ['akta_transaction_id' => $transaction->id]) }}"
-                                    class="btn btn-primary btn-sm mb-2 ">+ Tambah Dokumen Akta</a>
+                                    class="btn btn-primary btn-sm mb-0 ">+ Tambah Dokumen Akta</a>
                             </div>
-                            <table class="table align-items-center mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nama Dokumen</th>
-                                        <th>Tipe</th>
-                                        <th>Tanggal Upload</th>
-                                        <th>File Dokumen</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($documents as $doc)
-                                        <tr class="text-center text-sm">
-                                            <td>{{ $documents->firstItem() + $loop->index }}</td>
-                                            <td>{{ $doc->name }}</td>
-                                            <td>{{ $doc->type }}</td>
-                                            <td>
-                                                {{ $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('d-m-Y H:i') : '-' }}
-                                            </td>
-                                            <td class="text-center">
-                                                @if ($doc->file_url)
-                                                    <!-- Tombol buka modal -->
-                                                    <button type="button" class="btn btn-sm btn-outline-primary mb-0"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#imageModal{{ $doc->id }}">
-                                                        <i class="bi bi-image me-1"></i> Lihat Akta
-                                                    </button>
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nama Dokumen</th>
+                                            <th>Tipe</th>
+                                            <th>Tanggal Upload</th>
+                                            <th>File Dokumen</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($documents as $doc)
+                                            <tr class="text-center text-sm">
+                                                <td>{{ $documents->firstItem() + $loop->index }}</td>
+                                                <td>{{ $doc->name }}</td>
+                                                <td>{{ $doc->type }}</td>
+                                                <td>
+                                                    {{ $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('d-m-Y H:i') : '-' }}
+                                                </td>
+                                                <td class="text-center">
+                                                    @if ($doc->file_url)
+                                                        <!-- Tombol buka modal -->
+                                                        <button type="button" class="btn btn-sm btn-outline-primary mb-0"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#imageModal{{ $doc->id }}">
+                                                            <i class="bi bi-image me-1"></i> Lihat Akta
+                                                        </button>
 
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="imageModal{{ $doc->id }}"
-                                                        tabindex="-1" aria-labelledby="imageModalLabel{{ $doc->id }}"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header py-2">
-                                                                    <h6 class="modal-title"
-                                                                        id="imageModalLabel{{ $doc->id }}">File Dokumen Akta
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="imageModal{{ $doc->id }}"
+                                                            tabindex="-1"
+                                                            aria-labelledby="imageModalLabel{{ $doc->id }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header py-2">
+                                                                        <h6 class="modal-title"
+                                                                            id="imageModalLabel{{ $doc->id }}">File
+                                                                            Dokumen Akta
                                                                         </h6>
-                                                                    <button type="button" class="btn-close btn-close-white"
-                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body text-center d-flex justify-content-center">
-                                                                    <img src="{{ asset('storage/' . $doc->file_url) }}"
-                                                                        alt="Dokumen" class="img-fluid rounded shadow-sm"
-                                                                        style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div
+                                                                        class="modal-body text-center d-flex justify-content-center">
+                                                                        <img src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                            alt="Dokumen"
+                                                                            class="img-fluid rounded shadow-sm"
+                                                                            style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @else
-                                                    <span class="badge bg-secondary">Tidak Ada Gambar</span>
-                                                @endif
-                                            </td>
+                                                    @else
+                                                        <span class="badge bg-secondary">Tidak Ada Gambar</span>
+                                                    @endif
+                                                </td>
 
-                                            <td>
-                                                <a href="{{ route('akta-documents.edit', $doc->id) }}"
-                                                    class="btn btn-info btn-sm mb-0">Edit</a>
-                                                <form action="{{ route('akta-documents.destroy', $doc->id) }}"
-                                                    method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="6" class="text-center text-sm">Belum ada akta dokumen.</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                                                <td>
+                                                    <a href="{{ route('akta-documents.edit', $doc->id) }}"
+                                                        class="btn btn-info btn-sm mb-0">Edit</a>
+                                                    <form action="{{ route('akta-documents.destroy', $doc->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="btn btn-danger btn-sm mb-0">Hapus</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center text-sm">Belum ada akta dokumen.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
 
-                            <div class="d-flex justify-content-end mt-3">
-                                {{ $documents->links() }}
+
+                                <div class="d-flex justify-content-end mt-3">
+                                    {{ $documents->links() }}
+                                </div>
                             </div>
                         </div>
                     @else
