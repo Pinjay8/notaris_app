@@ -40,32 +40,51 @@
 
                         {{-- Client --}}
                         <div class="mb-3">
-                            <label for="client_id" class="form-label text-sm">Klien</label>
-                            <select name="client_id" id="client_id"
-                                class="form-select select2 @error('client_id') is-invalid @enderror">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code"
+                                class="form-select select2 @error('client_code') is-invalid @enderror">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}"
-                                        {{ old('client_id', $data->client_id ?? '') == $client->id ? 'selected' : '' }}>
+                                    <option value="{{ $client->client_code }}"
+                                        {{ old('client_code', $data->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
                                         {{ $client->fullname }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('client_id')
+                            @error('client_code')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         {{-- Registration Code --}}
                         {{-- <div class="mb-3">
-                        <label for="registration_code" class="form-label">Kode Registrasi</label>
-                        <input type="text" name="registration_code" id="registration_code"
-                            class="form-control @error('registration_code') is-invalid @enderror"
-                            value="{{ old('registration_code', $data->registration_code ?? '') }}">
-                        @error('registration_code')
+                        <label for="client_code" class="form-label">Kode Klien</label>
+                        <input type="text" name="client_code" id="client_code"
+                            class="form-control @error('client_code') is-invalid @enderror"
+                            value="{{ old('client_code', $data->client_code ?? '') }}">
+                        @error('client_code')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div> --}}
+
+                        <div class="mb-3">
+                            <label for="relaas_type_id" class="form-label text-sm">Jenis Akta</label>
+                            <select name="relaas_type_id" id="relaas_type_id"
+                                class="form-select text-capitalize @error('relaas_type_id') is-invalid @enderror">
+                                <option value="" hidden>Pilih Jenis Akta</option>
+                                @foreach ($relaasType as $relaasTypes)
+                                    <option value="{{ $relaasTypes->id }}"
+                                        {{ old('relaas_type_id', $data->id ?? '') == $relaasTypes->id ? 'selected' : '' }}
+                                        class="text-capitalize">
+                                        {{ $relaasTypes->category }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('relaas_type_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
 
                         {{-- title --}}
                         <div class="mb-3">
@@ -142,7 +161,7 @@
                         </div>
 
                         <a href="{{ route('relaas-aktas.index') }}" class="btn btn-secondary">Kembali</a>
-                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
+                        <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
                     </form>
                 </div>
             </div>

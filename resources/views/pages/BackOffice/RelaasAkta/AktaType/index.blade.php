@@ -3,18 +3,18 @@
 @section('title', 'Jenis Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Jenis Akta '])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PPAT / Jenis Akta'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-3 px-3">
                     <h5 class="mb-0">Jenis Akta</h5>
-                    <a href="{{ route('akta-types.create') }}" class="btn btn-primary btn-sm mb-0">
+                    <a href="{{ route('relaas-types.create') }}" class="btn btn-primary btn-sm mb-0">
                         + Tambah Jenis Akta
                     </a>
                 </div>
                 <div class="d-flex justify-content-lg-end w-100 px-2">
-                    <form method="GET" action="{{ route('akta-types.index') }}" class="d-flex gap-2 w-100"
+                    <form method="GET" action="{{ route('relaas-types.index') }}" class="d-flex gap-2 w-100"
                         style="max-width: 400px;" class="no-spinner">
                         <input type="text" name="search" placeholder="Cari tipe akta" value="{{ request('search') }}"
                             class="form-control">
@@ -66,13 +66,13 @@
 
                                         </td>
                                         <td class="">
-                                            <a href=" {{ route('akta-types.edit', $aktaType->id) }}"
+                                            <a href=" {{ route('relaas-types.edit', $aktaType->id) }}"
                                                 class="btn btn-info btn-sm mb-0">Edit</a>
                                             <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal{{ $aktaType->id }}">
                                                 Hapus
                                             </button>
-                                            @include('pages.BackOffice.AktaType.modal.index')
+                                            @include('pages.BackOffice.RelaasAkta.AktaType.modal.index')
                                         </td>
                                     </tr>
                                 @empty

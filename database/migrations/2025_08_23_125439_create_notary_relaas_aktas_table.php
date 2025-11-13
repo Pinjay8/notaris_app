@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('notary_relaas_aktas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('notaris_id')->constrained('notaris');
-            $table->foreignId('client_id')->constrained('clients');
-            $table->string('registration_code')->nullable();
+            $table->string('client_code', 50)->nullable();
+
+            $table->foreign('client_code')
+                ->references('client_code')
+                ->on('clients')
+                ->onDelete('set null');
+
             $table->year('year')->nullable();
+            $table->foreignId('relaas_type_id')->constrained('relaas_types');
             $table->string('relaas_number')->nullable();
             $table->dateTime('relaas_number_created_at')->nullable();
             $table->string('title')->nullable();

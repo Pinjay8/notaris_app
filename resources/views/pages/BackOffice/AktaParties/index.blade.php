@@ -3,7 +3,7 @@
 @section('title', 'Pihak Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Pihak-Pihak Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Pihak Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -14,8 +14,8 @@
                 <div class="card-body pt-2 pb-0">
                     <form method="GET" action="{{ route('akta-parties.index') }}"
                         class="d-flex gap-2 mb-3 justify-content-end">
-                        <input type="text" name="registration_code" class="form-control"
-                            placeholder="Cari kode registrasi..." value="{{ request('registration_code') }}">
+                        <input type="text" name="client_code" class="form-control" placeholder="Cari Kode Klien..."
+                            value="{{ request('client_code') }}">
                         <input type="text" name="akta_number" class="form-control" placeholder="Cari nomor akta..."
                             value="{{ request('akta_number') }}">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
@@ -30,17 +30,17 @@
                             <div class="card-body">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <h6 class="mb-1"><strong>Kode Registrasi</strong></h6>
-                                        <p class="text-muted text-sm">{{ $aktaInfo->first()->registration_code }}</p>
+                                        <h6 class="mb-1"><strong>Kode Klien</strong></h6>
+                                        <p class="text-muted text-sm">{{ $aktaInfo->first()->client_code }}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
                                         <p class="text-muted text-sm">{{ $aktaInfo->first()->akta_number ?? '-' }}</p>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Jenis Akta</strong></h6>
                                         <p class="text-muted text-sm">{{ $aktaInfo->first()->akta_type->type ?? '-' }}</p>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Notaris</strong></h6>
                                         <p class="text-muted text-sm">{{ $aktaInfo->first()->notaris->display_name ?? '-' }}
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center text-muted text-sm">Silakan cari kode registrasi atau nomor akta untuk
+                        <p class="text-center text-muted text-sm">Silakan cari Kode Klien atau nomor akta untuk
                             menampilkan
                             pihak-pihak.</p>
                     @endif

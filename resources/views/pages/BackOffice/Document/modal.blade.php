@@ -10,7 +10,7 @@
             <form method="POST" action="{{ route('management-document.addDocument') }}" enctype="multipart/form-data">
                 @csrf
                 {{-- Hidden input wajib --}}
-                {{-- <input type="hidden" name="registration_code" value="{{ $product->registration_code }}">
+                {{-- <input type="hidden" name="client_code" value="{{ $product->client_code }}">
                 <input type="hidden" name="notaris_id" value="{{ $product->notaris_id }}">
                 <input type="hidden" name="client_id" value="{{ $product->client_id }}"> --}}
 
@@ -20,12 +20,12 @@
                     <div class="mb-3">
                         <label class="form-label">Client</label>
                         @php
-                        $clients = $clients ?? collect();
+                            $clients = $clients ?? collect();
                         @endphp
                         <select name="client_id" class="form-select" required>
                             <option value="" hidden>Pilih Klien</option>
-                            @foreach($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->fullname }}</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->fullname }}</option>
                             @endforeach
                         </select>
                     </div>

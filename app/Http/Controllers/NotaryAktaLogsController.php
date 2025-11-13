@@ -21,7 +21,7 @@ class NotaryAktaLogsController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['registration_code', 'step']);
+        $filters = $request->only(['client_code', 'step']);
         $logs = $this->service->list($filters);
 
         return view('pages.BackOffice.AktaLogs.index', compact('logs', 'filters'));
@@ -36,39 +36,38 @@ class NotaryAktaLogsController extends Controller
     }
 
 
-    public function generateRegistrationCode(int $notarisId, int $clientId): string
-    {
-        $today = Carbon::now()->format('Ymd');
+    // public function generateRegistrationCode(int $notarisId, int $clientId): string
+    // {
+    //     $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
-        $countToday = NotaryAktaLogs::where('notaris_id', $notarisId)
-            ->where('client_id', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+    //     // Hitung jumlah konsultasi notaris ini hari ini
+    //     $countToday = NotaryAktaLogs::where('notaris_id', $notarisId)
+    //         ->where('client_code', $clientId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+    //     $countToday += 1; // untuk konsultasi baru ini
 
-        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    }
+    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    // }
 
 
     public function store(Request $request)
     {
         $data = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'client_id' => 'required|exists:clients,id',
-            'akta_transaction_id' => 'required|exists:notary_akta_transactions,id',
-            'registration_code' => 'nullable|string',
+            'client_code' => 'required',
+            'akta_transaction_id' => 'required',
             'step' => 'required|string',
             'note' => 'nullable|string',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'step.required' => 'Step harus diisi.',
             'akta_transaction_id.required' => 'Transaksi akta harus dipilih.',
         ]);
 
         $data['notaris_id'] = auth()->user()->notaris_id;
-        $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
+
 
         $this->service->create($data);
 
@@ -89,13 +88,12 @@ class NotaryAktaLogsController extends Controller
     {
         $data = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'client_id' => 'required|exists:clients,id',
-            'akta_transaction_id' => 'required|exists:notary_akta_transactions,id',
-            'registration_code' => 'nullable|string',
+            'client_code' => 'required',
+            'akta_transaction_id' => 'required',
             'step' => 'required|string',
             'note' => 'nullable|string',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'step.required' => 'Step harus diisi.',
             'akta_transaction_id.required' => 'Transaksi akta harus dipilih.',
         ]);

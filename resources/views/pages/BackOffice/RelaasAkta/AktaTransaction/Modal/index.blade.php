@@ -1,6 +1,6 @@
 <!-- Modal Delete per item -->
-<div class="modal fade" id="deleteModal{{ $akta->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $akta->id }}"
-    aria-hidden="true">
+<div class="modal fade" id="deleteModal{{ $akta->id }}" tabindex="-1"
+    aria-labelledby="deleteModalLabel{{ $akta->id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 Apakah kamu yakin ingin menghapus
-                <strong>{{ $akta->registration_code ?? 'Relaas' }}</strong>?
+                <strong>{{ $akta->client_code ?? 'Relaas' }}</strong>?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

@@ -3,7 +3,7 @@
 @section('title', 'Pihak Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Pihak Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Pihak Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -28,11 +28,24 @@
                             value="{{ old('akta_transaction_id', $transaction->id) }}">
                         {{-- hidden untuk client_id --}}
                         <input type="hidden" name="client_id" value="{{ old('client_id', $transaction->client_id) }}">
-                        {{-- hidden untuk registration_code --}}
-                        <input type="hidden" name="registration_code"
-                            value="{{ old('registration_code', $transaction->registration_code) }}">
+                        {{-- hidden untuk client_code --}}
+                        <input type="hidden" name="client_code"
+                            value="{{ old('client_code', $transaction->client_code) }}">
                         {{-- hidden notaris --}}
                         <input type="hidden" name="notaris_id" value="{{ old('notaris_id', $transaction->notaris_id) }}">
+
+                        <div class="mb-3">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code" class="form-select select2">
+                                <option value="" hidden>Pilih Klien</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->client_code }}"
+                                        {{ isset($party) && $party->client_code == $client->client_code ? 'selected' : '' }}>
+                                        {{ $client->fullname }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label text-sm">Nama</label>
@@ -79,13 +92,13 @@
                             @enderror
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label class="form-label text-sm">Catatan</label>
                             <textarea name="note" class="form-control">{{ old('note', $aktaParty->note ?? '') }}</textarea>
                             @error('note')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="mt-3">
 

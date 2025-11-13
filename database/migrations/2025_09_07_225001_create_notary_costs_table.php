@@ -14,7 +14,13 @@ return new class extends Migration
         Schema::create('notary_costs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('notaris_id')->constrained('notaris')->onDelete('cascade');
-            $table->foreignId('client_id')->constrained('clients');
+            $table->string('client_code', 50)->nullable();
+
+            $table->foreign('client_code')
+                ->references('client_code')
+                ->on('clients')
+                ->onDelete('set null');
+
             $table->foreignId('pic_document_id')->constrained('pic_documents')->onDelete('cascade');
             $table->string('payment_code');
             $table->double('product_cost');

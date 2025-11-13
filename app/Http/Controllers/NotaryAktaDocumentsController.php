@@ -18,20 +18,21 @@ class NotaryAktaDocumentsController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['registration_code', 'akta_number']);
+        $filters = $request->only(['client_code', 'akta_number']);
         $transaction = null;
         $documents = collect();
 
         // Cari Akta Transaction dulu
-        if (!empty($filters['registration_code']) || !empty($filters['akta_number'])) {
-            $transaction = NotaryAktaTransaction::where(function ($q) use ($filters) {
-                if (!empty($filters['registration_code'])) {
-                    $q->where('registration_code', $filters['registration_code']);
+        if (!empty($filters['client_code']) || !empty($filters['akta_number'])) {
+            $transaction = NotaryAktaTransaction::with('akta_type')->where(function ($q) use ($filters) {
+                if (!empty($filters['client_code'])) {
+                    $q->where('client_code', $filters['client_code']);
                 }
                 if (!empty($filters['akta_number'])) {
                     $q->orWhere('akta_number', $filters['akta_number']);
                 }
             })->first();
+            // dd($transaction);
 
             if ($transaction) {
                 $documents = NotaryAktaDocuments::where('akta_transaction_id', $transaction->id)
@@ -77,9 +78,9 @@ class NotaryAktaDocumentsController extends Controller
         ]);
 
         $data['notaris_id'] = $transaction->notaris_id;
-        $data['client_id'] = $transaction->client_id;
+        // $data['client_id'] = $transaction->client_id;
         $data['akta_transaction_id'] = $transaction->id;
-        $data['registration_code'] = $transaction->registration_code;
+        $data['client_code'] = $transaction->client_code;
         $data['akta_number'] = $transaction->akta_number;
 
         if ($request->hasFile('file_url')) {
@@ -100,7 +101,7 @@ class NotaryAktaDocumentsController extends Controller
         NotaryAktaDocuments::create($data);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta dokumen.');
-        return redirect()->route('akta-documents.index', ['registration_code' => $transaction->registration_code, 'akta_number' => $transaction->akta_number]);
+        return redirect()->route('akta-documents.index', ['client_code' => $transaction->client_code, 'akta_number' => $transaction->akta_number]);
     }
 
     public function edit($id)
@@ -129,9 +130,9 @@ class NotaryAktaDocumentsController extends Controller
 
 
         $data['notaris_id'] = $transaction->notaris_id;
-        $data['client_id'] = $transaction->client_id;
+        // $data['client_id'] = $transaction->client_id;
         $data['akta_transaction_id'] = $transaction->id;
-        $data['registration_code'] = $transaction->registration_code;
+        $data['client_code'] = $transaction->client_code;
         $data['akta_number'] = $transaction->akta_number;
 
 
@@ -154,7 +155,7 @@ class NotaryAktaDocumentsController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta dokumen.');
         return redirect()->route('akta-documents.index', [
-            'registration_code' => $transaction->registration_code,
+            'client_code' => $transaction->client_code,
             'akta_number' => $transaction->akta_number
         ]);
     }

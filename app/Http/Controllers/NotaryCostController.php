@@ -36,7 +36,7 @@ class NotaryCostController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'client_id' => 'required',
+            'client_code' => 'required',
             'pic_document_id' => 'required',
             'product_cost' => 'required',
             'admin_cost' => 'nullable',
@@ -84,7 +84,7 @@ class NotaryCostController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'client_id' => 'required',
+            'client_code' => 'required',
             'pic_document_id' => 'required',
             'payment_code' => 'nullable',
             'product_cost' => 'required',

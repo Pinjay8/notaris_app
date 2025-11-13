@@ -11,10 +11,8 @@ class NotaryAktaLogs extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
-        'registration_code',
+        'client_code',
         'akta_transaction_id',
-        'registration_code',
         'step',
         'note'
     ];
@@ -26,7 +24,7 @@ class NotaryAktaLogs extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     public function akta_transaction()

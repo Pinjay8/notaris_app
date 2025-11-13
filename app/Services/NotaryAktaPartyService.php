@@ -18,8 +18,8 @@ class NotaryAktaPartyService
     public function searchAkta(array $filters)
     {
         return NotaryAktaTransaction::query()
-            ->when(!empty($filters['registration_code']), function ($query) use ($filters) {
-                $query->where('registration_code', $filters['registration_code']);
+            ->when(!empty($filters['client_code']), function ($query) use ($filters) {
+                $query->where('client_code', $filters['client_code']);
             })
             ->when(!empty($filters['akta_number']), function ($query) use ($filters) {
                 $query->orWhere('akta_number', $filters['akta_number']);
@@ -49,8 +49,8 @@ class NotaryAktaPartyService
 
     public function store(array $data)
     {
-        // Cari akta transaksi berdasarkan registration_code
-        $akta = NotaryAktaTransaction::where('registration_code', $data['registration_code'])->firstOrFail();
+        // Cari akta transaksi berdasarkan client_code
+        $akta = NotaryAktaTransaction::where('client_code', $data['client_code'])->firstOrFail();
 
         $data['akta_transaction_id'] = $akta->id;
         $data['notaris_id'] = $akta->notaris_id;

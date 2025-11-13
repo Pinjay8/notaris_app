@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\NotaryAktaTransaction;
+use App\Models\NotaryRelaasAkta;
 use App\Models\PicDocuments;
 use App\Models\PicStaff;
 use App\Services\PicDocumentsService;
@@ -34,39 +36,43 @@ class PicDocumentsController extends Controller
     {
         $clients = Client::all();
         $picStaffList = PicStaff::all();
-        return view('pages.PIC.PicDocuments.form', compact('clients', 'picStaffList'));
+        $aktaTransaction = NotaryAktaTransaction::all();
+        $relaasTransaction = NotaryRelaasAkta::all();
+        return view('pages.PIC.PicDocuments.form', compact('clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }
 
-    public function generateRegistrationCode(int $notarisId, int $clientId): string
-    {
-        $today = Carbon::now()->format('Ymd');
+    // public function generateRegistrationCode(int $notarisId, int $clientId): string
+    // {
+    //     $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
-        $countToday = PicDocuments::where('notaris_id', $notarisId)
-            ->where('client_id', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+    //     // Hitung jumlah konsultasi notaris ini hari ini
+    //     $countToday = PicDocuments::where('notaris_id', $notarisId)
+    //         ->where('client_code', $clientId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+    //     $countToday += 1; // untuk konsultasi baru ini
 
-        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    }
+    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    // }
 
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'pic_id' => 'required',
-            'client_id' => 'required',
-            'document_type' => 'required',
-            'document_number' => 'required',
+            'client_code' => 'required',
+            // 'document_type' => 'required',
+            // 'document_number' => 'required',
+            'transaction_id' => 'required',
+            'transaction_type' => 'required',
             'received_date' => 'required',
             'status' => 'required',
             'note' => 'nullable',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
-        $validated['registration_code'] = $this->generateRegistrationCode($validated['notaris_id'], $validated['client_id']);
+
         $this->service->createDocument($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('PIC Document berhasil ditambahkan.');
@@ -78,19 +84,23 @@ class PicDocumentsController extends Controller
         $clients = Client::all();
         $picStaffList = PicStaff::all();
         $picDocument = $this->service->getDocumentById($id);
+        $aktaTransaction = NotaryAktaTransaction::all();
+        $relaasTransaction = NotaryRelaasAkta::all();
 
-        return view('pages.PIC.PicDocuments.form', compact('picDocument', 'clients', 'picStaffList'));
+        return view('pages.PIC.PicDocuments.form', compact('picDocument', 'clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'registration_code' => 'required',
+            // 'registration_code' => 'required',
             'pic_id' => 'required',
-            'client_id' => 'required',
+            'client_code' => 'required',
             'received_date' => 'required',
-            'document_type' => 'required',
-            'document_number' => 'required',
+            'transaction_type' => 'required',
+            'transaction_id' => 'nullable',
+            // 'document_type' => 'required',
+            // 'document_number' => 'required',
             'status' => 'required',
             'note' => 'nullable',
         ]);

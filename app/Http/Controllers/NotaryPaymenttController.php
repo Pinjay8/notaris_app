@@ -12,6 +12,8 @@ class NotaryPaymenttController extends Controller
 {
     public function index(Request $request)
     {
+        $cost = null;
+
         if ($request->has('pic_document_code')) {
             $cost = NotaryCost::with('payments')
                 ->whereHas(
@@ -28,23 +30,6 @@ class NotaryPaymenttController extends Controller
                 notyf()->position('x', 'right')->position('y', 'top')
                     ->info('Kode dokumen tidak ditemukan');
             }
-
-            // 🔁 Redirect ke route index tanpa memicu ulang pencarian
-            return redirect()->route('notary_payments.index', [
-                'pic_document_code' => $request->pic_document_code
-            ]);
-        }
-
-        // Saat pertama kali load, tidak ada pencarian
-        $cost = null;
-        if ($request->pic_document_code) {
-            $cost = NotaryCost::with('payments')
-                ->whereHas(
-                    'picDocument',
-                    fn($q) =>
-                    $q->where('pic_document_code', $request->pic_document_code)
-                )
-                ->first();
         }
 
         return view('pages.Biaya.Pembayaran.index', compact('cost'));
@@ -78,7 +63,7 @@ class NotaryPaymenttController extends Controller
         // Simpan ke notary_payments
         NotaryPayment::create([
             'notaris_id'      => $cost->notaris_id,
-            'client_id'       => $cost->client_id,
+            'client_code'       => $cost->client_code,
             'pic_document_id' => $cost->pic_document_id,
             'payment_code'    => $cost->payment_code,
             'payment_type'    => $request->payment_type,

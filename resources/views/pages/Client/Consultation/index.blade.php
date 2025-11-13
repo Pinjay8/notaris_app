@@ -8,8 +8,8 @@
 
     <<div class="row mt-4 mx-4 ">
         <div class="col-md-12">
-            <div class="card mb-4 p-3 shadow-lg">
-                <div class="card-header pb-0 d-flex justify-content-between align-items-center  px-2 flex-wrap pt-0">
+            <div class="card mb-0  shadow-lg pb-0">
+                <div class="card-header pb-0 d-flex justify-content-between align-items-center  p-3 flex-wrap ">
                     <h5 class="mb-lg-1 fw-bold">Konsultasi</h5>
                     {{-- search --}}
                     <div class="w-md-25">
@@ -54,7 +54,7 @@
                         </div>
 
                         {{-- pagination --}}
-                        <div class="d-flex justify-content-end mt-3 px-4">
+                        <div class="d-flex justify-content-end mt-2 px-4">
                             {{ $clients->links() }}
                         </div>
                     @else

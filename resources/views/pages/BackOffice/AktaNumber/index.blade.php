@@ -3,7 +3,7 @@
 @section('title', 'Penomoran Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Penomoran akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Penomoran akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -29,7 +29,7 @@
                     <form method="GET" action="{{ route('akta_number.index') }}" class="mb-3" class="no-spinner">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control"
-                                placeholder="Masukkan Kode Registrasi atau Nomor Akta" value="{{ request('search') }}">
+                                placeholder="Masukkan Kode Klien atau Nomor Akta" value="{{ request('search') }}">
                             <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                         </div>
                     </form>
@@ -43,8 +43,8 @@
                             <div class="card-body">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <h6 class="mb-1"><strong>Kode Registrasi</strong></h6>
-                                        <p class="text-muted text-sm">{{ $aktaInfo->registration_code }}</p>
+                                        <h6 class="mb-1"><strong>Kode Klien</strong></h6>
+                                        <p class="text-muted text-sm">{{ $aktaInfo->client_code }}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
@@ -57,6 +57,21 @@
                                     <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Notaris</strong></h6>
                                         <p class="text-muted text-sm">{{ $aktaInfo->notaris->display_name ?? '-' }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Status</strong></p>
+                                        <span
+                                            class="badge text-capitalize
+                                    @switch($aktaInfo->status)
+                                        @case('draft') bg-secondary @break
+                                        @case('diproses') bg-warning @break
+                                        @case('selesai') bg-success @break
+                                        @case('dibatalkan') bg-danger @break
+                                        @default bg-light text-dark
+                                    @endswitch
+                                ">
+                                            {{ $aktaInfo->status }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Notaris;
 use App\Models\NotaryRelaasAkta;
+use App\Models\RelaasType;
 use App\Services\NotaryRelaasAktaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -22,8 +23,8 @@ class NotaryRelaasAktaController extends Controller
     {
         $perPage = 10;
 
-        if ($request->filled('registration_code')) {
-            $data = $this->service->searchByRegistrationCode($request->registration_code, $perPage);
+        if ($request->filled('client_code')) {
+            $data = $this->service->searchByRegistrationCode($request->client_code, $perPage);
         } elseif ($request->filled('status')) {
             $data = $this->service->filterByStatus($request->status, $perPage);
         } else {
@@ -37,42 +38,44 @@ class NotaryRelaasAktaController extends Controller
     {
         $clients = Client::where('deleted_at', null)->get();
         $notaris = Notaris::where('deleted_at', null)->get();
-        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris'));
+        $relaasType = RelaasType::get();
+        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris', 'relaasType'));
     }
 
-    public function generateRegistrationCode(int $notarisId, int $clientId): string
-    {
-        $today = Carbon::now()->format('Ymd');
+    // public function generateRegistrationCode(int $notarisId, int $clientId): string
+    // {
+    //     $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
-        $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
-            ->where('client_id', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+    //     // Hitung jumlah konsultasi notaris ini hari ini
+    //     $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
+    //         ->where('client_id', $clientId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+    //     $countToday += 1; // untuk konsultasi baru ini
 
-        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    }
+    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    // }
 
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             // 'notaris_id' => 'required|exists:notaris,id',
-            'client_id' => 'required|exists:clients,id',
+            'client_code' => 'required',
             // 'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
             'relaas_number' => 'nullable',
             'relaas_number_created_at' => 'nullable',
             'title' => 'required|string',
+            'relaas_type_id' => 'required',
             'story' => 'required|string',
             'story_date' => 'required|date',
             'story_location' => 'required|string',
             'status' => 'required|string',
             'note' => 'nullable|string',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'title.required' => 'Judul harus diisi.',
             'story.required' => 'Cerita harus diisi.',
             'story_date.required' => 'Tanggal cerita harus diisi.',
@@ -81,11 +84,10 @@ class NotaryRelaasAktaController extends Controller
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
-        $validated['registration_code'] = $this->generateRegistrationCode($validated['notaris_id'], $validated['client_id']);
 
         $this->service->create($validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Akta berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi Akta berhasil ditambahkan.');
         return redirect()->route('relaas-aktas.index');
     }
 
@@ -101,10 +103,11 @@ class NotaryRelaasAktaController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'notaris_id' => 'required|exists:notaris,id',
-            'client_id' => 'required|exists:clients,id',
-            'registration_code' => 'required|string',
+            // 'notaris_id' => 'required',
+            'client_code' => 'required',
+            // 'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
+            'relaas_type_id' => 'required',
             'relaas_number' => 'nullable',
             'relaas_number_created_at' => 'nullable',
             'title' => 'required|string',
@@ -117,14 +120,14 @@ class NotaryRelaasAktaController extends Controller
 
         $this->service->update($id, $validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Akta berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi akta berhasil diperbarui.');
         return redirect()->route('relaas-aktas.index');
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
-        return redirect()->route('relaas-aktas.index')->with('success', 'Relaas Akta berhasil dihapus.');
+        return redirect()->route('relaas-aktas.index')->with('success', 'Transaksi akta berhasil dihapus.');
     }
 
 
@@ -151,7 +154,7 @@ class NotaryRelaasAktaController extends Controller
         // Kalau user melakukan pencarian
         if ($request->filled('search')) {
             $aktaInfo = NotaryRelaasAkta::where('relaas_number', 'like', '%' . $request->search . '%')
-                ->orWhere('registration_code', 'like', '%' . $request->search . '%')
+                ->orWhere('client_code', 'like', '%' . $request->search . '%')
                 ->first();
         } else {
             // Kalau tidak ada pencarian, tampilkan nomor akta terakhir
@@ -163,11 +166,19 @@ class NotaryRelaasAktaController extends Controller
 
     public function storeNumber(Request $request)
     {
-        $request->validate([
-            'relaas_id' => 'required|exists:notary_relaas_aktas,id',
-            'relaas_number' => 'required|integer',
-            'year' => 'required|digits:4|integer',
-        ]);
+        $request->validate(
+            [
+                'relaas_id' => 'required',
+                'relaas_number' => 'required|integer',
+                'year' => 'required',
+            ],
+            [
+                'relaas_id.required' => 'Transaksi akta harus dipilih.',
+                'relaas_number.required' => 'Nomor akta harus diisi.',
+                'relaas_number.integer' => 'Nomor akta harus berupa angka.',
+                'year.required' => 'Tahun harus diisi.',
+            ]
+        );
 
         $akta = NotaryRelaasAkta::findOrFail($request->relaas_id);
 
@@ -177,7 +188,7 @@ class NotaryRelaasAktaController extends Controller
             'relaas_number_created_at' => now(),
         ]);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Akta Number berhasil disimpan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi Akta Number berhasil disimpan.');
         return redirect()->route('relaas_akta.indexNumber', [
             'search' => $akta->registration_code, // <-- bawa parameter search
         ]);

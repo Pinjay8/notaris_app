@@ -12,8 +12,8 @@ class NotaryAktaDocumentRepository implements NotaryAktaDocumentRepositoryInterf
     {
         $query = NotaryAktaDocuments::query();
 
-        if (!empty($filters['registration_code'])) {
-            $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');
+        if (!empty($filters['client_code'])) {
+            $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
         }
 
         if (!empty($filters['akta_number'])) {

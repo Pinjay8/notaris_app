@@ -14,8 +14,8 @@
                 </div>
                 <form method="GET" action="{{ route('relaas-aktas.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
                     style="max-width:500px;" onchange="this.submit()" class="no-spinner">
-                    <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
-                        value="{{ request('registration_code') }}" class="form-control">
+                    <input type="text" name="client_code" placeholder="Cari Kode Klien..."
+                        value="{{ request('client_code') }}" class="form-control">
                     <select name="status" class="form-select">
                         <option value="">Semua Status</option>
                         @foreach (['draft', 'diproses', 'selesai', 'dibatalkan'] as $status)
@@ -39,10 +39,11 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Klien</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
+                                    <th>Jenis Akta</th>
                                     <th>Tahun</th>
-                                    <th>Angka Transaksi</th>
-                                    <th>Waktu Dibuat</th>
+                                    <th>Nomor Transaksi</th>
+                                    <th>Waktu Transaksi Dibuat</th>
                                     <th>Status</th>
                                     <th>Tanggal</th>
                                     <th>Lokasi</th>
@@ -55,7 +56,8 @@
                                         <td>{{ $loop->iteration }}</td>
                                         {{-- <td>{{ $akta->notaris->display_name ?? '-' }}</td> --}}
                                         <td>{{ $akta->client->fullname ?? '-' }}</td>
-                                        <td>{{ $akta->registration_code ?? '-' }}</td>
+                                        <td>{{ $akta->client_code ?? '-' }}</td>
+                                        <td>{{ ucfirst($akta->akta_type->type) ?? '-' }}</td>
                                         <td>{{ $akta->year ?? '-' }}</td>
                                         <td>{{ $akta->relaas_number ?? '-' }}</td>
                                         <td>{{ $akta->relaas_number_created_at ? \Carbon\Carbon::parse($akta->relaas_date)->format('d M Y H:i') : '-' }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\NotaryRelaasAkta;
 use App\Models\NotaryRelaasParties;
 use App\Services\RelaasPartiesService;
@@ -35,10 +36,11 @@ class NotaryRelaasPartiesController extends Controller
     public function create($relaasId)
     {
         // relaas untuk header + back-link + action form
-        $relaas = NotaryRelaasAkta::select('id', 'registration_code')->findOrFail($relaasId);
+        $relaas = NotaryRelaasAkta::findOrFail($relaasId);
         $party  = null;
+        $clients = Client::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaParties.form', compact('relaas', 'party'));
+        return view('pages.BackOffice.RelaasAkta.AktaParties.form', compact('relaas', 'party', 'clients'));
     }
 
     public function edit($relaasId, $id)
@@ -46,9 +48,10 @@ class NotaryRelaasPartiesController extends Controller
         $party  = $this->service->findById($id);
 
         // pastikan relaas mengikuti data party (lebih aman)
-        $relaas = NotaryRelaasAkta::select('id', 'registration_code')->findOrFail($party->relaas_id);
+        $relaas = NotaryRelaasAkta::findOrFail($party->relaas_id);
+        $clients = Client::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaParties.form', compact('relaas', 'party'));
+        return view('pages.BackOffice.RelaasAkta.AktaParties.form', compact('relaas', 'party', 'clients'));
     }
 
     public function store(Request $request, $relaasId)
@@ -69,8 +72,8 @@ class NotaryRelaasPartiesController extends Controller
         ]);
 
         $validated['relaas_id'] = $relaas->id;
-        $validated['registration_code'] = $relaas->registration_code;
-        $validated['client_id'] = $relaas->client_id;
+        // $validated['registration_code'] = $relaas->registration_code;
+        $validated['client_code'] = $relaas->client_code;
         $validated['notaris_id'] = $relaas->notaris_id;
 
         $this->service->store($validated);
@@ -102,8 +105,8 @@ class NotaryRelaasPartiesController extends Controller
 
 
         $validated['relaas_id'] = $relaas->id;
-        $validated['registration_code'] = $relaas->registration_code;
-        $validated['client_id'] = $relaas->client_id;
+        // $validated['registration_code'] = $relaas->registration_code;
+        $validated['client_code'] = $relaas->client_code;
         $validated['notaris_id'] = $relaas->notaris_id;
 
         $this->service->update($id, $validated);

@@ -14,9 +14,8 @@ class NotaryAktaTransaction extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
+        'client_code',
         'akta_type_id',
-        'registration_code',
         'year',
         'status',
         'akta_number',
@@ -35,12 +34,12 @@ class NotaryAktaTransaction extends Model
 
     public function akta_type()
     {
-        return $this->belongsTo(NotaryAktaTypes::class);
+        return $this->belongsTo(NotaryAktaTypes::class, 'akta_type_id', 'id');
     }
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     protected $casts = [

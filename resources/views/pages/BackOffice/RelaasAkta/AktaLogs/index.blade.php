@@ -15,8 +15,8 @@
                 {{-- Filter & Search --}}
                 <form method="GET" action="{{ route('relaas-logs.index') }}" class="d-flex gap-2 ms-auto me-3 mb-0"
                     style="max-width:600px;" onchange="this.submit()" class="no-spinner">
-                    <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
-                        value="{{ request('registration_code') }}" class="form-control">
+                    <input type="text" name="client_code" placeholder="Cari Kode Klien..."
+                        value="{{ request('client_code') }}" class="form-control">
                     <input type="text" name="step" placeholder="Cari step..." value="{{ request('step') }}"
                         class="form-control">
                     <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
@@ -32,7 +32,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Klien</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
                                     <th>Step</th>
                                     <th>Catatan</th>
                                     <th>Aksi</th>
@@ -43,7 +43,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $log->client->fullname ?? '-' }}</td>
-                                        <td>{{ $log->registration_code ?? '-' }}</td>
+                                        <td>{{ $log->client_code ?? '-' }}</td>
                                         <td>{{ $log->step ?? '-' }}</td>
                                         <td>{{ $log->note ?? '-' }}</td>
                                         <td>

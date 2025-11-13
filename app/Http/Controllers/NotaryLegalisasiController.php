@@ -48,19 +48,19 @@ class NotaryLegalisasiController extends Controller
         // Validasi input
         $validated = $request->validate(
             [
-                'client_id'         => 'required|exists:clients,id',
-                'legalisasi_number' => 'required|string|max:255|unique:notary_legalisasis,legalisasi_number',
+                'client_code'         => 'required',
+                'legalisasi_number' => 'required|string|max:255',
                 'applicant_name'    => 'required|string|max:255',
                 'officer_name'      => 'required|string|max:255',
                 'document_type'     => 'nullable|string|max:255',
                 'document_number'   => 'nullable|string|max:255',
                 'request_date'      => 'nullable|date',
-                'release_date'      => 'nullable|date|after_or_equal:request_date',
+                'release_date'      => 'nullable|date',
                 'notes'             => 'nullable|string',
                 'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5000', // misal file upload
             ],
             [
-                'client_id.required' => 'Klien harus dipilih.',
+                'client_code.required' => 'Klien harus dipilih.',
                 'legalisasi_number.required' => 'Nomor Legalisasi harus diisi.',
                 'legalisasi_number.unique' => 'Nomor Legalisasi sudah ada.',
                 'applicant_name.required' => 'Nama Pemohon harus diisi.',
@@ -110,7 +110,7 @@ class NotaryLegalisasiController extends Controller
     {
         $validated = $request->validate(
             [
-                'client_id'         => 'required|exists:clients,id',
+                'client_code'         => 'required',
                 'legalisasi_number' => [
                     'required',
                     'string',
@@ -122,12 +122,12 @@ class NotaryLegalisasiController extends Controller
                 'document_type'     => 'nullable|string|max:255',
                 'document_number'   => 'nullable|string|max:255',
                 'request_date'      => 'nullable|date',
-                'release_date'      => 'nullable|date|after_or_equal:request_date',
+                'release_date'      => 'nullable|date',
                 'notes'             => 'nullable|string',
                 'file_path'         => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5000',
             ],
             [
-                'client_id.required' => 'Klien harus dipilih.',
+                'client_code.required' => 'Klien harus dipilih.',
                 'legalisasi_number.required' => 'Nomor Legalisasi harus diisi.',
                 'legalisasi_number.unique' => 'Nomor Legalisasi sudah ada.',
             ]

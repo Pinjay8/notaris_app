@@ -16,10 +16,10 @@ class PicDocuments extends Model
         'notaris_id',
         'pic_id',
         'pic_document_code',
-        'client_id',
+        'client_code',
         'registration_code',
-        'document_type',
-        'document_number',
+        'transaction_id',
+        'transaction_type',
         'received_date',
         'status',
         'note',
@@ -32,7 +32,7 @@ class PicDocuments extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     public function notaris()
@@ -48,5 +48,15 @@ class PicDocuments extends Model
     public function latestProcess()
     {
         return $this->hasOne(PicProcess::class, 'pic_document_id')->latestOfMany('step_date');
+    }
+
+    public function aktaTransaction()
+    {
+        return $this->belongsTo(NotaryAktaTransaction::class, 'transaction_id', 'id');
+    }
+
+    public function relaasTransaction()
+    {
+        return $this->belongsTo(NotaryRelaasAkta::class, 'transaction_id', 'id');
     }
 }

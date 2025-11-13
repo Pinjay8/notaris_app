@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class NotaryConsultation extends Model
 {
 
-    use LogsActivityCustom,SoftDeletes;
+    use LogsActivityCustom, SoftDeletes;
 
     protected $table = 'notary_consultations';
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
-        'registration_code',
+        'client_code',
+        // 'registration_code',
         'subject',
         'description',
         'status'
@@ -29,7 +29,7 @@ class NotaryConsultation extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     public function products()

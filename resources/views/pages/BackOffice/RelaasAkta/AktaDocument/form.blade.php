@@ -61,10 +61,10 @@
                         </div>
 
 
-                        <a href="{{ route('relaas-documents.index', ['search' => $relaas->registration_code]) }}"
+                        <a href="{{ route('relaas-documents.index', ['search' => $relaas->client_code]) }}"
                             class="btn btn-secondary btn-sm ">Batal</a>
                         <button type="submit" class="btn btn-primary btn-sm">
-                            {{ $doc ? 'Update' : 'Simpan' }}
+                            {{ $doc ? 'Ubah' : 'Simpan' }}
                         </button>
 
                     </form>

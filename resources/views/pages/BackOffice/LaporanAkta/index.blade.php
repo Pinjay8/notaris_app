@@ -74,7 +74,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nomor Akta</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
                                     <th>Nama Klien / Pihak</th>
                                     <th>Tanggal Dibuat</th>
                                     <th>Jenis Akta</th>
@@ -86,7 +86,7 @@
                                     <tr class="text-center text-sm">
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $row->akta_number ?? ($row->relaas_number ?? '-') }}</td>
-                                        <td>{{ $row->registration_code ?? '-' }}</td>
+                                        <td>{{ $row->client_code ?? '-' }}</td>
                                         <td>{{ $row->client->fullname ?? '-' }}</td>
                                         <td>{{ $row->created_at->format('d-m-Y H:i') }}</td>
                                         <td>{{ ucfirst($queryType) }}</td>

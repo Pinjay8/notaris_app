@@ -14,7 +14,7 @@ class NotaryAktaParties extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
+        'client_code',
         'akta_transaction_id',
         'registration_code',
         'name',

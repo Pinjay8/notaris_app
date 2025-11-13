@@ -21,22 +21,7 @@
                             @method('PUT')
                         @endif
 
-                        {{-- <div class="mb-3">
-                        <label for="notaris_id" class="form-label text-sm">Notaris</label>
-                        <select name="notaris_id" id="notaris_id" class="form-select">
-                            <option value="">Pilih Notaris</option>
-                            @foreach ($notarisList as $notaris)
-                            <option value="{{ $notaris->id }}" {{ old('notaris_id', $picDocument->notaris_id ?? '') ==
-                                $notaris->id ? 'selected' : '' }}>
-                                {{ $notaris->name }}
-                            </option>
-                            @endforeach
-                        </select>
-                        @error('notaris_id')
-                        <p class="text-danger mt-2">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
-
+                        {{-- PIC Staff --}}
                         <div class="mb-3">
                             <label for="pic_id" class="form-label text-sm">PIC Staff</label>
                             <select name="pic_id" id="pic_id" class="form-select">
@@ -48,74 +33,84 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('pic_id')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
                         </div>
 
+                        {{-- Klien --}}
                         <div class="mb-3">
-                            <label for="client_id" class="form-label text-sm">Klien</label>
-                            <select name="client_id" id="client_id" class="form-select select2">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}"
-                                        {{ old('client_id', $picDocument->client_id ?? '') == $client->id ? 'selected' : '' }}>
+                                    <option value="{{ $client->client_code }}"
+                                        {{ old('client_code', $picDocument->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
                                         {{ $client->fullname }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('client_id')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
                         </div>
 
-                        {{-- <div class="mb-3">
-                        <label for="registration_code" class="form-label text-sm">Kode Registrasi</label>
-                        <input type="text" name="registration_code" id="registration_code" class="form-control"
-                            value="{{ old('registration_code', $picDocument->registration_code ?? '') }}">
-                        @error('registration_code')
-                        <p class="text-danger mt-2">{{ $message }}</p>
-                        @enderror
-                    </div> --}}
-
+                        {{-- Tipe Transaksi --}}
                         <div class="mb-3">
-                            <label for="document_type" class="form-label text-sm">Tipe Dokumen</label>
-                            <input type="text" name="document_type" id="document_type" class="form-control"
-                                value="{{ old('document_type', $picDocument->document_type ?? '') }}">
-                            @error('document_type')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
+                            <label for="transaction_type" class="form-label text-sm">Tipe Transaksi</label>
+                            <select name="transaction_type" id="transaction_type" class="form-select">
+                                <option value="" hidden>Pilih Tipe Transaksi</option>
+                                <option value="akta"
+                                    {{ old('transaction_type', $picDocument->transaction_type ?? '') == 'akta' ? 'selected' : '' }}>
+                                    Akta
+                                </option>
+                                <option value="ppat"
+                                    {{ old('transaction_type', $picDocument->transaction_type ?? '') == 'ppat' ? 'selected' : '' }}>
+                                    PPAT
+                                </option>
+                            </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="document_number" class="form-label text-sm">Nomor Dokumen</label>
-                            <input type="text" name="document_number" id="document_number" class="form-control"
-                                value="{{ old('document_number', $picDocument->document_number ?? '') }}">
-                            @error('document_number')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
+                        {{-- Akta Transaction --}}
+                        <div class="mb-3" id="akta_section" style="display: none;">
+                            <label for="transaction_id" class="form-label text-sm">Transaksi Akta</label>
+                            <select name="transaction_id" id="transaction_id" class="form-select">
+                                <option value="" hidden>Pilih Transaksi</option>
+                                @foreach ($aktaTransaction as $akta)
+                                    <option value="{{ $akta->id }}"
+                                        {{ old('transaction_id', $picDocument->transaction_id ?? '') == $akta->id ? 'selected' : '' }}>
+                                        {{ $akta->akta_type->type ?? '-' }} - {{ $akta->akta_number ?? '-' }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
+                        {{-- Relaas Transaction --}}
+                        <div class="mb-3" id="relaas_section" style="display: none;">
+                            <label for="transaction_id" class="form-label text-sm">Transaksi PPAT</label>
+                            <select name="transaction_id" id="transaction_id" class="form-select">
+                                <option value="" hidden>Pilih Transaksi PPAT</option>
+                                @foreach ($relaasTransaction as $relaas)
+                                    <option value="{{ $relaas->id }}"
+                                        {{ old('transaction_id', $picDocument->transaction_id ?? '') == $relaas->id ? 'selected' : '' }}>
+                                        {{ $relaas->akta_type->type ?? '-' }} - {{ $relaas->relaas_number ?? '-' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- Tanggal Terima --}}
                         <div class="mb-3">
                             <label for="received_date" class="form-label text-sm">Tanggal Terima</label>
                             <input type="datetime-local" name="received_date" id="received_date" class="form-control"
                                 value="{{ old('received_date', isset($picDocument->received_date) ? \Carbon\Carbon::parse($picDocument->received_date)->format('Y-m-d\TH:i') : '') }}">
-                            @error('received_date')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
                         </div>
 
+                        {{-- Status --}}
                         <div class="mb-3">
                             <label for="status" class="form-label text-sm">Status</label>
                             <select name="status" id="status" class="form-select">
                                 <option value="">Pilih Status</option>
                                 <option value="delivered"
                                     {{ old('status', $picDocument->status ?? '') == 'delivered' ? 'selected' : '' }}>
-                                    Dikirim
-                                </option>
+                                    Dikirim</option>
                                 <option value="process"
-                                    {{ old('status', $picDocument->status ?? '') == 'process' ? 'selected' : '' }}>
-                                    Proses</option>
+                                    {{ old('status', $picDocument->status ?? '') == 'process' ? 'selected' : '' }}>Proses
+                                </option>
                                 <option value="received"
                                     {{ old('status', $picDocument->status ?? '') == 'received' ? 'selected' : '' }}>
                                     Diterima</option>
@@ -123,17 +118,12 @@
                                     {{ old('status', $picDocument->status ?? '') == 'completed' ? 'selected' : '' }}>
                                     Selesai</option>
                             </select>
-                            @error('status')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
                         </div>
 
+                        {{-- Catatan --}}
                         <div class="mb-3">
                             <label for="note" class="form-label text-sm">Catatan</label>
                             <textarea name="note" id="note" class="form-control" rows="3">{{ old('note', $picDocument->note ?? '') }}</textarea>
-                            @error('note')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
                         </div>
 
                         <div class="mt-4">
@@ -147,4 +137,27 @@
             </div>
         </div>
     </div>
+
+    {{-- JS untuk toggle --}}
+    @push('js')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const typeSelect = document.getElementById('transaction_type');
+                const aktaSection = document.getElementById('akta_section');
+                const relaasSection = document.getElementById('relaas_section');
+
+                function toggleSections() {
+                    const value = typeSelect.value;
+                    aktaSection.style.display = value === 'akta' ? 'block' : 'none';
+                    relaasSection.style.display = value === 'ppat' ? 'block' : 'none';
+                }
+
+                // Trigger pertama kali saat load (biar sesuai value old())
+                toggleSections();
+
+                // Ubah tampilan ketika select berubah
+                typeSelect.addEventListener('change', toggleSections);
+            });
+        </script>
+    @endpush
 @endsection

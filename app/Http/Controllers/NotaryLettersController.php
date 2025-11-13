@@ -32,7 +32,7 @@ class NotaryLettersController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'client_id'     => 'required|exists:clients,id',
+            'client_code'     => 'required',
             'letter_number' => 'required|string',
             'type'          => 'nullable|string',
             'recipient'     => 'required|string',
@@ -43,7 +43,7 @@ class NotaryLettersController extends Controller
             'notes'         => 'nullable|string',
             'file_path'     => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'letter_number.required' => 'Nomor surat harus diisi.',
             'recipient.required' => 'Penerima harus diisi.',
             'subject.required'   => 'Perihal harus diisi.',
@@ -75,7 +75,7 @@ class NotaryLettersController extends Controller
     {
 
         $data = $request->validate([
-            'client_id'     => 'required|exists:clients,id',
+            'client_code'     => 'required',
             'letter_number' => 'required|string',
             'type'          => 'nullable|string',
             'recipient'     => 'required|string',
@@ -86,7 +86,7 @@ class NotaryLettersController extends Controller
             'notes'         => 'nullable|string',
             'file_path'     => 'nullable|file|mimes:pdf,jpg,png,doc,docx',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'letter_number.required' => 'Nomor surat harus diisi.',
             'recipient.required' => 'Penerima harus diisi.',
             'subject.required'   => 'Perihal harus diisi.',

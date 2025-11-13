@@ -9,7 +9,7 @@ class NotaryRelaasDocumentRepository
     public function search($keyword)
     {
         return NotaryRelaasDocument::query()
-            ->where('registration_code', 'like', "%{$keyword}%")
+            ->where('client_code', 'like', "%{$keyword}%")
             ->orWhere('name', 'like', "%{$keyword}%")
             ->get();
     }

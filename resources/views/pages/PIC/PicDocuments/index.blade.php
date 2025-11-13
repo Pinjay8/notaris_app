@@ -19,7 +19,7 @@
                     <form method="GET" action="{{ route('pic_documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
                         style="max-width: 500px;" class="no-spinner">
                         <input type="text" name="search" class="form-control form-control-sm"
-                            placeholder="Cari kode registrasi / PIC" value="{{ request('search') }}">
+                            placeholder="Cari Kode Klien / PIC" value="{{ request('search') }}">
                         <select name="status" class="form-select form-select-sm">
                             <option value="">Semua Status</option>
                             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
@@ -42,7 +42,7 @@
                                         <th>PIC</th>
                                         <th>Klien</th>
                                         <th>Tipe Dokumen</th>
-                                        <th>Nomor Dokumen</th>
+                                        {{-- <th>Nomor Dokumen</th> --}}
                                         <th>Tanggal Diterima</th>
                                         <th>Status</th>
                                         <th>
@@ -56,8 +56,9 @@
                                             <td>{{ $doc->pic_document_code }}</td>
                                             <td>{{ $doc->pic->full_name ?? '-' }}</td>
                                             <td>{{ $doc->client->fullname ?? '-' }}</td>
-                                            <td>{{ $doc->document_type }}</td>
-                                            <td>{{ $doc->document_number }}</td>
+                                            <td class="text-capitalize">{{ $doc->transaction_type }}</td>
+                                            {{-- <td>{{ $doc->aktaTransaction->relaas_number ?? '-' }}</td> --}}
+                                            {{-- <td></td> --}}
                                             <td>
                                                 {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->translatedFormat('d F Y H:i') : '-' }}
                                             </td>

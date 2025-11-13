@@ -16,7 +16,7 @@
                     {{-- Form Pencarian --}}
                     <form method="GET" action="{{ route('relaas-documents.index') }}" class="mb-3" class="no-spinner">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Registrasi"
+                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Klien"
                                 value="{{ request('search') }}">
                             <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                         </div>
@@ -31,11 +31,11 @@
                             <div class="card-body">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <h6><strong>Kode Registrasi</strong></h6>
-                                        <p class="text-muted text-sm">{{ $relaasInfo->registration_code }}</p>
+                                        <h6><strong>Kode Klien</strong></h6>
+                                        <p class="text-muted text-sm">{{ $relaasInfo->client_code }}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <h6><strong>Nomor Relaas</strong></h6>
+                                        <h6><strong>Nomor Transaksi</strong></h6>
                                         <p class="text-muted text-sm">{{ $relaasInfo->relaas_number ?? '-' }}</p>
                                     </div>
                                     <div class="col-md-6">
@@ -46,6 +46,30 @@
                                         <h6><strong>Klien</strong></h6>
                                         <p class="text-muted text-sm">{{ $relaasInfo->client->fullname ?? '-' }}</p>
                                     </div>
+                                    {{-- <div class="col-md-6">
+                                        <h6 class="mb-1"><strong>Tipe Akta</strong></h6>
+                                        <p class="text-muted text-sm">{{ $relaasInfo->akta_type->type ?? '-' }}</p>
+                                    </div> --}}
+
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Status</strong></p>
+                                        <span
+                                            class="badge text-capitalize
+                                    @switch($relaasInfo->status)
+                                        @case('draft') bg-secondary @break
+                                        @case('diproses') bg-warning @break
+                                        @case('selesai') bg-success @break
+                                        @case('dibatalkan') bg-danger @break
+                                        @default bg-light text-dark
+                                    @endswitch
+                                ">
+                                            {{ $relaasInfo->status }}
+                                        </span>
+                                    </div>
+                                    {{-- <div class="col-md-6">
+                                        <h6><strong>Jenis Akta</strong></h6>
+                                        <p class="text-muted text-sm">{{ $relaasInfo->title?? '-' }}</p>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -121,7 +145,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center text-muted text-sm mb-0">Masukkan kode registrasi untuk melihat daftar dokumen
+                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Klien untuk melihat daftar dokumen
                             relaas.
                         </p>
                     @endif

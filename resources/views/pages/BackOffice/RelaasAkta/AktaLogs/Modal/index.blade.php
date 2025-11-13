@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 Apakah Anda yakin ingin menghapus log dengan kode
-                <b>{{ $log->registration_code }}</b> ?
+                <b>{{ $log->client_code }}</b> ?
             </div>
             <div class="modal-footer">
                 <form action="{{ route('relaas-logs.destroy', $log->id) }}" method="POST">

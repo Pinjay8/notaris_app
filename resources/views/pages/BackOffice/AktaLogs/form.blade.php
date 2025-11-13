@@ -3,7 +3,7 @@
 @section('title', 'Logs Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Logs Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Logs Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -21,12 +21,12 @@
                         @endif
 
                         <div class="mb-3">
-                            <label for="client_id" class="form-label text-sm">Klien</label>
-                            <select name="client_id" id="client_id" class="form-select select2">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}"
-                                        {{ isset($log) && $log->client_id == $client->id ? 'selected' : '' }}>
+                                    <option value="{{ $client->client_code }}"
+                                        {{ isset($log) && $log->client_code == $client->client_code ? 'selected' : '' }}>
                                         {{ $client->fullname }}
                                     </option>
                                 @endforeach
@@ -39,16 +39,16 @@
                                 @foreach ($transactions as $trx)
                                     <option value="{{ $trx->id }}"
                                         {{ isset($log) && $log->akta_transaction_id == $trx->id ? 'selected' : '' }}>
-                                        {{ $trx->registration_code }} - {{ $trx->akta_type->type ?? '-' }}
+                                        {{ $trx->client_code }} - {{ $trx->akta_type->type ?? '-' }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
                         {{-- <div class="mb-3">
-                        <label for="registration_code" class="form-label">Registration Code</label>
-                        <input type="text" name="registration_code" id="registration_code" class="form-control"
-                            value="{{ $log->registration_code ?? old('registration_code') }}">
+                        <label for="client_code" class="form-label">Registration Code</label>
+                        <input type="text" name="client_code" id="client_code" class="form-control"
+                            value="{{ $log->client_code ?? old('client_code') }}">
                     </div> --}}
 
                         <div class="mb-3">

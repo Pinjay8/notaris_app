@@ -22,23 +22,23 @@
 
                     {{-- Client --}}
                     <div class="mb-3">
-                        <label for="client_id" class="form-label text-sm">Klien</label>
-                        <select name="client_id" id="client_id" class="form-control form-control-sm select2">
+                        <label for="client_code" class="form-label text-sm">Klien</label>
+                        <select name="client_code" id="client_code" class="form-control form-control-sm select2">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach ($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('client_id', $cost->client_id ?? '') == $client->id
+                            <option value="{{ $client->client_code }}" {{ old('client_code', $cost->client_code ?? '') == $client->client_code
                                 ? 'selected' : '' }}>
                                 {{ $client->fullname }}
                             </option>
                             @endforeach
                         </select>
-                        @error('client_id') <p class="text-danger mt-2">{{ $message }}</p> @enderror
+                        @error('client_code') <p class="text-danger mt-2">{{ $message }}</p> @enderror
                     </div>
 
                     {{-- Dokumen --}}
                     <div class="mb-3">
                         <label for="pic_document_id" class="form-label text-sm">Dokumen</label>
-                        <select name="pic_document_id" id="pic_document_id" class="form-control form-control-sm">
+                        <select name="pic_document_id" id="pic_document_id" class="form-control">
                             <option value="" hidden>Pilih Dokumen</option>
                             @foreach ($picDocuments as $doc)
                             <option value="{{ $doc->id }}" {{ old('pic_document_id', $cost->pic_document_id ?? '') ==

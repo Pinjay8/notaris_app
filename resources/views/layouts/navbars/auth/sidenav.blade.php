@@ -256,6 +256,16 @@
 
                 <div class="collapse {{ request()->is('relaas-*') ? 'show' : '' }}" id="collapseRelaasAkta">
                     <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
+                        <li class="p-0">
+                            <a href="{{ route('relaas-types.index') }}"
+                                class="nav-link {{ request()->is('relaas-types*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-layer-group text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Jenis Akta</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="{{ route('relaas-aktas.index') }}"
                                 class="nav-link {{ request()->is('relaas-aktas*') ? 'active' : '' }}">

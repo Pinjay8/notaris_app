@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\NotaryAktaTransaction;
 use App\Services\NotaryAktaPartyService;
 use Illuminate\Http\Request;
@@ -17,12 +18,12 @@ class NotaryAktaPartiesController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['registration_code', 'akta_number']);
+        $filters = $request->only(['client_code', 'akta_number']);
         $aktaInfo = null;
         $parties = collect();
 
         // Jika ada input pencarian
-        if (!empty($filters['registration_code']) || !empty($filters['akta_number'])) {
+        if (!empty($filters['client_code']) || !empty($filters['akta_number'])) {
             $aktaInfo = $this->service->searchAkta($filters);
 
             if ($aktaInfo && $aktaInfo->count() > 0) {
@@ -42,17 +43,19 @@ class NotaryAktaPartiesController extends Controller
     {
         $transaction = NotaryAktaTransaction::with('akta_type', 'notaris', 'client')
             ->findOrFail($akta_transaction_id);
+        $clients = Client::where('deleted_at', null)->get();
 
         return view('pages.BackOffice.AktaParties.form', [
             'transaction' => $transaction,
-            'aktaParty' => null // supaya form bisa bedakan create / edit
+            'aktaParty' => null,
+            'clients' => $clients
         ]);
     }
     public function storeData(Request $request)
     {
         $request->validate(
             [
-                'registration_code' => 'required',
+                // 'client_code' => 'required',
                 'name' => 'required|string',
                 'role' => 'required|string',
                 'address' => 'required|string',
@@ -61,7 +64,7 @@ class NotaryAktaPartiesController extends Controller
                 'note' => 'nullable|string',
             ],
             [
-                'registration_code.required' => 'Nomor akta harus diisi.',
+                // 'client_code.required' => 'Nomor akta harus diisi.',
                 'name.required' => 'Nama harus diisi.',
                 'role.required' => 'Peran harus diisi.',
                 'address.required' => 'Alamat harus diisi.',
@@ -71,9 +74,9 @@ class NotaryAktaPartiesController extends Controller
 
         $this->service->store($request->all());
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Pihak berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Pihak akta berhasil ditambahkan.');
         return redirect()->route('akta-parties.index', [
-            'registration_code' => $request->registration_code,
+            'client_code' => $request->client_code,
             'akta_number' => $request->akta_number ?? null,
         ]);
     }
@@ -84,17 +87,18 @@ class NotaryAktaPartiesController extends Controller
         // $transaction = $aktaParty->transaction; // relasi ke NotaryAktaTransaction
         $aktaParty = $this->service->findParty($id);
         $transaction = $aktaParty->akta_transaction; // relasi belongsTo
+        $clients = Client::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.AktaParties.form', compact('transaction', 'aktaParty'));
+        return view('pages.BackOffice.AktaParties.form', compact('transaction', 'aktaParty', 'clients'));
     }
 
     public function update(Request $request, $id)
     {
         $this->service->updateParty($id, $request->all());
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Pihak berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Pihak akta berhasil diperbarui.');
         return redirect()->route('akta-parties.index', [
-            'registration_code' => $request->registration_code,
+            'client_code' => $request->client_code,
             'akta_number' => $request->akta_number ?? null,
         ]);
     }
@@ -102,6 +106,8 @@ class NotaryAktaPartiesController extends Controller
     public function destroy($id)
     {
         $this->service->deleteParty($id);
-        return back()->with('success', 'Pihak berhasil dihapus.');
+
+        notyf()->position('x', 'right')->position('y', 'top')->success('Pihak akta berhasil dihapus.');
+        return back();
     }
 }

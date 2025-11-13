@@ -3,7 +3,7 @@
 @section('title', 'Logs Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Log Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Log Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -14,8 +14,8 @@
                 </div>
                 <form method="GET" action="{{ route('akta-logs.index') }}" class="d-flex gap-2  justify-content-end me-4"
                     style="max-width: 500px; margin-left: auto;" class="no-spinner">
-                    <input type="text" name="registration_code" class="form-control"
-                        placeholder="Cari kode registrasi..." value="{{ $filters['registration_code'] ?? '' }}">
+                    <input type="text" name="client_code" class="form-control" placeholder="Cari Kode Klien..."
+                        value="{{ $filters['client_code'] ?? '' }}">
                     <input type="text" name="step" class="form-control" placeholder="Cari step..."
                         value="{{ $filters['step'] ?? '' }}">
                     <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
@@ -32,7 +32,7 @@
                                     <th>Notaris</th>
                                     <th>Klien</th>
                                     <th>Transaksi Akta</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
                                     <th>Step</th>
                                     <th>Note</th>
                                     <th>Aksi</th>
@@ -44,8 +44,8 @@
                                         <td>{{ $logs->firstItem() + $loop->index }}</td>
                                         <td>{{ $log->notaris->display_name ?? '-' }}</td>
                                         <td>{{ $log->client->fullname ?? '-' }}</td>
-                                        <td>{{ $log->akta_transaction->registration_code ?? '-' }}</td>
-                                        <td>{{ $log->registration_code }}</td>
+                                        <td>{{ $log->akta_transaction->client_code ?? '-' }}</td>
+                                        <td>{{ $log->client_code }}</td>
                                         <td>{{ $log->step }}</td>
                                         <td>{{ $log->note }}</td>
                                         <td class="text-center">

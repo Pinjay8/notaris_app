@@ -43,7 +43,7 @@ class NotaryRelaasAktaRepository implements NotaryRelaasAktaRepositoryInterface
 
     public function searchByRegistrationCode(string $code, int $perPage = 10): LengthAwarePaginator
     {
-        return NotaryRelaasAkta::where('registration_code', 'like', "%$code%")
+        return NotaryRelaasAkta::where('client_code', 'like', "%$code%")
             ->paginate($perPage);
     }
 

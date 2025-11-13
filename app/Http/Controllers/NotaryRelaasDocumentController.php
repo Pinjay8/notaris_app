@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\NotaryRelaasAkta;
 use App\Models\NotaryRelaasDocument;
 use App\Services\NotaryRelaasDocumentService;
@@ -34,18 +35,20 @@ class NotaryRelaasDocumentController extends Controller
 
     public function create($relaasId)
     {
-        $relaas = NotaryRelaasAkta::select('id', 'registration_code', 'relaas_number')->findOrFail($relaasId);
+        $relaas = NotaryRelaasAkta::findOrFail($relaasId);
         $doc = null;
+        $clients = Client::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc'));
+        return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc', 'clients'));
     }
 
     public function edit($relaasId, $id)
     {
         $doc = $this->service->findById($id);
-        $relaas = NotaryRelaasAkta::select('id', 'registration_code', 'relaas_number')->findOrFail($doc->relaas_id);
+        $relaas = NotaryRelaasAkta::findOrFail($doc->relaas_id);
+        $clients = Client::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc'));
+        return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc', 'clients'));
     }
 
     public function store(Request $request, $relaasId)
@@ -69,14 +72,14 @@ class NotaryRelaasDocumentController extends Controller
         }
 
         $validated['relaas_id'] = $relaas->id;
-        $validated['registration_code'] = $relaas->registration_code;
+        // $validated['registration_code'] = $relaas->registration_code;
         $validated['notaris_id'] = $relaas->notaris_id;
-        $validated['client_id'] = $relaas->client_id;
+        $validated['client_code'] = $relaas->client_code;
         // $validated['uploaded_at'] = now();
 
         $this->service->store($validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil ditambahkan.');
 
         return redirect()->route('relaas-documents.index', ['search' => $relaas->registration_code]);
     }
@@ -101,22 +104,22 @@ class NotaryRelaasDocumentController extends Controller
         }
 
         $validated['relaas_id'] = $relaas->id;
-        $validated['registration_code'] = $relaas->registration_code;
+        // $validated['registration_code'] = $relaas->registration_code;
         $validated['notaris_id'] = $relaas->notaris_id;
-        $validated['client_id'] = $relaas->client_id;
+        $validated['client_code'] = $relaas->client_code;
 
         $this->service->update($id, $validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil diperbarui.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->registration_code]);
+        return redirect()->route('relaas-documents.index', ['search' => $relaas->client_code]);
     }
 
     public function destroy($id)
     {
         $this->service->destroy($id);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil dihapus.');
         return redirect()->back();
     }
 

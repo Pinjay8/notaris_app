@@ -14,7 +14,7 @@ class NotaryLetters extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
+        'client_code',
         'letter_number',
         'type',
         'recipient',
@@ -33,6 +33,6 @@ class NotaryLetters extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 }

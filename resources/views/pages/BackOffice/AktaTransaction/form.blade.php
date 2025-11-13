@@ -3,7 +3,7 @@
 @section('title', 'Transaksi Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Transaksi Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Transaksi Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -21,12 +21,12 @@
                             @method('PUT')
                         @endif
                         <div class="mb-3">
-                            <label for="client_id" class="form-label text-sm">Klien</label>
-                            <select name="client_id" id="client_id" class="form-select select2">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
-                                    <option value="{{ $client->id }}"
-                                        {{ isset($transaction) && $transaction->client_id == $client->id ? 'selected' : '' }}>
+                                    <option value="{{ $client->client_code }}"
+                                        {{ isset($transaction) && $transaction->client_code == $client->client_code ? 'selected' : '' }}>
                                         {{ $client->fullname }}
                                     </option>
                                 @endforeach

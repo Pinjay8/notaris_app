@@ -21,8 +21,8 @@
                     <div class="d-flex justify-content-lg-end w-100 px-2">
                         <form method="GET" action="{{ route('management-document.index') }}"
                             class=" g-2 w-100 no-spinner d-flex gap-2" style="max-width: 500px;">
-                            <input type="text" name="registration_code" value="{{ request('registration_code') }}"
-                                class="form-control" placeholder="Kode Registrasi">
+                            <input type="text" name="client_code" value="{{ request('client_code') }}"
+                                class="form-control" placeholder="Kode Klien">
                             <input type="text" name="client_name" value="{{ request('client_name') }}"
                                 class="form-control" placeholder="Nama Klien">
                             <button type="submit" class="btn btn-primary mb-0 btn-sm">Cari</button>
@@ -33,7 +33,7 @@
                             <thead>
                                 <tr class="text-center">
                                     <th>#</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
                                     <th>Nama Klien</th>
                                     <th>Dokumen</th>
                                     <th>Kode Dokumen</th>
@@ -47,7 +47,7 @@
                                 @forelse ($documents as $product)
                                     <tr class="text-center text-sm">
                                         <td>{{ $documents->firstItem() + $loop->index }}</td>
-                                        <td>{{ $product->registration_code }}</td>
+                                        <td>{{ $product->client_code }}</td>
                                         <td>{{ $product->client->fullname ?? '-' }}</td>
                                         <td>{{ $product->document_name ?? '-' }}</td>
                                         <td>{{ $product->document_code ?? '-' }}</td>
@@ -73,18 +73,18 @@
                                             @if ($product->status !== 'done' && $product->status !== 'valid' && $product->status !== 'invalid')
                                                 <button type="button" class="btn btn-success btn-xs mb-0"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#validationModal-{{ $product->registration_code }}">
+                                                    data-bs-target="#validationModal-{{ $product->client_code }}">
                                                     <i class="fa fa-check me-1"></i> Valid
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-xs mb-0"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#invalidModal-{{ $product->registration_code }}">
+                                                    data-bs-target="#invalidModal-{{ $product->client_code }}">
                                                     <i class="fa-solid fa-x me-1"></i>
                                                     Tidak Valid
                                                 </button>
-                                                <div class="modal fade"
-                                                    id="validationModal-{{ $product->registration_code }}" tabindex="-1"
-                                                    aria-labelledby="validationModalLabel-{{ $product->registration_code }}"
+                                                <div class="modal fade" id="validationModal-{{ $product->client_code }}"
+                                                    tabindex="-1"
+                                                    aria-labelledby="validationModalLabel-{{ $product->client_code }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
@@ -96,8 +96,8 @@
                                                             <div class="modal-body text-center text-wrap">
                                                                 Apakah dokumen
                                                                 <strong>{{ $product->document_name }}</strong> dengan
-                                                                kode registrasi
-                                                                <strong>{{ $product->registration_code }}</strong>
+                                                                Kode Klien
+                                                                <strong>{{ $product->client_code }}</strong>
                                                                 dinyatakan
                                                                 <span class="text-success fw-bold">Valid</span>?
                                                             </div>
@@ -105,8 +105,8 @@
                                                                 <form method="POST"
                                                                     action="{{ route('management-document.updateStatus') }}">
                                                                     @csrf
-                                                                    <input type="hidden" name="registration_code"
-                                                                        value="{{ $product->registration_code }}">
+                                                                    <input type="hidden" name="client_code"
+                                                                        value="{{ $product->client_code }}">
                                                                     <input type="hidden" name="notaris_id"
                                                                         value="{{ $product->notaris_id }}">
                                                                     <input type="hidden" name="client_id"
@@ -120,9 +120,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal fade" id="invalidModal-{{ $product->registration_code }}"
+                                                <div class="modal fade" id="invalidModal-{{ $product->client_code }}"
                                                     tabindex="-1"
-                                                    aria-labelledby="invalidModalLabel-{{ $product->registration_code }}"
+                                                    aria-labelledby="invalidModalLabel-{{ $product->client_code }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
@@ -134,8 +134,8 @@
                                                             <div class="modal-body text-center text-wrap">
                                                                 Apakah dokumen
                                                                 <strong>{{ $product->document_name }}</strong> dengan
-                                                                kode registrasi
-                                                                <strong>{{ $product->registration_code }}</strong>
+                                                                Kode Klien
+                                                                <strong>{{ $product->client_code }}</strong>
                                                                 dinyatakan
                                                                 <span class="text-danger fw-bold">TIDAK VALID</span>?
                                                             </div>
@@ -143,8 +143,8 @@
                                                                 <form method="POST"
                                                                     action="{{ route('management-document.updateStatus') }}">
                                                                     @csrf
-                                                                    <input type="hidden" name="registration_code"
-                                                                        value="{{ $product->registration_code }}">
+                                                                    <input type="hidden" name="client_code"
+                                                                        value="{{ $product->client_code }}">
                                                                     <input type="hidden" name="notaris_id"
                                                                         value="{{ $product->notaris_id }}">
                                                                     <input type="hidden" name="client_id"

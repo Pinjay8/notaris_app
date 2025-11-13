@@ -89,6 +89,7 @@
                                         <th>
                                             #
                                         </th>
+                                        <th>Kode Klien</th>
                                         <th>
                                             Nama Klien
                                         </th>
@@ -117,6 +118,10 @@
                                         <tr class="text-sm mb-0 text-center">
                                             <td>
                                                 {{ $clients->firstItem() + $loop->index }}
+                                            </td>
+                                            <td>
+                                                {{ $client->client_code }}
+
                                             </td>
                                             <td>
                                                 {{ $client->fullname }}
@@ -314,7 +319,8 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center text-muted text-sm">Belum ada data klien.</td>
+                                            <td colspan="8" class="text-center text-muted text-sm">Belum ada data
+                                                klien.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

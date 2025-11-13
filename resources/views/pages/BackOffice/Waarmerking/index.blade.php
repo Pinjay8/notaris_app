@@ -35,6 +35,7 @@
                                 <tr class="text-center">
                                     <th>#</th>
                                     <th>Nama Klien</th>
+                                    <th>Kode Klien</th>
                                     <th>Nomor Legalisasi</th>
                                     <th>Nama Pemohon</th>
                                     <th>Nama Petugas</th>
@@ -52,6 +53,7 @@
                                     <tr class="text-center text-sm">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->client->fullname }}</td>
+                                        <td>{{ $item->client_code }}</td>
                                         <td>{{ $item->waarmerking_number }}</td>
                                         <td>{{ $item->applicant_name }}</td>
                                         <td>{{ $item->officer_name }}</td>
@@ -65,22 +67,12 @@
                                         {{-- file image --}}
                                         <td>
                                             @if ($item->file_path)
-                                                @php
-                                                    $ext = strtolower(pathinfo($item->file_path, PATHINFO_EXTENSION));
-                                                    $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
-                                                @endphp
-
-                                                @if ($isImage)
-                                                    <img src="{{ asset('storage/' . $item->file_path) }}" alt="Preview"
-                                                        style="max-width: 100px; max-height: 100px;">
-                                                @else
-                                                    <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank"
-                                                        class="btn btn-primary btn-sm mb-0">
-                                                        Lihat File
-                                                    </a>
-                                                @endif
+                                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank"
+                                                    class="btn btn-primary btn-sm mb-0">
+                                                    Lihat File
+                                                </a>
                                             @else
-                                                -
+                                                <span class="text-muted">Tidak ada file</span>
                                             @endif
                                         </td>
                                         <td class="text-center">

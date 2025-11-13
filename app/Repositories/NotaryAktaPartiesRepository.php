@@ -11,7 +11,7 @@ class NotaryAktaPartiesRepository implements NotaryAktaPartiesRepositoryInterfac
 {
     public function findByRegistrationCodeOrAktaNumber(string $search): ?Collection
     {
-        return NotaryAktaParties::where('registration_code', $search)
+        return NotaryAktaParties::where('client_code', $search)
             ->orWhereHas(
                 'akta_transaction',
                 function ($q) use ($search) {

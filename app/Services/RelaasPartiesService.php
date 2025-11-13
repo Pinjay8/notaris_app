@@ -14,13 +14,13 @@ class RelaasPartiesService
         $this->repo = $repo;
     }
 
-    public function searchRelaas(?string $registrationCode)
+    public function searchRelaas(?string $client_code)
     {
-        if (!$registrationCode) {
+        if (!$client_code) {
             return null; // tidak melakukan pencarian jika kosong
         }
 
-        return $this->repo->searchByRegistrationCode($registrationCode);
+        return $this->repo->searchByRegistrationCode($client_code);
     }
 
     public function getParties(int $relaasId)

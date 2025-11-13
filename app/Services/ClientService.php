@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Client;
 use App\Repositories\Interfaces\ClientRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
@@ -35,6 +37,7 @@ class ClientService
     {
         $validated = $this->validate($data, $id = null);
         $validated['notaris_id'] = auth()->user()->notaris_id;
+
         if (
             (($validated['status'] ?? null) === 'valid') &&
             (empty($validated['uuid']))
@@ -42,8 +45,37 @@ class ClientService
             $validated['uuid'] = Str::uuid();
         }
 
-        return $this->clientRepository->create($validated);
+        // 1️⃣ Hitung jumlah client hari ini SEBELUM insert
+        $countToday = Client::where('notaris_id', $validated['notaris_id'])
+            ->whereDate('created_at', Carbon::today())
+            ->count();
+        $sequence = $countToday + 1;
+
+        // 2️⃣ Simpan client
+        $client = $this->clientRepository->create($validated);
+
+        // 3️⃣ Generate client_code
+        $clientCode = 'N' . Carbon::now()->format('ymd') . '-' . $client->notaris_id . '-' . $client->id . '-' . $sequence;
+
+        // 4️⃣ Update client dengan client_code
+        $client = $this->clientRepository->update($client->id, ['client_code' => $clientCode]);
+
+        return $client;
     }
+
+    // private function generateClientCode(int $notarisId, int $clientId): string
+    // {
+    //     $today = Carbon::now()->format('ymd');
+
+    //     // Hitung jumlah client yang sudah ada hari ini SEBELUM client ini dibuat
+    //     $countToday = Client::where('notaris_id', $notarisId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->count();
+
+    //     $sequence = $countToday + 1; // urutan client baru hari ini
+
+    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $sequence;
+    // }
 
     public function update($id, array $data)
     {

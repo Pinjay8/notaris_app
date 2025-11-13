@@ -13,9 +13,9 @@ class NotaryRelaasAkta extends Model
     protected $table = 'notary_relaas_aktas';
     protected $fillable = [
         'notaris_id',
-        'client_id',
-        'registration_code',
+        'client_code',
         'year',
+        'relaas_type_id',
         'relaas_number',
         'relaas_number_created_at',
         'title',
@@ -26,6 +26,11 @@ class NotaryRelaasAkta extends Model
         'note'
     ];
 
+    public function akta_type()
+    {
+        return $this->belongsTo(RelaasType::class, 'relaas_type_id');
+    }
+
     public function notaris()
     {
         return $this->belongsTo(Notaris::class, 'notaris_id');
@@ -33,7 +38,7 @@ class NotaryRelaasAkta extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     public function parties()

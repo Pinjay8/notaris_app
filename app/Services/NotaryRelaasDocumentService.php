@@ -13,7 +13,7 @@ class NotaryRelaasDocumentService
      */
     public function searchRelaas(string $search)
     {
-        return NotaryRelaasAkta::where('registration_code', $search)
+        return NotaryRelaasAkta::where('client_code', $search)
             ->orWhere('relaas_number', $search)
             ->first();
     }

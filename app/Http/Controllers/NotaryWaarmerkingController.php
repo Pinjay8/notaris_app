@@ -34,7 +34,7 @@ class NotaryWaarmerkingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'client_id'        => 'required|exists:clients,id',
+            'client_code'        => 'required',
             'waarmerking_number' => 'required|string',
             'applicant_name'   => 'required|string',
             'officer_name'     => 'required|string',
@@ -45,7 +45,7 @@ class NotaryWaarmerkingController extends Controller
             'notes'            => 'nullable|string',
             'file_path'        => 'nullable|file',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
             'officer_name.required' => 'Nama Petugas harus diisi.',
             'document_type.required' => 'Jenis Dokumen harus diisi.',
@@ -74,7 +74,7 @@ class NotaryWaarmerkingController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'client_id'        => 'required|exists:clients,id',
+            'client_code'        => 'required',
             'waarmerking_number' => 'required|string',
             'applicant_name'   => 'required|string',
             'officer_name'     => 'required|string',
@@ -85,7 +85,7 @@ class NotaryWaarmerkingController extends Controller
             'notes'            => 'nullable|string',
             'file_path'        => 'nullable|file',
         ], [
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
             'officer_name.required' => 'Nama Petugas harus diisi.',
             'document_type.required' => 'Jenis Dokumen harus diisi.',

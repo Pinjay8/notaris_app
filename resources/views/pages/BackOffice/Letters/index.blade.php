@@ -26,7 +26,9 @@
                         <table class="table align-items-center mb-0">
                             <thead>
                                 <tr>
-                                    <th class="th-title">No</th>
+                                    <th class="th-title">#</th>
+                                    <th class="th-title">Nama Klien</th>
+                                    <th class="th-title">Kode Klien</th>
                                     <th class="th-title">Nomor Surat</th>
                                     <th class="th-title">Jenis</th>
                                     <th class="th-title">Penerima</th>
@@ -40,7 +42,9 @@
                             <tbody>
                                 @forelse ($notaryLetters as $letter)
                                     <tr class="text-sm text-center">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $notaryLetters->firstItem() + $loop->index }}</td>
+                                        <td>{{ $letter->client->fullname ?? '-' }}</td>
+                                        <td>{{ $letter->client_code ?? '-' }}</td>
                                         <td>{{ $letter->letter_number }}</td>
                                         <td>{{ $letter->type ?? '-' }}</td>
                                         <td>{{ $letter->recipient ?? '-' }}</td>
@@ -51,11 +55,14 @@
                                         <td>
                                             @if ($letter->file_path)
                                                 <a href="{{ asset('storage/' . $letter->file_path) }}" target="_blank"
-                                                    class="btn btn-info btn-sm mb-0">Lihat File</a>
+                                                    class="btn btn-primary btn-sm mb-0">
+                                                    Lihat File
+                                                </a>
                                             @else
-                                                -
+                                                <span class="text-muted">Tidak ada file</span>
                                             @endif
                                         </td>
+
                                         <td class="text-center">
                                             <a href="{{ route('notary-letters.edit', $letter->id) }}"
                                                 class="btn btn-info btn-sm mb-0">Edit</a>
@@ -63,8 +70,7 @@
                                                 method="POST" class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm mb-0"
-                                                    onclick="return confirm('Yakin ingin menghapus surat ini?')">Hapus</button>
+                                                <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -77,6 +83,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="mt-3 d-flex justify-content-end">
+                            {{ $notaryLetters->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

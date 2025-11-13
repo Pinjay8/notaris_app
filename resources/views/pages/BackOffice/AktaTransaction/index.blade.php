@@ -3,7 +3,7 @@
 @section('title', 'Transaksi Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Transaksi Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Transaksi Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -17,8 +17,8 @@
                         class="d-flex  gap-2  justify-content-end flex-wrap flex-md-nowrap px-3"
                         style="max-width: 500px; width: 100%;">
 
-                        <input type="text" name="registration_code" placeholder="Cari kode registrasi..."
-                            value="{{ request('registration_code') }}" class="form-control">
+                        <input type="text" name="client_code" placeholder="Cari Kode Klien..."
+                            value="{{ request('client_code') }}" class="form-control">
                         <select name="status" class="form-select">
                             <option value="">Semua Status</option>
                             @foreach (['draft', 'diproses', 'selesai', 'dibatalkan'] as $status)
@@ -38,7 +38,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Klien</th>
-                                    <th>Kode Registrasi</th>
+                                    <th>Kode Klien</th>
                                     <th>Nomor Akta</th>
                                     <th>Jenis Akta</th>
                                     <th>Tahun</th>
@@ -53,21 +53,20 @@
                                     <tr class="text-center text-sm">
                                         <td>{{ $transactions->firstItem() + $loop->index }}</td>
                                         <td>{{ $transaction->client->fullname }}</td>
-                                        <td>{{ $transaction->registration_code ?? '-' }}</td>
+                                        <td>{{ $transaction->client_code ?? '-' }}</td>
                                         <td>{{ $transaction->akta_number ?? '-' }}</td>
                                         <td>{{ $transaction->akta_type->type ?? '-' }}</td>
-
                                         <td>{{ $transaction->year ?? '-' }}</td>
                                         <td>
                                             {{ $transaction->date_submission
                                                 ? \Illuminate\Support\Carbon::parse($transaction->date_submission)->format('d F Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        H:i:s')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                H:i:s')
                                                 : '-' }}
                                         </td>
                                         <td>
                                             {{ $transaction->date_finished
                                                 ? \Illuminate\Support\Carbon::parse($transaction->date_finished)->format('d F Y
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        H:i:s')
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                H:i:s')
                                                 : '-' }}
                                         </td>
                                         <td>{{ ucfirst($transaction->status) }}</td>

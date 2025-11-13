@@ -10,7 +10,7 @@ class NotaryPayment extends Model
     protected $table = 'notary_paymentts';
     protected $fillable = [
         'notaris_id',
-        'client_id',
+        'client_code',
         'pic_document_id',
         'payment_code',
         'payment_type',
@@ -29,7 +29,7 @@ class NotaryPayment extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 
     public function pic_document()

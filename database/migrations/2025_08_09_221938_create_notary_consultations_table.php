@@ -14,8 +14,14 @@ return new class extends Migration
         Schema::create('notary_consultations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('notaris_id')->nullable()->constrained('notaris');
-            $table->foreignId('client_id')->nullable()->constrained('clients');
-            $table->string('registration_code')->nullable();
+            // 1️⃣ Buat dulu kolom string
+            $table->string('client_code', 50)->nullable();
+
+            // 2️⃣ Baru bikin foreign key
+            $table->foreign('client_code')
+                ->references('client_code') // kolom di tabel clients
+                ->on('clients')
+                ->onDelete('set null');
             $table->string('subject')->nullable();
             $table->text('description')->nullable();
             $table->string('status');

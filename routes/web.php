@@ -33,6 +33,7 @@ use App\Http\Controllers\PicStaffController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RelaasTypeController;
 use App\Http\Controllers\ReportPaymentController;
 use App\Http\Controllers\ReportProcessController;
 use App\Http\Controllers\ResetPassword;
@@ -165,8 +166,10 @@ Route::middleware('auth')->group(function () {
 
     // Warkah
     Route::resource('warkah', NotaryClientWarkahController::class);
+
+    Route::post('warkah/store', [NotaryClientWarkahController::class, 'store'])->name('warkah.store');
     Route::get('warkah/create', [NotaryClientWarkahController::class, 'create'])->name('warkah.create');
-    Route::post('warkah/store', [NotaryClientWarkahController::class, 'addDocument'])->name('warkah.addDocument');
+    // Route::post('warkah/store', [NotaryClientWarkahController::class, 'addDocument'])->name('warkah.addDocument');
     Route::post('warkah/status', [NotaryClientWarkahController::class, 'updateStatus'])->name('warkah.updateStatus');
     // // End
     // Partij Akta
@@ -191,6 +194,7 @@ Route::middleware('auth')->group(function () {
 
 
     // Relaas Akta
+    Route::resource('relaas-types', RelaasTypeController::class);
     Route::resource('relaas-aktas', NotaryRelaasAktaController::class);
     Route::resource('relaas-parties', NotaryRelaasPartiesController::class);
     Route::get('/relaas-parties/createData/{relaas_id}', [NotaryRelaasPartiesController::class, 'create'])->name('relaas-parties.create');

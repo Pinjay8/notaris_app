@@ -18,11 +18,11 @@ class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepository
             $query->where('status', 'draft');
         }
 
-        if (!empty($filters['registration_code'])) {
-            $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');
+        if (!empty($filters['client_code'])) {
+            $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
         }
 
-        return $query->latest()->paginate($perPage)->withQueryString();
+        return $query->latest()->paginate($perPage);
     }
 
     public function find(int $id)

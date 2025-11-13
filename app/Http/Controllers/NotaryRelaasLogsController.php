@@ -27,7 +27,8 @@ class NotaryRelaasLogsController extends Controller
     public function create()
     {
         $relaasAktas = NotaryRelaasAkta::with('notaris', 'client')->where('deleted_at', null)->get();
-        return view('pages.BackOffice.RelaasAkta.AktaLogs.form', compact('relaasAktas'));
+        $clients = Client::where('deleted_at', null)->get();
+        return view('pages.BackOffice.RelaasAkta.AktaLogs.form', compact('relaasAktas', 'clients'));
     }
 
     public function store(Request $request)
@@ -47,13 +48,13 @@ class NotaryRelaasLogsController extends Controller
 
         $this->service->create([
             'notaris_id' => $relaas->notaris_id,
-            'client_id' => $relaas->client_id,
-            'registration_code' => $relaas->registration_code,
+            'client_code' => $relaas->client_code,
+            // 'registration_code' => $relaas->registration_code,
             'relaas_id' => $validated['relaas_id'],
             'step' => $validated['step'],
             'note' => $validated['note'],
         ]);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Log berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Log berhasil ditambahkan.');
         return redirect()->route('relaas-logs.index');
     }
 
@@ -61,7 +62,8 @@ class NotaryRelaasLogsController extends Controller
     {
         $data = $this->service->findById($id);
         $relaasAktas = NotaryRelaasAkta::with('notaris', 'client')->where('deleted_at', null)->get();
-        return view('pages.BackOffice.RelaasAkta.AktaLogs.form', compact('data', 'relaasAktas'));
+        $clients = Client::where('deleted_at', null)->get();
+        return view('pages.BackOffice.RelaasAkta.AktaLogs.form', compact('data', 'relaasAktas', 'clients'));
     }
 
     public function update(Request $request, $id)
@@ -76,14 +78,14 @@ class NotaryRelaasLogsController extends Controller
         ]);
 
         $this->service->update($id, $validated);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Log berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Log berhasil diperbarui.');
         return redirect()->route('relaas-logs.index');
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
-        notyf()->position('x', 'right')->position('y', 'top')->success('Relaas Log berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success(' Log berhasil dihapus.');
         return redirect()->route('relaas-logs.index');
     }
 }

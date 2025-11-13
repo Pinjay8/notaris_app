@@ -14,9 +14,7 @@ class NotaryClientWarkah extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
-        'registration_code',
-        'product_id',
+        'client_code',
         'warkah_code',
         'warkah_name',
         'note',
@@ -37,6 +35,6 @@ class NotaryClientWarkah extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 }

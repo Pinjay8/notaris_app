@@ -31,9 +31,9 @@ class NotaryConsultationService
     public function create(array $data): NotaryConsultation
     {
         $validated = $this->validate($data);
-        if (!isset($data['registration_code']) && isset($data['notaris_id'])) {
-            $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
-        }
+        // if (!isset($data['registration_code']) && isset($data['notaris_id'])) {
+        //     $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
+        // }
         return $this->notaryRepository->create($data);
     }
 
@@ -54,7 +54,7 @@ class NotaryConsultationService
 
         // Hitung jumlah konsultasi notaris ini hari ini
         $countToday = NotaryConsultation::where('notaris_id', $notarisId)
-            ->where('client_id', $clientId)
+            ->where('client_code', $clientId)
             ->whereDate('created_at', Carbon::today())
             ->count();
 
@@ -69,15 +69,15 @@ class NotaryConsultationService
             'subject' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:progress,done',
-            'registration_code' => 'nullable|string|max:50',
-            'client_id' => 'required|integer|exists:clients,id',
+            // 'registration_code' => 'nullable|string|max:50',
+            'client_code' => 'required',
             'notaris_id' => 'required',
         ];
 
         $messages = [
             'subject.required' => 'Subjek konsultasi harus diisi.',
             'status.in' => 'Status tidak valid.',
-            'client_id.required' => 'Klien harus dipilih.',
+            'client_code.required' => 'Klien harus dipilih.',
             'notaris_id.required' => 'Notaris tidak valid.',
         ];
 

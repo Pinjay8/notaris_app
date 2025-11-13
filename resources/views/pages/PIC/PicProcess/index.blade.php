@@ -14,7 +14,7 @@
                         <h5 class="mb-0">PIC Proses Pengurusan</h5>
                         <form method="GET" action="{{ route('pic_process.index') }}" class="d-flex gap-2">
                             <input type="text" name="pic_document_code" class="form-control form-control-sm"
-                                style="max-width: 350px; width: 350px" placeholder="Cari PIC Document Code..."
+                                style="max-width: 350px; width: 350px" placeholder="Cari Kode Dokumen"
                                 value="{{ request('pic_document_code') }}">
                             <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
                         </form>
@@ -45,12 +45,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <h6 class="mb-1">Tipe Dokumen</h6>
-                                            <p class="text-muted text-sm">{{ $doc->document_type ?? '-' }}</p>
+                                            <p class="text-muted text-sm text-capitalize">{{ $doc->transaction_type ?? '-' }}</p>
                                         </div>
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <h6 class="mb-1">Nomor Dokumen</h6>
                                             <p class="text-muted text-sm">{{ $doc->document_number ?? '-' }}</p>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-6">
                                             <h6 class="mb-1">Tanggal Diterima</h6>
                                             <p class="text-muted text-sm">
@@ -73,7 +73,8 @@
                                                     'received' => 'Diterima',
                                                 ];
                                             @endphp
-                                            <span class="badge text-capitalize bg-{{ $badgeColors[$doc->status] ?? 'secondary' }}">
+                                            <span
+                                                class="badge text-capitalize bg-{{ $badgeColors[$doc->status] ?? 'secondary' }}">
                                                 {{ $statusText[$doc->status] ?? ucfirst($doc->status) }}
                                             </span>
                                         </div>
@@ -85,7 +86,8 @@
                         {{-- Tabel Proses --}}
                         <div class="table-responsive p-0 mx-4">
                             @if (request('pic_document_code'))
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-between  align-items-center">
+                                    <h5>Proses Pengurusan</h5>
                                     <a href="{{ route('pic_process.create', ['pic_document_code' => request('pic_document_code')]) }}"
                                         class="btn btn-sm btn-primary mb-3">
                                         + Tambah Proses
@@ -140,8 +142,7 @@
                                                         method="POST" style="display:inline-block;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger mb-0"
-                                                            >
+                                                        <button type="submit" class="btn btn-sm btn-danger mb-0">
                                                             Hapus
                                                         </button>
                                                     </form>
@@ -150,7 +151,7 @@
                                         @empty
                                             <tr>
                                                 <td colspan="6" class="text-center text-muted text-sm py-3">
-                                                    Belum ada proses pengurusan untuk PIC dokumen.
+                                                    Belum ada proses pengurusan untuk PIC proses pengurusan.
                                                 </td>
                                             </tr>
                                         @endforelse
@@ -158,7 +159,7 @@
                                 </table>
                             @else
                                 <div class="text-center text-muted text-sm p-4">
-                                    Masukkan PIC Document Code untuk melihat daftar proses pengurusan.
+                                    Masukkan PIC Kode Dokumen untuk melihat daftar proses pengurusan.
                                 </div>
                             @endif
                         </div>

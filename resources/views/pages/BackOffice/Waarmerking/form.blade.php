@@ -23,16 +23,16 @@
 
                     <div class="mb-3">
                         <label class="form-label text-sm">Klien</label>
-                        <select name="client_id" class="form-select @error('client_id') is-invalid @enderror select2">
+                        <select name="client_code" class="form-select @error('client_code') is-invalid @enderror select2">
                             <option value="" hidden>Pilih Klien</option>
                             @foreach($clients as $client)
-                            <option value="{{ $client->id }}" {{ old('client_id', $data->client_id ?? '') == $client->id
+                            <option value="{{ $client->client_code }}" {{ old('client_code', $data->client_code ?? '') == $client->client_code
                                 ? 'selected' : '' }}>
                                 {{ $client->fullname ?? $client->name }}
                             </option>
                             @endforeach
                         </select>
-                        @error('client_id')
+                        @error('client_code')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

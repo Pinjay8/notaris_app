@@ -3,21 +3,21 @@
 @section('title', 'Jenis Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Jenis Akta'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PPAT / Jenis Akta'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6 class="mb-0">{{ isset($aktaType) ? 'Edit Jenis Akta' : 'Tambah Jenis Akta' }}</h6>
+                    <h6 class="mb-0">{{ isset($relaasType) ? 'Edit Jenis Akta' : 'Tambah Jenis Akta' }}</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
                     <form
-                        action="{{ isset($aktaType) ? route('akta-types.update', $aktaType->id) : route('akta-types.store') }}"
+                        action="{{ isset($relaasType) ? route('relaas-types.update', $relaasType->id) : route('relaas-types.store') }}"
                         method="POST">
                         @csrf
-                        @if (isset($aktaType))
+                        @if (isset($relaasType))
                             @method('PUT')
                         @endif
                         <div class="mb-3">
@@ -28,7 +28,7 @@
                                 $defaultCategories = ['pendirian', 'perubahan', 'pemutusan'];
 
                                 // Ambil kategori dari database (saat edit)
-                                $selectedCategory = old('category', $aktaType->category ?? '');
+                                $selectedCategory = old('category', $relaasType->category ?? '');
 
                                 // Cek apakah kategori bukan dari daftar standar
                                 $isOther = $selectedCategory && !in_array($selectedCategory, $defaultCategories);
@@ -62,7 +62,7 @@
                             <label for="type" class="form-label text-sm">Tipe</label>
                             <input type="text" name="type" id="type"
                                 class="form-control @error('type') is-invalid @enderror"
-                                value="{{ old('type', $aktaType->type ?? '') }}" placeholder="Contoh: Akta Pendirian PT">
+                                value="{{ old('type', $relaasType->type ?? '') }}" placeholder="Contoh: Akta Pendirian PT">
                             {{-- <div class="form-text text-secondary">Contoh: Akta Pendirian PT</div> --}}
                             @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -71,20 +71,20 @@
 
                         <div class="mb-3">
                             <label for="description" class="form-label text-sm">Deskripsi</label>
-                            <textarea name="description" id="description" class="form-control">{{ $aktaType->description ?? old('description') }}</textarea>
+                            <textarea name="description" id="description" class="form-control">{{ $relaasType->description ?? old('description') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="documents" class="form-label text-sm">Kebutuhan Dokumen</label>
                             <textarea name="documents" id="documents" class="form-control"
-                                placeholder="Contoh: Fotokopi KTP, NPWP, Fotokopi Akta Pendirian">{{ $aktaType->documents ?? old('documents') }}</textarea>
+                                placeholder="Contoh: Fotokopi KTP, NPWP, Fotokopi Akta Pendirian">{{ $relaasType->documents ?? old('documents') }}</textarea>
                             {{-- <div class="form-text">Contoh: Fotokopi KTP, NPWP, Fotokopi Akta Pendirian</div> --}}
                         </div>
 
 
-                        <a href="{{ route('akta-types.index') }}" class="btn btn-secondary">Kembali</a>
+                        <a href="{{ route('relaas-types.index') }}" class="btn btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-primary">
-                            {{ isset($aktaType) ? 'Ubah' : 'Simpan' }}
+                            {{ isset($relaasType) ? 'Ubah' : 'Simpan' }}
                         </button>
                     </form>
                 </div>

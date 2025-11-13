@@ -20,6 +20,20 @@
                             @method('PUT')
                         @endif
 
+                        {{-- clients --}}
+                        <div class="mb-3">
+                            <label for="client_code" class="form-label text-sm">Klien</label>
+                            <select name="client_code" id="client_code" class="form-select select2">
+                                <option value="" hidden>Pilih Klien</option>
+                                @foreach ($clients as $client)
+                                    <option value="{{ $client->client_code }}"
+                                        {{ isset($data) && $data->client_code == $client->client_code ? 'selected' : '' }}>
+                                        {{ $client->fullname }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
 
                         {{-- Relaas ID --}}
                         <div class="mb-3">
@@ -30,7 +44,7 @@
                                 @foreach ($relaasAktas as $ra)
                                     <option value="{{ $ra->id }}"
                                         {{ old('relaas_id', $data->relaas_id ?? '') == $ra->id ? 'selected' : '' }}>
-                                        {{ $ra->registration_code }} - {{ $ra->client->fullname }}
+                                        {{ $ra->client_code }} - {{ $ra->client->fullname }}
                                         ({{ $ra->notaris->display_name }})
                                         - {{ $ra->title }}
                                     </option>
@@ -63,7 +77,7 @@
                             <a href="{{ route('relaas-logs.index') }}" class="btn btn-secondary">Kembali</a>
 
                             <button type="submit" class="btn btn-primary">
-                                {{ isset($data) ? 'Update' : 'Simpan' }}
+                                {{ isset($data) ? 'Ubah' : 'Simpan' }}
                             </button>
                     </form>
                 </div>

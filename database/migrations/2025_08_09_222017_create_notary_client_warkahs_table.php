@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('notary_client_warkahs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('notaris_id')->nullable()->constrained('notaris');
-            $table->foreignId('client_id')->nullable()->constrained('clients');
-            $table->string('registration_code')->nullable();
-            $table->foreignId('product_id')->nullable()->constrained('products');
+            $table->string('client_code', 50)->nullable();
+
+            $table->foreign('client_code')
+                ->references('client_code')
+                ->on('clients')
+                ->onDelete('set null');
+
             $table->string('warkah_code')->nullable();
             $table->string('warkah_name')->nullable();
             $table->text('note')->nullable();

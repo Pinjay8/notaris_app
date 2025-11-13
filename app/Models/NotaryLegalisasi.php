@@ -14,7 +14,7 @@ class NotaryLegalisasi extends Model
 
     protected $fillable = [
         'notaris_id',
-        'client_id',
+        'client_code',
         'legalisasi_number',
         'applicant_name',
         'officer_name',
@@ -33,6 +33,6 @@ class NotaryLegalisasi extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 }
