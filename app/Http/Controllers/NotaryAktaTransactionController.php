@@ -22,7 +22,7 @@ class NotaryAktaTransactionController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['status', 'registration_code']);
+        $filters = $request->only(['status', 'client_code']);
         $transactions = $this->service->list($filters);
 
         return view('pages.BackOffice.AktaTransaction.index', compact('transactions', 'filters'));
@@ -101,6 +101,7 @@ class NotaryAktaTransactionController extends Controller
                 'akta_type_id' => 'required|exists:notary_akta_types,id',
                 'date_submission' => 'required|date',
                 'date_finished' => 'required|date',
+                'status' => 'required',
                 'note' => 'nullable|string',
             ],
             [
@@ -110,10 +111,10 @@ class NotaryAktaTransactionController extends Controller
         );
 
 
-        $data['status'] = 'draft';
-        $data['year'] = null;
-        $data['akta_number'] = null;
-        $data['akta_number_created_at'] = null;
+        // $data['status'] = 'draft';
+        // $data['year'] = null;
+        // $data['akta_number'] = null;
+        // $data['akta_number_created_at'] = null;
         $data['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->update($id, $data);
@@ -157,30 +158,47 @@ class NotaryAktaTransactionController extends Controller
     public function storeNumber(Request $request)
     {
         $request->validate([
-            'transaction_id' => 'required|exists:notary_akta_transactions,id',
-            'akta_number' => 'required|string|unique:notary_akta_transactions,akta_number',
+            'akta_number' => 'required',
             'year' => 'required|integer',
         ]);
 
         $akta = NotaryAktaTransaction::findOrFail($request->transaction_id);
 
+        // Cek apakah ini edit
+        $isEdit = !is_null($akta->akta_number);
+
+        // Update data
         $akta->update([
             'akta_number' => $request->akta_number,
             'year' => $request->year,
             'akta_number_created_at' => now(),
         ]);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil ditambahkan.');
-        return redirect()->route('akta_number.index', ['search' => $akta->registration_code]);
+        // Alert sesuai kondisi
+        if ($isEdit) {
+            notyf()->position('x', 'right')->position('y', 'top')
+                ->success('Nomor akta berhasil diperbarui.');
+        } else {
+            notyf()->position('x', 'right')->position('y', 'top')
+                ->success('Nomor akta berhasil ditambahkan.');
+        }
+
+        return redirect()->route('akta_number.index', ['search' => $akta->client_code]);
     }
 
 
     public function updateNumber(Request $request, $id)
     {
-        $request->validate([
-            'akta_number' => 'required|string|unique:notary_akta_transactions,akta_number,' . $id,
-            'year' => 'required|integer',
-        ]);
+        $request->validate(
+            [
+                'akta_number' => 'required',
+                'year' => 'required',
+            ],
+            [
+                'akta_number.required' => 'Nomor akta harus diisi.',
+                'year.required' => 'Tahun harus diisi.',
+            ]
+        );
 
         $akta = NotaryAktaTransaction::findOrFail($id);
         $akta->update([
@@ -188,6 +206,8 @@ class NotaryAktaTransactionController extends Controller
             'year' => $request->year,
         ]);
 
-        return redirect()->route('akta_number.index')->with('success', 'Nomor akta berhasil diupdate.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil diperbarui.');
+
+        return redirect()->route('akta_number.index', ['search' => $akta->client_code]);
     }
 }

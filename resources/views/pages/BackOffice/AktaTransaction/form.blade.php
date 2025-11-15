@@ -27,7 +27,7 @@
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ isset($transaction) && $transaction->client_code == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }}
+                                        {{ $client->fullname }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>

@@ -34,39 +34,21 @@ class PicDocumentsController extends Controller
 
     public function create()
     {
-        $clients = Client::all();
-        $picStaffList = PicStaff::all();
-        $aktaTransaction = NotaryAktaTransaction::all();
-        $relaasTransaction = NotaryRelaasAkta::all();
+        $clients = Client::where('deleted_at', null)->get();
+        $picStaffList = PicStaff::where('deleted_at', null)->get();
+        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->where('status', 'draft')->get();
+        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->where('status', 'draft')->get();
         return view('pages.PIC.PicDocuments.form', compact('clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }
-
-    // public function generateRegistrationCode(int $notarisId, int $clientId): string
-    // {
-    //     $today = Carbon::now()->format('Ymd');
-
-    //     // Hitung jumlah konsultasi notaris ini hari ini
-    //     $countToday = PicDocuments::where('notaris_id', $notarisId)
-    //         ->where('client_code', $clientId)
-    //         ->whereDate('created_at', Carbon::today())
-    //         ->count();
-
-    //     $countToday += 1; // untuk konsultasi baru ini
-
-    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    // }
-
-
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'pic_id' => 'required',
             'client_code' => 'required',
-            // 'document_type' => 'required',
-            // 'document_number' => 'required',
             'transaction_id' => 'required',
             'transaction_type' => 'required',
-            'received_date' => 'required',
+            'received_date' => 'required|date',
             'status' => 'required',
             'note' => 'nullable',
         ]);
@@ -81,8 +63,8 @@ class PicDocumentsController extends Controller
 
     public function edit($id)
     {
-        $clients = Client::all();
-        $picStaffList = PicStaff::all();
+        $clients =  Client::where('deleted_at', null)->get();
+        $picStaffList = PicStaff::where('deleted_at', null)->get();
         $picDocument = $this->service->getDocumentById($id);
         $aktaTransaction = NotaryAktaTransaction::all();
         $relaasTransaction = NotaryRelaasAkta::all();
@@ -93,14 +75,11 @@ class PicDocumentsController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            // 'registration_code' => 'required',
             'pic_id' => 'required',
             'client_code' => 'required',
             'received_date' => 'required',
             'transaction_type' => 'required',
             'transaction_id' => 'nullable',
-            // 'document_type' => 'required',
-            // 'document_number' => 'required',
             'status' => 'required',
             'note' => 'nullable',
         ]);

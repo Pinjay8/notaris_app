@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>{{ isset($data) ? 'Edit Relaas Akta' : 'Tambah Relaas Akta' }}</h6>
+                    <h6>{{ isset($data) ? 'Edit Transaksi Akta' : 'Tambah Transaksi Akta' }}</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
@@ -47,7 +47,7 @@
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ old('client_code', $data->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }}
+                                        {{ $client->fullname }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>
@@ -91,7 +91,7 @@
                             <label for="title" class="form-label text-sm">Judul</label>
                             <input type="text" name="title" id="title"
                                 class="form-control @error('title') is-invalid @enderror"
-                                value="{{ old('title', $data->title ?? '') }}">
+                                value="{{ old('title', $data->title ?? '') }}" placeholder="Contoh: Pembukaan Wasiat">
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

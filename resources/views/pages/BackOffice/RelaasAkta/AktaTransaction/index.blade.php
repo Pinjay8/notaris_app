@@ -42,11 +42,12 @@
                                     <th>Kode Klien</th>
                                     <th>Jenis Akta</th>
                                     <th>Tahun</th>
-                                    <th>Nomor Transaksi</th>
-                                    <th>Waktu Transaksi Dibuat</th>
-                                    <th>Status</th>
+                                    <th>Nomor Akta</th>
+                                    <th>Waktu Nomor Dibuat</th>
+                                    <th>Judul</th>
                                     <th>Tanggal</th>
                                     <th>Lokasi</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -60,12 +61,13 @@
                                         <td>{{ ucfirst($akta->akta_type->type) ?? '-' }}</td>
                                         <td>{{ $akta->year ?? '-' }}</td>
                                         <td>{{ $akta->relaas_number ?? '-' }}</td>
-                                        <td>{{ $akta->relaas_number_created_at ? \Carbon\Carbon::parse($akta->relaas_date)->format('d M Y H:i') : '-' }}
+                                        <td>{{ $akta->relaas_number_created_at ? \Carbon\Carbon::parse($akta->relaas_date)->format('d M Y H:i:ss') : '-' }}
                                         </td>
-                                        <td>{{ ucfirst($akta->status) ?? '-' }}</td>
-                                        <td>{{ $akta->story_date ? \Carbon\Carbon::parse($akta->story_date)->format('d M Y H:i') : '-' }}
+                                        <td>{{ $akta->title ?? '-' }}</td>
+                                        <td>{{ $akta->story_date ? \Carbon\Carbon::parse($akta->story_date)->format('d F Y H:i:s') : '-' }}
                                         </td>
                                         <td>{{ $akta->story_location ?? '-' }}</td>
+                                        <td>{{ ucfirst($akta->status) ?? '-' }}</td>
                                         <td>
                                             <a href="{{ route('relaas-aktas.edit', $akta->id) }}"
                                                 class="btn btn-info btn-sm mb-0">Edit</a>

@@ -28,7 +28,7 @@
                             @foreach ($clients as $client)
                             <option value="{{ $client->client_code }}" {{ old('client_code', $cost->client_code ?? '') == $client->client_code
                                 ? 'selected' : '' }}>
-                                {{ $client->fullname }}
+                                {{ $client->fullname }} - {{ $client->client_code }}
                             </option>
                             @endforeach
                         </select>
@@ -42,8 +42,8 @@
                             <option value="" hidden>Pilih Dokumen</option>
                             @foreach ($picDocuments as $doc)
                             <option value="{{ $doc->id }}" {{ old('pic_document_id', $cost->pic_document_id ?? '') ==
-                                $doc->id ? 'selected' : '' }}>
-                                {{ $doc->pic_document_code }} - {{ $doc->document_type }}
+                                $doc->id ? 'selected' : '' }} class="text-capitalize">
+                                {{ $doc->pic_document_code }} - {{ $doc->transaction_type }}
                             </option>
                             @endforeach
                         </select>

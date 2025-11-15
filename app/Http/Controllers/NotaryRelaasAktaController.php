@@ -38,7 +38,7 @@ class NotaryRelaasAktaController extends Controller
     {
         $clients = Client::where('deleted_at', null)->get();
         $notaris = Notaris::where('deleted_at', null)->get();
-        $relaasType = RelaasType::get();
+        $relaasType = RelaasType::where('deleted_at', null)->get();
         return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris', 'relaasType'));
     }
 
@@ -61,9 +61,7 @@ class NotaryRelaasAktaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // 'notaris_id' => 'required|exists:notaris,id',
             'client_code' => 'required',
-            // 'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
             'relaas_number' => 'nullable',
             'relaas_number_created_at' => 'nullable',
@@ -96,16 +94,15 @@ class NotaryRelaasAktaController extends Controller
         $data = $this->service->getById($id);
         $clients = Client::where('deleted_at', null)->get();
         $notaris = Notaris::where('deleted_at', null)->get();
+        $relaasType = RelaasType::where('deleted_at', null)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('data', 'clients', 'notaris'));
+        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('data', 'clients', 'notaris', 'relaasType'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            // 'notaris_id' => 'required',
             'client_code' => 'required',
-            // 'registration_code' => 'required|string',
             'year' => 'nullable|digits:4|integer',
             'relaas_type_id' => 'required',
             'relaas_number' => 'nullable',
@@ -146,19 +143,49 @@ class NotaryRelaasAktaController extends Controller
     //     return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));
     // }
 
+    // public function indexNumber(Request $request)
+    // {
+    //     $aktaInfo = null;
+    //     $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
+
+
+    //     // Kalau user melakukan pencarian
+    //     if ($request->filled('search')) {
+    //         $aktaInfo = NotaryRelaasAkta::where(function ($q) use ($request) {
+    //             $q->where('client_code', $request->search)
+    //                 ->orWhere('relaas_number', $request->search);
+    //         })
+    //             ->orderBy('relaas_number', 'desc') // ambil yang sudah ada nomornya
+    //             ->first();
+    //     } else {
+    //         // Kalau tidak ada pencarian, tampilkan nomor akta terakhir
+    //         $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
+    //         dd($lastAkta);
+    //     }
+
+    //     return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));
+    // }
+
     public function indexNumber(Request $request)
     {
-        $aktaInfo = null;
-        $lastAkta = null;
+        // Ambil nomor akta terakhir (tetap ditampilkan)
+        $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
 
-        // Kalau user melakukan pencarian
+        $aktaInfo = null;
+
+        // Jika user melakukan pencarian
         if ($request->filled('search')) {
-            $aktaInfo = NotaryRelaasAkta::where('relaas_number', 'like', '%' . $request->search . '%')
-                ->orWhere('client_code', 'like', '%' . $request->search . '%')
+
+            $search = $request->search;
+
+            $aktaInfo = NotaryRelaasAkta::where(function ($q) use ($search) {
+                $q->where('client_code', 'like', "%$search%")
+                    ->orWhere('relaas_number', 'like', "%$search%");
+            })
+                // Prioritaskan record yang sudah punya relaas_number
+                ->orderByRaw("CASE WHEN relaas_number IS NULL THEN 1 ELSE 0 END")
+                ->orderBy('relaas_number', 'desc')
                 ->first();
-        } else {
-            // Kalau tidak ada pencarian, tampilkan nomor akta terakhir
-            $lastAkta = NotaryRelaasAkta::orderBy('relaas_number_created_at', 'desc')->first();
         }
 
         return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));
@@ -168,12 +195,10 @@ class NotaryRelaasAktaController extends Controller
     {
         $request->validate(
             [
-                'relaas_id' => 'required',
                 'relaas_number' => 'required|integer',
                 'year' => 'required',
             ],
             [
-                'relaas_id.required' => 'Transaksi akta harus dipilih.',
                 'relaas_number.required' => 'Nomor akta harus diisi.',
                 'relaas_number.integer' => 'Nomor akta harus berupa angka.',
                 'year.required' => 'Tahun harus diisi.',
@@ -182,15 +207,50 @@ class NotaryRelaasAktaController extends Controller
 
         $akta = NotaryRelaasAkta::findOrFail($request->relaas_id);
 
+        // Cek apakah ini edit atau create
+        $isEdit = !is_null($akta->relaas_number);
+
+        // Update data
         $akta->update([
             'relaas_number' => $request->relaas_number,
             'year' => $request->year,
             'relaas_number_created_at' => now(),
         ]);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi Akta Number berhasil disimpan.');
+        // Alert berbeda
+        if ($isEdit) {
+            notyf()->position('x', 'right')->position('y', 'top')->success('Nomor Akta berhasil diperbarui.');
+        } else {
+            notyf()->position('x', 'right')->position('y', 'top')->success('Nomor Akta berhasil disimpan.');
+        }
+
         return redirect()->route('relaas_akta.indexNumber', [
-            'search' => $akta->registration_code, // <-- bawa parameter search
+            'search' => $akta->client_code,
         ]);
+    }
+
+
+    public function updateNumber(Request $request, $id)
+    {
+        $request->validate(
+            [
+                'relaas_number' => 'required',
+                'year' => 'required',
+            ],
+            [
+                'relaas_number.required' => 'Nomor akta harus diisi.',
+                'year.required' => 'Tahun harus diisi.',
+            ]
+        );
+
+        $akta = NotaryRelaasAkta::findOrFail($id);
+        $akta->update([
+            'relaas_number' => $request->relaas_number,
+            'year' => $request->year,
+        ]);
+
+        notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil diperbarui.');
+
+        return redirect()->route('relaas_akta.indexNumber', ['search' => $akta->client_code]);
     }
 }

@@ -23,12 +23,13 @@
 
                         <div class="mb-3">
                             <label class="form-label text-sm">Klien</label>
-                            <select name="client_code" class="form-select @error('client_code') is-invalid @enderror">
+                            <select name="client_code"
+                                class="form-select select2 @error('client_code') is-invalid @enderror">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ old('client_code', $data->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname ?? $client->name }}
+                                        {{ $client->fullname ?? $client->name }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>
@@ -96,8 +97,8 @@
                             <textarea name="notes" class="form-control">{{ old('notes', $data->notes ?? '') }}</textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label text-sm">Upload File</label>
+                        {{-- <div class="mb-3">
+                            <label class="form-label text-sm">File Surat Keluar</label>
                             <input type="file" name="file_path" class="form-control">
 
                             @if (isset($data) && $data->file_path)
@@ -117,7 +118,53 @@
                                     </small>
                                 @endif
                             @endif
+                        </div> --}}
+
+                        <div class="mb-3">
+                            <label class="form-label text-sm">File Surat Keluar</label>
+                            <input type="file" name="file_path" class="form-control" id="fileInput">
+
+                            @if (isset($data) && $data->file_path)
+                                <button type="button" class="btn btn-primary btn-sm mb-0 mt-2" data-bs-toggle="modal"
+                                    data-bs-target="#previewModal">
+                                    Lihat File
+                                </button>
+                            @endif
                         </div>
+
+                        @if (isset($data) && $data->file_path)
+                            @php
+                                $ext = strtolower(pathinfo($data->file_path, PATHINFO_EXTENSION));
+                            @endphp
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="previewModal" tabindex="-1">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">File Surat Keluar</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+
+                                        <div class="modal-body text-center">
+
+                                            @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                                <img src="{{ asset('storage/' . $data->file_path) }}" class="img-fluid"
+                                                    style="max-height: 250;">
+                                            @else
+                                                <a href="{{ asset('storage/' . $data->file_path) }}" target="_blank"
+                                                    class="btn btn-primary">
+                                                    Download / Lihat File
+                                                </a>
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="mt-4">
                             <a href="{{ route('notary-letters.index') }}" class="btn btn-secondary">Batal</a>

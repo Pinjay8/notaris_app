@@ -18,6 +18,7 @@ class NotarisController extends Controller
 
             $query = Notaris::select([
                 'id',
+                'user_id',
                 'first_name',
                 'last_name',
                 'display_name',

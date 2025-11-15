@@ -14,6 +14,7 @@ class Notaris extends Model
     protected $table = 'notaris';
 
     protected $fillable = [
+        'user_id',
         'first_name',
         'last_name',
         'display_name',

@@ -4,21 +4,22 @@
 
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'Serah Terima Dokumen'])
+@include('layouts.navbars.auth.topnav', ['title' => 'PIC / Serah Terima Dokumen'])
 
 <div class="row mt-4 mx-4">
     <div class="col-md-12 mx-auto">
         <div class="card">
             <div class="card-header pb-0">
-                <h5>Form Serah Terima Dokumen</h5>
+                <h5>Serah Terima Dokumen</h5>
             </div>
             <hr>
-            <div class="card-body">
+            <div class="card-body pt-0">
                 <form method="POST" action="{{ route('pic_handovers.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label text-sm">Pilih Dokumen</label>
+                        <label class="form-label text-sm">Dokumen</label>
                         <select name="pic_document_id" class="form-select">
+                            <option value="" hidden>Pilih Dokumen</option>
                             @foreach ($picDocuments as $doc)
                             <option value="{{ $doc->id }}">{{ $doc->pic_document_code }}</option>
                             @endforeach

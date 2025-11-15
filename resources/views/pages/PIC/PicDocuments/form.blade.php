@@ -3,7 +3,7 @@
 @section('title', 'Pic Dokumen')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'PIC Dokumen'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PIC / PIC Dokumen'])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -15,11 +15,13 @@
                 <div class="card-body px-4 pt-0 pb-2">
                     <form
                         action="{{ isset($picDocument) ? route('pic_documents.update', $picDocument) : route('pic_documents.store') }}"
-                        method="POST">
+                        method="POST" id="picDocumentForm">
                         @csrf
                         @if (isset($picDocument))
                             @method('PUT')
                         @endif
+
+                        <input type="hidden" name="transaction_id" id="transaction_id">
 
                         {{-- PIC Staff --}}
                         <div class="mb-3">
@@ -43,7 +45,7 @@
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ old('client_code', $picDocument->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }}
+                                        {{ $client->fullname }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>
@@ -67,13 +69,13 @@
 
                         {{-- Akta Transaction --}}
                         <div class="mb-3" id="akta_section" style="display: none;">
-                            <label for="transaction_id" class="form-label text-sm">Transaksi Akta</label>
-                            <select name="transaction_id" id="transaction_id" class="form-select">
+                            <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta</label>
+                            <select id="akta_transaction_id" name="akta_transaction_id" class="form-select">
                                 <option value="" hidden>Pilih Transaksi</option>
                                 @foreach ($aktaTransaction as $akta)
                                     <option value="{{ $akta->id }}"
-                                        {{ old('transaction_id', $picDocument->transaction_id ?? '') == $akta->id ? 'selected' : '' }}>
-                                        {{ $akta->akta_type->type ?? '-' }} - {{ $akta->akta_number ?? '-' }}
+                                        {{ isset($picDocument) && $picDocument->transaction_type === 'akta' && $picDocument->transaction_id == $akta->id ? 'selected' : '' }}>
+                                        {{ $akta->akta_type->type }} - {{ $akta->akta_number }}
                                     </option>
                                 @endforeach
                             </select>
@@ -81,13 +83,14 @@
 
                         {{-- Relaas Transaction --}}
                         <div class="mb-3" id="relaas_section" style="display: none;">
-                            <label for="transaction_id" class="form-label text-sm">Transaksi PPAT</label>
-                            <select name="transaction_id" id="transaction_id" class="form-select">
+                            <label for="ppat_transaction_id" class="form-label text-sm">Transaksi PPAT</label>
+                            <select id="ppat_transaction_id" name="ppat_transaction_id" class="form-select">
                                 <option value="" hidden>Pilih Transaksi PPAT</option>
                                 @foreach ($relaasTransaction as $relaas)
                                     <option value="{{ $relaas->id }}"
-                                        {{ old('transaction_id', $picDocument->transaction_id ?? '') == $relaas->id ? 'selected' : '' }}>
-                                        {{ $relaas->akta_type->type ?? '-' }} - {{ $relaas->relaas_number ?? '-' }}
+                                        {{ isset($picDocument) && $picDocument->transaction_type === 'ppat' && $picDocument->transaction_id == $relaas->id ? 'selected' : '' }}>
+                                        {{ $relaas->akta_type->type }} - {{ $relaas->relaas_number }} -
+                                        {{ $relaas->title }}
                                     </option>
                                 @endforeach
                             </select>
@@ -138,26 +141,40 @@
         </div>
     </div>
 
-    {{-- JS untuk toggle --}}
-    @push('js')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const typeSelect = document.getElementById('transaction_type');
-                const aktaSection = document.getElementById('akta_section');
-                const relaasSection = document.getElementById('relaas_section');
 
-                function toggleSections() {
-                    const value = typeSelect.value;
-                    aktaSection.style.display = value === 'akta' ? 'block' : 'none';
-                    relaasSection.style.display = value === 'ppat' ? 'block' : 'none';
-                }
-
-                // Trigger pertama kali saat load (biar sesuai value old())
-                toggleSections();
-
-                // Ubah tampilan ketika select berubah
-                typeSelect.addEventListener('change', toggleSections);
-            });
-        </script>
-    @endpush
 @endsection
+
+{{-- JS untuk toggle --}}
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeSelect = document.getElementById('transaction_type');
+            const akta = document.getElementById('akta_transaction_id');
+            const ppat = document.getElementById('ppat_transaction_id');
+            const transactionId = document.getElementById('transaction_id');
+
+            const aktaSection = document.getElementById('akta_section');
+            const relaasSection = document.getElementById('relaas_section');
+
+            function toggleSections() {
+                const value = typeSelect.value;
+                aktaSection.style.display = value === 'akta' ? 'block' : 'none';
+                relaasSection.style.display = value === 'ppat' ? 'block' : 'none';
+            }
+
+            toggleSections();
+            typeSelect.addEventListener('change', toggleSections);
+
+            const form = document.getElementById("picDocumentForm");
+
+            form.addEventListener("submit", function() {
+                if (typeSelect.value === 'akta') {
+                    transactionId.value = akta.value || "";
+                } else if (typeSelect.value === 'ppat') {
+                    transactionId.value = ppat.value || "";
+                }
+            });
+
+        });
+    </script>
+@endpush

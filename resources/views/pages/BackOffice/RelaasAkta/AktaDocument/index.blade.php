@@ -11,7 +11,7 @@
                 <div class="card-header pb-0">
                     <h6>Dokumen Akta</h6>
                 </div>
-                <div class="card-body pt-1">
+                <div class="card-body pt-1 pb-0">
 
                     {{-- Form Pencarian --}}
                     <form method="GET" action="{{ route('relaas-documents.index') }}" class="mb-3" class="no-spinner">
@@ -26,9 +26,9 @@
                     @if ($relaasInfo)
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header bg-primary text-white">
-                                <h6 class="mb-0 text-white">Detail Relaas</h6>
+                                <h6 class="mb-0 text-white">Detail Transaksi Akta</h6>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body pb-2">
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <h6><strong>Kode Klien</strong></h6>
@@ -46,10 +46,10 @@
                                         <h6><strong>Klien</strong></h6>
                                         <p class="text-muted text-sm">{{ $relaasInfo->client->fullname ?? '-' }}</p>
                                     </div>
-                                    {{-- <div class="col-md-6">
+                                    <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Tipe Akta</strong></h6>
                                         <p class="text-muted text-sm">{{ $relaasInfo->akta_type->type ?? '-' }}</p>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="col-md-6">
                                         <p class="mb-1"><strong>Status</strong></p>
@@ -74,8 +74,9 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-end mb-2">
+                        <div class="mb-0">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5>Dokumen Akta</h5>
                                 <a href="{{ route('relaas-documents.create', $relaasInfo->id) }}"
                                     class="btn btn-primary btn-sm">+
                                     Tambah Dokumen</a>
@@ -83,14 +84,13 @@
 
                             <div class="table-responsive p-0">
                                 <table class="table table-hover mb-0">
-
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Nama Dokumen</th>
                                             <th>Tipe</th>
                                             <th>Tanggal Upload</th>
-                                            <th>File</th>
+                                            <th>File Dokumen Akta</th>
                                             {{-- <th>Status</th> --}}
                                             <th>Aksi</th>
                                         </tr>
@@ -98,32 +98,22 @@
                                     <tbody>
                                         @forelse($documents as $doc)
                                             <tr class="text-center text-sm">
-                                                <td>{{ $doc->firstItem() + $loop->index }}</td>
+                                                <td>{{ $documents->firstItem() + $loop->index }}</td>
                                                 <td>{{ $doc->name }}</td>
                                                 <td>{{ $doc->type ?? '-' }}</td>
-                                                <td>{{ $doc->uploaded_at ? $doc->uploaded_at->format('d-m-Y H:i') : '-' }}
+                                                <td>{{ $doc->uploaded_at ? $doc->uploaded_at->format('d F Y H:i:s') : '-' }}
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="text-center" width="10%">
                                                     @if ($doc->file_url)
                                                         <a href="{{ asset('storage/' . $doc->file_url) }}" target="_blank"
                                                             class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center mb-0">
-                                                            <i class="bi bi-eye me-1"></i> Lihat
+                                                            <i class="bi bi-image me-1"></i> Lihat Akta Dokumen
                                                         </a>
                                                     @else
                                                         <span class="text-muted">-</span>
                                                     @endif
                                                 </td>
-                                                {{-- <td>
-                                    <form action="{{ route('relaas-documents.toggleStatus', $doc->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        <button type="submit"
-                                            class="btn btn-sm {{ $doc->status ? 'btn-success' : 'btn-secondary' }}">
-                                            {{ $doc->status ? 'Aktif' : 'Nonaktif' }}
-                                        </button>
-                                    </form>
-                                </td> --}}
-                                                <td>
+                                                <td class="d-flex gap-1 justify-content-center">
                                                     <a href="{{ route('relaas-documents.edit', [$relaasInfo->id, $doc->id]) }}"
                                                         class="btn btn-info btn-sm mb-0">Edit</a>
                                                     <form action="{{ route('relaas-documents.destroy', $doc->id) }}"
@@ -142,6 +132,9 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                {{ $documents->appends(request()->query())->links() }}
                             </div>
                         </div>
                     @else

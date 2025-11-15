@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('notaris')->insert([
             [
+                'user_id' => null,
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'display_name' => 'John Doe',
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
                 'gender' => 'Laki-Laki'
             ],
             [
+                'user_id' => null,
                 'first_name' => 'Maria',
                 'last_name' => 'Santoso',
                 'display_name' => 'Maria Santoso',
@@ -43,6 +45,7 @@ class DatabaseSeeder extends Seeder
                 'gender' => 'Perempuan'
             ],
             [
+                'user_id' => null,
                 'first_name' => 'Ahmad',
                 'last_name' => 'Hakim',
                 'display_name' => 'Ahmad Hakim',
@@ -115,7 +118,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'user_id' => 1,
+                'user_id' => 2,
                 'plan_id' => 1,
                 'start_date' => now(),
                 'end_date' => now()->addMonth(),

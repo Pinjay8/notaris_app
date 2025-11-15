@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <form method="GET" action="{{ route('notary-letters.index') }}" class="d-flex gap-2 ms-auto me-4"
-                    style="max-width: 300px;" class="no-spinner">
+                    style="width: 500px; max-width: 100%;" class="no-spinner">
                     <input type="text" name="search" placeholder="Cari nomor surat..." value="{{ request('search') }}"
                         class="form-control">
                     <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
@@ -49,7 +49,7 @@
                                         <td>{{ $letter->type ?? '-' }}</td>
                                         <td>{{ $letter->recipient ?? '-' }}</td>
                                         <td>{{ $letter->subject ?? '-' }}</td>
-                                        <td>{{ $letter->date ? \Carbon\Carbon::parse($letter->date)->format('d-m-Y') : '-' }}
+                                        <td>{{ $letter->date ? \Carbon\Carbon::parse($letter->date)->format('d F Y') : '-' }}
                                         </td>
                                         <td>{{ $letter->attachment ?? '-' }}</td>
                                         <td>
@@ -76,7 +76,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center text-muted text-sm">Belum ada data surat
+                                        <td colspan="10" class="text-center text-muted text-sm">Belum ada data surat
                                             keluar.
                                         </td>
                                     </tr>

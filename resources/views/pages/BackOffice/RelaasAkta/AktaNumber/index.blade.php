@@ -111,7 +111,7 @@
 
                                             {{-- Tampilkan tombol edit hanya jika sudah ada data --}}
                                             @if ($aktaInfo->relaas_number)
-                                                <button type="button" id="editButton" class="btn btn-primary mb-0">
+                                                <button type="button" id="editButtons" class="btn btn-primary mb-0">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                             @endif
@@ -142,7 +142,7 @@
 @push('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const editButton = document.getElementById('editButton');
+            const editButton = document.getElementById('editButtons');
             const aktaNumberInput = document.getElementById('relaas_number');
 
             if (editButton) {

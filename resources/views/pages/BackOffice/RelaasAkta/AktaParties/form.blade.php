@@ -24,7 +24,7 @@
                         @endif
 
                         {{-- Klien --}}
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="client_code" class="form-label text-sm">Klien</label>
                             <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
@@ -35,7 +35,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         {{-- Nama --}}
                         <div class="mb-3">
@@ -53,7 +53,7 @@
                             <label for="role" class="form-label text-sm">Peran</label>
                             <input type="text" name="role" id="role"
                                 class="form-control @error('role') is-invalid @enderror"
-                                value="{{ old('role', $party->role ?? '') }}">
+                                value="{{ old('role', $party->role ?? '') }}" placeholder="Contoh: Pendiri, Penerima Kuasa">
                             @error('role')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -68,27 +68,29 @@
                             @enderror
                         </div>
 
+                        <div class="mb-3">
+                            <label for="id_type" class="form-label text-sm">Jenis Identitas</label>
+                            <input type="text" name="id_type" id="id_type"
+                                class="form-control @error('id_type') is-invalid @enderror"
+                                value="{{ old('id_type', $party->id_type ?? '') }}" placeholder="Contoh: KTP, SIM, dll">
+                            @error('id_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         {{-- Nomor Identitas --}}
                         <div class="mb-3">
-                            <label for="id_number" class="form-label text-sm">Nomor Identitas</label>
+                            <label for="id_number" class="form-label text-sm">No. Identitas</label>
                             <input type="text" name="id_number" id="id_number"
                                 class="form-control @error('id_number') is-invalid @enderror"
-                                value="{{ old('id_number', $party->id_number ?? '') }}">
+                                value="{{ old('id_number', $party->id_number ?? '') }}" placeholder="Contoh: Nomor KTP">
                             @error('id_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         {{-- Jenis Identitas --}}
-                        <div class="mb-3">
-                            <label for="id_type" class="form-label text-sm">Jenis Identitas</label>
-                            <input type="text" name="id_type" id="id_type"
-                                class="form-control @error('id_type') is-invalid @enderror"
-                                value="{{ old('id_type', $party->id_type ?? '') }}">
-                            @error('id_type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+
 
                         {{-- Catatan --}}
                         {{-- <div class="mb-3">

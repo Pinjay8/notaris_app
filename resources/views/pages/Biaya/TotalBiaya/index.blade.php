@@ -21,7 +21,7 @@
                     <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                 </form>
                 <hr>
-                <div class="card-body px-0 pt-0 pb-0">
+                <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
@@ -29,6 +29,7 @@
                                     <th>#</th>
                                     <th>Kode Pembayaran</th>
                                     <th>Klien</th>
+                                    <th>Kode Klien</th>
                                     <th>Kode Dokumen</th>
                                     <th>Total Biaya</th>
                                     <th>Jumlah Pembayaran</th>
@@ -43,6 +44,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $cost->payment_code }}</td>
                                         <td>{{ $cost->client->fullname }}</td>
+                                        <td>{{ $cost->client->client_code }}</td>
                                         <td>{{ $cost->picDocument->pic_document_code }}</td>
                                         <td>Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
                                         <td>Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
@@ -109,7 +111,7 @@
                                                                         <label
                                                                             class="form-label text-start w-100 mb-1">Notaris</label>
                                                                         <input type="text" class="form-control"
-                                                                            value="{{ $cost->notaris->name ?? '-' }}"
+                                                                            value="{{ $cost->notaris->display_name ?? '-' }}"
                                                                             readonly>
                                                                     </div>
                                                                     <div class="col-md-6">
@@ -241,8 +243,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center text-muted text-sm">Data Total Biaya tidak
-                                            ditemukan.
+                                        <td colspan="9" class="text-center text-muted text-sm">Belum ada data total biaya
                                         </td>
                                     </tr>
                                 @endforelse

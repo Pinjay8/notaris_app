@@ -23,7 +23,7 @@ class PicProcessRepository implements PicProcessRepositoryInterface
             $query->where('pic_document_id', $filters['pic_document_id']);
         }
 
-        return $query->latest()->get();
+        return $query->latest()->paginate(10);
     }
 
     public function find($id)

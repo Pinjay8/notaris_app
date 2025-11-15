@@ -25,7 +25,7 @@ class NotaryRelaasDocumentService
     {
         return NotaryRelaasDocument::where('relaas_id', $relaasId)
             ->orderBy('uploaded_at', 'desc')
-            ->get();
+            ->paginate(10);
     }
 
     /**

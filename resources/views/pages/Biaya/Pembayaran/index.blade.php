@@ -31,6 +31,7 @@
                             <table class="table table-bordered rounded-3 overflow-hidden shadow">
                                 <thead class="thead-light bg-light text-black">
                                     <th class="text-capitalize fw-bold text-black">Kode Pembayaran</th>
+                                    <th class="text-capitalize fw-bold text-black">Klien</th>
                                     <th class="text-capitalize">Total Biaya</th>
                                     <th class="text-capitalize">Telah Dibayar</th>
                                     <th class="text-capitalize">Kekurangan</th>
@@ -39,6 +40,7 @@
                                 </thead>
                                 <tbody class="text-center">
                                     <td class="text-sm">{{ $cost->payment_code }}</td>
+                                    <td class="text-sm">{{ $cost->client->fullname }}</td>
                                     <td class="text-sm">Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
                                     <td class="text-sm">Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
                                     <td class="text-sm">Rp

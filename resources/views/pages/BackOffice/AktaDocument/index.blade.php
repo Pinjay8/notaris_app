@@ -84,7 +84,7 @@
                                             <th>Nama Dokumen</th>
                                             <th>Tipe</th>
                                             <th>Tanggal Upload</th>
-                                            <th>File Dokumen</th>
+                                            <th>File Dokumen Akta</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -95,7 +95,7 @@
                                                 <td>{{ $doc->name }}</td>
                                                 <td>{{ $doc->type }}</td>
                                                 <td>
-                                                    {{ $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('d-m-Y H:i') : '-' }}
+                                                    {{ $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('d F Y H:i:s') : '-' }}
                                                 </td>
                                                 <td class="text-center">
                                                     @if ($doc->file_url)
@@ -103,7 +103,7 @@
                                                         <button type="button" class="btn btn-sm btn-outline-primary mb-0"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#imageModal{{ $doc->id }}">
-                                                            <i class="bi bi-image me-1"></i> Lihat Akta
+                                                            <i class="bi bi-image me-1"></i> Lihat Akta Dokumen
                                                         </button>
 
                                                         <!-- Modal -->
@@ -157,8 +157,6 @@
                                         @endforelse
                                     </tbody>
                                 </table>
-
-
                                 <div class="d-flex justify-content-end mt-3">
                                     {{ $documents->links() }}
                                 </div>

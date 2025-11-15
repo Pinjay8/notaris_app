@@ -23,82 +23,116 @@ class NotaryPaymenttController extends Controller
                 )
                 ->first();
 
-            if ($cost) {
-                notyf()->position('x', 'right')->position('y', 'top')
-                    ->success('Kode dokumen berhasil ditemukan');
-            } else {
-                notyf()->position('x', 'right')->position('y', 'top')
-                    ->info('Kode dokumen tidak ditemukan');
-            }
+            // if ($cost) {
+            //     notyf()->position('x', 'right')->position('y', 'top')
+            //         ->success('Kode dokumen berhasil ditemukan');
+            // } else {
+            //     notyf()->position('x', 'right')->position('y', 'top')
+            //         ->info('Kode dokumen tidak ditemukan');
+            // }
         }
 
         return view('pages.Biaya.Pembayaran.index', compact('cost'));
     }
 
+    // public function store(Request $request)
+    // {
+    //     $request->validate(
+    //         [
+    //             'payment_code'   => 'required',
+    //             'payment_type'   => 'required',
+    //             'amount'         => 'required',
+    //             'payment_date'   => 'required|date',
+    //             'payment_method' => 'required|string',
+    //             'payment_file'   => 'required|file',
+    //         ],
+    //         [
+    //             'payment_code.required'   => 'Kode pembayaran harus diisi.',
+    //             'payment_type.required'   => 'Tipe pembayaran harus diisi.',
+    //             'amount.required'         => 'Jumlah pembayaran harus diisi.',
+    //             'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
+    //             'payment_method.required' => 'Metode pembayaran harus diisi.',
+    //             'payment_file.required'   => 'File pembayaran harus diupload.',
+    //         ]
+    //     );
+
+    //     $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();
+
+
+    //     $amount = (float) str_replace('.', '', $request->amount);
+    //     // Simpan ke notary_payments
+    //     NotaryPayment::create([
+    //         'notaris_id'      => $cost->notaris_id,
+    //         'client_code'       => $cost->client_code,
+    //         'pic_document_id' => $cost->pic_document_id,
+    //         'payment_code'    => $cost->payment_code,
+    //         'payment_type'    => $request->payment_type,
+    //         'amount'          => $amount,
+    //         'payment_date'    => $request->payment_date,
+    //         'payment_method'  => $request->payment_method,
+    //         'payment_file'    => $request->file('payment_file')?->storeAs('documents', $request->file('payment_file')->getClientOriginalName()),
+    //         'note'            => $request->note,
+    //         'is_valid'        => false,
+    //     ]);
+
+
+    //     $cost->amount_paid = $cost->amount_paid ?? 0;
+
+    //     // Tambahkan nominal baru
+    //     $cost->amount_paid += $amount;
+
+    //     if ($cost->amount_paid > $cost->total_cost) {
+    //         notyf()->position('x', 'right')->position('y', 'top')->error('Jumlah pembayaran melebihi total biaya!');
+    //         return back()->withInput();
+    //     }
+
+    //     // Update status
+    //     if ($cost->amount_paid >= $cost->total_cost) {
+    //         $cost->payment_status = 'paid';
+    //     } elseif ($cost->amount_paid > 0) {
+    //         $cost->payment_status = 'partial';
+    //     } else {
+    //         $cost->payment_status = 'unpaid';
+    //     }
+
+    //     $cost->save();
+
+    //     notyf()->position('x', 'right')->position('y', 'top')->success('Pembayaran berhasil disimpan.');
+    //     return back();
+    // }
+
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'payment_code'   => 'required',
-                'payment_type'   => 'required',
-                'amount'         => 'required',
-                'payment_date'   => 'required|date',
-                'payment_method' => 'required|string',
-                'payment_file'   => 'required|file',
-            ],
-            [
-                'payment_code.required'   => 'Kode pembayaran harus diisi.',
-                'payment_type.required'   => 'Tipe pembayaran harus diisi.',
-                'amount.required'         => 'Jumlah pembayaran harus diisi.',
-                'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
-                'payment_method.required' => 'Metode pembayaran harus diisi.',
-                'payment_file.required'   => 'File pembayaran harus diupload.',
-            ]
-        );
+        $request->validate([
+            'payment_code'   => 'required',
+            'payment_type'   => 'required',
+            'amount'         => 'required',
+            'payment_date'   => 'required|date',
+            'payment_method' => 'required|string',
+            'payment_file'   => 'required|file',
+        ]);
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();
 
-
         $amount = (float) str_replace('.', '', $request->amount);
-        // Simpan ke notary_payments
+
+
         NotaryPayment::create([
-            'notaris_id'      => $cost->notaris_id,
-            'client_code'       => $cost->client_code,
-            'pic_document_id' => $cost->pic_document_id,
-            'payment_code'    => $cost->payment_code,
-            'payment_type'    => $request->payment_type,
-            'amount'          => $amount,
-            'payment_date'    => $request->payment_date,
-            'payment_method'  => $request->payment_method,
-            'payment_file'    => $request->file('payment_file')?->storeAs('documents', $request->file('payment_file')->getClientOriginalName()),
-            'note'            => $request->note,
-            'is_valid'        => false,
+            'notaris_id'       => $cost->notaris_id,
+            'client_code'      => $cost->client_code,
+            'pic_document_id'  => $cost->pic_document_id,
+            'payment_code'     => $cost->payment_code,
+            'payment_type'     => $request->payment_type,
+            'amount'           => $amount,
+            'payment_date'     => $request->payment_date,
+            'payment_method'   => $request->payment_method,
+            'payment_file'     => $request->file('payment_file')?->storeAs(
+                'documents',
+                $request->file('payment_file')->getClientOriginalName()
+            ),
+            'note'             => $request->note,
+            'is_valid'         => false,  // default: belum valid
         ]);
-
-
-        // Update notary_cost
-        // Bersihkan amount dari titik sebelum dipakai
-
-        $cost->amount_paid = $cost->amount_paid ?? 0;
-
-        // Tambahkan nominal baru
-        $cost->amount_paid += $amount;
-
-        if ($cost->amount_paid > $cost->total_cost) {
-            notyf()->position('x', 'right')->position('y', 'top')->error('Jumlah pembayaran melebihi total biaya!');
-            return back()->withInput();
-        }
-
-        // Update status
-        if ($cost->amount_paid >= $cost->total_cost) {
-            $cost->payment_status = 'paid';
-        } elseif ($cost->amount_paid > 0) {
-            $cost->payment_status = 'partial';
-        } else {
-            $cost->payment_status = 'unpaid';
-        }
-
-        $cost->save();
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Pembayaran berhasil disimpan.');
         return back();
@@ -132,9 +166,42 @@ class NotaryPaymenttController extends Controller
             ->header('Content-Type', 'application/pdf');
     }
 
+    // public function valid($id)
+    // {
+    //     $payment = NotaryPayment::findOrFail($id);
+    //     $payment->is_valid = true;
+    //     $payment->save();
+
+    //     notyf()->position('x', 'right')->position('y', 'top')->success('Pembayaran berhasil divalidasi.');
+    //     return back();
+    // }
+
     public function valid($id)
     {
         $payment = NotaryPayment::findOrFail($id);
+        $cost    = NotaryCost::where('payment_code', $payment->payment_code)->firstOrFail();
+
+        // Jika sudah valid jangan proses lagi
+        if ($payment->is_valid) {
+            notyf()->info('Pembayaran sudah divalidasi.');
+            return back();
+        }
+
+        // Tambahkan amount ke amount_paid
+        $cost->amount_paid += $payment->amount;
+
+        // Update status pembayaran
+        if ($cost->amount_paid >= $cost->total_cost) {
+            $cost->payment_status = 'paid';
+        } elseif ($cost->amount_paid > 0) {
+            $cost->payment_status = 'partial';
+        } else {
+            $cost->payment_status = 'unpaid';
+        }
+
+        $cost->save();
+
+        // Update payment
         $payment->is_valid = true;
         $payment->save();
 

@@ -33,7 +33,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="type" class="form-label text-sm">Tipe</label>
+                            <label for="type" class="form-label text-sm">Tipe Dokumen</label>
                             <input type="text" name="type" id="type"
                                 class="form-control @error('type') is-invalid @enderror"
                                 value="{{ old('type', $document->type ?? '') }}"

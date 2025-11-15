@@ -51,9 +51,9 @@
                                         <p class="text-muted text-sm">{{ $relaasInfo->first()->akta_type->type ?? '-' }}</p>
                                     </div>
                                     <div class="col-md-6">
-                                        <p class="mb-1"><strong>Status</strong></p>
+                                        <h6 class="mb-1"><strong>Status</strong></h6>
                                         <span
-                                            class="badge
+                                            class="badge text-capitalize
                                     @switch($relaasInfo->first()->status)
                                         @case('draft') bg-secondary @break
                                         @case('diproses') bg-warning @break

@@ -22,15 +22,15 @@ return new class extends Migration
                 ->onDelete('set null');
 
             $table->foreignId('pic_document_id')->constrained('pic_documents')->onDelete('cascade');
-            $table->string('payment_code');
-            $table->double('product_cost');
+            $table->string('payment_code')->nullable();
+            $table->double('product_cost')->nullable();
             $table->double('admin_cost')->nullable();
             $table->double('other_cost')->nullable();
-            $table->double('total_cost');
+            $table->double('total_cost')->nullable();
             $table->double('amount_paid')->nullable();
-            $table->string('payment_status');
+            $table->string('payment_status')->nullable();
             $table->date('paid_date')->nullable();
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });

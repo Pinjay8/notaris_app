@@ -3,7 +3,7 @@
 @section('title', 'PIC Staff')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'PIC Staff'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PIC / PIC Staff'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="card mb-4">

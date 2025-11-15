@@ -14,10 +14,9 @@ class PicDocuments extends Model
 
     protected $fillable = [
         'notaris_id',
-        'pic_id',
         'pic_document_code',
+        'pic_id',
         'client_code',
-        'registration_code',
         'transaction_id',
         'transaction_type',
         'received_date',

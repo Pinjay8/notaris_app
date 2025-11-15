@@ -35,18 +35,25 @@ class NotaryCostController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'client_code' => 'required',
-            'pic_document_id' => 'required',
-            'product_cost' => 'required',
-            'admin_cost' => 'nullable',
-            'other_cost' => 'nullable',
-            'amount_paid' => 'nullable',
-            'payment_status' => 'required|string',
-            'paid_date' => 'nullable|date',
-            'due_date' => 'required|date',
-            'note' => 'nullable',
-        ]);
+        $validated = $request->validate(
+            [
+                'client_code' => 'required',
+                'pic_document_id' => 'required',
+                'product_cost' => 'required',
+                'admin_cost' => 'nullable',
+                'other_cost' => 'nullable',
+                'amount_paid' => 'nullable',
+                'payment_status' => 'required|string',
+                'paid_date' => 'nullable|date',
+                'due_date' => 'nullable|date',
+                'note' => 'nullable',
+            ],
+            [
+                'client_code.required' => 'Kode Klien harus diisi.',
+                'pic_document_id.required' => 'PIC Dokumen harus diisi.',
+                'payment_status.required' => 'Status Pembayaran harus diisi.',
+            ]
+        );
 
         // Ambil tanggal hari ini (format: 20251112)
         $today = now()->format('Ymd');

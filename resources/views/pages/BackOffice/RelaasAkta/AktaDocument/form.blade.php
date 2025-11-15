@@ -32,14 +32,15 @@
                         <div class="mb-3">
                             <label class="form-label text-sm">Tipe Dokumen</label>
                             <input type="text" name="type" class="form-control @error('type') is-invalid @enderror"
-                                value="{{ old('type', $doc->type ?? '') }}">
+                                value="{{ old('type', $doc->type ?? '') }}"
+                                placeholder="Contoh: Draft, Final, Dokumen Pendukung">
                             @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">File</label>
+                            <label class="form-label text-sm">File Akta Dokumen</label>
                             <input type="file" name="file" class="form-control">
                             @if ($doc && $doc->file_url)
                                 <img src="{{ asset('storage/' . $doc->file_url) }}" class="img-thumbnail mt-2"
@@ -62,8 +63,8 @@
 
 
                         <a href="{{ route('relaas-documents.index', ['search' => $relaas->client_code]) }}"
-                            class="btn btn-secondary btn-sm ">Batal</a>
-                        <button type="submit" class="btn btn-primary btn-sm">
+                            class="btn btn-secondary  ">Batal</a>
+                        <button type="submit" class="btn btn-primary ">
                             {{ $doc ? 'Ubah' : 'Simpan' }}
                         </button>
 

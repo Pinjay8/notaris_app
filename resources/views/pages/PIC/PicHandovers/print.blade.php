@@ -113,27 +113,27 @@
             {{-- Contoh kalau mau tampilkan list detail dokumen terkait --}}
             <tr style="text-align: center">
                 <td>1</td>
-                <td>{{ $handover->picDocument->document_type ?? '-' }} ({{ $handover->picDocument->document_number ??
+                <td style="text-transform: capitalize">{{ $handover->picDocument->transaction_type ?? '-' }}
                     '-' }})</td>
                 @php
-                $badgeColors = [
-                'delivered' => 'primary', // biru
-                'received' => 'info', // biru muda
-                'process' => 'warning', // kuning/oranye
-                'completed' => 'success', // hijau
-                ];
+                    $badgeColors = [
+                        'delivered' => 'primary', // biru
+                        'received' => 'info', // biru muda
+                        'process' => 'warning', // kuning/oranye
+                        'completed' => 'success', // hijau
+                    ];
 
-                $statusText = [
-                'delivered' => 'Dikirim',
-                'received' => 'Diterima',
-                'process' => 'Proses',
-                'completed' => 'Selesai',
-                ];
+                    $statusText = [
+                        'delivered' => 'Dikirim',
+                        'received' => 'Diterima',
+                        'process' => 'Proses',
+                        'completed' => 'Selesai',
+                    ];
                 @endphp
 
                 <td>
                     <span class="badge bg-{{ $badgeColors[$handover->picDocument->status] ?? 'secondary' }}">
-                        {{ $statusText[$handover->picDocument->status] ?? $handover->picDocument->status ?? '-' }}
+                        {{ $statusText[$handover->picDocument->status] ?? ($handover->picDocument->status ?? '-') }}
                     </span>
                 </td>
             </tr>

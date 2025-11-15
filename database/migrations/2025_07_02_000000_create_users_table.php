@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
-            $table->string('signup_at')->nullable();
-            $table->string('active_at')->nullable();
+            $table->dateTime('signup_at')->nullable();
+            $table->dateTime('active_at')->nullable();
             $table->string('status')->nullable();
             $table->rememberToken();
             $table->softDeletes();

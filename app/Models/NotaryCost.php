@@ -26,7 +26,7 @@ class NotaryCost extends Model
 
     public function notaris()
     {
-        return $this->belongsTo(Notaris::class);
+        return $this->belongsTo(Notaris::class, 'notaris_id');
     }
 
     public function client()

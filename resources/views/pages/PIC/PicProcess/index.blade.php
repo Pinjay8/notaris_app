@@ -45,12 +45,9 @@
                                         </div>
                                         <div class="col-md-6">
                                             <h6 class="mb-1">Tipe Dokumen</h6>
-                                            <p class="text-muted text-sm text-capitalize">{{ $doc->transaction_type ?? '-' }}</p>
+                                            <p class="text-muted text-sm text-capitalize">
+                                                {{ $doc->transaction_type ?? '-' }}</p>
                                         </div>
-                                        {{-- <div class="col-md-6">
-                                            <h6 class="mb-1">Nomor Dokumen</h6>
-                                            <p class="text-muted text-sm">{{ $doc->document_number ?? '-' }}</p>
-                                        </div> --}}
                                         <div class="col-md-6">
                                             <h6 class="mb-1">Tanggal Diterima</h6>
                                             <p class="text-muted text-sm">
@@ -69,7 +66,7 @@
                                                 $statusText = [
                                                     'delivered' => 'Dikirim',
                                                     'completed' => 'Selesai',
-                                                    'process' => 'Proses',
+                                                    'process' => 'Diroses',
                                                     'received' => 'Diterima',
                                                 ];
                                             @endphp
@@ -157,6 +154,10 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                                {{-- pagination --}}
+                                <div class="d-flex justify-content-end mt-3">
+                                    {{ $processes->appends(request()->query())->links() }}
+                                </div>
                             @else
                                 <div class="text-center text-muted text-sm p-4">
                                     Masukkan PIC Kode Dokumen untuk melihat daftar proses pengurusan.

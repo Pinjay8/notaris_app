@@ -41,7 +41,7 @@
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->client_code }}"
                                             {{ old('client_code', $notaryConsultation->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                            {{ $client->fullname }}
+                                            {{ $client->fullname }} - {{ $client->client_code }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -65,7 +65,7 @@
                                     <option value="" hidden>Pilih Status</option>
                                     <option value="progress"
                                         {{ old('status', $notaryConsultation->status ?? '') == 'progress' ? 'selected' : '' }}>
-                                        Proses</option>
+                                        Sedang Diproses</option>
                                     <option value="done"
                                         {{ old('status', $notaryConsultation->status ?? '') == 'done' ? 'selected' : '' }}>
                                         Selesai</option>

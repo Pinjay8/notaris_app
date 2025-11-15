@@ -81,7 +81,7 @@ class NotaryRelaasDocumentController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil ditambahkan.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->registration_code]);
+        return redirect()->route('relaas-documents.index', ['search' => $relaas->client_code]);
     }
 
     public function update(Request $request, $relaasId, $id)

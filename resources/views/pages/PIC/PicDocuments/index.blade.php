@@ -3,12 +3,11 @@
 @section('title', 'Pic Dokumen')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'PIC Dokumen'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PIC / PIC Dokumen'])
 
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-                {{-- Card Utama --}}
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-4">
                         <h5 class="mb-0">PIC Dokumen</h5>
@@ -17,14 +16,18 @@
                         </a>
                     </div>
                     <form method="GET" action="{{ route('pic_documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
-                        style="max-width: 500px;" class="no-spinner">
+                        style="max-width: 600px; width: 100%" class="no-spinner">
                         <input type="text" name="search" class="form-control form-control-sm"
-                            placeholder="Cari Kode Klien / PIC" value="{{ request('search') }}">
+                            placeholder="Cari Kode Klien / Nama PIC" value="{{ request('search') }}">
                         <select name="status" class="form-select form-select-sm">
                             <option value="">Semua Status</option>
-                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                            <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Dikirim
                             </option>
-                            <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai
+                            <option value="process" {{ request('status') == 'process' ? 'selected' : '' }}>Diproses
+                            </option>
+                            <option value="received" {{ request('status') == 'received' ? 'selected' : '' }}>Diterima
+                            </option>
+                            <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai
                             </option>
                         </select>
                         <button class="btn btn-sm btn-primary mb-0" type="submit">Cari</button>
@@ -32,17 +35,14 @@
                     <hr>
                     <div class="card-body px-0 pt-0 pb-0">
                         <div class="table-responsive p-0">
-
-
                             <table class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
-                                        <th>Kode PIC Dokumen</th>
-                                        <th>PIC</th>
+                                        <th>#</th>
+                                        <th>Kode Dokumen</th>
+                                        <th>PIC Staff</th>
                                         <th>Klien</th>
                                         <th>Tipe Dokumen</th>
-                                        {{-- <th>Nomor Dokumen</th> --}}
                                         <th>Tanggal Diterima</th>
                                         <th>Status</th>
                                         <th>
@@ -57,25 +57,21 @@
                                             <td>{{ $doc->pic->full_name ?? '-' }}</td>
                                             <td>{{ $doc->client->fullname ?? '-' }}</td>
                                             <td class="text-capitalize">{{ $doc->transaction_type }}</td>
-                                            {{-- <td>{{ $doc->aktaTransaction->relaas_number ?? '-' }}</td> --}}
-                                            {{-- <td></td> --}}
                                             <td>
                                                 {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->translatedFormat('d F Y H:i') : '-' }}
                                             </td>
-                                            {{-- Badge Status --}}
-                                            {{-- Define badge colors and status text --}}
                                             @php
                                                 $badgeColors = [
-                                                    'delivered' => 'primary', // biru
-                                                    'completed' => 'success', // hijau
-                                                    'process' => 'warning', // kuning
-                                                    'received' => 'info', // biru muda
+                                                    'delivered' => 'primary',
+                                                    'completed' => 'success',
+                                                    'process' => 'warning',
+                                                    'received' => 'info',
                                                 ];
 
                                                 $statusText = [
                                                     'delivered' => 'Dikirim',
                                                     'completed' => 'Selesai',
-                                                    'process' => 'Proses',
+                                                    'process' => 'Diproses',
                                                     'received' => 'Diterima',
                                                 ];
                                             @endphp

@@ -8,16 +8,33 @@ use Illuminate\Database\Eloquent\Collection;
 
 class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepositoryInterface
 {
+    // public function all(array $filters = [], int $perPage = 10)
+    // {
+    //     $query = NotaryAktaTransaction::with(['client', 'akta_type']);
+
+    //     if (!empty($filters['status'])) {
+    //         $query->where('status', $filters['status']);
+    //     } else {
+    //         $query->where('status', 'draft');
+    //     }
+
+    //     if (!empty($filters['client_code'])) {
+    //         $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
+    //     }
+
+    //     return $query->latest()->paginate($perPage);
+    // }
+
     public function all(array $filters = [], int $perPage = 10)
     {
         $query = NotaryAktaTransaction::with(['client', 'akta_type']);
 
-        if (!empty($filters['status'])) {
+        // Filter status: hanya jika ada value dan tidak kosong
+        if (isset($filters['status']) && $filters['status'] !== '') {
             $query->where('status', $filters['status']);
-        } else {
-            $query->where('status', 'draft');
         }
 
+        // Filter client code
         if (!empty($filters['client_code'])) {
             $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
         }

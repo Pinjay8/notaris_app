@@ -27,25 +27,26 @@
                         <input type="hidden" name="akta_transaction_id"
                             value="{{ old('akta_transaction_id', $transaction->id) }}">
                         {{-- hidden untuk client_id --}}
-                        <input type="hidden" name="client_id" value="{{ old('client_id', $transaction->client_id) }}">
+                        <input type="hidden" name="client_code"
+                            value="{{ old('client_code', $transaction->client_code) }}">
                         {{-- hidden untuk client_code --}}
                         <input type="hidden" name="client_code"
                             value="{{ old('client_code', $transaction->client_code) }}">
                         {{-- hidden notaris --}}
                         <input type="hidden" name="notaris_id" value="{{ old('notaris_id', $transaction->notaris_id) }}">
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="client_code" class="form-label text-sm">Klien</label>
                             <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ isset($party) && $party->client_code == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }}
+                                        {{ $client->fullname }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label class="form-label text-sm">Nama</label>
@@ -59,7 +60,7 @@
                         <div class="mb-3">
                             <label class="form-label text-sm">Peran</label>
                             <input type="text" name="role" class="form-control"
-                                value="{{ old('role', $aktaParty->role ?? '') }}">
+                                value="{{ old('role', $aktaParty->role ?? '') }}" placeholder="Contoh: Pendiri, Penerima Kuasa">
                             @error('role')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
@@ -75,22 +76,25 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">No. Identitas</label>
-                            <input type="text" name="id_number" class="form-control"
-                                value="{{ old('id_number', $aktaParty->id_number ?? '') }}">
-                            @error('id_number')
+                            <label class="form-label text-sm">Tipe Identitas</label>
+                            <input type="text" name="id_type" class="form-control"
+                                value="{{ old('id_type', $aktaParty->id_type ?? '') }}" placeholder="Contoh: KTP, SIM, dll">
+                            @error('id_type')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">Tipe Identitas</label>
-                            <input type="text" name="id_type" class="form-control"
-                                value="{{ old('id_type', $aktaParty->id_type ?? '') }}">
-                            @error('id_type')
+                            <label class="form-label text-sm">No. Identitas</label>
+                            <input type="text" name="id_number" class="form-control"
+                                value="{{ old('id_number', $aktaParty->id_number ?? '') }}"
+                                placeholder="Contoh: Nomor KTP">
+                            @error('id_number')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
+
 
                         {{-- <div class="mb-3">
                             <label class="form-label text-sm">Catatan</label>

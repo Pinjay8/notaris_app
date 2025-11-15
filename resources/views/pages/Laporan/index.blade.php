@@ -55,11 +55,11 @@
                                     <th>#</th>
                                     <th>Kode Pembayaran</th>
                                     <th>Nama Klien</th>
-                                    <th>Tanggal Pelunasan</th>
+                                    <th>Tanggal Pembayaran</th>
                                     <th>Total Biaya</th>
                                     <th>Total Pembayaran</th>
                                     <th>Piutang</th>
-                                    <th>Status</th>
+                                    <th>Status Pembayaran</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,25 +71,23 @@
                                         <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') : '-' }}
                                         </td>
                                         <td>Rp
-                                            {{ number_format($payment->total_cost ?? 0, 0, ',', '.') }}
+                                            {{ number_format($payment->cost->total_cost ?? 0, 0, ',', '.') }}
                                         </td>
-                                        <td>Rp {{ number_format($payment->amount_paid, 0, ',', '.') }}</td>
-                                        <td>Rp
-                                            {{ number_format($payment->total_cost - $payment->amount_paid, 0, ',', '.') }}
-                                        </td>
+                                        <td>Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($payment->cost->total_cost - $payment->amount, 0, ',', '.') }}</td>
                                         <td>
                                             @php
-                                                $status = $payment->payment_status;
+                                                $status = $payment->cost->payment_status;
                                                 $badgeColor = match ($status) {
                                                     'full' => 'success',
                                                     'partial' => 'warning',
-                                                    'dp' => 'info',
+                                                    'unpaid' => 'info',
                                                     default => 'secondary',
                                                 };
                                                 $statusText = match ($status) {
                                                     'full' => 'Lunas',
                                                     'partial' => 'Bayar sebagian',
-                                                    'dp' => 'DP',
+                                                    'unpaid' => 'Belum Dibayar',
                                                     default => $status,
                                                 };
                                             @endphp

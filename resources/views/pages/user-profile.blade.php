@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label text-sm">Tanggal Pendaftaran</label>
                                         <input class="form-control" type="text" name="signup_at"
-                                            value="{{ $user->signup_at ? \Carbon\Carbon::parse($user->signup_at)->format('d-m-Y') : '' }}"
+                                            value="{{ $user->signup_at ? \Carbon\Carbon::parse($user->signup_at)->format('d F Y H:i:s') : '' }}"
                                             disabled>
                                     </div>
                                 </div>
@@ -133,16 +133,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label text-sm">Waktu Aktif</label>
                                         <input class="form-control" type="text" name="active_at"
-                                            value="{{ $user->active_at ? \Carbon\Carbon::parse($user->active_at)->format('d-m-Y H:i:s') : '' }}"
+                                            value="{{ $user->active_at ? \Carbon\Carbon::parse($user->active_at)->format('d F Y H:i:s') : '' }}"
                                             disabled>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label text-sm">
-                                            Waktu Aktif Berakhir</label>
-                                        <input type="text" class="form-control" id="active_at" name="active_at"
-                                            value="" disabled>
                                     </div>
                                 </div>
                             </div>

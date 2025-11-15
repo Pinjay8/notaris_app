@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>{{ isset($data) ? 'Edit Logs Akta' : 'Tambah  Log Akta' }}</h6>
+                    <h6>{{ isset($data) ? 'Edit Logs Akta' : 'Tambah  Logs Akta' }}</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
@@ -28,7 +28,7 @@
                                 @foreach ($clients as $client)
                                     <option value="{{ $client->client_code }}"
                                         {{ isset($data) && $data->client_code == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }}
+                                        {{ $client->fullname }} - {{ $client->client_code }}
                                     </option>
                                 @endforeach
                             </select>
@@ -44,8 +44,8 @@
                                 @foreach ($relaasAktas as $ra)
                                     <option value="{{ $ra->id }}"
                                         {{ old('relaas_id', $data->relaas_id ?? '') == $ra->id ? 'selected' : '' }}>
-                                        {{ $ra->client_code }} - {{ $ra->client->fullname }}
-                                        ({{ $ra->notaris->display_name }})
+                                        {{ $ra->client_code }}
+                                        {{-- ({{ $ra->notaris->display_name }}) --}}
                                         - {{ $ra->title }}
                                     </option>
                                 @endforeach
