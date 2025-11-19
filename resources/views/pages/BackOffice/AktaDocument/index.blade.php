@@ -102,42 +102,59 @@
                                                         <!-- Tombol buka modal -->
                                                         <button type="button" class="btn btn-sm btn-outline-primary mb-0"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#imageModal{{ $doc->id }}">
-                                                            <i class="bi bi-image me-1"></i> Lihat Akta Dokumen
+                                                            data-bs-target="#fileModal{{ $doc->id }}">
+                                                            <i class="bi bi-file-earmark me-1"></i> Lihat Akta Dokumen
                                                         </button>
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="imageModal{{ $doc->id }}"
+                                                        <div class="modal fade" id="fileModal{{ $doc->id }}"
                                                             tabindex="-1"
-                                                            aria-labelledby="imageModalLabel{{ $doc->id }}"
+                                                            aria-labelledby="fileModalLabel{{ $doc->id }}"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header py-2">
-                                                                        <h6 class="modal-title"
-                                                                            id="imageModalLabel{{ $doc->id }}">File
-                                                                            Dokumen Akta
-                                                                        </h6>
+                                                                        <h5 class="modal-title"
+                                                                            id="fileModalLabel{{ $doc->id }}">
+                                                                            File Dokumen Akta
+                                                                        </h5>
                                                                         <button type="button"
                                                                             class="btn-close btn-close-white"
                                                                             data-bs-dismiss="modal"
                                                                             aria-label="Close"></button>
                                                                     </div>
-                                                                    <div
-                                                                        class="modal-body text-center d-flex justify-content-center">
-                                                                        <img src="{{ asset('storage/' . $doc->file_url) }}"
-                                                                            alt="Dokumen"
-                                                                            class="img-fluid rounded shadow-sm"
-                                                                            style="max-height: 100%; max-width: 100%; object-fit: contain;">
+
+                                                                    <div class="modal-body text-center">
+
+                                                                        {{-- Jika FILE IMAGE --}}
+                                                                        @if ($doc->file_type === 'svg' || $doc->file_type === 'png' || $doc->file_type === 'jpg' || $doc->file_type === 'jpeg')
+                                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                                style="min-height: 400px;">
+                                                                                <img src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                                    alt="Dokumen"
+                                                                                    class="img-fluid rounded shadow-sm"
+                                                                                    style="max-height: 90vh; object-fit: contain;">
+                                                                            </div>
+
+                                                                            {{-- Jika FILE PDF --}}
+                                                                        @elseif ($doc->file_type === 'pdf')
+                                                                            <embed
+                                                                                src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                                type="application/pdf" width="100%"
+                                                                                height="600px" />
+                                                                        @else
+                                                                            <p class="text-muted">File tidak dapat
+                                                                                ditampilkan.</p>
+                                                                        @endif
+
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     @else
-                                                        <span class="badge bg-secondary">Tidak Ada Gambar</span>
+                                                        <span class="badge bg-secondary">Tidak Ada File</span>
                                                     @endif
                                                 </td>
-
                                                 <td>
                                                     <a href="{{ route('akta-documents.edit', $doc->id) }}"
                                                         class="btn btn-info btn-sm mb-0">Edit</a>

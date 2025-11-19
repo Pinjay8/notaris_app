@@ -50,12 +50,6 @@
                                         <td>
                                             {{ $notaryConsultations->firstItem() + $loop->index }}
                                         </td>
-                                        {{-- <td>
-                                    <p class="text-sm mb-0  text-center"> {{
-                                        $notaryconsultation->notaris->display_name
-                                        }}
-                                    </p>
-                                </td> --}}
                                         <td>
                                             <p class="text-sm mb-0  text-center">{{ $notaryconsultation->client->fullname }}
                                             </p>
@@ -94,12 +88,6 @@
                                                 Edit
                                                 </i>
                                             </a>
-                                            {{-- get product by consultation --}}
-                                            {{-- <a href="{{ route('consultation.detail', $notaryconsultation->id) }}"
-                                        class="btn btn-warning btn-xs mb-0">
-                                        <i class="fa-solid fa-list" style="font-size: 14px">
-                                        </i>
-                                    </a> --}}
                                         </td>
                                     </tr>
                                 @empty

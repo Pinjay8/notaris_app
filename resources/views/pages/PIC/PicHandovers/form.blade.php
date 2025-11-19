@@ -4,56 +4,60 @@
 
 
 @section('content')
-@include('layouts.navbars.auth.topnav', ['title' => 'PIC / Serah Terima Dokumen'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PIC / Serah Terima Dokumen'])
 
-<div class="row mt-4 mx-4">
-    <div class="col-md-12 mx-auto">
-        <div class="card">
-            <div class="card-header pb-0">
-                <h5>Serah Terima Dokumen</h5>
-            </div>
-            <hr>
-            <div class="card-body pt-0">
-                <form method="POST" action="{{ route('pic_handovers.store') }}" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label text-sm">Dokumen</label>
-                        <select name="pic_document_id" class="form-select">
-                            <option value="" hidden>Pilih Dokumen</option>
-                            @foreach ($picDocuments as $doc)
-                            <option value="{{ $doc->id }}">{{ $doc->pic_document_code }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm">Tanggal Serah Terima</label>
-                        <input type="date" name="handover_date" class="form-control"
-                            value="{{ old('handover_date', now()->toDateString()) }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm">Nama Penerima</label>
-                        <input type="text" name="recipient_name" class="form-control"
-                            value="{{ old('recipient_name') }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm">Kontak Penerima</label>
-                        <input type="text" name="recipient_contact" class="form-control"
-                            value="{{ old('recipient_contact') }}">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm">Catatan</label>
-                        <textarea name="note" class="form-control">{{ old('note') }}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm">File (Opsional)</label>
-                        <input type="file" name="file_path" class="form-control">
-                    </div>
+    <div class="row mt-4 mx-4">
+        <div class="col-md-12 mx-auto">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>Serah Terima Dokumen</h5>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                    <form method="POST" action="{{ route('pic_handovers.store') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Dokumen</label>
+                            <select name="pic_document_id" class="form-select">
+                                <option value="" hidden>Pilih Dokumen</option>
+                                @foreach ($picDocuments as $doc)
+                                    <option value="{{ $doc->id }}" class="text-capitalize">
+                                        {{ $doc->pic_document_code }} -
+                                        {{ $doc->transaction_type }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Tanggal Serah Terima</label>
+                            <input type="date" name="handover_date" class="form-control"
+                                value="{{ old('handover_date', now()->toDateString()) }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Nama Penerima</label>
+                            <input type="text" name="recipient_name" class="form-control"
+                                value="{{ old('recipient_name') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Kontak Penerima</label>
+                            <input type="text" name="recipient_contact" class="form-control"
+                                value="{{ old('recipient_contact') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Catatan</label>
+                            <textarea name="note" class="form-control">{{ old('note') }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-sm">File Serah Terima Dokumen (Opsional)</label>
+                            <input type="file" name="file_path" class="form-control">
+                            {{-- maximal 1mb --}}
+                            <div class="form-text">Maksimal File 1MB</div>
+                        </div>
 
-                    <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>
-                    <button class="btn btn-primary">Simpan</button>
-                </form>
+                        <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>
+                        <button class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

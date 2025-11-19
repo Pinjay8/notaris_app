@@ -40,7 +40,7 @@ class PicHandoverController extends Controller
             'recipient_name'  => 'required|string',
             'recipient_contact' => 'required|string',
             'note'            => 'nullable|string',
-            'file_path'       => 'nullable|file|mimes:pdf,jpg,png|max:5000',
+            'file_path'       => 'nullable|file|mimes:pdf,jpg,png,png|max:1024',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
@@ -51,7 +51,7 @@ class PicHandoverController extends Controller
 
         $this->service->createHandover($validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Serah terima berhasil dicatat.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Serah terima berhasil ditambahkan.');
         return redirect()->route('pic_handovers.index');
     }
 

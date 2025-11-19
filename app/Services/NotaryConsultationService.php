@@ -31,9 +31,6 @@ class NotaryConsultationService
     public function create(array $data): NotaryConsultation
     {
         $validated = $this->validate($data);
-        // if (!isset($data['registration_code']) && isset($data['notaris_id'])) {
-        //     $data['registration_code'] = $this->generateRegistrationCode($data['notaris_id'], $data['client_id']);
-        // }
         return $this->notaryRepository->create($data);
     }
 
@@ -48,20 +45,20 @@ class NotaryConsultationService
         return $this->notaryRepository->update($id, $validated);
     }
 
-    public function generateRegistrationCode(int $notarisId, int $clientId): string
-    {
-        $today = Carbon::now()->format('Ymd');
+    // public function generateRegistrationCode(int $notarisId, int $clientId): string
+    // {
+    //     $today = Carbon::now()->format('Ymd');
 
-        // Hitung jumlah konsultasi notaris ini hari ini
-        $countToday = NotaryConsultation::where('notaris_id', $notarisId)
-            ->where('client_code', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+    //     // Hitung jumlah konsultasi notaris ini hari ini
+    //     $countToday = NotaryConsultation::where('notaris_id', $notarisId)
+    //         ->where('client_code', $clientId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->count();
 
-        $countToday += 1; // untuk konsultasi baru ini
+    //     $countToday += 1; // untuk konsultasi baru ini
 
-        return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    }
+    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    // }
 
     public function validate(array $data, $id = null)
     {
@@ -71,14 +68,14 @@ class NotaryConsultationService
             'status' => 'nullable|in:progress,done',
             // 'registration_code' => 'nullable|string|max:50',
             'client_code' => 'required',
-            'notaris_id' => 'required',
+            // 'notaris_id' => 'required',
         ];
 
         $messages = [
             'subject.required' => 'Subjek konsultasi harus diisi.',
             'status.in' => 'Status tidak valid.',
             'client_code.required' => 'Klien harus dipilih.',
-            'notaris_id.required' => 'Notaris tidak valid.',
+            // 'notaris_id.required' => 'Notaris tidak valid.',
         ];
 
         $validator = Validator::make($data, $rules, $messages);

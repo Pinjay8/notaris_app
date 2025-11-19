@@ -40,11 +40,23 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">File Akta Dokumen</label>
-                            <input type="file" name="file" class="form-control">
+                            <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
+                            <input type="file" name="file_url" id="file_url"
+                                class="form-control @error('file_url') is-invalid @enderror">
+                            <small class="text-muted">Ukuran maksimal 1 MB</small>
+
+                            @error('file_url')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+
                             @if ($doc && $doc->file_url)
-                                <img src="{{ asset('storage/' . $doc->file_url) }}" class="img-thumbnail mt-2"
-                                    width="100" />
+                                <br>
+                                <a href="{{ asset('storage/' . $doc->file_url) }}" target="_blank"
+                                    class="btn btn-outline-primary btn-sm mt-2 mb-0">
+                                    Lihat File Akta Dokumen
+                                </a>
                             @endif
                         </div>
 
@@ -52,7 +64,7 @@
                             <label for="uploaded_at" class="form-label text-sm">Tanggal Upload</label>
                             <input type="datetime-local" name="uploaded_at" id="uploaded_at"
                                 class="form-control @error('uploaded_at') is-invalid @enderror"
-                                value="{{ old('uploaded_at', isset($document) && $document->uploaded_at ? \Carbon\Carbon::parse($document->uploaded_at)->format('Y-m-d\TH:i') : '') }}">
+                                value="{{ old('uploaded_at', isset($doc) && $doc->uploaded_at ? \Carbon\Carbon::parse($doc->uploaded_at)->format('Y-m-d\TH:i') : '') }}">
 
                             @error('uploaded_at')
                                 <div class="invalid-feedback">

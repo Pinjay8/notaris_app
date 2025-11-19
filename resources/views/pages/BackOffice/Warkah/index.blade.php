@@ -16,8 +16,8 @@
                     </a>
                 </div>
                 <div class="d-flex justify-content-end w-100 px-2">
-                    <form method="GET" action="{{ route('warkah.index') }}" class=" g-2 w-100 no-spinner d-flex gap-2"
-                        style="max-width: 500px;">
+                    <form method="GET" action="{{ route('warkah.index', $client->id) }}"
+                        class=" g-2 w-100 no-spinner d-flex gap-2" style="max-width: 500px;">
                         <input type="text" name="client_code" value="{{ request('client_code') }}" class="form-control"
                             placeholder="Kode Klien">
                         <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
@@ -39,6 +39,7 @@
                                     <th>Kode Warkah</th>
                                     <th>Tanggal Upload</th>
                                     <th>Status</th>
+                                    <th>Dokumen</th>
                                     <th>Catatan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -68,6 +69,53 @@
                                                 @endif
                                             </span>
                                         </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-xs mb-0"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#viewDocumentModal-{{ $product->id }}">
+                                                <i class="fa fa-file me-1"></i> Lihat Dokumen
+                                            </button>
+                                            <div class="modal fade" id="viewDocumentModal-{{ $product->id }}"
+                                                tabindex="-1" aria-labelledby="viewDocumentModalLabel-{{ $product->id }}"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Dokumen Warkah</h5>
+                                                            <button type="button" class="btn-close btn-close-white"
+                                                                data-bs-dismiss="modal"></button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+
+                                                            @php
+                                                                $file = asset('storage/' . $product->warkah_link);
+                                                                $ext = strtolower(
+                                                                    pathinfo($product->warkah_link, PATHINFO_EXTENSION),
+                                                                );
+                                                            @endphp
+
+                                                            @if (in_array($ext, ['jpg', 'jpeg', 'png', 'svg', 'webp']))
+                                                                <div class="d-flex justify-content-center">
+                                                                    <img src="{{ $file }}" alt="Dokumen"
+                                                                        class="img-fluid rounded shadow-sm"
+                                                                        style="max-height: 90vh; object-fit: contain;">
+                                                                </div>
+                                                            @elseif ($ext === 'pdf')
+                                                                <iframe src="{{ $file }}" width="100%"
+                                                                    height="600px" style="border: none;"></iframe>
+                                                            @else
+                                                                <p class="text-muted text-center">Format dokumen tidak dapat
+                                                                    ditampilkan.</p>
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+
                                         <td>{{ $product->note ?? '-' }}</td>
                                         <td>
                                             @if ($product->status !== 'done' && $product->status !== 'valid' && $product->status !== 'invalid')
@@ -93,12 +141,7 @@
                                                                 <button type="button" class="btn-close btn-close-white"
                                                                     data-bs-dismiss="modal"></button>
                                                             </div>
-                                                            {{-- <div class="modal-body text-center text-wrap text-sm">
-                                                    Apakah dokumen <strong>{{ $product->document_name }}</strong> dengan
-                                                    Kode Klien
-                                                    <strong>{{ $product->client_code }}</strong> <br>
-                                                    dinyatakan <span class="text-success fw-bold">VALID?</span>
-                                                </div> --}}
+
                                                             <div class="modal-body text-center text-wrap">
                                                                 Apakah dokumen
                                                                 <strong>{{ $product->document_name }}</strong> dengan

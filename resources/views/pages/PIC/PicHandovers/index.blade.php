@@ -40,7 +40,9 @@
                         <tbody>
                             @forelse ($handovers as $handover)
                                 <tr class="text-center text-sm">
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        {{ $handovers->firstItem() + $loop->index }}
+                                    </td>
                                     <td>{{ $handover->picDocument->pic_document_code }}</td>
                                     <td>{{ $handover->handover_date }}</td>
                                     <td>{{ $handover->recipient_name }}</td>
@@ -97,6 +99,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-end">
+                        {{ $handovers->links() }}
+                    </div>
                 </div>
             </div>
         </div>

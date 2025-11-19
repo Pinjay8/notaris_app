@@ -11,13 +11,16 @@ class PicHandoverRepository implements PicHandoverRepositoryInterface
     {
         $query = PicHandover::with(['picDocument']);
 
-        if (!empty($filters['search'])) {
-            $query->whereHas('picDocument', function ($q) use ($filters) {
-                $q->where('pic_document_code', 'like', '%' . $filters['search'] . '%');
+        // Ambil search dengan aman (tidak error meskipun tidak dikirim dari request)
+        $search = $filters['search'] ?? null;
+
+        if (!empty($search)) {
+            $query->whereHas('picDocument', function ($q) use ($search) {
+                $q->where('pic_document_code', 'like', '%' . $search . '%');
             });
         }
 
-        return $query->latest()->get();
+        return $query->latest()->paginate(10);
     }
 
     public function find($id)

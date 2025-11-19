@@ -149,7 +149,8 @@
                 </a>
             </li> --}}
             <li class="nav-item">
-                <a href="{{ route('warkah.index') }}" class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
+                <a href="{{ route('warkah.selectClient') }}"
+                    class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>

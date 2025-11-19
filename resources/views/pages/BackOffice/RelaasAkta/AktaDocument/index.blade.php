@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Dokumen Akta</h6>
+                    <h5>Dokumen Akta</h5>
                 </div>
                 <div class="card-body pt-1 pb-0">
 
@@ -26,7 +26,7 @@
                     @if ($relaasInfo)
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header bg-primary text-white">
-                                <h6 class="mb-0 text-white">Detail Transaksi Akta</h6>
+                                <h5 class="mb-0 text-white">Detail Transaksi Akta</h5>
                             </div>
                             <div class="card-body pb-2">
                                 <div class="row g-3">
@@ -103,14 +103,62 @@
                                                 <td>{{ $doc->type ?? '-' }}</td>
                                                 <td>{{ $doc->uploaded_at ? $doc->uploaded_at->format('d F Y H:i:s') : '-' }}
                                                 </td>
-                                                <td class="text-center" width="10%">
+                                                <td class="text-center">
                                                     @if ($doc->file_url)
-                                                        <a href="{{ asset('storage/' . $doc->file_url) }}" target="_blank"
-                                                            class="btn btn-sm btn-outline-primary d-flex align-items-center justify-content-center mb-0">
-                                                            <i class="bi bi-image me-1"></i> Lihat Akta Dokumen
-                                                        </a>
+                                                        <!-- Tombol buka modal -->
+                                                        <button type="button" class="btn btn-sm btn-outline-primary mb-0"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#fileModal{{ $doc->id }}">
+                                                            <i class="bi bi-file-earmark me-1"></i> Lihat Akta Dokumen
+                                                        </button>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="fileModal{{ $doc->id }}"
+                                                            tabindex="-1"
+                                                            aria-labelledby="fileModalLabel{{ $doc->id }}"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header py-2">
+                                                                        <h5 class="modal-title"
+                                                                            id="fileModalLabel{{ $doc->id }}">
+                                                                            File Dokumen Akta
+                                                                        </h5>
+                                                                        <button type="button"
+                                                                            class="btn-close btn-close-white"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+
+                                                                    <div class="modal-body text-center">
+
+                                                                        {{-- Jika FILE IMAGE --}}
+                                                                        @if ($doc->file_type === 'svg' || $doc->file_type === 'png' || $doc->file_type === 'jpg' || $doc->file_type === 'jpeg')
+                                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                                style="min-height: 400px;">
+                                                                                <img src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                                    alt="Dokumen"
+                                                                                    class="img-fluid rounded shadow-sm"
+                                                                                    style="max-height: 90vh; object-fit: contain;">
+                                                                            </div>
+
+                                                                            {{-- Jika FILE PDF --}}
+                                                                        @elseif ($doc->file_type === 'pdf')
+                                                                            <embed
+                                                                                src="{{ asset('storage/' . $doc->file_url) }}"
+                                                                                type="application/pdf" width="100%"
+                                                                                height="600px" />
+                                                                        @else
+                                                                            <p class="text-muted">File tidak dapat
+                                                                                ditampilkan.</p>
+                                                                        @endif
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     @else
-                                                        <span class="text-muted">-</span>
+                                                        <span class="badge bg-secondary">Tidak Ada File</span>
                                                     @endif
                                                 </td>
                                                 <td class="d-flex gap-1 justify-content-center">
@@ -138,7 +186,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Klien untuk melihat daftar dokumen
+                        <p class="text-center text-muted text-sm mb-3">Masukkan Kode Klien untuk melihat daftar dokumen
                             relaas.
                         </p>
                     @endif

@@ -13,10 +13,14 @@ class PicDocumentsRepository implements PicDocumentsRepositoryInterface
 
         if (!empty($filters['search'])) {
             $search = $filters['search'];
-            $query->where('client_code', 'like', "%$search%")
-                ->orWhereHas('pic', function ($q) use ($search) {
-                    $q->where('name', 'like', "%$search%");
-                });
+
+            $query->where(function ($q) use ($search) {
+                $q->where('pic_document_code', 'like', "%$search%")
+                    ->orWhere('status', 'like', "%$search%")
+                    ->orWhereHas('pic', function ($q2) use ($search) {
+                        $q2->where('full_name', 'like', "%$search%");
+                    });
+            });
         }
 
         if (!empty($filters['status'])) {

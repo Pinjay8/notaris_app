@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->string('file_name')->nullable();
-            $table->string('file_url')->nullable();
+            $table->text('file_url')->nullable();
             $table->string('file_type')->nullable();
             $table->dateTime('uploaded_at')->nullable();
             $table->timestamps();

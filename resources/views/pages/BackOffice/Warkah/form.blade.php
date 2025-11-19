@@ -73,6 +73,7 @@
                                 <input type="file" name="warkah_link"
                                     class="form-control @error('warkah_link') is-invalid @enderror"
                                     accept=".jpg,.jpeg,.png,.pdf">
+                                <small class="text-muted">Maksimal ukuran file: 1 MB</small>
                                 @error('warkah_link')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -96,7 +97,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <a href="{{ route('warkah.index') }}" class="btn btn-secondary">Kembali</a>
+                            <a href="{{ route('warkah.index', $client->id) }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit"
                                 class="btn btn-primary">{{ isset($document) ? 'Ubah' : 'Simpan' }}</button>
                         </div>

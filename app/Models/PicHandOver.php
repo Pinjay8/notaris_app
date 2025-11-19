@@ -25,6 +25,6 @@ class PicHandOver extends Model
 
     public function picDocument()
     {
-        return $this->belongsTo(PicDocuments::class);
+        return $this->belongsTo(PicDocuments::class, 'pic_document_id');
     }
 }

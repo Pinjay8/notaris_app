@@ -50,27 +50,22 @@
                             <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
                             <input type="file" name="file_url" id="file_url"
                                 class="form-control @error('file_url') is-invalid @enderror">
+                            <small class="text-muted">Ukuran maksimal 1 MB</small>
 
                             @error('file_url')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
-
+                            {{-- <br> --}}
                             @if (isset($document) && $document->file_url)
+                                <br>
                                 <a href="{{ asset('storage/' . $document->file_url) }}" target="_blank"
                                     class="btn btn-outline-primary btn-sm mt-2 mb-0">
-                                    📂 Lihat File
+                                    Lihat File Akta Dokumen
                                 </a>
                             @endif
                         </div>
-
-
-                        {{-- <div class="mb-3">
-                        <label for="file_type" class="form-label">Tipe Dokumen</label>
-                        <input type="text" name="file_type" class="form-control"
-                            value="{{ $document->file_type ?? old('file_type') }}" required>
-                    </div> --}}
 
                         {{-- uploaded_at --}}
                         <div class="mb-3">

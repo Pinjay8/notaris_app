@@ -59,16 +59,28 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'required|date',
+            'file_url'  => 'required|file|max:1024',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
+            'uploaded_at.required' => 'Tanggal upload harus diisi.',
+            'file_url.required' => 'File dokumen harus diupload.',
+            'file_url.max' => 'Ukuran file maksimal 1MB.',
         ]);
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $validated['file_name'] = $file->getClientOriginalName();
-            $validated['file_url']  = $file->storeAs('documents', $file->getClientOriginalName());
-            $validated['file_type'] = $file->getClientMimeType();
+        if ($request->hasFile('file_url')) {
+            $file = $request->file('file_url');
+            $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
+            $fileExtension = $file->getClientOriginalExtension(); // pdf
+
+            // simpan file ke storage/app/documents
+            $storedPath = $file->storeAs('documents', $originalName);
+
+            // isi otomatis
+            $validated['file_url'] = $storedPath;
+            $validated['file_name'] = $fileNameOnly;
+            $validated['file_type'] = $fileExtension;
         }
 
         $validated['relaas_id'] = $relaas->id;
@@ -77,7 +89,8 @@ class NotaryRelaasDocumentController extends Controller
         $validated['client_code'] = $relaas->client_code;
         // $validated['uploaded_at'] = now();
 
-        $this->service->store($validated);
+        // $this->service->store($validated);
+        NotaryRelaasDocument::create($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil ditambahkan.');
 
@@ -91,16 +104,29 @@ class NotaryRelaasDocumentController extends Controller
         $validated = $request->validate([
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
+            'uploaded_at' => 'nullable|date',
+            'file_url'  => 'nullable|file|max:1024',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Jenis dokumen harus diisi.',
+            'file_url.required' => 'File dokumen harus diupload.',
+            'file_url.max' => 'Ukuran file maksimal 1MB.',
         ]);
 
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $validated['file_name'] = $file->getClientOriginalName();
-            $validated['file_url']  = $file->store('relaas_documents', 'public');
-            $validated['file_type'] = $file->getClientMimeType();
+        if ($request->hasFile('file_url')) {
+            $file = $request->file('file_url');
+            $file = $request->file('file_url');
+            $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
+            $fileExtension = $file->getClientOriginalExtension(); // pdf
+
+            // simpan file ke storage/app/documents
+            $storedPath = $file->storeAs('documents', $originalName);
+
+            // isi otomatis
+            $validated['file_url'] = $storedPath;
+            $validated['file_name'] = $fileNameOnly;
+            $validated['file_type'] = $fileExtension;
         }
 
         $validated['relaas_id'] = $relaas->id;

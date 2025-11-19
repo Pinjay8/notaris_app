@@ -165,7 +165,9 @@ Route::middleware('auth')->group(function () {
     Route::post('management-document/status', [NotaryClientDocumentController::class, 'updateStatus'])->name('management-document.updateStatus');
 
     // Warkah
-    Route::resource('warkah', NotaryClientWarkahController::class);
+    Route::get('/warkahs', [NotaryClientWarkahController::class, 'selectClient'])->name('warkah.selectClient');
+    Route::get('/warkahs/{id}', [NotaryClientWarkahController::class, 'index'])->name('warkah.index');
+    // Route::resource('warkah', NotaryClientWarkahController::class);
 
     Route::post('warkah/store', [NotaryClientWarkahController::class, 'store'])->name('warkah.store');
     Route::get('warkah/create', [NotaryClientWarkahController::class, 'create'])->name('warkah.create');
@@ -222,6 +224,7 @@ Route::middleware('auth')->group(function () {
 
     //PIC
     Route::resource('pic_documents', PicDocumentsController::class);
+    Route::get('pic_documents/{id}/print', [PicDocumentsController::class, 'print'])->name('pic_documents.print');
     Route::resource('pic_staff', PicStaffController::class);
     Route::resource('pic_process', PicProcessController::class);
     Route::put('/pic_process/{id}/complete', [PicProcessController::class, 'markComplete'])->name('pic_process.markComplete');

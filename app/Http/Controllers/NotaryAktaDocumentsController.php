@@ -67,7 +67,7 @@ class NotaryAktaDocumentsController extends Controller
             'name' => 'required|string',
             'type' => 'required|string',
             // 'file_name' => 'required|string',
-            'file_url' => 'required|file|max:10240',
+            'file_url' => 'required|file|max:1024',
             // 'file_type' => 'required|string',
             'uploaded_at' => 'required|date',
         ], [
@@ -75,6 +75,7 @@ class NotaryAktaDocumentsController extends Controller
             'type.required' => 'Tipe dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
+            'file_url.max' => 'Ukuran file maksimal 1MB.',
         ]);
 
         $data['notaris_id'] = $transaction->notaris_id;
@@ -119,13 +120,14 @@ class NotaryAktaDocumentsController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'type' => 'required|string',
-            'file_url' => 'nullable|file|max:10240',
+            'file_url' => 'nullable|file|max:1024',
             'uploaded_at' => 'required|date',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
+            'file_url.max' => 'Ukuran file maksimal 1MB.',
         ]);
 
 
@@ -162,8 +164,11 @@ class NotaryAktaDocumentsController extends Controller
 
     public function destroy($id)
     {
+        $document = NotaryAktaDocuments::findOrFail($id);
+        $transaction = NotaryAktaTransaction::findOrFail($document->akta_transaction_id);
         $this->service->delete($id);
+
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta dokumen.');
-        return redirect()->route('akta-documents.index');
+        return redirect()->route('akta-documents.index', ['client_code' => $transaction->client_code, 'akta_number' => $transaction->akta_number]);
     }
 }

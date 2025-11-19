@@ -18,7 +18,7 @@
                     <form method="GET" action="{{ route('pic_documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
                         style="max-width: 600px; width: 100%" class="no-spinner">
                         <input type="text" name="search" class="form-control form-control-sm"
-                            placeholder="Cari Kode Klien / Nama PIC" value="{{ request('search') }}">
+                            placeholder="Cari Kode Dokumen / Nama PIC" value="{{ request('search') }}">
                         <select name="status" class="form-select form-select-sm">
                             <option value="">Semua Status</option>
                             <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Dikirim
@@ -83,14 +83,51 @@
                                                 </span>
                                             </td>
                                             <td class="text-center">
+                                                <a href="{{ route('pic_documents.print', $doc->id) }}"
+                                                    class="btn btn-danger btn-xs mb-0" target="_blank" title="Cetak PDF">
+                                                    <i class="bi bi-filetype-pdf " style="font-size:14px;"></i> Cetak
+                                                </a>
                                                 <a href="{{ route('pic_documents.edit', $doc->id) }}"
                                                     class="btn btn-sm btn-info mb-0">Edit</a>
-                                                <form action="{{ route('pic_documents.destroy', $doc->id) }}"
-                                                    method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger mb-0">Hapus</button>
-                                                </form>
+                                                <button type="button" class="btn btn-sm btn-danger mb-0"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal{{ $doc->id }}">
+                                                    Hapus
+                                                </button>
+                                                <div class="modal fade" id="deleteModal{{ $doc->id }}" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header  text-white py-2">
+                                                                <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                                                <button type="button" class="btn-close btn-close-white"
+                                                                    data-bs-dismiss="modal"></button>
+                                                            </div>
+
+                                                            <div class="modal-body text-center">
+                                                                <p class="mb-0 text-sm">Apakah Anda yakin ingin menghapus
+                                                                    PIC
+                                                                    Dokumen ini?</p>
+                                                            </div>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary btn-sm"
+                                                                    data-bs-dismiss="modal">Batal</button>
+
+                                                                <form
+                                                                    action="{{ route('pic_documents.destroy', $doc->id) }}"
+                                                                    method="POST" class="d-inline">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger btn-sm">Hapus</button>
+                                                                </form>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+
                                             </td>
                                         </tr>
                                     @empty

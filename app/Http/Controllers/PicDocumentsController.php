@@ -10,6 +10,7 @@ use App\Models\PicStaff;
 use App\Services\PicDocumentsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Mpdf\Mpdf;
 
 class PicDocumentsController extends Controller
 {
@@ -57,7 +58,7 @@ class PicDocumentsController extends Controller
 
         $this->service->createDocument($validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Document berhasil ditambahkan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Dokumen berhasil ditambahkan.');
         return redirect()->route('pic_documents.index');
     }
 
@@ -88,7 +89,7 @@ class PicDocumentsController extends Controller
 
         $this->service->updateDocument($id, $validated);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Document berhasil diperbarui.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Dokumen berhasil diperbarui.');
         return redirect()->route('pic_documents.index');
     }
 
@@ -96,7 +97,32 @@ class PicDocumentsController extends Controller
     {
         $this->service->deleteDocument($id);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Document berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('PIC Dokumen berhasil dihapus.');
         return redirect()->route('pic_documents.index');
+    }
+
+    public function print($id)
+    {
+        $picDocuments = PicDocuments::findOrFail($id);
+        // Render blade ke HTML
+        $html = view('pages.PIC.PicDocuments.print', compact('picDocuments'))->render();
+
+        // Inisialisasi mPDF
+        $mpdf = new Mpdf([
+            'default_font' => 'dejavusans',
+            'format'       => 'A4',
+            'margin_top'   => 10,
+            'margin_bottom' => 0,
+            'margin_left'  => 15,
+            'margin_right' => 15,
+            'tempDir' => storage_path('app/mpdf-temp'),
+        ]);
+
+        // Tulis HTML ke PDF
+        $mpdf->WriteHTML($html);
+
+        // Output langsung ke browser (inline)
+        return response($mpdf->Output("Pic Dokumen.pdf", 'I'))
+            ->header('Content-Type', 'application/pdf');
     }
 }

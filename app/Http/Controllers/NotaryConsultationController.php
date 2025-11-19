@@ -61,48 +61,56 @@ class NotaryConsultationController extends Controller
         return view('pages.Client.Consultation.consultation', compact('notaryConsultations', 'client'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $notarisId = auth()->user()->notaris_id;
 
-        // Ambil semua client untuk dropdown
-        $clients = Client::where('notaris_id', $notarisId)->get();
+        $clientId = $request->client_id;
+        $client = Client::find($clientId);
 
-        $firstClient = $clients->first();
-        // Generate registration code dari service
-        $registrationCode = $firstClient
-            ? $this->notaryConsultationService->generateRegistrationCode($notarisId, $firstClient->id)
-            : null;
-
-        return view('pages.Client.Consultation.form', compact('clients', 'registrationCode'));
+        return view('pages.Client.Consultation.form', compact('client'));
     }
+
+    // public function store(Request $request)
+    // {
+    //     $this->notaryConsultationService->create($request->all());
+
+    //     // Ambil client_id dari client_code
+    //     $client = Client::where('client_code', $request->client_code)->first();
+    //     $clientId = $client ? $client->id : null;
+
+    //     notyf()->position('x', 'right')->position('y', 'top')
+    //         ->success('Konsultasi nama ' . ($client->fullname ?? '') . ' berhasil ditambahkan');
+
+    //     return redirect()->route('consultation.getConsultationByClient', ['id' => $clientId]);
+    // }
 
     public function store(Request $request)
     {
-        $this->notaryConsultationService->create($request->all());
+        $client = Client::findOrFail($request->client_id);
 
-        // Ambil client_id dari client_code
-        $client = Client::where('client_code', $request->client_code)->first();
-        $clientId = $client ? $client->id : null;
+        $data = $request->all();
+        $data['client_code'] = $client->client_code;
+        $data['notaris_id'] = $client->notaris_id;
 
-        notyf()->position('x', 'right')->position('y', 'top')
-            ->success('Konsultasi nama ' . ($client->fullname ?? '') . ' berhasil ditambahkan');
+        $this->notaryConsultationService->create($data);
 
-        return redirect()->route('consultation.getConsultationByClient', ['id' => $clientId]);
+        notyf()->position('x', 'right')->position('y', 'top')->success('Konsultasi untuk ' . $client->fullname . ' berhasil ditambahkan');
+
+        return redirect()->route('consultation.getConsultationByClient', ['id' => $client->id]);
     }
 
-    public function show(NotaryConsultation $notaryConsultation) {}
 
     public function edit($id)
     {
         $notaryConsultation = $this->notaryConsultationService->findById($id);
         $notarisId = auth()->user()->notaris_id;
-        $clients = Client::where('notaris_id', $notarisId)->get();
+        $client = Client::where('client_code', $notaryConsultation->client_code)->first();
 
         // Jangan lupa pass juga registration_code jika mau tampilkan di form
         $registrationCode = $notaryConsultation->registration_code;
 
-        return view('pages.Client.Consultation.form', compact('notaryConsultation', 'clients', 'registrationCode'));
+        return view('pages.Client.Consultation.form', compact('notaryConsultation', 'client'));
     }
     public function update(Request $request, $id)
     {
