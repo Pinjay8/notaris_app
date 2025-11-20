@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\PicHandover;
+use App\Models\PicHandOver;
 use App\Repositories\Interfaces\PicHandoverRepositoryInterface;
 
 class PicHandoverRepository implements PicHandoverRepositoryInterface
