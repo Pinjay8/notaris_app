@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center mb-3 px-3 flex-wrap">
                     <h5>Warkah</h5>
-                    <a href="{{ route('warkah.create') }}" class="btn btn-primary btn-sm mb-0">
+                    <a href="{{ route('warkah.create', $client->id) }}" class="btn btn-primary btn-sm mb-0">
                         + Tambah Warkah
                     </a>
                 </div>
@@ -121,18 +121,18 @@
                                             @if ($product->status !== 'done' && $product->status !== 'valid' && $product->status !== 'invalid')
                                                 <button type="button" class="btn btn-success btn-xs mb-0"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#validationModal-{{ $product->client_code }}">
+                                                    data-bs-target="#validationModal-{{ $product->id }}">
                                                     <i class="fa fa-check me-1"></i> Valid
                                                 </button>
                                                 <button type="button" class="btn btn-danger btn-xs mb-0"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#invalidModal-{{ $product->client_code }}">
+                                                    data-bs-target="#invalidModal-{{ $product->id }}">
                                                     <i class="fa-solid fa-x me-1"></i>
                                                     Tidak Valid
                                                 </button>
-                                                <div class="modal fade" id="validationModal-{{ $product->client_code }}"
+                                                <div class="modal fade" id="validationModal-{{ $product->id }}"
                                                     tabindex="-1"
-                                                    aria-labelledby="validationModalLabel-{{ $product->client_code }}"
+                                                    aria-labelledby="validationModalLabel-{{ $product->id }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
@@ -152,14 +152,12 @@
                                                             </div>
                                                             <div class="modal-footer d-flex justify-content-end">
                                                                 <form method="POST"
-                                                                    action="{{ route('warkah.updateStatus') }}">
+                                                                    action="{{ route('warkah.updateStatus', $product->id) }}">
                                                                     @csrf
                                                                     <input type="hidden" name="client_code"
                                                                         value="{{ $product->client_code }}">
                                                                     <input type="hidden" name="notaris_id"
                                                                         value="{{ $product->notaris_id }}">
-                                                                    <input type="hidden" name="client_id"
-                                                                        value="{{ $product->client_id }}">
                                                                     <input type="hidden" name="status" value="valid">
                                                                     <button type="submit"
                                                                         class="btn btn-primary btn-sm mb-0">Submit</button>
@@ -169,9 +167,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal fade" id="invalidModal-{{ $product->client_code }}"
+                                                <div class="modal fade" id="invalidModal-{{ $product->id }}"
                                                     tabindex="-1"
-                                                    aria-labelledby="invalidModalLabel-{{ $product->client_code }}"
+                                                    aria-labelledby="invalidModalLabel-{{ $product->id }}"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
@@ -190,14 +188,14 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <form method="POST"
-                                                                    action="{{ route('warkah.updateStatus') }}">
+                                                                    action="{{ route('warkah.updateStatus', $product->id) }}">
                                                                     @csrf
                                                                     <input type="hidden" name="client_code"
                                                                         value="{{ $product->client_code }}">
                                                                     <input type="hidden" name="notaris_id"
                                                                         value="{{ $product->notaris_id }}">
-                                                                    <input type="hidden" name="client_id"
-                                                                        value="{{ $product->client_id }}">
+                                                                    {{-- <input type="hidden" name="client_id"
+                                                                        value="{{ $product->client_id }}"> --}}
                                                                     <input type="hidden" name="status" value="invalid">
                                                                     <button type="submit"
                                                                         class="btn btn-primary btn-sm mb-0">Submit</button>

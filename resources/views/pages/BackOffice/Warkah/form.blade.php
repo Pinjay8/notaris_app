@@ -9,36 +9,20 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>{{ isset($document) ? 'Edit Warkah' : 'Tambah Warkah' }}</h6>
+                    <h6>Tambah Warkah}</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
-                    <form action="{{ isset($document) ? route('warkah.update', $document->id) : route('warkah.store') }}"
-                        method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('warkah.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        @if (isset($document))
+                        {{-- @if (isset($document))
                             @method('PUT')
-                        @endif
-                        {{--
-                        <input type="hidden" name="notaris_id" value="{{ auth()->user()->notaris_id }}"> --}}
+                        @endif --}}
+
+                        <input type="hidden" name="notaris_id" value="{{ auth()->user()->notaris_id }}">
 
                         <div class="row">
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label text-sm">Klien</label>
-                                <select name="client_code"
-                                    class="form-select @error('client_code') is-invalid @enderror select2">
-                                    <option value="" hidden>Pilih Klien</option>
-                                    @foreach ($clients as $client)
-                                        <option value="{{ $client->client_code }}"
-                                            {{ old('client_code', $document->client_code ?? request('client_code')) == $client->client_code ? 'selected' : '' }}>
-                                            {{ $client->fullname }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('client_code')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            <input type="hidden" name="client_code" value="{{ $client->client_code }}">
 
                             <div class="col-md-12 mb-3">
                                 <label class="form-label text-sm">Jenis Warkah</label>

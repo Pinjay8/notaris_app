@@ -165,14 +165,15 @@ Route::middleware('auth')->group(function () {
     Route::post('management-document/status', [NotaryClientDocumentController::class, 'updateStatus'])->name('management-document.updateStatus');
 
     // Warkah
-    Route::get('/warkahs', [NotaryClientWarkahController::class, 'selectClient'])->name('warkah.selectClient');
-    Route::get('/warkahs/{id}', [NotaryClientWarkahController::class, 'index'])->name('warkah.index');
+    Route::get('/warkah', [NotaryClientWarkahController::class, 'selectClient'])->name('warkah.selectClient');
+    Route::get('/warkah/{id}', [NotaryClientWarkahController::class, 'index'])->name('warkah.index');
     // Route::resource('warkah', NotaryClientWarkahController::class);
 
     Route::post('warkah/store', [NotaryClientWarkahController::class, 'store'])->name('warkah.store');
-    Route::get('warkah/create', [NotaryClientWarkahController::class, 'create'])->name('warkah.create');
+    Route::get('warkah/create/{id}', [NotaryClientWarkahController::class, 'create'])->name('warkah.create');
+    Route::put('warkah/update/{id}', [NotaryClientWarkahController::class, 'update'])->name('warkah.update');
     // Route::post('warkah/store', [NotaryClientWarkahController::class, 'addDocument'])->name('warkah.addDocument');
-    Route::post('warkah/status', [NotaryClientWarkahController::class, 'updateStatus'])->name('warkah.updateStatus');
+    Route::post('warkah/status/{id}', [NotaryClientWarkahController::class, 'updateStatus'])->name('warkah.updateStatus');
     // // End
     // Partij Akta
     Route::resource('akta-types', NotaryAktaTypesController::class);

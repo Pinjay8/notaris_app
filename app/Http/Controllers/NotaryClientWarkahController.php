@@ -70,16 +70,34 @@ class NotaryClientWarkahController extends Controller
     //     ]);
     // }
 
-    public function create(Request $request)
+    // public function create(Request $request)
+    // {
+    //     $notarisId = auth()->user()->notaris_id;
+
+    //     $clients = Client::where('notaris_id', $notarisId)->get();
+    //     $documents = Documents::where('notaris_id', $notarisId)->get();
+    //     $client = Client::findOrFail($request->client_id);
+
+    //     return view('pages.BackOffice.Warkah.form', [
+    //         'clients' => $clients,
+    //         'documents' => $documents,
+    //         'client' => $client
+    //     ]);
+    // }
+
+
+    public function create($id)
     {
         $notarisId = auth()->user()->notaris_id;
 
-        $clients = Client::where('notaris_id', $notarisId)->get();
+        // Cari client berdasarkan ID dari URL
+        $client = Client::where('notaris_id', $notarisId)
+            ->where('id', $id)
+            ->firstOrFail();
+
         $documents = Documents::where('notaris_id', $notarisId)->get();
-        $client = $request->client_id;
 
         return view('pages.BackOffice.Warkah.form', [
-            'clients' => $clients,
             'documents' => $documents,
             'client' => $client
         ]);
@@ -146,22 +164,18 @@ class NotaryClientWarkahController extends Controller
     // }
 
 
-    public function updateStatus(Request $request)
+    public function updateStatus(Request $request, $id)
     {
         $request->validate([
             'client_code' => 'required',
-            // 'client_id' => 'required',
             'status' => 'required|in:valid,invalid',
         ]);
 
-        $clientDoc = NotaryClientWarkah::where('client_code', $request->client_code)
-            ->where('client_code', $request->client_code)
-            ->first();
+        $warkah  = NotaryClientWarkah::findOrFail($id);
 
-        if ($clientDoc) {
-            $clientDoc->status = $request->status;
-            $clientDoc->save();
-        }
+        $warkah->update([
+            'status' => $request->status,
+        ]);
 
         $msg = $request->status === 'valid'
             ? 'Dokumen berhasil divalidasi'
@@ -201,7 +215,7 @@ class NotaryClientWarkahController extends Controller
         $client = Client::where('client_code', $request->client_code)->firstOrFail();
 
         NotaryClientWarkah::create([
-            'client_code' => $client->client_code,
+            'client_code' => $validated['client_code'],
             'notaris_id' => $notarisId,
             'warkah_code' => $document->code,
             'warkah_name' => $document->name,
