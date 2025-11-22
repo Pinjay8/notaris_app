@@ -289,9 +289,9 @@ class UserSyncController extends Controller
                 'password'   => 'nullable|string|min:6',
                 'phone'      => 'required|string',
                 'address'    => 'required|string',
-                'signup_at'  => 'required',
-                'active_at'  => 'required',
-                'status'     => 'required|string',
+                'signup_at'  => 'nullable',
+                'active_at'  => 'nullable',
+                'status'     => 'required',
             ])->validate();
 
 
@@ -316,11 +316,11 @@ class UserSyncController extends Controller
             */
             $validatedSub = validator($payloadSub, [
                 'id'          => 'nullable|integer',
-                'plan_id'     => 'required',
+                'plan_id'     => 'nullable',
                 'start_date'  => 'required|date',
                 'end_date'    => 'required|date',
                 'payment_date' => 'nullable',
-                'status'      => 'required|string',
+                'status'      => 'required',
             ])->validate();
 
 
