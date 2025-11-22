@@ -31,6 +31,8 @@ class NotarisController extends Controller
                 'email',
                 'gender',
                 'information',
+                'created_at',
+                'updated_at',
             ]);
 
             // pakai pagination tapi jumlah data per halaman mengikuti limit
