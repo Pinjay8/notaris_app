@@ -20,7 +20,7 @@
                         class=" g-2 w-100 no-spinner d-flex gap-2" style="max-width: 500px;">
                         <input type="text" name="client_code" value="{{ request('client_code') }}" class="form-control"
                             placeholder="Kode Klien">
-                        <input type="text" name="client_name" value="{{ request('client_name') }}" class="form-control"
+                        <input type="text" name="fullanme" value="{{ request('fullanme') }}" class="form-control"
                             placeholder="Nama Klien">
                         <button type="submit" class="btn btn-primary mb-0 btn-sm">Cari</button>
                     </form>

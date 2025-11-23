@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Notaris extends Model
 {
-    //
     use LogsActivityCustom, SoftDeletes;
 
     protected $table = 'notaris';

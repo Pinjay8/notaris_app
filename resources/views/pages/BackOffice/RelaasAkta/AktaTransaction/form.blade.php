@@ -20,26 +20,8 @@
                             @method('PUT')
                         @endif
 
-                        {{-- Notaris --}}
-                        {{-- <div class="mb-3">
-                        <label for="notaris_id" class="form-label">Notaris</label>
-                        <select name="notaris_id" id="notaris_id"
-                            class="form-select @error('notaris_id') is-invalid @enderror">
-                            <option value="" hidden>-- Pilih Notaris --</option>
-                            @foreach ($notaris as $notary)
-                            <option value="{{ $notary->id }}" {{ old('notaris_id', $data->notaris_id ?? '') ==
-                                $notary->id ? 'selected' : '' }}>
-                                {{ $notary->display_name }}
-                            </option>
-                            @endforeach
-                        </select>
-                        @error('notaris_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
-
                         {{-- Client --}}
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="client_code" class="form-label text-sm">Klien</label>
                             <select name="client_code" id="client_code"
                                 class="form-select select2 @error('client_code') is-invalid @enderror">
@@ -54,18 +36,9 @@
                             @error('client_code')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        {{-- Registration Code --}}
-                        {{-- <div class="mb-3">
-                        <label for="client_code" class="form-label">Kode Klien</label>
-                        <input type="text" name="client_code" id="client_code"
-                            class="form-control @error('client_code') is-invalid @enderror"
-                            value="{{ old('client_code', $data->client_code ?? '') }}">
-                        @error('client_code')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
+                        <input type="hidden" name="client_code" value="{{ $clientCode }}">
 
                         <div class="mb-3">
                             <label for="relaas_type_id" class="form-label text-sm">Jenis Akta</label>

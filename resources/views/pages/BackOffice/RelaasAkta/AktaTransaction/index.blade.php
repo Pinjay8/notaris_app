@@ -10,12 +10,13 @@
             <div class="card mb-4">
                 <div class="card-header d-flex justify-content-between align-items-center pb-0">
                     <h5>Transaksi Akta</h5>
-                    <a href="{{ route('relaas-aktas.create') }}" class="btn btn-primary btn-sm">+ Tambah Transaksi</a>
+                    <a href="{{ route('relaas-aktas.create', ['client_code' => request('client_code')]) }}"
+                        class="btn btn-primary btn-sm">+ Tambah Transaksi</a>
                 </div>
                 <form method="GET" action="{{ route('relaas-aktas.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
-                    style="max-width:500px;" onchange="this.submit()" class="no-spinner">
-                    <input type="text" name="client_code" placeholder="Cari Kode Klien..."
-                        value="{{ request('client_code') }}" class="form-control">
+                    style="max-width:600px;" onchange="this.submit()" class="no-spinner">
+                    <input type="text" name="transaction_code" placeholder="Cari Kode Transaksi"
+                        value="{{ request('transaction_code') }}" class="form-control">
                     <select name="status" class="form-select">
                         <option value="">Semua Status</option>
                         @foreach (['draft', 'diproses', 'selesai', 'dibatalkan'] as $status)
@@ -28,11 +29,6 @@
                 </form>
                 <hr>
                 <div class="card-body px-0 pt-0 pb-0">
-
-                    {{-- Filter & Search --}}
-
-
-                    {{-- Table --}}
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0 text-sm text-center">
                             <thead>
@@ -40,6 +36,7 @@
                                     <th>#</th>
                                     <th>Klien</th>
                                     <th>Kode Klien</th>
+                                    <th>Kode Transaksi</th>
                                     <th>Jenis Akta</th>
                                     <th>Tahun</th>
                                     <th>Nomor Akta</th>
@@ -58,6 +55,7 @@
                                         {{-- <td>{{ $akta->notaris->display_name ?? '-' }}</td> --}}
                                         <td>{{ $akta->client->fullname ?? '-' }}</td>
                                         <td>{{ $akta->client_code ?? '-' }}</td>
+                                        <td>{{ $akta->transaction_code ?? '-' }}</td>
                                         <td>{{ ucfirst($akta->akta_type->type) ?? '-' }}</td>
                                         <td>{{ $akta->year ?? '-' }}</td>
                                         <td>{{ $akta->relaas_number ?? '-' }}</td>
@@ -79,12 +77,11 @@
                                                 'pages.BackOffice.RelaasAkta.AktaTransaction.Modal.index',
                                                 ['akta' => $akta]
                                             )
-                                            {{-- End Modal --}}
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="10" class="text-muted">Belum ada transaksi Akta.</td>
+                                        <td colspan="11" class="text-muted">Belum ada transaksi Akta.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

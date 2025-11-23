@@ -20,20 +20,39 @@ class NotaryAktaTransactionController extends Controller
         $this->service = $service;
     }
 
+    public function selectClient(Request $request)
+    {
+        $notarisId = auth()->user()->notaris_id;
+
+        $clients = Client::where('notaris_id', $notarisId)
+            ->when($request->search, function ($query, $search) {
+                $query->where('fullname', 'like', '%' . $search . '%')->orWhere('client_code', 'like', '%' . $search . '%');
+            })
+            ->where('deleted_at', null)
+            ->withCount('aktaTransactions')
+            ->paginate(10);
+
+        return view('pages.BackOffice.AktaTransaction.selectClient', [
+            'clients' => $clients,
+        ]);
+    }
+
     public function index(Request $request)
     {
-        $filters = $request->only(['status', 'client_code']);
+        $filters = $request->only(['status', 'transaction_code']);
         $transactions = $this->service->list($filters);
 
         return view('pages.BackOffice.AktaTransaction.index', compact('transactions', 'filters'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $clients = Client::all();
-        $aktaTypes = NotaryAktaTypes::all(); // hanya yang aktif jika soft delete
-        $notaris = Notaris::whereNull('deleted_at')->get();
-        return view('pages.BackOffice.AktaTransaction.form', compact('clients', 'aktaTypes', 'notaris'));
+        $clientCode = $request->query('client_code');
+
+        $client = Client::where('client_code', $clientCode)->firstOrFail();
+
+        $aktaTypes = NotaryAktaTypes::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        return view('pages.BackOffice.AktaTransaction.form', compact('clientCode', 'aktaTypes'));
     }
 
     // public function generateRegistrationCode(int $notarisId, int $clientId): string
@@ -57,17 +76,24 @@ class NotaryAktaTransactionController extends Controller
             [
                 // 'notaris_id' => 'required|exists:notaris,id',
                 // 'registration_code' => 'required|string',
-                'client_code' => 'required',
+                // 'client_code' => 'required',
                 'akta_type_id' => 'required|exists:notary_akta_types,id',
                 'date_submission' => 'nullable|date',
                 'date_finished' => 'nullable|date',
                 'note' => 'nullable|string',
             ],
             [
-                'client_id.required' => 'Klien harus dipilih.',
+                // 'client_id.required' => 'Klien harus dipilih.',
                 'akta_type_id.required' => 'Jenis akta harus dipilih.',
             ]
         );
+
+        $clientCode = $request->client_code;
+
+        $data['client_code'] = $clientCode;
+
+        $data['transaction_code'] = $clientCode;
+
 
         $data['status'] = 'draft';
         $data['year'] = null;
@@ -84,11 +110,10 @@ class NotaryAktaTransactionController extends Controller
     public function edit($id)
     {
         $transaction = $this->service->get($id);
-        $clients = Client::all();
-        $aktaTypes = NotaryAktaTypes::all();
-        $notaris = Notaris::whereNull('deleted_at')->get();
+        $clientCode = $transaction->client_code;
+        $aktaTypes = NotaryAktaTypes::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
 
-        return view('pages.BackOffice.AktaTransaction.form', compact('transaction', 'clients', 'aktaTypes', 'notaris'));
+        return view('pages.BackOffice.AktaTransaction.form', compact('transaction', 'clientCode', 'aktaTypes'));
     }
 
     public function update(Request $request, $id)

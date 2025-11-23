@@ -186,7 +186,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('akta-transactions.index') }}"
+                            <a href="{{ route('akta-transactions.selectClient') }}"
                                 class="nav-link {{ request()->is('akta-transactions*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -268,7 +268,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('relaas-aktas.index') }}"
+                            <a href="{{ route('relaas-aktas.selectClient') }}"
                                 class="nav-link {{ request()->is('relaas-aktas*') ? 'active' : '' }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

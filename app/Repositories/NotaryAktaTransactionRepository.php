@@ -35,8 +35,8 @@ class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepository
         }
 
         // Filter client code
-        if (!empty($filters['client_code'])) {
-            $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
+        if (!empty($filters['transaction_code'])) {
+            $query->where('transaction_code', 'like', '%' . $filters['transaction_code'] . '%');
         }
 
         return $query->latest()->paginate($perPage);

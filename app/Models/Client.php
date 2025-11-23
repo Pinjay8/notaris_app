@@ -39,4 +39,16 @@ class Client extends Model
     {
         return $this->belongsTo(Notaris::class, 'notaris_id', 'id');
     }
+
+    public function aktaTransactions()
+    {
+        return $this->hasMany(NotaryAktaTransaction::class, 'client_code', 'client_code');
+    }
+
+      public function aktaTransactionsRelaas()
+    {
+        return $this->hasMany(NotaryRelaasAkta::class, 'client_code', 'client_code');
+    }
+
+
 }

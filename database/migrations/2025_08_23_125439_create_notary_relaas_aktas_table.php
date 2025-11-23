@@ -20,7 +20,7 @@ return new class extends Migration
                 ->references('client_code')
                 ->on('clients')
                 ->onDelete('set null');
-
+            $table->string('transaction_code')->nullable();
             $table->year('year')->nullable();
             $table->foreignId('relaas_type_id')->constrained('relaas_types');
             $table->string('relaas_number')->nullable();

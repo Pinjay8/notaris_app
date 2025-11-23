@@ -19,6 +19,23 @@ class NotaryRelaasAktaController extends Controller
         $this->service = $service;
     }
 
+    public function selectClient(Request $request)
+    {
+        $notarisId = auth()->user()->notaris_id;
+
+        $clients = Client::where('notaris_id', $notarisId)
+            ->when($request->search, function ($query, $search) {
+                $query->where('fullname', 'like', '%' . $search . '%')->orWhere('client_code', 'like', '%' . $search . '%');
+            })
+            ->where('deleted_at', null)
+            ->withCount('aktaTransactionsRelaas')
+            ->paginate(10);
+
+        return view('pages.BackOffice.RelaasAkta.AktaTransaction.selectClient', [
+            'clients' => $clients,
+        ]);
+    }
+
     public function index(Request $request)
     {
         $perPage = 10;
@@ -34,34 +51,36 @@ class NotaryRelaasAktaController extends Controller
         return view('pages.BackOffice.RelaasAkta.AktaTransaction.index', compact('data'));
     }
 
-    public function create()
-    {
-        $clients = Client::where('deleted_at', null)->get();
-        $notaris = Notaris::where('deleted_at', null)->get();
-        $relaasType = RelaasType::where('deleted_at', null)->get();
-        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris', 'relaasType'));
-    }
-
-    // public function generateRegistrationCode(int $notarisId, int $clientId): string
+    // public function create(Request $request)
     // {
-    //     $today = Carbon::now()->format('Ymd');
-
-    //     // Hitung jumlah konsultasi notaris ini hari ini
-    //     $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
-    //         ->where('client_id', $clientId)
-    //         ->whereDate('created_at', Carbon::today())
-    //         ->count();
-
-    //     $countToday += 1; // untuk konsultasi baru ini
-
-    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
+    //     $clients = Client::where('deleted_at', null)->get();
+    //     $notaris = Notaris::where('deleted_at', null)->get();
+    //     $relaasType = RelaasType::where('deleted_at', null)->get();
+    //     return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris', 'relaasType'));
     // }
+
+    public function create(Request $request)
+    {
+        $clientCode = $request->query('client_code');
+
+
+        $client = Client::where('client_code', $clientCode)->firstOrFail();
+        $notaris = Notaris::whereNull('deleted_at')->get();
+        $relaasType = RelaasType::whereNull('deleted_at')->where('notaris_id', auth()->user()->notaris_id)->get();
+
+        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact(
+            'client',
+            'clientCode',
+            'notaris',
+            'relaasType'
+        ));
+    }
 
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'client_code' => 'required',
+            // 'client_code' => 'required',
             'year' => 'nullable|digits:4|integer',
             'relaas_number' => 'nullable',
             'relaas_number_created_at' => 'nullable',
@@ -73,13 +92,20 @@ class NotaryRelaasAktaController extends Controller
             'status' => 'required|string',
             'note' => 'nullable|string',
         ], [
-            'client_code.required' => 'Klien harus dipilih.',
+            // 'client_code.required' => 'Klien harus dipilih.',
             'title.required' => 'Judul harus diisi.',
             'story.required' => 'Cerita harus diisi.',
             'story_date.required' => 'Tanggal cerita harus diisi.',
             'story_location.required' => 'Lokasi Story harus diisi.',
             'status.required' => 'Status harus diisi.',
         ]);
+
+        $clientCode = $request->client_code;
+
+        $validated['client_code'] = $clientCode;
+
+        // transaction_code sementara sama
+        $validated['transaction_code'] = $clientCode;
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
@@ -92,17 +118,16 @@ class NotaryRelaasAktaController extends Controller
     public function edit($id)
     {
         $data = $this->service->getById($id);
-        $clients = Client::where('deleted_at', null)->get();
-        $notaris = Notaris::where('deleted_at', null)->get();
-        $relaasType = RelaasType::where('deleted_at', null)->get();
+        $clientCode = $data->client_code;
+        $relaasType = RelaasType::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
 
-        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('data', 'clients', 'notaris', 'relaasType'));
+        return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('data', 'clientCode', 'relaasType'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'client_code' => 'required',
+            // 'client_code' => 'required',
             'year' => 'nullable|digits:4|integer',
             'relaas_type_id' => 'required',
             'relaas_number' => 'nullable',
@@ -118,13 +143,15 @@ class NotaryRelaasAktaController extends Controller
         $this->service->update($id, $validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi akta berhasil diperbarui.');
-        return redirect()->route('relaas-aktas.index');
+        return redirect()->route('relaas-aktas.index', ['client_code' => $request->client_code]);
     }
 
     public function destroy($id)
     {
         $this->service->delete($id);
-        return redirect()->route('relaas-aktas.index')->with('success', 'Transaksi akta berhasil dihapus.');
+
+        notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi akta berhasil dihapus.');
+        return redirect()->route('relaas-aktas.index');
     }
 
 

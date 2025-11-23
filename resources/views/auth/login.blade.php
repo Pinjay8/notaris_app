@@ -76,7 +76,7 @@
                                         <div class="text-center mt-3">
                                             <small class="text-muted">Lupa Password ?
                                                 <a href="{{ route('alertForgotPassword') }}"
-                                                    class="text-primary fw-semibold">Contact admin</a>
+                                                    class="text-primary fw-semibold">Kontak admin</a>
                                             </small>
                                         </div>
                                     </form>

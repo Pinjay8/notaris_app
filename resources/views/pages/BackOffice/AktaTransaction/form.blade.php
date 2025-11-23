@@ -20,7 +20,7 @@
                         @if (isset($transaction))
                             @method('PUT')
                         @endif
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="client_code" class="form-label text-sm">Klien</label>
                             <select name="client_code" id="client_code" class="form-select select2">
                                 <option value="" hidden>Pilih Klien</option>
@@ -31,7 +31,9 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
+
+                        <input type="hidden" name="client_code" value="{{ $clientCode }}">
 
                         <div class="mb-3">
                             <label for="akta_type_id" class="form-label text-sm">Jenis Akta</label>

@@ -38,7 +38,7 @@ class UserProfileController extends Controller
             }
 
             // Buat notaris baru
-            $notaris = $user->notaris()->create($credential);
+            $notaris = $user->notaris->create($credential);
 
             // Update relasi di user
             $user->update([
@@ -46,7 +46,7 @@ class UserProfileController extends Controller
             ]);
         } else {
             // Update notaris existing
-            $notaris = $user->notaris();
+            $notaris = $user->notaris;
 
             // Kalau ada file baru, simpan dan timpa yang lama
             if ($request->hasFile('image')) {

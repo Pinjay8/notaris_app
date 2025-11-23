@@ -14,6 +14,7 @@ class NotaryRelaasAkta extends Model
     protected $fillable = [
         'notaris_id',
         'client_code',
+        'transaction_code',
         'year',
         'relaas_type_id',
         'relaas_number',

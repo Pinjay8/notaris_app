@@ -20,8 +20,8 @@ return new class extends Migration
                 ->references('client_code')
                 ->on('clients')
                 ->onDelete('set null');
-
             $table->foreignId('akta_type_id')->constrained('notary_akta_types');
+            $table->string('transaction_code')->nullable();
             $table->string('year')->nullable();
             $table->string('akta_number')->nullable();
             $table->string('akta_number_created_at')->nullable();

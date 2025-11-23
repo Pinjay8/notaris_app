@@ -12,10 +12,26 @@ use Illuminate\Http\Request;
 class NotaryClientWarkahController extends Controller
 {
 
+    // public function selectClient(Request $request)
+    // {
+    //     $notarisId = auth()->user()->notaris_id;
+    //     $clients = Client::where('notaris_id', $notarisId)->paginate(10);
+    //     return view('pages.BackOffice.Warkah.selectClient', [
+    //         'clients' => $clients,
+    //     ]);
+    // }
+
     public function selectClient(Request $request)
     {
         $notarisId = auth()->user()->notaris_id;
-        $clients = Client::where('notaris_id', $notarisId)->paginate(10);
+
+        $clients = Client::where('notaris_id', $notarisId)
+            ->when($request->search, function ($query, $search) {
+                $query->where('fullname', 'like', '%' . $search . '%')->orWhere('client_code', 'like', '%' . $search . '%');
+            })
+            ->where('deleted_at', null)
+            ->paginate(10);
+
         return view('pages.BackOffice.Warkah.selectClient', [
             'clients' => $clients,
         ]);
@@ -29,7 +45,7 @@ class NotaryClientWarkahController extends Controller
             $query->where('client_code', 'like', '%' . $request->client_code . '%');
         }
 
-        if ($request->filled('client_name')) {
+        if ($request->filled('fullname')) {
             $query->whereHas('client', function ($q) use ($request) {
                 $q->where('fullname', 'like', '%' . $request->client_name . '%');
             });

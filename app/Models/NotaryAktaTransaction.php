@@ -16,6 +16,7 @@ class NotaryAktaTransaction extends Model
         'notaris_id',
         'client_code',
         'akta_type_id',
+        'transaction_code',
         'year',
         'status',
         'akta_number',

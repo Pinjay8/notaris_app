@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class RelaasTypeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $notarisId = auth()->user()->notaris_id;
-        $aktaTypes  = RelaasType::where('notaris_id', $notarisId)->orderBy('created_at', 'desc')->paginate(10);
+
+        $aktaTypes = RelaasType::where('notaris_id', $notarisId)
+            ->when($request->search, function ($query, $search) {
+                $query->where('type', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('pages.BackOffice.RelaasAkta.AktaType.index', compact('aktaTypes'));
     }
