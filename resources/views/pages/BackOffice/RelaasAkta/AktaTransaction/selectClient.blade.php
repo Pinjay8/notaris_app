@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 
-@section('title', 'Warkah')
+@section('title', 'Transaksi Akta')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Warkah'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'PPAT / Transaksi Akta'])
 
     <<div class="row mt-4 mx-4 ">
         <div class="col-md-12">

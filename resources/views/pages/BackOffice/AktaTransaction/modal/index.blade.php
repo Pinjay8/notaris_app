@@ -7,13 +7,15 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body text-wrap">
-                Apakah Anda yakin ingin menghapus transaksi ini?
+                Apakah Anda yakin ingin menghapus transaksi akta ini?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
-                <form id="deleteForm" method="POST" action="{{ route('akta-transactions.destroy', $transaction->id) }}">
+                <form id="deleteForm" method="POST"
+                    action="{{ route('akta-transactions.destroy', $transaction->id) }}">
                     @csrf
                     @method('DELETE')
+                    <input type="hidden" name="client_code" value="{{ request('client_code') }}">
                     <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                 </form>
             </div>

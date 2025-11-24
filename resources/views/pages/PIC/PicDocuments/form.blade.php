@@ -75,7 +75,7 @@
                                 @foreach ($aktaTransaction as $akta)
                                     <option value="{{ $akta->id }}"
                                         {{ isset($picDocument) && $picDocument->transaction_type === 'akta' && $picDocument->transaction_id == $akta->id ? 'selected' : '' }}>
-                                        {{ $akta->akta_type->type }} - {{ $akta->akta_number }}
+                                        {{ $akta->transaction_code }} - {{ $akta->akta_type->type }}
                                     </option>
                                 @endforeach
                             </select>
@@ -89,7 +89,7 @@
                                 @foreach ($relaasTransaction as $relaas)
                                     <option value="{{ $relaas->id }}"
                                         {{ isset($picDocument) && $picDocument->transaction_type === 'ppat' && $picDocument->transaction_id == $relaas->id ? 'selected' : '' }}>
-                                        {{ $relaas->akta_type->type }} - {{ $relaas->relaas_number }} -
+                                        {{ $akta->transaction_code }} - {{ $relaas->akta_type->type }} -
                                         {{ $relaas->title }}
                                     </option>
                                 @endforeach

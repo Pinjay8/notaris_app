@@ -37,6 +37,8 @@ class NotaryAktaTransactionController extends Controller
         ]);
     }
 
+
+
     public function index(Request $request)
     {
         $filters = $request->only(['status', 'transaction_code']);
@@ -55,28 +57,26 @@ class NotaryAktaTransactionController extends Controller
         return view('pages.BackOffice.AktaTransaction.form', compact('clientCode', 'aktaTypes'));
     }
 
-    // public function generateRegistrationCode(int $notarisId, int $clientId): string
-    // {
-    //     $today = Carbon::now()->format('Ymd');
 
-    //     // Hitung jumlah konsultasi notaris ini hari ini
-    //     $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
-    //         ->where('client_id', $clientId)
-    //         ->whereDate('created_at', Carbon::today())
-    //         ->count();
+    public function generateTransactionCode(int $notarisId, string $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
 
-    //     $countToday += 1; // untuk konsultasi baru ini
+        $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
+            ->where('client_code', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->where('deleted_at' , null)
+            ->count();
 
-    //     return 'N' . '-' . $today . '-' . $notarisId . '-' . $clientId . '-' . $countToday;
-    // }
+        $countToday += 1;
+
+        return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
+    }
 
     public function store(Request $request)
     {
         $data = $request->validate(
             [
-                // 'notaris_id' => 'required|exists:notaris,id',
-                // 'registration_code' => 'required|string',
-                // 'client_code' => 'required',
                 'akta_type_id' => 'required|exists:notary_akta_types,id',
                 'date_submission' => 'nullable|date',
                 'date_finished' => 'nullable|date',
@@ -92,7 +92,9 @@ class NotaryAktaTransactionController extends Controller
 
         $data['client_code'] = $clientCode;
 
-        $data['transaction_code'] = $clientCode;
+        // $data['transaction_code'] = $clientCode;
+        $notarisId = auth()->user()->notaris_id;
+        $data['transaction_code'] = $this->generateTransactionCode($notarisId, $clientCode);
 
 
         $data['status'] = 'draft';
@@ -104,7 +106,7 @@ class NotaryAktaTransactionController extends Controller
         $this->service->create($data);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta transaction.');
-        return redirect()->route('akta-transactions.index');
+        return redirect()->route('akta-transactions.index', ['client_code' => $clientCode]);
     }
 
     public function edit($id)
@@ -120,9 +122,6 @@ class NotaryAktaTransactionController extends Controller
     {
         $data = $request->validate(
             [
-                // 'notaris_id' => 'required|exists:notaris,id',
-                // 'registration_code' => 'required|string',
-                'client_code' => 'required',
                 'akta_type_id' => 'required|exists:notary_akta_types,id',
                 'date_submission' => 'required|date',
                 'date_finished' => 'required|date',
@@ -130,30 +129,31 @@ class NotaryAktaTransactionController extends Controller
                 'note' => 'nullable|string',
             ],
             [
-                'client_code.required' => 'Klien harus dipilih.',
                 'akta_type_id.required' => 'Jenis akta harus dipilih.',
+                'date_submission.required' => 'Tanggal pengajuan harus diisi.',
+                'date_finished.required' => 'Tanggal selesai harus diisi.',
+                'status.required' => 'Status harus diisi.',
             ]
         );
 
 
-        // $data['status'] = 'draft';
-        // $data['year'] = null;
-        // $data['akta_number'] = null;
-        // $data['akta_number_created_at'] = null;
         $data['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->update($id, $data);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta transaction.');
-        return redirect()->route('akta-transactions.index');
+        return redirect()->route('akta-transactions.index', ['client_code' => $request->client_code]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $clientCode = $request->client_code;
         $this->service->delete($id);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta transaction.');
-        return redirect()->route('akta-transactions.index');
+        return redirect()->route('akta-transactions.index', [
+            'client_code' => $request->client_code
+        ]);
     }
 
 

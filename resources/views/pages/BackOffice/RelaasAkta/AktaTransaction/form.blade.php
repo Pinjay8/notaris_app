@@ -20,24 +20,6 @@
                             @method('PUT')
                         @endif
 
-                        {{-- Client --}}
-                        {{-- <div class="mb-3">
-                            <label for="client_code" class="form-label text-sm">Klien</label>
-                            <select name="client_code" id="client_code"
-                                class="form-select select2 @error('client_code') is-invalid @enderror">
-                                <option value="" hidden>Pilih Klien</option>
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->client_code }}"
-                                        {{ old('client_code', $data->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }} - {{ $client->client_code }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('client_code')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div> --}}
-
                         <input type="hidden" name="client_code" value="{{ $clientCode }}">
 
                         <div class="mb-3">
@@ -47,9 +29,9 @@
                                 <option value="" hidden>Pilih Jenis Akta</option>
                                 @foreach ($relaasType as $relaasTypes)
                                     <option value="{{ $relaasTypes->id }}"
-                                        {{ old('relaas_type_id', $data->id ?? '') == $relaasTypes->id ? 'selected' : '' }}
+                                        {{ old('relaas_type_id', $data->relaas_type_id ?? '') == $relaasTypes->id ? 'selected' : '' }}
                                         class="text-capitalize">
-                                        {{ $relaasTypes->category }}
+                                        {{ $relaasTypes->type }}
                                     </option>
                                 @endforeach
                             </select>

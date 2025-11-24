@@ -59,11 +59,25 @@ class NotaryRelaasAktaController extends Controller
     //     return view('pages.BackOffice.RelaasAkta.AktaTransaction.form', compact('clients', 'notaris', 'relaasType'));
     // }
 
+
+    public function generateTransactionCode(int $notarisId, string $clientId): string
+    {
+        $today = Carbon::now()->format('Ymd');
+
+        $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
+            ->where('client_code', $clientId)
+            ->whereDate('created_at', Carbon::today())
+            ->where('deleted_at', null)
+            ->count();
+
+        $countToday += 1;
+
+        return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
+    }
+
     public function create(Request $request)
     {
         $clientCode = $request->query('client_code');
-
-
         $client = Client::where('client_code', $clientCode)->firstOrFail();
         $notaris = Notaris::whereNull('deleted_at')->get();
         $relaasType = RelaasType::whereNull('deleted_at')->where('notaris_id', auth()->user()->notaris_id)->get();
@@ -103,16 +117,16 @@ class NotaryRelaasAktaController extends Controller
         $clientCode = $request->client_code;
 
         $validated['client_code'] = $clientCode;
-
+        $notarisId = auth()->user()->notaris_id;
         // transaction_code sementara sama
-        $validated['transaction_code'] = $clientCode;
+        $validated['transaction_code'] = $this->generateTransactionCode($notarisId, $clientCode);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
 
         $this->service->create($validated);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi Akta berhasil ditambahkan.');
-        return redirect()->route('relaas-aktas.index');
+        return redirect()->route('relaas-aktas.index', ['client_code' => $clientCode]);
     }
 
     public function edit($id)
@@ -146,12 +160,12 @@ class NotaryRelaasAktaController extends Controller
         return redirect()->route('relaas-aktas.index', ['client_code' => $request->client_code]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->service->delete($id);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Transaksi akta berhasil dihapus.');
-        return redirect()->route('relaas-aktas.index');
+        return redirect()->route('relaas-aktas.index', ['client_code' => $request->client_code]);
     }
 
 

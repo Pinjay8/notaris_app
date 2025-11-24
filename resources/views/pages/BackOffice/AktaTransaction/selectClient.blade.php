@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', 'Warkah')
+@section('title', 'Transaksi Akta')
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Akta Notaris / Transaksi Akta'])
@@ -47,7 +47,7 @@
                                             <td class="text-center">
                                                 <a href="{{ route('akta-transactions.index', ['client_code' => $client->client_code]) }}"
                                                     class="btn btn-outline-primary btn-sm rounded-pill mb-0">
-                                                    Pilih Transaksis
+                                                    Pilih Transaksi
                                                 </a>
                                             </td>
                                         </tr>

@@ -14,7 +14,7 @@
                         class="btn btn-primary btn-sm">+ Tambah Transaksi</a>
                 </div>
                 <form method="GET" action="{{ route('relaas-aktas.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
-                    style="max-width:600px;" onchange="this.submit()" class="no-spinner">
+                    style="width:500px;" onchange="this.submit()" class="no-spinner">
                     <input type="text" name="transaction_code" placeholder="Cari Kode Transaksi"
                         value="{{ request('transaction_code') }}" class="form-control">
                     <select name="status" class="form-select">
@@ -51,8 +51,7 @@
                             <tbody>
                                 @forelse($data as $akta)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        {{-- <td>{{ $akta->notaris->display_name ?? '-' }}</td> --}}
+                                        <td>{{ $data->firstItem() + $loop->index }}</td>
                                         <td>{{ $akta->client->fullname ?? '-' }}</td>
                                         <td>{{ $akta->client_code ?? '-' }}</td>
                                         <td>{{ $akta->transaction_code ?? '-' }}</td>
@@ -81,7 +80,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="11" class="text-muted">Belum ada transaksi Akta.</td>
+                                        <td colspan="12" class="text-muted">Belum ada transaksi Akta.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
