@@ -17,9 +17,9 @@
                     </div>
                     <form method="GET" action="{{ route('pic_documents.index') }}" class="d-flex gap-2 ms-auto me-4 mb-0"
                         style="max-width: 600px; width: 100%" class="no-spinner">
-                        <input type="text" name="search" class="form-control form-control-sm"
+                        <input type="text" name="search" class="form-control form-control"
                             placeholder="Cari Kode Dokumen / Nama PIC" value="{{ request('search') }}">
-                        <select name="status" class="form-select form-select-sm">
+                        <select name="status" class="form-select form-select">
                             <option value="">Semua Status</option>
                             <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Dikirim
                             </option>
@@ -58,11 +58,11 @@
                                             <td>{{ $doc->client->fullname ?? '-' }}</td>
                                             <td class="text-capitalize">{{ $doc->transaction_type }}</td>
                                             <td>
-                                                {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->translatedFormat('d F Y H:i') : '-' }}
+                                                {{ $doc->received_date ? \Carbon\Carbon::parse($doc->received_date)->translatedFormat('d-m-Y H:i:s') : '-' }}
                                             </td>
                                             @php
                                                 $badgeColors = [
-                                                    'delivered' => 'primary',
+                                                    'delivered' => 'secondary',
                                                     'completed' => 'success',
                                                     'process' => 'warning',
                                                     'received' => 'info',

@@ -46,7 +46,7 @@ class PicDocumentsController extends Controller
         // dd($request->all());
         $validated = $request->validate([
             'pic_id' => 'required',
-            'client_code' => 'required',
+            // 'client_code' => 'required',
             'transaction_id' => 'required',
             'transaction_type' => 'required',
             'received_date' => 'required|date',
@@ -55,6 +55,23 @@ class PicDocumentsController extends Controller
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
+
+        // Ambil client_code berdasarkan tipe transaksi
+        if ($validated['transaction_type'] === 'akta') {
+            $transaction = NotaryAktaTransaction::find($validated['transaction_id']);
+            if ($transaction) {
+                $validated['client_code'] = $transaction->client_code;
+            }
+        } elseif ($validated['transaction_type'] === 'ppat') {
+            $transaction = NotaryRelaasAkta::find($validated['transaction_id']);
+            if ($transaction) {
+                $validated['client_code'] = $transaction->client_code;
+            }
+        }
+
+        if (!isset($validated['client_code'])) {
+            return back()->withErrors(['transaction_id' => 'Client untuk transaksi ini tidak ditemukan.']);
+        }
 
         $this->service->createDocument($validated);
 
@@ -67,8 +84,8 @@ class PicDocumentsController extends Controller
         $clients =  Client::where('deleted_at', null)->get();
         $picStaffList = PicStaff::where('deleted_at', null)->get();
         $picDocument = $this->service->getDocumentById($id);
-        $aktaTransaction = NotaryAktaTransaction::all();
-        $relaasTransaction = NotaryRelaasAkta::all();
+        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->get();
+        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->get();
 
         return view('pages.PIC.PicDocuments.form', compact('picDocument', 'clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }
@@ -77,7 +94,7 @@ class PicDocumentsController extends Controller
     {
         $validated = $request->validate([
             'pic_id' => 'required',
-            'client_code' => 'required',
+            // 'client_code' => 'required',
             'received_date' => 'required',
             'transaction_type' => 'required',
             'transaction_id' => 'nullable',
@@ -104,7 +121,7 @@ class PicDocumentsController extends Controller
     public function print($id)
     {
         $picDocuments = PicDocuments::findOrFail($id);
-        // Render blade ke HTML
+
         $html = view('pages.PIC.PicDocuments.print', compact('picDocuments'))->render();
 
         // Inisialisasi mPDF

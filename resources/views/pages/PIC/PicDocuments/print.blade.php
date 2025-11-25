@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Total Biaya</title>
+    <title>PIC Dokumen</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/img/logo-ct.png">
     <style>
         body {
             font-family: DejaVu Sans, sans-serif;
@@ -164,36 +166,11 @@
         <h2>PIC Dokumen</h2>
     </div>
 
-    {{-- Informasi utama --}}
-    <div class="info">
-        <table class="info-table">
-            {{-- <tr>
-                <td><strong>Kode Pembayaran</strong></td>
-                <td>{{ $costs->payment_code }}</td>
-                <td><strong>Notaris</strong></td>
-                <td>{{ $costs->notaris->display_name ?? '-' }}</td>
-            </tr>
-            <tr>
-                <td><strong>Klien</strong></td>
-                <td>{{ $costs->client->fullname ?? '-' }}</td>
-                <td><strong>Status Pembayaran</strong></td>
-                <td>
-                    @if ($costs->payment_status == 'unpaid')
-                        Belum Dibayar
-                    @elseif($costs->payment_status == 'partial')
-                        Sebagian Dibayar
-                    @else
-                        Lunas
-                    @endif
-                </td>
-            </tr> --}}
-        </table>
-    </div>
-
     {{-- Rincian biaya --}}
     <table>
         <thead>
             <tr>
+                <th>Kode Transaksi</th>
                 <th>Kode Klien</th>
                 <th>Kode Dokumen</th>
                 <th>Tanggal Diterima</th>
@@ -205,6 +182,15 @@
         </thead>
         <tbody>
             <tr>
+                <td>
+                    @if ($picDocuments->transaction_type === 'akta')
+                        {{ $picDocuments->aktaTransaction->transaction_code ?? '-' }}
+                    @elseif ($picDocuments->transaction_type === 'ppat')
+                        {{ $picDocuments->relaasTransaction->transaction_code ?? '-' }}
+                    @else
+                        -
+                    @endif
+                </td>
                 <td>{{ $picDocuments->client->client_code }}</td>
                 <td>{{ $picDocuments->pic_document_code }}</td>
                 <td>{{ $picDocuments->received_date ? \Carbon\Carbon::parse($picDocuments->received_date)->translatedFormat('d F Y H:i') : '-' }}

@@ -37,20 +37,6 @@
                             </select>
                         </div>
 
-                        {{-- Klien --}}
-                        <div class="mb-3">
-                            <label for="client_code" class="form-label text-sm">Klien</label>
-                            <select name="client_code" id="client_code" class="form-select select2">
-                                <option value="" hidden>Pilih Klien</option>
-                                @foreach ($clients as $client)
-                                    <option value="{{ $client->client_code }}"
-                                        {{ old('client_code', $picDocument->client_code ?? '') == $client->client_code ? 'selected' : '' }}>
-                                        {{ $client->fullname }} - {{ $client->client_code }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         {{-- Tipe Transaksi --}}
                         <div class="mb-3">
                             <label for="transaction_type" class="form-label text-sm">Tipe Transaksi</label>
@@ -69,16 +55,20 @@
 
                         {{-- Akta Transaction --}}
                         <div class="mb-3" id="akta_section" style="display: none;">
-                            <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta</label>
+                            <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta </label>
                             <select id="akta_transaction_id" name="akta_transaction_id" class="form-select">
                                 <option value="" hidden>Pilih Transaksi</option>
                                 @foreach ($aktaTransaction as $akta)
                                     <option value="{{ $akta->id }}"
                                         {{ isset($picDocument) && $picDocument->transaction_type === 'akta' && $picDocument->transaction_id == $akta->id ? 'selected' : '' }}>
-                                        {{ $akta->transaction_code }} - {{ $akta->akta_type->type }}
+                                        {{ $akta->client->fullname }} - {{ $akta->transaction_code }} -
+                                        {{ $akta->akta_type->type }}
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="text-muted">
+                                Format : Nama Klien – Kode Transaksi – Jenis Akta
+                            </small>
                         </div>
 
                         {{-- Relaas Transaction --}}
@@ -89,11 +79,15 @@
                                 @foreach ($relaasTransaction as $relaas)
                                     <option value="{{ $relaas->id }}"
                                         {{ isset($picDocument) && $picDocument->transaction_type === 'ppat' && $picDocument->transaction_id == $relaas->id ? 'selected' : '' }}>
-                                        {{ $akta->transaction_code }} - {{ $relaas->akta_type->type }} -
-                                        {{ $relaas->title }}
+                                        {{ $relaas->client->fullname }} - {{ $akta->transaction_code }} -
+                                        {{ $relaas->akta_type->type }}
+                                        {{-- -{{ $relaas->title }} --}}
                                     </option>
                                 @endforeach
                             </select>
+                            <small class="text-muted">
+                                Format : Nama Klien – Kode Transaksi – Jenis Akta
+                            </small>
                         </div>
 
                         {{-- Tanggal Terima --}}
@@ -132,7 +126,7 @@
                         <div class="mt-4">
                             <a href="{{ route('pic_documents.index') }}" class="btn btn-secondary">Kembali</a>
                             <button type="submit" class="btn btn-primary">
-                                {{ isset($picDocument) ? 'Update' : 'Simpan' }}
+                                {{ isset($picDocument) ? 'Ubah' : 'Simpan' }}
                             </button>
                         </div>
                     </form>
