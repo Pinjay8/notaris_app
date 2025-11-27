@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Tambah Warkah}</h6>
+                    <h6>Tambah Warkah</h6>
                 </div>
                 <hr>
                 <div class="card-body px-4 pt-0 pb-2">
