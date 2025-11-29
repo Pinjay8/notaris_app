@@ -24,8 +24,8 @@ class NotaryAktaTransaction extends Model
         'date_submission',
         'date_finished',
         'note',
-        'created_at',
-        'updated_at'
+        // 'created_at',
+        // 'updated_at'
     ];
 
     public function notaris()
@@ -45,5 +45,6 @@ class NotaryAktaTransaction extends Model
 
     protected $casts = [
         'akta_number_created_at' => 'datetime',
+        'akta_number' => 'encrypted',
     ];
 }

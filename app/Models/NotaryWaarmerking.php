@@ -35,4 +35,9 @@ class NotaryWaarmerking extends Model
     {
         return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
+
+    protected $casts = [
+        'waarmerking_number' => 'encrypted',
+        'document_number' => 'encrypted',
+    ];
 }

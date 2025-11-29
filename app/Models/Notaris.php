@@ -28,6 +28,12 @@ class Notaris extends Model
         'information',
     ];
 
+    protected $casts = [
+        'phone' => 'encrypted',
+        'email' => 'encrypted',
+    ];
+
+
     public function clients()
     {
         return $this->hasMany(Client::class, 'notaris_id', 'id');

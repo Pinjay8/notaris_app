@@ -12,7 +12,6 @@ class NotaryRelaasDocument extends Model
     protected $fillable = [
         'notaris_id',
         'client_code',
-        'registration_code',
         'relaas_id',
         'name',
         'type',

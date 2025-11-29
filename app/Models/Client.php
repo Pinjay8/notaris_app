@@ -45,10 +45,15 @@ class Client extends Model
         return $this->hasMany(NotaryAktaTransaction::class, 'client_code', 'client_code');
     }
 
-      public function aktaTransactionsRelaas()
+    public function aktaTransactionsRelaas()
     {
         return $this->hasMany(NotaryRelaasAkta::class, 'client_code', 'client_code');
     }
 
-
+    protected $casts = [
+        'phone' => 'encrypted',
+        'email' => 'encrypted',
+        'nik'   => 'encrypted',
+        'npwp'  => 'encrypted',
+    ];
 }

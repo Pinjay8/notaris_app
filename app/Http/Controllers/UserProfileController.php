@@ -16,6 +16,7 @@ class UserProfileController extends Controller
     {
         $user = User::where('id', Auth::user()->id)->first();
         $notaris = $user->notaris;
+        // dd($notaris->toArray());
 
         return view('pages.user-profile', compact('user', 'notaris'));
     }

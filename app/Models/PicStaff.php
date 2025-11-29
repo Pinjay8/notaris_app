@@ -10,7 +10,7 @@ class PicStaff extends Model
 {
 
     use LogsActivityCustom, SoftDeletes;
-    
+
     protected $table = 'pic_staff';
 
     protected $fillable = [
@@ -27,4 +27,9 @@ class PicStaff extends Model
     {
         return $this->belongsTo(Notaris::class);
     }
+
+    protected $casts = [
+        'email' => 'encrypted',
+        'phone_number' => 'encrypted',
+    ];
 }

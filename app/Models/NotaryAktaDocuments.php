@@ -13,7 +13,6 @@ class NotaryAktaDocuments extends Model
         'notaris_id',
         'client_code',
         'akta_transaction_id',
-        'registration_code',
         'name',
         'type',
         'file_name',

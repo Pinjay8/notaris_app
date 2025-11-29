@@ -16,7 +16,6 @@ class NotaryConsultation extends Model
     protected $fillable = [
         'notaris_id',
         'client_code',
-        // 'registration_code',
         'subject',
         'description',
         'status'

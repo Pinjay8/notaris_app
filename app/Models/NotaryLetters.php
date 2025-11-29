@@ -35,4 +35,8 @@ class NotaryLetters extends Model
     {
         return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
+
+    protected $casts = [
+        'letter_number' => 'encrypted',
+    ];
 }

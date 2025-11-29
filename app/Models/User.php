@@ -53,6 +53,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone' => 'encrypted',
     ];
 
     /**
@@ -65,5 +66,4 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
-
 }
