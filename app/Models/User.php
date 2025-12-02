@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->belongsTo(Notaris::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscriptions::class, 'user_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

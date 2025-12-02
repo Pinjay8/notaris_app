@@ -36,7 +36,19 @@ class LoginController extends Controller
                 return redirect()->route('login');
             }
 
-            if ($user->active_at && $user->active_at < now()) {
+            // if ($user->active_at && $user->active_at < now()) {
+            //     Auth::logout();
+            //     notyf()
+            //         ->position('x', 'right')
+            //         ->position('y', 'top')
+            //         ->warning('Akun anda sudah kadaluarsa. Silakan hubungi admin untuk aktivasi kembali.');
+            //     return redirect()->route('login');
+            // }
+
+
+            $lastSubscription = $user->subscriptions()->latest('end_date')->first();
+
+            if ($lastSubscription && $lastSubscription->end_date < now()) {
                 Auth::logout();
                 notyf()
                     ->position('x', 'right')
@@ -44,7 +56,7 @@ class LoginController extends Controller
                     ->warning('Akun anda sudah kadaluarsa. Silakan hubungi admin untuk aktivasi kembali.');
                 return redirect()->route('login');
             }
-            
+
             $request->session()->regenerate();
 
             notyf()
