@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     public function notaris()
     {
-        return $this->belongsTo(Notaris::class);
+        return $this->hasOne(Notaris::class);
     }
 
     public function subscriptions()
