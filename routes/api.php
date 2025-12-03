@@ -17,9 +17,10 @@ use App\Http\Controllers\Api\SummaryNotarisController;
 
 
 Route::middleware('auth.token')->group(function () {
-    Route::get('/get-users',[UserSyncController::class, 'index']);
+    Route::get('/get-users', [UserSyncController::class, 'index']);
     Route::post('/users', [UserSyncController::class, 'store']);
     Route::post('/subscriptions', [SubscriptionSyncController::class, 'store']);
+    Route::get('subscriptions', [SubscriptionSyncController::class, 'index']);
     Route::get('/activity-logs', [ActivityLogApiController::class, 'index']);
     Route::get('/notaris', [NotarisController::class, 'index']);
 

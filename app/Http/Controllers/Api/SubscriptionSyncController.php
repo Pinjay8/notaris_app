@@ -26,4 +26,15 @@ class SubscriptionSyncController extends Controller
             ], 500);
         }
     }
+
+    public function index()
+    {
+        $subscription = Subscriptions::all();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Subscription data successfully retrieved',
+            'data' => $subscription
+        ], 200);
+    }
 }
