@@ -30,25 +30,23 @@
 
 <body class="bg-light">
     @guest
-    @yield('content')
+        @yield('content')
     @endguest
 
     @auth
 
-    @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    @elseif (in_array(request()->route()->getName(), ['profile-static', 'profile']))
-    <div class="position-absolute w-100 min-height-250 top-0"
-        style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
-        <span class="mask bg-primary opacity-6"></span>
-    </div>
-    @endif
-    @include('layouts.navbars.auth.sidenav')
-    <main class="main-content border-radius-lg">
-        @yield('content')
-    </main>
-    {{-- @include('components.fixed-plugin') --}}
-    {{-- @endif --}}
+        @if (!in_array(request()->route()->getName(), ['profile', 'profile-static']))
+            <div class="min-height-300 bg-primary position-absolute w-100"></div>
+        @elseif (in_array(request()->route()->getName(), ['profile-static', 'profile']))
+            <div class="position-absolute w-100 min-height-250 top-0"
+                style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+                <span class="mask bg-primary opacity-6"></span>
+            </div>
+        @endif
+        @include('layouts.navbars.auth.sidenav')
+        <main class="main-content border-radius-lg">
+            @yield('content')
+        </main>
     @endauth
 
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
@@ -58,12 +56,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
-                }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
             }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
     </script>
     <!-- Github buttons -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -85,54 +83,6 @@
     <script>
         AOS.init();
     </script>
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const spinner = document.getElementById('loadingSpinner');
-
-    function showSpinner() {
-        spinner.classList.remove('d-none');
-        spinner.classList.add('show');
-        const sidebar = document.querySelector('.navbar-vertical');
-        if (sidebar) sidebar.style.display = 'none';
-    }
-
-    function hideSpinner() {
-        spinner.classList.add('d-none');
-        spinner.classList.remove('show');
-        const sidebar = document.querySelector('.navbar-vertical');
-        if (sidebar) sidebar.style.display = '';
-    }
-
-    // Semua link internal
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (link.href && !link.href.includes('#') && !link.target && !link.dataset.noSpinner) {
-                showSpinner();
-            }
-        });
-    });
-
-    // Semua form
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            if (form.classList.contains('no-spinner')) {
-                // cegah refresh
-                e.preventDefault();
-                console.log('Form no-spinner, tidak melakukan refresh');
-
-                // kalau mau, bisa trigger AJAX atau proses manual di sini
-                return false; // pastikan submit dihentikan
-            } else {
-                showSpinner();
-            }
-        });
-    });
-});
-
-
-
-    </script> --}}
     @stack('js')
 </body>
 

@@ -5,7 +5,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- 
+
 :root {
     --bs-blue: #63b3ed;
     --bs-indigo: #596cff;
@@ -22374,6 +22374,7 @@ hr.horizontal.gray-light {
     }
 }
 
+
 .sidenav[data-color="primary"] .navbar-nav > .nav-item > .nav-link.active {
     background-image: linear-gradient(310deg, #fb6340 0%, #fb6340 100%);
 }
@@ -25955,19 +25956,30 @@ pre[class*="language-"] {
     position: absolute;
 }
 
-.ps__rail-y {
+.ps__rail-y,
+.ps__thumb-y {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Jika masih muncul saat hover scroll */
+.ps:hover > .ps__rail-y,
+.ps:hover > .ps__rail-x {
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* .ps__rail-y {
     display: none;
     opacity: 0;
     transition: background-color 0.2s linear, opacity 0.2s linear;
     -webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
     width: 15px;
-    /* there must be 'right' or 'left' for ps__rail-y */
     right: 0;
-    /* please don't change 'position' */
     position: absolute;
-}
+} */
 
-.ps--active-x > .ps__rail-x,
+/* .ps--active-x > .ps__rail-x,
 .ps--active-y > .ps__rail-y {
     display: block;
     background-color: transparent;
@@ -25990,7 +26002,7 @@ pre[class*="language-"] {
 .ps .ps__rail-y.ps--clicking {
     background-color: #eee;
     opacity: 0.9;
-}
+} */
 
 /*
  * Scrollbar thumb styles
@@ -26001,25 +26013,21 @@ pre[class*="language-"] {
     transition: background-color 0.2s linear, height 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s linear, height 0.2s ease-in-out;
     height: 6px;
-    /* there must be 'bottom' for ps__thumb-x */
     bottom: 2px;
-    /* please don't change 'position' */
     position: absolute;
 }
 
-.ps__thumb-y {
+/* .ps__thumb-y {
     background-color: #aaa;
     border-radius: 6px;
     transition: background-color 0.2s linear, width 0.2s ease-in-out;
     -webkit-transition: background-color 0.2s linear, width 0.2s ease-in-out;
     width: 6px;
-    /* there must be 'right' for ps__thumb-y */
     right: 2px;
-    /* please don't change 'position' */
     position: absolute;
-}
+} */
 
-.ps__rail-x:hover > .ps__thumb-x,
+/* .ps__rail-x:hover > .ps__thumb-x,
 .ps__rail-x:focus > .ps__thumb-x,
 .ps__rail-x.ps--clicking .ps__thumb-x {
     background-color: #999;
@@ -26031,7 +26039,7 @@ pre[class*="language-"] {
 .ps__rail-y.ps--clicking .ps__thumb-y {
     background-color: #999;
     width: 11px;
-}
+} */
 
 /* MS supports */
 @supports (-ms-overflow-style: none) {

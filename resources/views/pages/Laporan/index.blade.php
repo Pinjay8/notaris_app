@@ -16,20 +16,20 @@
                 </div>
                 <hr>
                 <div class="card-body px-2 pt-0 pb-2">
-                    <form method="GET" action="{{ route('report-payment.index') }}" class="row g-3 mb-4 px-3 no-spinner">
-                        <div class="col-md-4 col-xl-5">
+                    <form method="GET" action="{{ route('report-payment.index') }}" class="row g-2 mb-4 px-1 flex-wrap no-spinner">
+                        <div class="col-md-4 col-xl-4">
                             <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                             <input type="date" class="form-control" id="start_date" name="start_date"
                                 value="{{ request('start_date') }}">
                         </div>
 
-                        <div class=" col-md-4 col-xl-5">
+                        <div class=" col-md-4 col-xl-4">
                             <label for="end_date" class="form-label text-sm">Tanggal Akhir</label>
                             <input type="date" class="form-control" id="end_date" name="end_date"
                                 value="{{ request('end_date') }}">
                         </div>
 
-                        <div class=" col-md-2 col-xl-1">
+                        <div class=" col-md-2 col-xl-2">
                             <label for="status" class="form-label text-sm">Status</label>
                             <select class="form-select" name="status" id="status">
                                 <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
@@ -42,7 +42,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-lg-2 col-xl-1 d-lg-flex align-items-end py-2">
+                        <div class=" col-lg-2 col-xl-2 d-lg-flex align-items-end py-1">
                             <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
                                 Cari
                             </button>
@@ -74,7 +74,9 @@
                                             {{ number_format($payment->cost->total_cost ?? 0, 0, ',', '.') }}
                                         </td>
                                         <td>Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
-                                        <td>Rp {{ number_format($payment->cost->total_cost - $payment->amount, 0, ',', '.') }}</td>
+                                        <td>Rp
+                                            {{ number_format($payment->cost->total_cost - $payment->amount, 0, ',', '.') }}
+                                        </td>
                                         <td>
                                             @php
                                                 $status = $payment->cost->payment_status;

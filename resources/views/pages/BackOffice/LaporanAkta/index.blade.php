@@ -15,9 +15,9 @@
                 <hr>
                 <div class="card-body pt-0">
                     <form method="GET" action="{{ route('laporan-akta.index') }}" class="no-spinner">
-                        <div class="row g-3 align-items-end">
+                        <div class="row g-1 align-items-end">
                             {{-- Pilih Type --}}
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="type" class="form-label text-sm">Jenis Akta</label>
                                 <select name="type" id="type" class="form-select">
                                     <option value="" hidden>Pilih Jenis</option>
@@ -30,21 +30,21 @@
                             </div>
 
                             {{-- Start Date --}}
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                                 <input type="date" class="form-control" name="start_date" id="start_date"
                                     value="{{ request('start_date') }}">
                             </div>
 
                             {{-- End Date --}}
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <label for="end_date" class="form-label text-sm">Tanggal Selesai</label>
                                 <input type="date" class="form-control" name="end_date" id="end_date"
                                     value="{{ request('end_date') }}">
                             </div>
 
                             {{-- Tombol Filter --}}
-                            <div class="col-lg-1">
+                            <div class="col-lg-2">
                                 <button type="submit" class="btn btn-primary w-100 mb-0">Cari</button>
                             </div>
                         </div>
