@@ -25956,18 +25956,18 @@ pre[class*="language-"] {
     position: absolute;
 }
 
-.ps__rail-y,
+/* .ps__rail-y,
 .ps__thumb-y {
     opacity: 0 !important;
     visibility: hidden !important;
-}
+} */
 
 /* Jika masih muncul saat hover scroll */
-.ps:hover > .ps__rail-y,
+/* .ps:hover > .ps__rail-y,
 .ps:hover > .ps__rail-x {
     opacity: 0 !important;
     visibility: hidden !important;
-}
+} */
 
 /* .ps__rail-y {
     display: none;
