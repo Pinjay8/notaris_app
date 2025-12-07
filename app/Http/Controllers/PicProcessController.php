@@ -113,6 +113,9 @@ class PicProcessController extends Controller
 
             if ($doc) {
                 $processes = $this->service->listProcesses(['pic_document_id' => $doc->id]);
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')
+                    ->error('Kode dokumen tidak ditemukan.');
             }
         }
 
