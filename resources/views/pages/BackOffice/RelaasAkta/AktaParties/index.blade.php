@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Klien untuk melihat daftar pihak.
+                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Klien untuk melihat daftar pihak akta.
                         </p>
                     @endif
 

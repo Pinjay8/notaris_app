@@ -22,7 +22,7 @@
                             </h6>
                         </div>
                     @else
-                        <div class="alert alert-warning">Belum ada nomor akta tersimpan.</div>
+                        <div class="alert alert-warning text-white">Belum ada nomor akta tersimpan.</div>
                     @endif
 
                     {{-- Form Pencarian --}}

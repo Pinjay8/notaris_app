@@ -27,6 +27,8 @@ class NotaryRelaasPartiesController extends Controller
 
             if ($relaasInfo) {
                 $parties = $this->service->getParties($relaasInfo->id);
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')->warning('Data pihak akta tidak ditemukan');
             }
         }
 

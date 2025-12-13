@@ -9,7 +9,7 @@ class NotaryRelaasLogsRepository implements NotaryRelaasLogsRepositoryInterface
 {
     public function getAll()
     {
-        return NotaryRelaasLogs::with(['notaris', 'client'])->latest()->paginate(10);
+        return NotaryRelaasLogs::with(['notaris', 'clients'])->where('notaris_id', auth()->user()->notaris_id)->orderBy('created_at')->latest()->paginate(10);
     }
 
     public function findById(int $id): ?NotaryRelaasLogs

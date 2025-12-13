@@ -41,8 +41,8 @@
                             <tbody>
                                 @forelse($logs as $log)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $log->client->fullname ?? '-' }}</td>
+                                        <td>{{ $logs->firstItem() + $loop->index }}</td>
+                                        <td>{{ $log->clients->fullname ?? '-' }}</td>
                                         <td>{{ $log->client_code ?? '-' }}</td>
                                         <td>{{ $log->step ?? '-' }}</td>
                                         <td>{{ $log->note ?? '-' }}</td>

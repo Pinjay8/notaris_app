@@ -17,7 +17,7 @@ class NotaryAktaPartyService
 
     public function searchAkta(array $filters)
     {
-        return NotaryAktaTransaction::query()
+        return NotaryAktaTransaction::query()->where('notaris_id', auth()->user()->notaris_id)
             ->when(!empty($filters['client_code']), function ($query) use ($filters) {
                 $query->where('client_code', $filters['client_code']);
             })

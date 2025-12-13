@@ -33,6 +33,8 @@ class NotaryAktaPartiesController extends Controller
                     // Ambil data pihak (parties) dengan pagination
                     $parties = $this->service->getPartiesByAkta($aktaTransactionId, true);
                 }
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')->warning('Data transaksi dengan kode klien atau nomor akta tersebut tidak ditemukan.');
             }
         }
 

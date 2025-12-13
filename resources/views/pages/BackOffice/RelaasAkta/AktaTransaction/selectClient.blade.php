@@ -12,7 +12,7 @@
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center  p-3 flex-wrap ">
                     <h5 class="mb-lg-1 fw-bold">Klien</h5>
                     {{-- search --}}
-                    <div class="w-md-25">
+                    <div class="w-lg-25">
                         <form method="GET" action="{{ route('relaas-aktas.selectClient') }}" class="no-spinner">
                             <div class="input-group">
                                 <input type="text" name="search" value="{{ request('search') }}" class="form-control"
@@ -31,6 +31,7 @@
                                     <tr class="">
                                         <th>#</th>
                                         <th>Nama Klien</th>
+                                        <th>Kode Klien</th>
                                         <th>Nama Perusahaan</th>
                                         <th>Jumlah Transaksi</th>
                                         <th>Aksi</th>
@@ -41,6 +42,7 @@
                                         <tr class="text-sm text-center">
                                             <td>{{ $clients->firstItem() + $loop->index }}</td>
                                             <td class="text-capitalize">{{ $client->fullname }}</td>
+                                            <td class="text-capitalize">{{ $client->client_code }}</td>
                                             <td class="text-capitalize">{{ $client->company_name ?? '-' }}</td>
                                             <td>{{ $client->akta_transactions_relaas_count }}</td>
                                             <td>

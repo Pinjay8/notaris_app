@@ -10,7 +10,7 @@ class WaarmerkingRepository implements WaarmerkingRepositoryInterface
 {
     public function getAll(array $filters, int $perPage): LengthAwarePaginator
     {
-        $query = NotaryWaarmerking::query();
+        $query = NotaryWaarmerking::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['waarmerking_number'])) {
             $query->where('waarmerking_number', 'like', '%' . $filters['waarmerking_number'] . '%');

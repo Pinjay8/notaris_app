@@ -10,7 +10,7 @@ class NotaryLegalisasiRepository implements NotaryLegalisasiRepositoryInterface
 {
     public function getAll(array $filters, int $perPage): LengthAwarePaginator
     {
-        $query = NotaryLegalisasi::query();
+        $query = NotaryLegalisasi::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['legalisasi_number'])) {
             $query->where('legalisasi_number', 'like', '%' . $filters['legalisasi_number'] . '%');

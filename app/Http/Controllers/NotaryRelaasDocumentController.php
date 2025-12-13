@@ -22,11 +22,13 @@ class NotaryRelaasDocumentController extends Controller
         $relaasInfo = null;
         $documents = collect();
 
-        if ($request->has('search')) {
-            $relaasInfo = $this->service->searchRelaas($request->search); // search by registration_code atau relaas_number
+        if ($request->filled('search')) {
+            $relaasInfo = $this->service->searchRelaas($request->search);
 
             if ($relaasInfo) {
                 $documents = $this->service->getDocuments($relaasInfo->id);
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')->warning('Data dokumen akta tidak ditemukan');
             }
         }
 
@@ -59,7 +61,7 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'required|date',
-            'file_url'  => 'required|file|max:1024',
+            'file_url'  => 'required|max:1024',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',

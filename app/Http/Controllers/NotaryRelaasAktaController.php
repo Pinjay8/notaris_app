@@ -219,14 +219,21 @@ class NotaryRelaasAktaController extends Controller
 
             $search = $request->search;
 
-            $aktaInfo = NotaryRelaasAkta::where(function ($q) use ($search) {
+            $aktaInfo = NotaryRelaasAkta::where('notaris_id', auth()->user()->notaris_id)->where(function ($q) use ($search) {
                 $q->where('client_code', 'like', "%$search%")
                     ->orWhere('relaas_number', 'like', "%$search%");
             })
-                // Prioritaskan record yang sudah punya relaas_number
+
                 ->orderByRaw("CASE WHEN relaas_number IS NULL THEN 1 ELSE 0 END")
                 ->orderBy('relaas_number', 'desc')
                 ->first();
+
+            if (!$aktaInfo) {
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Kode Klien atau Nomor Akta tidak ditemukan');
+            }
         }
 
         return view('pages.BackOffice.RelaasAkta.AktaNumber.index', compact('lastAkta', 'aktaInfo'));

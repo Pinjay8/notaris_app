@@ -10,7 +10,7 @@ class NotaryAktaLogRepository implements NotaryAktaLogRepositoryInterface
 {
     public function all(array $filters = [])
     {
-        $query = NotaryAktaLogs::with(['notaris', 'client', 'akta_transaction']);
+        $query = NotaryAktaLogs::with(['notaris', 'client', 'akta_transaction'])->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['registration_code'])) {
             $query->where('registration_code', 'like', '%' . $filters['registration_code'] . '%');

@@ -10,7 +10,7 @@ class NotaryAktaDocumentRepository implements NotaryAktaDocumentRepositoryInterf
 {
     public function all(array $filters = [])
     {
-        $query = NotaryAktaDocuments::query();
+        $query = NotaryAktaDocuments::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['client_code'])) {
             $query->where('client_code', 'like', '%' . $filters['client_code'] . '%');
@@ -20,7 +20,7 @@ class NotaryAktaDocumentRepository implements NotaryAktaDocumentRepositoryInterf
             $query->where('akta_number', 'like', '%' . $filters['akta_number'] . '%');
         }
 
-        return $query->get();
+        return $query->where('notaris_id', auth()->user()->notaris_id)->get();
     }
 
     public function getById($id)

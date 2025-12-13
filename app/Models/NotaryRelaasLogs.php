@@ -19,8 +19,8 @@ class NotaryRelaasLogs extends Model
     {
         return $this->belongsTo(Notaris::class, 'notaris_id');
     }
-    public function client()
+    public function clients()
     {
-        return $this->belongsTo(Client::class, 'client_id');
+        return $this->belongsTo(Client::class, 'client_code', 'client_code');
     }
 }

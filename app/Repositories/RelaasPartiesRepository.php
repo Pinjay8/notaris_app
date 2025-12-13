@@ -13,12 +13,13 @@ class RelaasPartiesRepository implements RelaasPartiesRepositoryInterface
     {
         return NotaryRelaasAkta::with(['notaris', 'client'])
             ->where('client_code', $client_code)
+            ->where('notaris_id', auth()->user()->notaris_id)
             ->first();
     }
 
     public function getPartiesByRelaasId(int $relaasId): Collection
     {
-        return NotaryRelaasParties::where('relaas_id', $relaasId)->get();
+        return NotaryRelaasParties::where('relaas_id', $relaasId)->where('notaris_id', auth()->user()->notaris_id)->get();
     }
 
     public function create(array $data): object

@@ -14,6 +14,7 @@ class NotaryRelaasDocumentService
     public function searchRelaas(string $search)
     {
         return NotaryRelaasAkta::where('client_code', $search)
+            ->where('notaris_id', auth()->user()->notaris_id)
             ->orWhere('relaas_number', $search)
             ->first();
     }
@@ -24,6 +25,7 @@ class NotaryRelaasDocumentService
     public function getDocuments(int $relaasId)
     {
         return NotaryRelaasDocument::where('relaas_id', $relaasId)
+            ->where('notaris_id', auth()->user()->notaris_id)
             ->orderBy('uploaded_at', 'desc')
             ->paginate(10);
     }

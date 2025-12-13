@@ -10,7 +10,7 @@ class PicStaffRepository implements PicStaffRepositoryInterface
 {
     public function all(?string $search = null): Collection
     {
-        $query = PicStaff::query();
+        $query = PicStaff::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if ($search) {
             $query->where('full_name', 'like', "%{$search}%")

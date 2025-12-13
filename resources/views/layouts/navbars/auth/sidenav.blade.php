@@ -1,4 +1,5 @@
-<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 h-100"
+<aside
+    class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 h-100"
     id="sidenav-main" style="overflow-y:auto; height: 100vh">
     <div class="sidenav-header">
         <i class="fas fa-times p-1 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
@@ -276,16 +277,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('relaas-parties.index') }}"
-                                class="nav-link {{ request()->is('relaas-parties*') ? 'active' : '' }}">
-                                <div
-                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-user-group text-dark text-sm opacity-10 pb-0"></i>
-                                </div>
-                                <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('relaas-documents.index') }}"
                                 class="nav-link {{ request()->is('relaas-document*') ? 'active' : '' }}">
                                 <div
@@ -295,6 +286,17 @@
                                 <span class="nav-link-text ms-1 mt-2">Dokumen Akta</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('relaas-parties.index') }}"
+                                class="nav-link {{ request()->is('relaas-parties*') ? 'active' : '' }}">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-user-group text-dark text-sm opacity-10 pb-0"></i>
+                                </div>
+                                <span class="nav-link-text ms-1 mt-2">Pihak Akta</span>
+                            </a>
+                        </li>
+
                         <li>
                             <a href="{{ route('relaas_akta.indexNumber') }}"
                                 class="nav-link {{ request()->is('relaas-number*') ? 'active' : '' }}">

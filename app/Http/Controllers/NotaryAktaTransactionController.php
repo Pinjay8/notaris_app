@@ -65,7 +65,7 @@ class NotaryAktaTransactionController extends Controller
         $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
             ->where('client_code', $clientId)
             ->whereDate('created_at', Carbon::today())
-            ->where('deleted_at' , null)
+            ->where('deleted_at', null)
             ->count();
 
         $countToday += 1;
@@ -160,12 +160,15 @@ class NotaryAktaTransactionController extends Controller
     // Penomoran Akta
     public function indexNumber(Request $request)
     {
-        $lastAkta = NotaryAktaTransaction::orderBy('created_at', 'desc')->first();
+        $lastAkta = NotaryAktaTransaction::orderBy('created_at', 'desc')
+            ->where('notaris_id', auth()->user()->notaris_id)
+            ->first();
         $aktaInfo = null;
 
         if ($request->filled('search')) {
             $aktaInfo = NotaryAktaTransaction::query()
                 ->where('client_code', $request->search)
+                ->where('notaris_id', auth()->user()->notaris_id)
                 ->orWhere('akta_number', $request->search)
                 ->first();
 
@@ -173,7 +176,7 @@ class NotaryAktaTransactionController extends Controller
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
-                    ->error('Kode Klien tidak ditemukan');
+                    ->warning('Kode Klien atau Nomor Akta tidak ditemukan');
             }
         }
 

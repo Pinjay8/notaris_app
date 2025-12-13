@@ -24,7 +24,7 @@ class NotaryAktaDocumentsController extends Controller
 
         // Cari Akta Transaction dulu
         if (!empty($filters['client_code']) || !empty($filters['akta_number'])) {
-            $transaction = NotaryAktaTransaction::with('akta_type')->where(function ($q) use ($filters) {
+            $transaction = NotaryAktaTransaction::with('akta_type')->where('notaris_id', auth()->user()->notaris_id)->where(function ($q) use ($filters) {
                 if (!empty($filters['client_code'])) {
                     $q->where('client_code', $filters['client_code']);
                 }
@@ -36,9 +36,16 @@ class NotaryAktaDocumentsController extends Controller
 
             if ($transaction) {
                 $documents = NotaryAktaDocuments::where('akta_transaction_id', $transaction->id)
+                    ->where('notaris_id', auth()->user()->notaris_id)
                     ->orderBy('created_at', 'desc')
                     ->paginate(10)
                     ->withQueryString();
+            } else {
+                // 👉 data tidak ditemukan
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Data transaksi dengan kode klien atau nomor akta tersebut tidak ditemukan.');
             }
         }
 
@@ -67,7 +74,7 @@ class NotaryAktaDocumentsController extends Controller
             'name' => 'required|string',
             'type' => 'required|string',
             // 'file_name' => 'required|string',
-            'file_url' => 'required|file|max:1024',
+            'file_url' => 'required|max:1024',
             // 'file_type' => 'required|string',
             'uploaded_at' => 'required|date',
         ], [
@@ -75,7 +82,9 @@ class NotaryAktaDocumentsController extends Controller
             'type.required' => 'Tipe dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
+            // 'file_url.file' => 'File tidak valid.',
             'file_url.max' => 'Ukuran file maksimal 1MB.',
+
         ]);
 
         $data['notaris_id'] = $transaction->notaris_id;
@@ -120,7 +129,7 @@ class NotaryAktaDocumentsController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'type' => 'required|string',
-            'file_url' => 'nullable|file|max:1024',
+            'file_url' => 'nullable|max:1024',
             'uploaded_at' => 'required|date',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',

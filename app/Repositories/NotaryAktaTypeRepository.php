@@ -10,7 +10,7 @@ class NotaryAktaTypeRepository implements NotaryAktaTypeRepositoryInterface
 {
     public function all(array $filters = [], int $perPage = 10)
     {
-        $query = NotaryAktaTypes::query();
+        $query = NotaryAktaTypes::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['search'])) {
             $query->where(function ($q) use ($filters) {

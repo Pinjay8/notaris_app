@@ -15,6 +15,7 @@ class NotaryLetterRepository implements NotaryLetterRepositoryInterface
             ->when($search, function ($query, $search) {
                 $query->where('letter_number', 'like', "%{$search}%");
             })
+            ->where('notaris_id', auth()->user()->notaris_id)
             ->latest()
             ->paginate(10);
     }

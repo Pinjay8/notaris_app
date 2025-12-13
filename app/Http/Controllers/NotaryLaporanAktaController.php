@@ -26,12 +26,12 @@ class NotaryLaporanAktaController extends Controller
                 $data = NotaryAktaTransaction::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()
-                ])->get();
+                ])->where('notaris_id', auth()->user()->notaris_id)->get();
             } elseif ($queryType === 'ppat') {
                 $data = NotaryRelaasAkta::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()
-                ])->get();
+                ])->where('notaris_id', auth()->user()->notaris_id)->get();
             }
         }
 
