@@ -39,7 +39,7 @@ class NotaryRelaasDocumentController extends Controller
     {
         $relaas = NotaryRelaasAkta::findOrFail($relaasId);
         $doc = null;
-        $clients = Client::where('deleted_at', null)->get();
+        $clients = Client::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
 
         return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc', 'clients'));
     }
@@ -48,7 +48,7 @@ class NotaryRelaasDocumentController extends Controller
     {
         $doc = $this->service->findById($id);
         $relaas = NotaryRelaasAkta::findOrFail($doc->relaas_id);
-        $clients = Client::where('deleted_at', null)->get();
+        $clients = Client::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
 
         return view('pages.BackOffice.RelaasAkta.AktaDocument.form', compact('relaas', 'doc', 'clients'));
     }
@@ -61,13 +61,14 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'required|date',
-            'file_url'  => 'required|max:1024',
+            'file_url'  => 'required|max:1024|mimes:pdf,jpg,jpeg,png',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'file_url.max' => 'Ukuran file maksimal 1MB.',
+            'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         if ($request->hasFile('file_url')) {
@@ -107,12 +108,13 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'nullable|date',
-            'file_url'  => 'nullable|file|max:1024',
+            'file_url'  => 'nullable|max:1024|mimes:pdf,jpg,jpeg,png',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Jenis dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'file_url.max' => 'Ukuran file maksimal 1MB.',
+            'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         if ($request->hasFile('file_url')) {

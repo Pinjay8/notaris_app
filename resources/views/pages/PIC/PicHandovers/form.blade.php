@@ -10,7 +10,7 @@
         <div class="col-md-12 mx-auto">
             <div class="card">
                 <div class="card-header pb-0">
-                    <h5>Serah Terima Dokumen</h5>
+                    <h6> {{ isset($pic_handover) ? 'Edit Serah Terima Dokumen' : 'Tambah Serah Terima Dokumen' }}</h6>
                 </div>
                 <hr>
                 <div class="card-body pt-0">
@@ -47,7 +47,7 @@
                             <textarea name="note" class="form-control">{{ old('note') }}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label text-sm">File Serah Terima Dokumen (Opsional)</label>
+                            <label class="form-label text-sm">File Serah Terima Dokumen</label>
                             <input type="file" name="file_path" class="form-control">
                             {{-- maximal 1mb --}}
                             <div class="form-text">Maksimal File 1MB</div>

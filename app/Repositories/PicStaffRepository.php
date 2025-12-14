@@ -16,7 +16,6 @@ class PicStaffRepository implements PicStaffRepositoryInterface
             $query->where('full_name', 'like', "%{$search}%")
                 ->orWhere('email', 'like', "%{$search}%");
         }
-
         return $query->latest()->get();
     }
 

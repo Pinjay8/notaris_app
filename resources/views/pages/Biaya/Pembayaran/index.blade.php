@@ -82,6 +82,7 @@
                                             <tr>
                                                 <th style="width: 10%">#</th>
                                                 <th>Bukti Pembayaran</th>
+                                                <th>Nominal</th>
                                                 <th style="width: 20%">Status</th>
                                                 <th style="width: 15%">Aksi</th>
                                             </tr>
@@ -96,6 +97,7 @@
                                                                 class="img-fluid" style="max-width: 150px">
                                                         </div>
                                                     </td>
+                                                    <td>Rp {{ number_format($file->amount, 0, ',', '.') }}</td>
                                                     <td>
                                                         @if ($file->is_valid)
                                                             <span class="badge bg-success text-capitalize">Valid</span>

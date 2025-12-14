@@ -27,7 +27,7 @@ class NotaryWaarmerkingController extends Controller
 
     public function create()
     {
-        $clients = Client::all();
+        $clients = Client::all()->where('notaris_id', auth()->user()->notaris_id);
         return view('pages.BackOffice.Waarmerking.form', compact('clients'));
     }
 
@@ -43,13 +43,15 @@ class NotaryWaarmerkingController extends Controller
             'request_date'     => 'nullable|date',
             'release_date'     => 'nullable|date',
             'notes'            => 'nullable|string',
-            'file_path'        => 'nullable|file',
+            'file_path'        => 'nullable|mimes:pdf,jpg,jpeg,png|max:1024',
         ], [
             'client_code.required' => 'Klien harus dipilih.',
             'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
             'officer_name.required' => 'Nama Petugas harus diisi.',
             'document_type.required' => 'Jenis Dokumen harus diisi.',
             'applicant_name.required' => 'Nama Pemohon harus diisi.',
+            'file_path.max' => 'Ukuran file maksimal 1 MB.',
+            'file_path.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         if ($request->hasFile('file_path')) {
@@ -83,13 +85,15 @@ class NotaryWaarmerkingController extends Controller
             'request_date'     => 'nullable|date',
             'release_date'     => 'nullable|date',
             'notes'            => 'nullable|string',
-            'file_path'        => 'nullable|file',
+            'file_path'        => 'nullable|mimes:pdf,jpg,jpeg,png|max:1024',
         ], [
             'client_code.required' => 'Klien harus dipilih.',
             'waarmerking_number.required' => 'Nomor Waarmarking harus diisi.',
             'officer_name.required' => 'Nama Petugas harus diisi.',
             'document_type.required' => 'Jenis Dokumen harus diisi.',
             'applicant_name.required' => 'Nama Pemohon harus diisi.',
+            'file_path.max' => 'Ukuran file maksimal 1 MB.',
+            'file_path.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         if ($request->hasFile('file_path')) {

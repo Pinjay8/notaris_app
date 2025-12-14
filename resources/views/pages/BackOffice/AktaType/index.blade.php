@@ -13,7 +13,7 @@
                         + Tambah Jenis Akta
                     </a>
                 </div>
-                <div class="d-flex justify-content-lg-end w-100 px-2">
+                <div class="d-flex justify-content-end w-100 px-2">
                     <form method="GET" action="{{ route('akta-types.index') }}" class="d-flex gap-2 w-100"
                         style="max-width: 400px;" class="no-spinner">
                         <input type="text" name="search" placeholder="Cari tipe akta" value="{{ request('search') }}"

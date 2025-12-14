@@ -208,7 +208,7 @@ class NotaryClientWarkahController extends Controller
         $validated = $request->validate([
             'client_code' => 'required',
             'warkah_code' => 'required',
-            'warkah_link' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:1024',
+            'warkah_link' => 'nullable|mimes:jpg,jpeg,png,pdf|max:1024',
             'note' => 'nullable',
             'uploaded_at' => 'required|date',
         ], [
@@ -216,6 +216,7 @@ class NotaryClientWarkahController extends Controller
             'warkah_code.required' => 'Dokumen harus dipilih.',
             'warkah_link.required' => 'File warkah harus diupload.',
             'warkah_link.max' => 'Ukuran file maksimal 1MB.',
+            'warkah_link.mimes' => 'Format file harus JPG, JPEG, PNG, atau PDF.',
         ]);
 
         $document = Documents::where('code', $validated['warkah_code'])

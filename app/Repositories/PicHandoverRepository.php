@@ -9,7 +9,7 @@ class PicHandoverRepository implements PicHandoverRepositoryInterface
 {
     public function all(array $filters = [])
     {
-        $query = PicHandover::with(['picDocument']);
+        $query = PicHandover::with(['picDocument'])->where('notaris_id', auth()->user()->notaris_id);
 
         // Ambil search dengan aman (tidak error meskipun tidak dikirim dari request)
         $search = $filters['search'] ?? null;

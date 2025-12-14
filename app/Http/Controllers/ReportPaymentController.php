@@ -42,7 +42,7 @@ class ReportPaymentController extends Controller
         $costs = collect(); // default kosong
 
         if ($request->filled('start_date') || $request->filled('end_date') || $request->filled('status')) {
-            $query = NotaryPayment::with('client');
+            $query = NotaryPayment::with('client')->where('notaris_id', auth()->user()->notaris_id);
 
             if ($request->filled('start_date')) {
                 $query->whereDate('payment_date', '>=', $request->start_date);
@@ -64,7 +64,7 @@ class ReportPaymentController extends Controller
 
     public function print(Request $request)
     {
-        $query = NotaryCost::query();
+        $query = NotaryCost::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if ($request->filled('start_date')) {
             $query->whereDate('created_at', '>=', $request->start_date);

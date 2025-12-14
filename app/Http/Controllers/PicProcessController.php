@@ -21,10 +21,13 @@ class PicProcessController extends Controller
         $doc = null;
 
         if ($request->filled('pic_document_code')) {
-            $doc = PicDocuments::with(['pic', 'client'])->where('pic_document_code', $request->pic_document_code)->first();
+            $doc = PicDocuments::with(['pic', 'client'])->where('pic_document_code', $request->pic_document_code)->where('notaris_id', auth()->user()->notaris_id)->first();
 
             if ($doc) {
                 $processes = $this->service->listProcesses(['pic_document_id' => $doc->id]);
+            } else {
+                notyf()->position('x', 'right')->position('y', 'top')
+                    ->warning('Kode dokumen tidak ditemukan.');
             }
         }
 

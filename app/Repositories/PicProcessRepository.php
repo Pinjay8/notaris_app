@@ -17,7 +17,7 @@ class PicProcessRepository implements PicProcessRepositoryInterface
 
     public function all(array $filters = [])
     {
-        $query = $this->model->query();
+        $query = $this->model->query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['pic_document_id'])) {
             $query->where('pic_document_id', $filters['pic_document_id']);

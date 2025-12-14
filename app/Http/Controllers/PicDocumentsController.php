@@ -35,10 +35,10 @@ class PicDocumentsController extends Controller
 
     public function create()
     {
-        $clients = Client::where('deleted_at', null)->get();
-        $picStaffList = PicStaff::where('deleted_at', null)->get();
-        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->where('status', 'draft')->get();
-        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->where('status', 'draft')->get();
+        $clients = Client::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        $picStaffList = PicStaff::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->where('status', 'draft')->get();
+        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->where('status', 'draft')->get();
         return view('pages.PIC.PicDocuments.form', compact('clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }
     public function store(Request $request)
@@ -81,11 +81,11 @@ class PicDocumentsController extends Controller
 
     public function edit($id)
     {
-        $clients =  Client::where('deleted_at', null)->get();
-        $picStaffList = PicStaff::where('deleted_at', null)->get();
+        $clients =  Client::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        $picStaffList = PicStaff::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
         $picDocument = $this->service->getDocumentById($id);
-        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->get();
-        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->get();
+        $aktaTransaction = NotaryAktaTransaction::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        $relaasTransaction = NotaryRelaasAkta::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
 
         return view('pages.PIC.PicDocuments.form', compact('picDocument', 'clients', 'picStaffList', 'aktaTransaction', 'relaasTransaction'));
     }

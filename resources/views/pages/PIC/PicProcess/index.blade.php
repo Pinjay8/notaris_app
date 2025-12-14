@@ -82,17 +82,18 @@
 
                         {{-- Tabel Proses --}}
                         <div class="table-responsive p-0 mx-4">
-                            @if (request('pic_document_code'))
-                                <div class="d-flex justify-content-between  align-items-center">
-                                    <h5>Proses Pengurusan</h5>
-                                    <a href="{{ route('pic_process.create', ['pic_document_code' => request('pic_document_code')]) }}"
-                                        class="btn btn-sm btn-primary mb-3">
-                                        + Tambah Proses
-                                    </a>
-                                </div>
-                            @endif
 
                             @if (isset($doc) && $doc)
+                                @if (request('pic_document_code'))
+                                    <div class="d-flex justify-content-between  align-items-center">
+                                        <h5>Proses Pengurusan</h5>
+                                        <a href="{{ route('pic_process.create', ['pic_document_code' => request('pic_document_code')]) }}"
+                                            class="btn btn-sm btn-primary mb-3">
+                                            + Tambah Proses
+                                        </a>
+                                    </div>
+                                @endif
+
                                 <table class="table align-items-center mb-0">
                                     <thead class="">
                                         <tr class="text-center">

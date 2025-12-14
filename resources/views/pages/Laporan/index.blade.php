@@ -42,7 +42,7 @@
                             </select>
                         </div>
 
-                        <div class=" col-lg-2 col-xl-2 d-lg-flex align-items-end py-1">
+                        <div class=" col-lg-2 col-xl-2 d-flex align-items-end py-1">
                             <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
                                 Cari
                             </button>

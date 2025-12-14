@@ -14,22 +14,20 @@ class NotaryPaymenttController extends Controller
     {
         $cost = null;
 
-        if ($request->has('pic_document_code')) {
+        if ($request->filled('pic_document_code')) {
             $cost = NotaryCost::with('payments')
                 ->whereHas(
                     'picDocument',
                     fn($q) =>
                     $q->where('pic_document_code', $request->pic_document_code)
                 )
+                ->where('notaris_id', auth()->user()->notaris_id)
                 ->first();
 
-            // if ($cost) {
-            //     notyf()->position('x', 'right')->position('y', 'top')
-            //         ->success('Kode dokumen berhasil ditemukan');
-            // } else {
-            //     notyf()->position('x', 'right')->position('y', 'top')
-            //         ->info('Kode dokumen tidak ditemukan');
-            // }
+            if (!$cost) {
+                notyf()->position('x', 'right')->position('y', 'top')
+                    ->warning('Kode dokumen tidak ditemukan');
+            }
         }
 
         return view('pages.Biaya.Pembayaran.index', compact('cost'));
@@ -109,7 +107,15 @@ class NotaryPaymenttController extends Controller
             'amount'         => 'required',
             'payment_date'   => 'required|date',
             'payment_method' => 'required|string',
-            'payment_file'   => 'required|file',
+            'payment_file'   => 'required|max:1024',
+        ], [
+            'payment_code.required'   => 'Kode pembayaran harus diisi.',
+            'payment_type.required'   => 'Tipe pembayaran harus diisi.',
+            'amount.required'         => 'Jumlah pembayaran harus diisi.',
+            'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
+            'payment_method.required' => 'Metode pembayaran harus diisi.',
+            'payment_file.required'   => 'File pembayaran harus diupload.',
+            'payment_file.max'        => 'Ukuran file maksimal 1MB.',
         ]);
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();

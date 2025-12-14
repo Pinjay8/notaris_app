@@ -25,7 +25,7 @@ class NotaryLettersController extends Controller
 
     public function create()
     {
-        $clients = Client::all();
+        $clients = Client::all()->where('notaris_id', auth()->user()->notaris_id);
         return view('pages.BackOffice.Letters.form', compact('clients'));
     }
 

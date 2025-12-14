@@ -18,8 +18,8 @@
                 <form method="GET" action="{{ route('pic_handovers.index') }}"
                     class="d-flex justify-content-end gap-2 mb-0 mx-3 mt-3">
                     <div class="input-group " style="max-width: 400px;" class="no-spinner">
-                        <input type="text" name="search" class="form-control"
-                            placeholder="Cari berdasarkan kode dokumen" value="{{ request('search') }}">
+                        <input type="text" name="search" class="form-control" placeholder="Cari kode dokumen"
+                            value="{{ request('search') }}">
                         <button class="btn btn-primary mb-0" type="submit">Cari</button>
                     </div>
                 </form>

@@ -37,7 +37,16 @@
         </div>
 
         <!-- Toggle sidenav: hanya tampil <1200px -->
-        <ul class="navbar-nav ms-auto d-flex d-xl-none">
+        <ul class="navbar-nav ms-auto d-flex d-lg-none flex-row">
+            <li class="nav-item d-flex align-items-center">
+                <form method="post" action="{{ route('logout') }}" id="logout-form">
+                    @csrf
+                    <button type="submit" class="btn btn-white text-primary mb-0 shadow">
+                        <i class="fa fa-user me-lg-1"></i>
+                        <span class="d-sm-inline d-none text-wrap">Keluar</span>
+                    </button>
+                </form>
+            </li>
             <li class="nav-item ps-3 d-flex align-items-center">
                 <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                     <div class="sidenav-toggler-inner">

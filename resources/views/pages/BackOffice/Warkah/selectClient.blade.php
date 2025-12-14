@@ -12,7 +12,7 @@
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center  p-3 flex-wrap ">
                     <h5 class="mb-lg-1 fw-bold">Klien</h5>
                     {{-- search --}}
-                    <div class="w-md-25">
+                    <div class="w-lg-25">
                         <form method="GET" action="{{ route('warkah.selectClient') }}" class="no-spinner">
                             <div class="input-group">
                                 <input type="text" name="search" value="{{ request('search') }}" class="form-control"

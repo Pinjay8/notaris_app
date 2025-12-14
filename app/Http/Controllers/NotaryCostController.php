@@ -27,8 +27,8 @@ class NotaryCostController extends Controller
 
     public function create()
     {
-        $clients = Client::where('deleted_at', null)->get();
-        $picDocuments = PicDocuments::where('deleted_at', null)->get();
+        $clients = Client::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
+        $picDocuments = PicDocuments::where('deleted_at', null)->where('notaris_id', auth()->user()->notaris_id)->get();
         $cost = null;
         return view('pages.Biaya.TotalBiaya.form', compact('clients', 'picDocuments', 'cost'));
     }

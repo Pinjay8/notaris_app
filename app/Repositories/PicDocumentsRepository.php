@@ -7,9 +7,10 @@ use App\Repositories\Interfaces\PicDocumentsRepositoryInterface;
 
 class PicDocumentsRepository implements PicDocumentsRepositoryInterface
 {
+
     public function getAll($filters = [])
     {
-        $query = PicDocuments::query();
+        $query = PicDocuments::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if (!empty($filters['search'])) {
             $search = $filters['search'];

@@ -13,7 +13,7 @@ class ReportProcessController extends Controller
     public function index(Request $request)
     {
         $processes = collect(); // default kosong
-        $query =  PicProcess::query();
+        $query =  PicProcess::query()->where('notaris_id', auth()->user()->notaris_id);
 
         // cek apakah ada filter
         if ($request->filled('start_date') || $request->filled('end_date')) {
@@ -32,7 +32,7 @@ class ReportProcessController extends Controller
     }
     public function print(Request $request)
     {
-        $query = PicProcess::query();
+        $query = PicProcess::query()->where('notaris_id', auth()->user()->notaris_id);
 
         if ($request->filled('start_date')) {
             $query->whereDate('created_at', '>=', $request->start_date);

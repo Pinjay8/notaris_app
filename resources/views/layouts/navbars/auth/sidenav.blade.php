@@ -8,8 +8,15 @@
             <a class="navbar-brand m-0 p-1" href="{{ route('dashboard') }}" target="_blank">
                 <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle"
                     style="width: 40px; height: 40px;">
-                    <img src="{{ asset('img/logo-ct.png') }}" alt="main_logo"
-                        style="width: 24px; height: 24px; object-fit: contain; color:white;">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle"
+                        style="width: 45px; height: 40px;">
+                        <img src="{{ auth()->user()->notaris && auth()->user()->notaris->image
+                            ? (filter_var(auth()->user()->notaris->image, FILTER_VALIDATE_URL)
+                                ? auth()->user()->notaris->image
+                                : asset('storage/' . auth()->user()->notaris->image))
+                            : asset('img/img_profile.png') }}"
+                            alt="main_logo" style="width: 60px; height: 60px; object-fit: cover;">
+                    </div>
                 </div>
             </a>
             <div>

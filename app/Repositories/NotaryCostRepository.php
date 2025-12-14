@@ -10,6 +10,7 @@ class NotaryCostRepository implements NotaryCostRepositoryInterface
     public function all(array $filters = [])
     {
         return NotaryCost::with(['client', 'picDocument'])
+            ->where('notaris_id', auth()->user()->notaris_id)
             ->when($filters['search'] ?? null, function ($q, $search) {
                 $q->where('payment_code', 'like', "%{$search}%");
             })
