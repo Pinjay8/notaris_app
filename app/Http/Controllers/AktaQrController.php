@@ -23,7 +23,17 @@ class AktaQrController extends Controller
 
         $akta = NotaryAktaTransaction::with(['client', 'akta_type', 'notaris'])
             ->where('transaction_code', $decodedCode)
-            ->firstOrFail();
+            // ->where('notaris_id', auth()->user()->notaris_id)
+            ->first();
+
+        if ($akta->notaris_id !== auth()->user()->notaris_id) {
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->warning('Anda tidak memiliki akses ke transaksi ini.');
+
+            return redirect()->route('dashboard');
+        }
 
         return view('pages.PreviewTransaction.index', compact('akta'));
     }

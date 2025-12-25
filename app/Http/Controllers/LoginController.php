@@ -38,15 +38,6 @@ class LoginController extends Controller
                 return redirect()->route('login');
             }
 
-            // if ($user->active_at && $user->active_at < now()) {
-            //     Auth::logout();
-            //     notyf()
-            //         ->position('x', 'right')
-            //         ->position('y', 'top')
-            //         ->warning('Akun anda sudah kadaluarsa. Silakan hubungi admin untuk aktivasi kembali.');
-            //     return redirect()->route('login');
-            // }
-
 
             $lastSubscription = $user->subscriptions()->latest('end_date')->first();
 

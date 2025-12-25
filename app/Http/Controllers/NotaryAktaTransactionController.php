@@ -107,7 +107,7 @@ class NotaryAktaTransactionController extends Controller
 
         $this->service->create($data);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta transaction.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan transaksi akta notaris.');
         return redirect()->route('akta-transactions.index', ['client_code' => $clientCode]);
     }
 
@@ -143,7 +143,7 @@ class NotaryAktaTransactionController extends Controller
 
         $this->service->update($id, $data);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta transaction.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui transaksi akta notaris.');
         return redirect()->route('akta-transactions.index', ['client_code' => $request->client_code]);
     }
 
@@ -152,7 +152,7 @@ class NotaryAktaTransactionController extends Controller
         $clientCode = $request->client_code;
         $this->service->delete($id);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta transaction.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus transaksi akta notaris.');
         return redirect()->route('akta-transactions.index', [
             'client_code' => $request->client_code
         ]);

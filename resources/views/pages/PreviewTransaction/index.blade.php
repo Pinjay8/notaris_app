@@ -12,10 +12,16 @@
         }
     }
 
-    if (!function_exists('d')) {
-        function d($date)
-        {
-            return $date ? Carbon::parse($date)->format('d F Y') : '-';
+    function d($date)
+    {
+        if (empty($date) || $date === '-') {
+            return '-';
+        }
+
+        try {
+            return \Carbon\Carbon::parse($date)->format('d F Y');
+        } catch (\Exception $e) {
+            return '-';
         }
     }
 @endphp
@@ -42,7 +48,7 @@
                                     </div>
 
                                     <h5 class="fw-bold mb-1">
-                                        {{ v($akta->aktaType->name ?? 'Jenis Akta') }}
+                                        Transaksi Akta
                                     </h5>
 
                                     <div class="text-muted">
@@ -52,84 +58,122 @@
 
                                 {{-- BODY --}}
                                 <div class="card-body pt-3 pb-2">
-                                    <div class="row g-3 small">
 
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-hash text-primary"></i> Nomor Akta</h6>
-                                            <p class="fw-semibold mb-0">{{ v($akta->akta_number) }}</p>
-                                        </div>
+                                    {{-- NOTARIS --}}
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-capitalize text-primary mb-2">
+                                            <i class="bi bi-person-badge me-1"></i> Notaris
+                                        </h6>
 
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-calendar-event text-primary"></i> Tahun</h6>
-                                            <p class="fw-semibold mb-0">{{ v($akta->year) }}</p>
-                                        </div>
-
-                                        {{-- Akta type --}}
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-journal-text text-primary"></i> Jenis Akta</h6>
-                                            <p class="fw-semibold mb-0">
-                                                {{ v($akta->akta_type->type ?? '-') }}
-                                            </p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-person-fill text-primary"></i> Notaris</h6>
-                                            <p class="fw-semibold mb-0">
+                                        <div class="border rounded px-3 py-2 small bg-light">
+                                            <h6>Nama </h6>
+                                            <div class="fw-semibold">
                                                 {{ v($akta->notaris->display_name ?? '-') }}
-                                            </p>
+                                            </div>
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-people-fill text-primary"></i> Klien</h6>
-                                            <p class="fw-semibold mb-0">
-                                                {{ v($akta->client->fullname ?? '-') }}
-                                            </p>
-                                        </div>
-                                        @php
-                                            $status = strtolower($akta->status ?? '');
-
-                                            $statusClass = match ($status) {
-                                                'draft' => 'bg-secondary',
-                                                'diproses', 'process' => 'bg-primary',
-                                                'selesai', 'done' => 'bg-success',
-                                                'dibatalkan', 'cancel' => 'bg-danger',
-                                                default => 'bg-info',
-                                            };
-                                        @endphp
-
-                                        <div class="col-md-6">
-                                            <h6>
-                                                <i class="bi bi-hourglass-split text-primary"></i>
-                                                Status
-                                            </h6>
-                                            <span class="badge {{ $statusClass }}">
-                                                {{ ucfirst($akta->status) }}
-                                            </span>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-calendar-plus text-primary"></i> Tanggal Pengajuan</h6>
-                                            <p class="fw-semibold mb-0">{{ d($akta->date_submission) }}</p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-calendar-check text-primary"></i> Tanggal Selesai</h6>
-                                            <p class="fw-semibold mb-0">{{ d($akta->date_finished) }}</p>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <h6><i class="bi bi-chat-left-text text-primary"></i> Catatan</h6>
-                                            <p class="fw-semibold mb-0">{{ v($akta->note) }}</p>
-                                        </div>
-
                                     </div>
+
+                                    {{-- KLIEN --}}
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-capitalize text-primary mb-2">
+                                            <i class="bi bi-people me-1"></i> Klien
+                                        </h6>
+
+                                        <div class="border rounded px-3 py-2 small bg-light">
+                                            <div class="row mb-1">
+                                                <h6 class="col-2">Nama</h6>
+                                                <div class="col-8 fw-semibold">: {{ v($akta->client->fullname ?? '-') }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <h6 class="col-2">Kode Klien</h6>
+                                                <div class="col-8 fw-semibold">: {{ v($akta->client->client_code ?? '-') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- TRANSAKSI --}}
+                                    @php
+                                        $status = strtolower($akta->status ?? '');
+                                        $statusClass = match ($status) {
+                                            'draft' => 'bg-secondary',
+                                            'diproses', 'process' => 'bg-primary',
+                                            'selesai', 'done' => 'bg-success',
+                                            'dibatalkan', 'cancel' => 'bg-danger',
+                                            default => 'bg-info',
+                                        };
+                                    @endphp
+
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-capitalize text-primary mb-2">
+                                            <i class="bi bi-file-earmark-text me-1"></i> Transaksi
+                                        </h6>
+
+                                        <div class="border rounded p-3 small bg-light">
+                                            <div class="row g-3">
+
+                                                <div class="col-md-6">
+                                                    <h6>Kode Transaksi</h6>
+                                                    <div class="fw-semibold">{{ v($akta->transaction_code) }}</div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Status</h6>
+                                                    <span class="badge text-capitalize {{ $statusClass }}">
+                                                        {{ ucfirst($akta->status) }}
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Nomor Akta</h6>
+                                                    <div class="fw-semibold">{{ v($akta->akta_number) }}</div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Tanggal Penetapan Nomor Akta</h6>
+                                                    <div class="fw-semibold">{{ d($akta->akta_number_created_at) }}</div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Kategori</h6>
+                                                    <div class="fw-semibold text-capitalize">
+                                                        {{ v($akta->akta_type->category ?? '-') }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6>Jenis Akta</h6>
+                                                    <div class="fw-semibold">
+                                                        {{ v($akta->akta_type->type ?? '-') }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Tanggal Pengajuan</h6>
+                                                    <div class="fw-semibold">{{ d($akta->date_submission) }}</div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <h6>Tanggal Selesai</h6>
+                                                    <div class="fw-semibold">{{ d($akta->date_finished) }}</div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <h6>Catatan</h6>
+                                                    <div class="fw-semibold">{{ v($akta->note) }}</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <a href="{{ route('dashboard') }}"
-                                        class="btn btn-primary mt-3 d-inline-flex align-items-center gap-2">
+                                        class="btn btn-primary d-inline-flex align-items-center gap-2">
                                         <i class="bi bi-arrow-left-circle"></i>
                                         Kembali ke Dashboard
                                     </a>
-                                </div>
 
+                                </div>
                             </div>
 
                         </div>
