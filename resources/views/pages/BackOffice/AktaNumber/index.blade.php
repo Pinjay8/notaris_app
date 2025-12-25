@@ -29,7 +29,7 @@
                     <form method="GET" action="{{ route('akta_number.index') }}" class="mb-3" class="no-spinner">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control"
-                                placeholder="Masukkan Kode Klien atau Nomor Akta" value="{{ request('search') }}">
+                                placeholder="Masukkan Kode transaksi atau Nomor Akta" value="{{ request('search') }}">
                             <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                         </div>
                     </form>

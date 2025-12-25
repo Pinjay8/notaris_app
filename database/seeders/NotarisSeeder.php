@@ -11,7 +11,7 @@ class NotarisSeeder extends Seeder
     {
         $data = [
             [
-                'user_id' => null,
+                'user_id' => 1,
                 'first_name' => 'John',
                 'last_name' => 'Doe',
                 'display_name' => 'John Doe',
@@ -22,7 +22,13 @@ class NotarisSeeder extends Seeder
                 'address' => '456 Main St, Cityville',
                 'phone' => '081234567890',
                 'email' => 'john@gmail.com',
-                'gender' => 'Laki-Laki'
+                'gender' => 'Laki-Laki',
+                'sk_ppat' => '5-XI-1996',
+                'sk_ppat_date' => '1996-06-03',
+                'sk_notaris' => 'C-193.HT.03.01-TH.1998',
+                'sk_notaris_date' => '1998-05-12',
+                'no_kta_ini' => '1245123123123',
+                'no_kta_ippat' => '004-4575-0100962'
             ],
             [
                 'user_id' => null,
@@ -36,7 +42,13 @@ class NotarisSeeder extends Seeder
                 'address' => 'Jl. Mawar No. 7, Bandung',
                 'phone' => '082134567890',
                 'email' => 'maria@gmail.com',
-                'gender' => 'Perempuan'
+                'gender' => 'Perempuan',
+                'sk_ppat' => '5-XI-1997',
+                'sk_ppat_date' => '1996-06-03',
+                'sk_notaris' => 'C-193.HT.03.01-TH.1998',
+                'sk_notaris_date' => '1998-05-13',
+                'no_kta_ini' => '8129838123',
+                'no_kta_ippat' => '004-4575-0100964'
             ],
             [
                 'user_id' => null,

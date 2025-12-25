@@ -15,8 +15,8 @@
                     {{-- Form Pencarian --}}
                     <form method="GET" action="{{ route('akta-documents.index') }}"
                         class="d-flex gap-2 mb-3 justify-content-end" class="no-spinner">
-                        <input type="text" name="client_code" class="form-control" placeholder="Cari Kode Klien..."
-                            value="{{ $filters['client_code'] ?? '' }}">
+                        <input type="text" name="transaction_code" class="form-control"
+                            placeholder="Cari Kode transaksi..." value="{{ $filters['transaction_code'] ?? '' }}">
                         <input type="text" name="akta_number" class="form-control" placeholder="Cari nomor akta..."
                             value="{{ $filters['akta_number'] ?? '' }}">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AktaQrController;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
@@ -39,11 +40,14 @@ use App\Http\Controllers\ReportProcessController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Notaris;
 use App\Models\NotaryAktaTransaction;
 use App\Models\NotaryConsultation;
 use App\Models\NotaryRelaasAkta;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use Milon\Barcode\Facades\DNS2DFacade;
+
 
 
 
@@ -55,7 +59,19 @@ Route::middleware('guest')->group(function () {
         Route::get('/', 'show')->name('login');
         Route::post('/login', 'login')->name('login.perform');
         Route::get('/alert-forgot-password', 'alertForgotPassword')->name('alertForgotPassword');
+        Route::get('/notaris/verify/{hash}', function ($hash) {
+            try {
+                $id = Crypt::decryptString($hash);
+            } catch (\Exception $e) {
+                abort(404);
+            }
+
+            $notaris = Notaris::with('user')->findOrFail($id);
+
+            return view('pages.profile-notaris', compact('notaris'));
+        })->name('profileNotaris');
     });
+
     // RegisterController routes
     Route::controller(RegisterController::class)->group(function () {
         Route::get('/register', 'create')->name('register');
@@ -94,8 +110,12 @@ Route::middleware('guest')->group(function () {
         ->name('client.uploadDocument');
 });
 
+
+
 Route::middleware('auth')->group(function () {
     // HomeController routes
+    Route::get('/akta/{transaction_code}', [AktaQrController::class, 'show'])
+        ->name('akta.qr.show');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('consultation', NotaryConsultationController::class);
     Route::get('/consultation/client/{id}', [NotaryConsultationController::class, 'getConsultationByClient'])->name('consultation.getConsultationByClient');

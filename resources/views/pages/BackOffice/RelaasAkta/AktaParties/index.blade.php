@@ -16,7 +16,7 @@
                     {{-- Form Pencarian --}}
                     <form method="GET" action="{{ route('relaas-parties.index') }}" class="mb-3" class="no-spinner">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Klien"
+                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Transaksi"
                                 value="{{ request('search') }}">
                             <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                         </div>
@@ -121,7 +121,8 @@
                             </div>
                         </div>
                     @else
-                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Klien untuk melihat daftar pihak akta.
+                        <p class="text-center text-muted text-sm mb-0">Masukkan Kode Transaksi untuk melihat daftar pihak
+                            akta.
                         </p>
                     @endif
 

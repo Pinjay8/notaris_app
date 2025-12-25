@@ -6,16 +6,17 @@
             aria-hidden="true" id="iconSidenav"></i>
         <div class="d-flex  justify-content-center mt-3 gap-2">
             <a class="navbar-brand m-0 p-1" href="{{ route('dashboard') }}" target="_blank">
-                <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle"
-                    style="width: 40px; height: 40px;">
-                    <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle"
-                        style="width: 45px; height: 40px;">
+                <div class="d-flex align-items-center justify-content-center rounded-circle"
+                    style="width: 60px; height: 60px;">
+                    <div class=" d-flex align-items-center justify-content-center rounded-circle"
+                        style="width: 60px; height: 60px;">
                         <img src="{{ auth()->user()->notaris && auth()->user()->notaris->image
                             ? (filter_var(auth()->user()->notaris->image, FILTER_VALIDATE_URL)
                                 ? auth()->user()->notaris->image
                                 : asset('storage/' . auth()->user()->notaris->image))
                             : asset('img/img_profile.png') }}"
-                            alt="main_logo" style="width: 60px; height: 60px; object-fit: cover;">
+                            alt="main_logo"
+                            style="width: 60px; height: 60px; object-fit:contain; object-position: center">
                     </div>
                 </div>
             </a>

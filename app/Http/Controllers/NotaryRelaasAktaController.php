@@ -75,6 +75,8 @@ class NotaryRelaasAktaController extends Controller
         return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
     }
 
+
+
     public function create(Request $request)
     {
         $clientCode = $request->query('client_code');
@@ -220,7 +222,7 @@ class NotaryRelaasAktaController extends Controller
             $search = $request->search;
 
             $aktaInfo = NotaryRelaasAkta::where('notaris_id', auth()->user()->notaris_id)->where(function ($q) use ($search) {
-                $q->where('client_code', 'like', "%$search%")
+                $q->where('transaction_code', 'like', "%$search%")
                     ->orWhere('relaas_number', 'like', "%$search%");
             })
 
@@ -232,7 +234,7 @@ class NotaryRelaasAktaController extends Controller
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
-                    ->warning('Kode Klien atau Nomor Akta tidak ditemukan');
+                    ->warning('Kode Transaksi atau Nomor Akta tidak ditemukan');
             }
         }
 
@@ -273,7 +275,7 @@ class NotaryRelaasAktaController extends Controller
         }
 
         return redirect()->route('relaas_akta.indexNumber', [
-            'search' => $akta->client_code,
+            'search' => $akta->transaction_code,
         ]);
     }
 
@@ -299,6 +301,6 @@ class NotaryRelaasAktaController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil diperbarui.');
 
-        return redirect()->route('relaas_akta.indexNumber', ['search' => $akta->client_code]);
+        return redirect()->route('relaas_akta.indexNumber', ['search' => $akta->transaction_code]);
     }
 }

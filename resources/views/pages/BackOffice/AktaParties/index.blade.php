@@ -14,8 +14,8 @@
                 <div class="card-body pt-2 pb-0">
                     <form method="GET" action="{{ route('akta-parties.index') }}"
                         class="d-flex gap-2 mb-3 justify-content-end">
-                        <input type="text" name="client_code" class="form-control" placeholder="Cari Kode Klien..."
-                            value="{{ request('client_code') }}">
+                        <input type="text" name="transaction_code" class="form-control"
+                            placeholder="Cari Kode transaksi..." value="{{ request('transaction_code') }}">
                         <input type="text" name="akta_number" class="form-control" placeholder="Cari nomor akta..."
                             value="{{ request('akta_number') }}">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>

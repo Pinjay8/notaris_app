@@ -34,7 +34,13 @@ class ProfileRequest extends FormRequest
             'phone' => ['required', 'string', 'min:10', 'max:15', 'regex:/^(\+?\d{1,3}[- ]?)?\d{10,14}$/'],
             'email' => ['required', 'email', 'max:255'],
             'gender' => ['required', 'string', 'max:100'],
-            'information' => ['nullable']
+            'information' => ['nullable'],
+            'sk_ppat' => ['nullable'],
+            'sk_ppat_date' => ['nullable', 'date'],
+            'sk_notaris' => ['nullable'],
+            'sk_notaris_date' => ['nullable', 'date'],
+            'no_kta_ini' => ['nullable'],
+            'no_kta_ippat' => ['nullable'],
         ];
     }
 

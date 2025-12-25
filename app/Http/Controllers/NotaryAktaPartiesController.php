@@ -18,12 +18,12 @@ class NotaryAktaPartiesController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['client_code', 'akta_number']);
+        $filters = $request->only(['transaction_code', 'akta_number']);
         $aktaInfo = null;
         $parties = collect();
 
         // Jika ada input pencarian
-        if (!empty($filters['client_code']) || !empty($filters['akta_number'])) {
+        if (!empty($filters['transaction_code']) || !empty($filters['akta_number'])) {
             $aktaInfo = $this->service->searchAkta($filters);
 
             if ($aktaInfo && $aktaInfo->count() > 0) {
@@ -34,7 +34,7 @@ class NotaryAktaPartiesController extends Controller
                     $parties = $this->service->getPartiesByAkta($aktaTransactionId, true);
                 }
             } else {
-                notyf()->position('x', 'right')->position('y', 'top')->warning('Data transaksi dengan kode klien atau nomor akta tersebut tidak ditemukan.');
+                notyf()->position('x', 'right')->position('y', 'top')->warning('Data transaksi dengan kode transaksi atau nomor akta tersebut tidak ditemukan.');
             }
         }
 
@@ -78,15 +78,13 @@ class NotaryAktaPartiesController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Pihak akta berhasil ditambahkan.');
         return redirect()->route('akta-parties.index', [
-            'client_code' => $request->client_code,
+            'transaction_code' => $request->transaction_code,
             'akta_number' => $request->akta_number ?? null,
         ]);
     }
 
     public function edit($id)
     {
-        // $aktaParty = $this->service->getPartiesByAkta($id); // misal service ada method find
-        // $transaction = $aktaParty->transaction; // relasi ke NotaryAktaTransaction
         $aktaParty = $this->service->findParty($id);
         $transaction = $aktaParty->akta_transaction; // relasi belongsTo
         $clients = Client::where('deleted_at', null)->get();
@@ -100,7 +98,7 @@ class NotaryAktaPartiesController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Pihak akta berhasil diperbarui.');
         return redirect()->route('akta-parties.index', [
-            'client_code' => $request->client_code,
+            'transaction_code' => $request->transaction_code,
             'akta_number' => $request->akta_number ?? null,
         ]);
     }

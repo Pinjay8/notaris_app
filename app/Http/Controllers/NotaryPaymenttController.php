@@ -114,7 +114,7 @@ class NotaryPaymenttController extends Controller
             'amount.required'         => 'Jumlah pembayaran harus diisi.',
             'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
             'payment_method.required' => 'Metode pembayaran harus diisi.',
-            'payment_file.required'   => 'File pembayaran harus diupload.',
+            // 'payment_file.required'   => 'File pembayaran harus diupload.',
             'payment_file.max'        => 'Ukuran file maksimal 1MB.',
         ]);
 

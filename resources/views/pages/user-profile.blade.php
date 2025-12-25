@@ -5,22 +5,65 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Profile'])
     <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
-            <div class="row gx-4 p-2">
-                <div class=" d-flex gap-3 align-items-center">
-                    <img src="{{ $notaris && $notaris->image
-                        ? (filter_var($notaris->image, FILTER_VALIDATE_URL)
-                            ? $notaris->image
-                            : asset('storage/' . $notaris->image))
-                        : asset('img/img_profile.png') }}"
-                        alt="profile_image" style="width:100px; height:100px; object-fit:cover; border-radius:50%;">
-                    <div>
-                        <h5 class="mb-1 mt-2 text-capitalize">
-                            {{ $notaris->display_name ?? '-' }}
-                        </h5>
-                        <h6 class="mb-0 font-semibold  text-capitalize">
-                            {{ $notaris->office_name ?? '-' }}
-                        </h6>
+        <div class="card-body p-1">
+            <div class="row gx-4 p-2 px-4">
+                <div class=" d-flex gap-3 align-items-center justify-content-between flex-column flex-md-row w-100">
+                    <div class="d-flex align-items-center gap-3">
+                        <div style="width:150px; height:150px;">
+                            <img src="{{ $notaris && $notaris->image
+                                ? (filter_var($notaris->image, FILTER_VALIDATE_URL)
+                                    ? $notaris->image
+                                    : asset('storage/' . $notaris->image))
+                                : asset('img/img_profile.png') }}"
+                                alt="profile_image"
+                                style="
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position: center;
+        border-radius:50%;
+        background:#fff;
+    ">
+                        </div>
+
+                        <div>
+                            <h4 class="mb-1 mt-2 text-capitalize">
+                                {{ $notaris->display_name ?? '-' }}
+                            </h4>
+                            <h5 class="mb-0 font-semibold  text-capitalize">
+                                {{ $notaris->office_name ?? '-' }}
+                            </h5>
+                        </div>
+                    </div>
+                    @php
+                        use Illuminate\Support\Facades\Crypt;
+
+                        $encryptedId = Crypt::encryptString($notaris->id);
+
+                        $link = url('/notaris/verify/' . $encryptedId);
+
+                        $dns2d = new \Milon\Barcode\DNS2D();
+                        $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
+                    @endphp
+
+                    <div class="mt-1 text-center">
+                        <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
+                            style="
+                                width:150px;
+                                background:#fff;
+                                padding:14px;
+                                border-radius:14px;
+                                box-shadow: 0 10px 25px rgba(251,98,64,0.35);
+                            ">
+
+                        <div class="mt-3">
+                            <a href="data:image/png;base64,{{ $png }}"
+                                download="qr-profile-{{ $notaris->display_name }}.png"
+                                class="btn btn-outline-primary btn-sm mb-0">
+                                <i class="bi bi-download fs-6 "></i>
+                                Download QR
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +141,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label text-sm">Alamat
-                                            Perusahaan</label>
+                                            Perusahaan / Kantor</label>
                                         <input class="form-control @error('office_address') is-invalid @enderror"
                                             type="text" name="office_address"
                                             value="{{ old('office_address', $notaris->office_address ?? '') }}">
@@ -206,6 +249,7 @@
                                         @enderror
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label text-sm">Latar
@@ -214,6 +258,79 @@
                                             type="text" name="background"
                                             value="{{ old('background', $notaris->background ?? '') }}">
                                         @error('background')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">SK PPAT</label>
+                                        <input class="form-control @error('sk_ppat') is-invalid @enderror" type="text"
+                                            name="sk_ppat" value="{{ old('sk_ppaat', $notaris->sk_ppat ?? '') }}">
+                                        @error('sk_ppat')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Tanggal SK
+                                            PPAT</label>
+                                        <input class="form-control @error('sk_ppat_date') is-invalid @enderror"
+                                            type="date" name="sk_ppat_date"
+                                            value="{{ old('sk_ppat_date', $notaris->sk_ppat_date ?? '') }}">
+                                        @error('sk_ppat_date')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">SK
+                                            Notaris</label>
+                                        <input class="form-control @error('sk_notaris') is-invalid @enderror"
+                                            type="text" name="sk_notaris"
+                                            value="{{ old('sk_notaris', $notaris->sk_notaris ?? '') }}">
+                                        @error('sk_notaris')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">Tanggal SK
+                                            Notaris</label>
+                                        <input class="form-control @error('sk_notaris_date') is-invalid @enderror"
+                                            type="date" name="sk_notaris_date"
+                                            value="{{ old('sk_notaris_date', $notaris->sk_notaris_date ?? '') }}">
+                                        @error('sk_notaris_date')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">
+                                            No KTA INI</label>
+                                        <input class="form-control @error('no_kta_ini') is-invalid @enderror"
+                                            type="text" name="no_kta_ini"
+                                            value="{{ old('no_kta_ini', $notaris->no_kta_ini ?? '') }}">
+                                        @error('no_kta_ini')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">
+                                            No KTA IPPAT</label>
+                                        <input class="form-control @error('no_kta_ippat') is-invalid @enderror"
+                                            type="text" name="no_kta_ippat"
+                                            value="{{ old('no_kta_ippat', $notaris->no_kta_ippat ?? '') }}">
+                                        @error('no_kta_ippat')
                                             <p class="text-danger mt-1 text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>

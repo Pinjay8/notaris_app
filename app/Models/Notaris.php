@@ -26,6 +26,12 @@ class Notaris extends Model
         'email',
         'gender',
         'information',
+        'sk_ppat',
+        'sk_ppat_date',
+        'sk_notaris',
+        'sk_notaris_date',
+        'no_kta_ini',
+        'no_kta_ippat',
     ];
 
     protected $casts = [
@@ -37,5 +43,10 @@ class Notaris extends Model
     public function clients()
     {
         return $this->hasMany(Client::class, 'notaris_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
     }
 }

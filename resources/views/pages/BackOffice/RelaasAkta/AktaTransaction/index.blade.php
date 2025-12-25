@@ -30,7 +30,7 @@
                 <hr>
                 <div class="card-body px-0 pt-0 pb-0">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0 text-sm text-center">
+                        <table class="table align-items-center mb-0 text-sm text-c   enter">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -66,6 +66,12 @@
                                         <td>{{ $akta->story_location ?? '-' }}</td>
                                         <td>{{ ucfirst($akta->status) ?? '-' }}</td>
                                         <td>
+                                            <button
+                                                class="btn btn-dark btn-sm rounded-pill d-inline-flex align-items-center gap-2 px-3 mb-0"
+                                                data-bs-toggle="modal" data-bs-target="#qrModal-{{ $akta->id }}">
+                                                <i class="fa fa-qrcode fs-5"></i>
+                                                <span>QR Code</span>
+                                            </button>
                                             <a href="{{ route('relaas-aktas.edit', $akta->id) }}"
                                                 class="btn btn-info btn-sm mb-0">Edit</a>
                                             <button type="button" class="btn btn-danger btn-sm mb-0" data-bs-toggle="modal"
@@ -77,6 +83,63 @@
                                                 ['akta' => $akta]
                                             )
                                         </td>
+                                        @php
+                                            // use Milon\Barcode\DNS2D;
+
+                                            $dns2d = new \Milon\Barcode\DNS2D();
+
+                                            $encryptedCode = \Illuminate\Support\Facades\Crypt::encryptString(
+                                                $akta->transaction_code,
+                                            );
+                                            $qrUrl = route('akta.qr.show', $encryptedCode);
+
+                                            $png = $dns2d->getBarcodePNG($qrUrl, 'QRCODE', 6, 6, [0, 0, 0], true);
+                                        @endphp
+
+                                        <div class="modal fade" id="qrModal-{{ $akta->id }}" tabindex="-1"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            QR Transaksi Akta
+                                                        </h5>
+                                                        <button type="button" class="btn-close btn-close-white"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <div class="modal-body text-center">
+
+                                                        <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
+                                                            style="
+                                                    width:160px;
+                                                    background:#fff;
+                                                    padding:14px;
+                                                    border-radius:14px;
+                                                    margin: 0 auto;
+                                                    box-shadow:0 10px 25px rgba(251,98,64,.35);
+                                                ">
+
+                                                        <p class="small text-muted mt-3 mb-1">Link Transaksi</p>
+                                                        <p class="fw-semibold text-break">
+                                                            {{ $qrUrl }}
+                                                        </p>
+
+                                                        <div class="mt-3">
+                                                            <a href="data:image/png;base64,{{ $png }}"
+                                                                download="qr-transaksi-{{ $akta->transaction_code }}.png"
+                                                                class="btn btn-outline-primary btn-sm">
+                                                                <i class="bi bi-download me-2"></i>
+                                                                Download QR
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </tr>
                                 @empty
                                     <tr>
@@ -85,14 +148,13 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>
 
-                    <div class="px-4 mt-3">
-                        {{ $data->links() }}
-                    </div>
+                        <div class="px-4 mt-3">
+                            {{ $data->links() }}
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

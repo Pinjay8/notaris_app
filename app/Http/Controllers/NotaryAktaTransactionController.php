@@ -73,6 +73,8 @@ class NotaryAktaTransactionController extends Controller
         return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
     }
 
+
+
     public function store(Request $request)
     {
         $data = $request->validate(
@@ -167,7 +169,7 @@ class NotaryAktaTransactionController extends Controller
 
         if ($request->filled('search')) {
             $aktaInfo = NotaryAktaTransaction::query()
-                ->where('client_code', $request->search)
+                ->where('transaction_code', $request->search)
                 ->where('notaris_id', auth()->user()->notaris_id)
                 ->orWhere('akta_number', $request->search)
                 ->first();
@@ -176,7 +178,7 @@ class NotaryAktaTransactionController extends Controller
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
-                    ->warning('Kode Klien atau Nomor Akta tidak ditemukan');
+                    ->warning('Kode transaksi atau Nomor Akta tidak ditemukan');
             }
         }
 

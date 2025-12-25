@@ -9,10 +9,10 @@ use Illuminate\Support\Collection;
 
 class RelaasPartiesRepository implements RelaasPartiesRepositoryInterface
 {
-    public function searchByRegistrationCode(string $client_code): ?object
+    public function searchByRegistrationCode(string $transaction_code): ?object
     {
         return NotaryRelaasAkta::with(['notaris', 'client'])
-            ->where('client_code', $client_code)
+            ->where('transaction_code', $transaction_code)
             ->where('notaris_id', auth()->user()->notaris_id)
             ->first();
     }

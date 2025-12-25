@@ -97,7 +97,7 @@ class NotaryRelaasDocumentController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil ditambahkan.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->client_code]);
+        return redirect()->route('relaas-documents.index', ['search' => $relaas->transaction_code]);
     }
 
     public function update(Request $request, $relaasId, $id)
@@ -121,8 +121,8 @@ class NotaryRelaasDocumentController extends Controller
             $file = $request->file('file_url');
             $file = $request->file('file_url');
             $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
-            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
-            $fileExtension = $file->getClientOriginalExtension(); // pdf
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
 
             // simpan file ke storage/app/documents
             $storedPath = $file->storeAs('documents', $originalName);
@@ -142,7 +142,7 @@ class NotaryRelaasDocumentController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil diperbarui.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->client_code]);
+        return redirect()->route('relaas-documents.index', ['search' => $relaas->transaction_code]);
     }
 
     public function destroy($id)

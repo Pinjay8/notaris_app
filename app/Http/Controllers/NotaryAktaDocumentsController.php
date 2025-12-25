@@ -18,15 +18,15 @@ class NotaryAktaDocumentsController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['client_code', 'akta_number']);
+        $filters = $request->only(['transaction_code', 'akta_number']);
         $transaction = null;
         $documents = collect();
 
         // Cari Akta Transaction dulu
-        if (!empty($filters['client_code']) || !empty($filters['akta_number'])) {
+        if (!empty($filters['transaction_code']) || !empty($filters['akta_number'])) {
             $transaction = NotaryAktaTransaction::with('akta_type')->where('notaris_id', auth()->user()->notaris_id)->where(function ($q) use ($filters) {
-                if (!empty($filters['client_code'])) {
-                    $q->where('client_code', $filters['client_code']);
+                if (!empty($filters['transaction_code'])) {
+                    $q->where('transaction_code', $filters['transaction_code']);
                 }
                 if (!empty($filters['akta_number'])) {
                     $q->orWhere('akta_number', $filters['akta_number']);
@@ -41,11 +41,10 @@ class NotaryAktaDocumentsController extends Controller
                     ->paginate(10)
                     ->withQueryString();
             } else {
-                // 👉 data tidak ditemukan
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
-                    ->warning('Data transaksi dengan kode klien atau nomor akta tersebut tidak ditemukan.');
+                    ->warning('Data transaksi dengan kode transaksi atau nomor akta tersebut tidak ditemukan.');
             }
         }
 
@@ -111,7 +110,7 @@ class NotaryAktaDocumentsController extends Controller
         NotaryAktaDocuments::create($data);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menambahkan akta dokumen.');
-        return redirect()->route('akta-documents.index', ['client_code' => $transaction->client_code, 'akta_number' => $transaction->akta_number]);
+        return redirect()->route('akta-documents.index', ['transaction_code' => $transaction->transaction_code, 'akta_number' => $transaction->akta_number]);
     }
 
     public function edit($id)
@@ -167,7 +166,7 @@ class NotaryAktaDocumentsController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil memperbarui akta dokumen.');
         return redirect()->route('akta-documents.index', [
-            'client_code' => $transaction->client_code,
+            'transaction_code' => $transaction->transaction_code,
             'akta_number' => $transaction->akta_number
         ]);
     }
@@ -179,6 +178,6 @@ class NotaryAktaDocumentsController extends Controller
         $this->service->delete($id);
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil menghapus akta dokumen.');
-        return redirect()->route('akta-documents.index', ['client_code' => $transaction->client_code, 'akta_number' => $transaction->akta_number]);
+        return redirect()->route('akta-documents.index', ['transaction_code' => $transaction->transaction_code, 'akta_number' => $transaction->akta_number]);
     }
 }

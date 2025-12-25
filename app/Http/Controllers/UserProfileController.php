@@ -74,6 +74,8 @@ class UserProfileController extends Controller
         $credential = $request->validated();
         $credential['user_id'] = $user->id;
 
+        // dd($credential);
+
         // Upload image jika ada
         if ($request->hasFile('image')) {
             $credential['image'] = $request->file('image')->storeAs(

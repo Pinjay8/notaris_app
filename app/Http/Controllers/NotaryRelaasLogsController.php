@@ -85,7 +85,7 @@ class NotaryRelaasLogsController extends Controller
     public function destroy($id)
     {
         $this->service->delete($id);
-        notyf()->position('x', 'right')->position('y', 'top')->success(' Log berhasil dihapus.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Log berhasil dihapus.');
         return redirect()->route('relaas-logs.index');
     }
 }

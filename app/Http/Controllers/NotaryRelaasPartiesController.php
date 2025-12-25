@@ -84,7 +84,7 @@ class NotaryRelaasPartiesController extends Controller
 
         // pakai registration_code yang dikirim hidden dari form
         return redirect()->route('relaas-parties.index', [
-            'search' => $relaas->client_code
+            'search' => $relaas->transaction_code
         ]);
     }
 
@@ -116,7 +116,7 @@ class NotaryRelaasPartiesController extends Controller
         notyf()->position('x', 'right')->position('y', 'top')->success('Pihak Akta berhasil diperbarui.');
 
         return redirect()->route('relaas-parties.index', [
-            'search' => $relaas->client_code
+            'search' => $relaas->transaction_code
         ]);
     }
 
