@@ -12,7 +12,15 @@
 
     function d($date)
     {
-        return $date ? Carbon::parse($date)->format('d F Y') : '-';
+        if (empty($date) || $date === '-') {
+            return '-';
+        }
+
+        try {
+            return \Carbon\Carbon::parse($date)->format('d F Y');
+        } catch (\Exception $e) {
+            return '-';
+        }
     }
 @endphp
 
@@ -104,7 +112,7 @@
                                                 <i class="bi bi-calendar-event-fill text-primary"></i>
                                                 Tanggal SK Notaris
                                             </h6>
-                                            <p class="fw-semibold mb-0">{{ d($notaris->sk_notaris_date ?? '-') }}</p>
+                                            <p class="fw-semibold mb-0">{{ d($notaris->sk_notaris_date) }}</p>
                                         </div>
 
                                         <div class="col-md-6">
@@ -120,7 +128,7 @@
                                                 <i class="bi bi-calendar-check-fill text-primary"></i>
                                                 Tanggal SK PPAT
                                             </h6>
-                                            <p class="fw-semibold mb-0">{{ d($notaris->sk_ppat_date ?? '-') }}</p>
+                                            <p class="fw-semibold mb-0">{{ d($notaris->sk_ppat_date) }}</p>
                                         </div>
 
                                         {{-- KEANGGOTAAN --}}
