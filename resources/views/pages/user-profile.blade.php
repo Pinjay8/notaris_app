@@ -35,16 +35,18 @@
                             </h5>
                         </div>
                     </div>
+                    @if(isset($notaris) && $notaris->id)
                     @php
                         use Illuminate\Support\Facades\Crypt;
 
                         $encryptedId = Crypt::encryptString($notaris->id);
-
                         $link = url('/notaris/verify/' . $encryptedId);
 
                         $dns2d = new \Milon\Barcode\DNS2D();
                         $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
                     @endphp
+
+
 
                     <div class="mt-1 text-center">
                         <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
@@ -65,6 +67,7 @@
                             </a>
                         </div>
                     </div>
+                    @endif  
                 </div>
             </div>
         </div>
