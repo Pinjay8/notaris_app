@@ -35,22 +35,27 @@
                             </h5>
                         </div>
                     </div>
-                    @if(isset($notaris) && $notaris->id)
-                    @php
-                        use Illuminate\Support\Facades\Crypt;
+                    @if (isset($notaris) && $notaris->id)
+                        @php
+                            // use Illuminate\Support\Facades\Crypt;
 
-                        $encryptedId = Crypt::encryptString($notaris->id);
-                        $link = url('/notaris/verify/' . $encryptedId);
+                            // $encryptedId = Crypt::encryptString($notaris->id);
+                            // $link = url('/notaris/verify/' . $encryptedId);
 
-                        $dns2d = new \Milon\Barcode\DNS2D();
-                        $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
-                    @endphp
+                            // $dns2d = new \Milon\Barcode\DNS2D();
+                            // $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
+                            $encryptedId = \Illuminate\Support\Facades\Crypt::encryptString($notaris->id);
+                            $link = url('/notaris/verify/' . $encryptedId);
+
+                            $dns2d = new \Milon\Barcode\DNS2D();
+                            $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
+                        @endphp
 
 
 
-                    <div class="mt-1 text-center">
-                        <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
-                            style="
+                        <div class="mt-1 text-center">
+                            <img src="data:image/png;base64,{{ $png }}" alt="QR Code"
+                                style="
                                 width:150px;
                                 background:#fff;
                                 padding:14px;
@@ -58,16 +63,17 @@
                                 box-shadow: 0 10px 25px rgba(251,98,64,0.35);
                             ">
 
-                        <div class="mt-3">
-                            <a href="data:image/png;base64,{{ $png }}"
-                                download="qr-profile-{{ $notaris->display_name }}.png"
-                                class="btn btn-outline-primary btn-sm mb-0">
-                                <i class="bi bi-download fs-6 "></i>
-                                Download QR
-                            </a>
+                            <div class="mt-3">
+                                <a href="data:image/png;base64,{{ $png }}"
+                                    download="qr-profile-{{ $notaris->display_name }}.png"
+                                    class="btn btn-outline-primary btn-sm mb-0">
+                                    <i class="bi bi-download fs-6 "></i>
+                                    Download QR
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    @endif  
+                    @else
+                    @endif
                 </div>
             </div>
         </div>
