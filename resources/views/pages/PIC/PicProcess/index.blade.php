@@ -108,7 +108,7 @@
                                     <tbody>
                                         @forelse ($processes as $process)
                                             <tr class="text-center text-sm">
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $processes->firstItem() + $loop->index }}</td>
                                                 <td>{{ $process->step_name }}</td>
                                                 <td>
                                                     @php

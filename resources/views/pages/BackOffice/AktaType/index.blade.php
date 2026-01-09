@@ -53,7 +53,7 @@
                                 @forelse ($aktaTypes as $aktaType)
                                     <tr class="text-center text-sm text-capitalize"">
                                         <td>
-                                            {{ $loop->iteration }}
+                                            {{ $aktaTypes->firstItem() + $loop->index }}
                                         </td>
                                         <td>{{ $aktaType->category }}</td>
                                         <td>{{ $aktaType->type }}

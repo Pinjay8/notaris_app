@@ -42,7 +42,7 @@
                             // $encryptedId = Crypt::encryptString($notaris->id);
                             // $link = url('/notaris/verify/' . $encryptedId);
 
-                            // $dns2d = new \Milon\Barcode\DNS2D();
+                            // $dns2d     = new \Milon\Barcode\DNS2D();
                             // $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
                             $encryptedId = \Illuminate\Support\Facades\Crypt::encryptString($notaris->id);
                             $link = url('/notaris/verify/' . $encryptedId);

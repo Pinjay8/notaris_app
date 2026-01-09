@@ -94,7 +94,7 @@
                                     <tbody>
                                         @forelse($parties as $party)
                                             <tr class="text-center text-sm">
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $parties->firstItem() + $loop->index }}</td>
                                                 <td>{{ $party->name }}</td>
                                                 <td>{{ $party->role }}</td>
                                                 <td>{{ $party->address ?? '-' }}</td>
@@ -118,6 +118,10 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+
+                                <div class="d-flex justify-content-end mt-3">
+                                    {{ $parties->withQueryString()->links() }}
+                                </div>
                             </div>
                         </div>
                     @else

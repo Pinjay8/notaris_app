@@ -39,7 +39,7 @@
                             <tbody>
                                 @forelse ($picStaffs as $staff)
                                     <tr class="text-center text-sm">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $picStaffs->firstItem() + $loop->index }}</td>
                                         <td>{{ $staff->full_name }}</td>
                                         <td>{{ $staff->email }}</td>
                                         <td>{{ $staff->phone_number }}</td>
@@ -50,7 +50,7 @@
                                             <a href="{{ route('pic_staff.edit', $staff->id) }}"
                                                 class="btn btn-info btn-sm mb-0">Edit</a>
                                             <form action="{{ route('pic_staff.destroy', $staff->id) }}" method="POST"
-                                                class="d-inline-block" onsubmit="return confirm('Hapus PIC ini?')">
+                                                class="d-inline-block">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
@@ -64,6 +64,9 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <div class="mt-3 d-flex justify-content-end">
+                            {{ $picStaffs->withQueryString()->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

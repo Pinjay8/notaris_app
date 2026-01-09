@@ -17,9 +17,10 @@ class RelaasPartiesRepository implements RelaasPartiesRepositoryInterface
             ->first();
     }
 
-    public function getPartiesByRelaasId(int $relaasId): Collection
+    public function getPartiesByRelaasId(int $relaasId)
     {
-        return NotaryRelaasParties::where('relaas_id', $relaasId)->where('notaris_id', auth()->user()->notaris_id)->get();
+        return NotaryRelaasParties::where('relaas_id', $relaasId)->where('notaris_id', auth()->user()->notaris_id)
+            ->latest()->paginate(10);
     }
 
     public function create(array $data): object

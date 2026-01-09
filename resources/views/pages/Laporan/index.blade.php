@@ -66,6 +66,7 @@
                                 @forelse($costs as $payment)
                                     <tr class="text-center text-sm">
                                         <td>{{ $loop->iteration }}</td>
+                                        {{-- <td>{{ $costs->firstItem() + $loop->index }}</td> --}}
                                         <td>{{ $payment->payment_code }}</td>
                                         <td>{{ $payment->client->fullname ?? '-' }}</td>
                                         <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d-m-Y') : '-' }}

@@ -28,75 +28,76 @@
                 </form>
                 <hr>
                 <div class="card-body px-0 pt-0 pb-2">
-
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>#</th>
-                                    <th>Nama Klien</th>
-                                    <th>Kode Klien</th>
-                                    <th>Nomor Legalisasi</th>
-                                    <th>Nama Pemohon</th>
-                                    <th>Nama Petugas</th>
-                                    <th>Jenis Dokumen</th>
-                                    <th>Nomor Dokumen</th>
-                                    <th>Tanggal Permintaan</th>
-                                    <th>Tanggal Rilis</th>
-                                    <th>Catatan</th>
-                                    <th>File</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($data as $item)
-                                    <tr class="text-center text-sm">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->client->fullname }}</td>
-                                        <td>{{ $item->client_code }}</td>
-                                        <td>{{ $item->waarmerking_number }}</td>
-                                        <td>{{ $item->applicant_name }}</td>
-                                        <td>{{ $item->officer_name }}</td>
-                                        <td>{{ $item->document_type }}</td>
-                                        <td>{{ $item->document_number }}</td>
-                                        <td>{{ $item->request_date ? \Carbon\Carbon::parse($item->request_date)->format('d-m-Y') : '-' }}
-                                        </td>
-                                        <td>{{ $item->release_date ? \Carbon\Carbon::parse($item->release_date)->format('d-m-Y') : '-' }}
-                                        </td>
-                                        <td>{{ $item->notes }}</td>
-                                        {{-- file image --}}
-                                        <td>
-                                            @if ($item->file_path)
-                                                <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank"
-                                                    class="btn btn-primary btn-sm mb-0">
-                                                    Lihat File
-                                                </a>
-                                            @else
-                                                <span class="text-muted">Tidak ada file</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('notary-waarmerking.edit', $item->id) }}"
-                                                class="btn btn-info btn-sm mb-0">Edit</a>
-                                            <form action="{{ route('notary-waarmerking.destroy', $item->id) }}"
-                                                method="POST" class="d-inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
-                                            </form>
-                                        </td>
+                        <div class="table-wrapper">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>#</th>
+                                        <th>Nama Klien</th>
+                                        <th>Kode Klien</th>
+                                        <th>Nomor Legalisasi</th>
+                                        <th>Nama Pemohon</th>
+                                        <th>Nama Petugas</th>
+                                        <th>Jenis Dokumen</th>
+                                        <th>Nomor Dokumen</th>
+                                        <th>Tanggal Permintaan</th>
+                                        <th>Tanggal Rilis</th>
+                                        {{-- <th>Catatan</th> --}}
+                                        <th>File</th>
+                                        <th>Aksi</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="10 text-sm" class="text-center text-muted text-sm">Belum ada data
-                                            waarmerking.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @forelse ($data as $item)
+                                        <tr class="text-center text-sm">
+                                            <td>{{ $data->firstItem() + $loop->index }}</td>
+                                            <td>{{ $item->client->fullname }}</td>
+                                            <td>{{ $item->client_code }}</td>
+                                            <td>{{ $item->waarmerking_number }}</td>
+                                            <td>{{ $item->applicant_name }}</td>
+                                            <td>{{ $item->officer_name }}</td>
+                                            <td>{{ $item->document_type }}</td>
+                                            <td>{{ $item->document_number }}</td>
+                                            <td>{{ $item->request_date ? \Carbon\Carbon::parse($item->request_date)->format('d-m-Y') : '-' }}
+                                            </td>
+                                            <td>{{ $item->release_date ? \Carbon\Carbon::parse($item->release_date)->format('d-m-Y') : '-' }}
+                                            </td>
+                                            {{-- <td>{{ $item->notes }}</td> --}}
+                                            {{-- file image --}}
+                                            <td>
+                                                @if ($item->file_path)
+                                                    <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank"
+                                                        class="btn btn-primary btn-sm mb-0">
+                                                        Lihat File
+                                                    </a>
+                                                @else
+                                                    <span class="text-muted">Tidak ada file</span>
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('notary-waarmerking.edit', $item->id) }}"
+                                                    class="btn btn-info btn-sm mb-0">Edit</a>
+                                                <form action="{{ route('notary-waarmerking.destroy', $item->id) }}"
+                                                    method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm mb-0">Hapus</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="12" class="text-center text-muted text-sm">Belum ada data
+                                                waarmerking.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
 
-                        <div class="mt-3 ms-3">
-                            {{ $data->links() }}
+                            <div class="d-flex justify-content-end mt-3">
+                                {{ $data->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

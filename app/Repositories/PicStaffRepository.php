@@ -4,19 +4,24 @@ namespace App\Repositories;
 
 use App\Models\PicStaff;
 use App\Repositories\Interfaces\PicStaffRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
 class PicStaffRepository implements PicStaffRepositoryInterface
 {
-    public function all(?string $search = null): Collection
+    public function all(?string $search = null)
     {
-        $query = PicStaff::query()->where('notaris_id', auth()->user()->notaris_id);
+        $query = PicStaff::query()
+            ->where('notaris_id', auth()->user()->notaris_id);
 
         if ($search) {
-            $query->where('full_name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%");
+            $query->where(function ($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            });
         }
-        return $query->latest()->get();
+
+        return $query->latest()->paginate(10);
     }
 
     public function find(int $id): ?PicStaff
