@@ -81,12 +81,12 @@
 
                                         <div class="border rounded px-3 py-2 small bg-light">
                                             <div class="row mb-1">
-                                                <h6 class="col-2">Nama</h6>
-                                                <div class="col-8 fw-semibold">: {{ v($akta->client->fullname ?? '-') }}
+                                                <h6 class=" col-4 col-lg-2">Nama</h6>
+                                                <div class="col-8 col-lg-8 fw-semibold">: {{ v($akta->client->fullname ?? '-') }}
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <h6 class="col-2">Kode Klien</h6>
+                                                <h6 class="col-4 col-lg-2">Kode Klien</h6>
                                                 <div class="col-8 fw-semibold">: {{ v($akta->client->client_code ?? '-') }}
                                                 </div>
                                             </div>
