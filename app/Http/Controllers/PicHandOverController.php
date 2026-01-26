@@ -35,12 +35,19 @@ class PicHandoverController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'pic_document_id' => 'required|exists:pic_documents,id',
+            'pic_document_id' => 'required',
             'handover_date'   => 'required|date',
             'recipient_name'  => 'required|string',
             'recipient_contact' => 'required|string',
             'note'            => 'nullable|string',
-            'file_path'       => 'nullable|file|mimes:pdf,jpg,png,png|max:1024',
+            'file_path'       => 'nullable|file|mimes:pdf,jpg,png,png|max:5000',
+        ],[
+            'pic_document_id.required' => 'Dokumen PIC harus dipilih.',
+            'handover_date.required'   => 'Tanggal serah terima harus diisi.',
+            'recipient_name.required'  => 'Nama penerima harus diisi.',
+            'recipient_contact.required' => 'Kontak penerima harus diisi.',
+            'file_path.max' => 'Ukuran file maksimal 5 MB.',
+            'file_path.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;

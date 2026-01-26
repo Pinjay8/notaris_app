@@ -16,14 +16,13 @@
                                     : asset('storage/' . $notaris->image))
                                 : asset('img/img_profile.png') }}"
                                 alt="profile_image"
-                                style="
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        object-position: center;
-        border-radius:50%;
-        background:#fff;
-    ">
+                                style="width:100%;
+                                height:100%;
+                                object-fit:cover;
+                                object-position: center;
+                                border-radius:50%;
+                                background:#fff;
+                                ">
                         </div>
 
                         <div>
@@ -37,13 +36,6 @@
                     </div>
                     @if (isset($notaris) && $notaris->id)
                         @php
-                            // use Illuminate\Support\Facades\Crypt;
-
-                            // $encryptedId = Crypt::encryptString($notaris->id);
-                            // $link = url('/notaris/verify/' . $encryptedId);
-
-                            // $dns2d     = new \Milon\Barcode\DNS2D();
-                            // $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
                             $encryptedId = \Illuminate\Support\Facades\Crypt::encryptString($notaris->id);
                             $link = url('/notaris/verify/' . $encryptedId);
 
@@ -208,11 +200,22 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label text-sm">Nomor
-                                            Telepon</label>
+                                        <label for="example-text-input" class="form-control-label text-sm">SMS/WA
+                                        </label>
                                         <input class="form-control @error('phone') is-invalid @enderror" type="text"
                                             name="phone" value="{{ old('phone', $notaris->phone ?? '') }}">
                                         @error('phone')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label text-sm">No.
+                                            Telp</label>
+                                        <input class="form-control @error('no_telp') is-invalid @enderror" type="text"
+                                            name="no_telp" value="{{ old('no_telp', $notaris->no_telp ?? '') }}">
+                                        @error('no_telp')
                                             <p class="text-danger mt-1 text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -246,18 +249,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="example-text-input"
-                                            class="form-control-label text-sm">Informasi</label>
-                                        <input class="form-control @error('information') is-invalid @enderror"
-                                            type="text" name="information"
-                                            value="{{ old('information', $notaris->information ?? '') }}">
-                                        @error('information')
-                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
+
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -344,6 +336,49 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="example-text-input"
+                                            class="form-control-label text-sm">Informasi</label>
+                                        <input class="form-control @error('information') is-invalid @enderror"
+                                            type="text" name="information"
+                                            value="{{ old('information', $notaris->information ?? '') }}">
+                                        @error('information')
+                                            <p class="text-danger mt-1 text-sm">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-3">
+                                        <label class="form-control-label text-sm">Provinsi</label>
+                                        <select id="provinsi" name="provinsi_id" class="form-select">
+                                            <option value="">Pilih Provinsi</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-control-label text-sm">Kota / Kabupaten</label>
+                                        <select id="kota" name="kota_id" class="form-select">
+                                            <option value="">Pilih Kota</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-control-label text-sm">Kecamatan</label>
+                                        <select id="kecamatan" name="kecamatan_id" class="form-select">
+                                            <option value="">Pilih Kecamatan</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-control-label text-sm">Kelurahan / Desa</label>
+                                        <select id="kelurahan" name="kelurahan_id" class="form-select">
+                                            <option value="">Pilih Kelurahan</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
 
                             {{-- <p class="text-uppercase text-sm">About me</p>
@@ -422,5 +457,76 @@
         </div> --}}
         </div>
         {{-- @include('layouts.footers.auth.footer') --}}
+
     </div>
+
 @endsection
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const provinsi = document.getElementById('provinsi');
+            const kota = document.getElementById('kota');
+            const kecamatan = document.getElementById('kecamatan');
+            const kelurahan = document.getElementById('kelurahan');
+
+            // Load Provinsi
+            fetch('/api/provinsi')
+                .then(res => res.json())
+                .then(data => {
+                    data.forEach(i => {
+                        provinsi.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                    });
+                });
+
+            // Provinsi → Kota
+            provinsi.addEventListener('change', function() {
+                kota.innerHTML = '<option value="">Pilih Kota</option>';
+                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
+
+                if (!this.value) return;
+
+                fetch(`/api/kota/${this.value}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(i => {
+                            kota.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                        });
+                    });
+            });
+
+            // Kota → Kecamatan
+            kota.addEventListener('change', function() {
+                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
+
+                if (!this.value) return;
+
+                fetch(`/api/kecamatan/${this.value}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(i => {
+                            kecamatan.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                        });
+                    });
+            });
+
+            // Kecamatan → Kelurahan
+            kecamatan.addEventListener('change', function() {
+                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
+
+                if (!this.value) return;
+
+                fetch(`/api/kelurahan/${this.value}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach(i => {
+                            kelurahan.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                        });
+                    });
+            });
+
+        });
+    </script>
+@endpush

@@ -208,7 +208,7 @@ class NotaryClientWarkahController extends Controller
         $validated = $request->validate([
             'client_code' => 'required',
             'warkah_code' => 'required',
-            'warkah_link' => 'nullable|mimes:jpg,jpeg,png,pdf|max:1024',
+            'warkah_link' => 'nullable|mimes:jpg,jpeg,png,pdf|max:5000',
             'note' => 'nullable',
             'uploaded_at' => 'required|date',
         ], [

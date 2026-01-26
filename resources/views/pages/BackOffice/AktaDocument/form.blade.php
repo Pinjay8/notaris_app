@@ -50,7 +50,7 @@
                             <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
                             <input type="file" name="file_url" id="file_url"
                                 class="form-control @error('file_url') is-invalid @enderror">
-                            <small class="text-muted">Ukuran maksimal 1 MB</small>
+                            <small class="text-muted">Ukuran maksimal 5 MB</small>
 
                             @error('file_url')
                                 <div class="invalid-feedback">

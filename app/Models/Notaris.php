@@ -23,6 +23,7 @@ class Notaris extends Model
         'background',
         'address',
         'phone',
+        'no_telp',
         'email',
         'gender',
         'information',

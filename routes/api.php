@@ -7,12 +7,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ActivityLogApiController;
 use App\Http\Controllers\Api\NotarisController;
 use App\Http\Controllers\Api\SummaryNotarisController;
+use App\Http\Controllers\WilayahController;
 
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::post('/users', [UserSyncController::class, 'store']);
 //     Route::post('/subscriptions', [SubscriptionSyncController::class, 'store']);
 //     Route::get('/activity-logs', [ActivityLogApiController::class, 'index']);
 // });
+
+Route::get('/provinsi', [WilayahController::class, 'provinsi']);
+Route::get('/kota/{provinsi_id}', [WilayahController::class, 'kota']);
+Route::get('/kecamatan/{kota_id}', [WilayahController::class, 'kecamatan']);
+Route::get('/kelurahan/{kecamatan_id}', [WilayahController::class, 'kelurahan']);
 
 
 

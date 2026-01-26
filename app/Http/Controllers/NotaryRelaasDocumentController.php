@@ -61,13 +61,13 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'required|date',
-            'file_url'  => 'required|max:1024|mimes:pdf,jpg,jpeg,png',
+            'file_url'  => 'required|max:5000|mimes:pdf,jpg,jpeg,png',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
-            'file_url.max' => 'Ukuran file maksimal 1MB.',
+            'file_url.max' => 'Ukuran file maksimal 5MB.',
             'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
@@ -108,12 +108,12 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'nullable|date',
-            'file_url'  => 'nullable|max:1024|mimes:pdf,jpg,jpeg,png',
+            'file_url'  => 'nullable|max:5000|mimes:pdf,jpg,jpeg,png',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Jenis dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
-            'file_url.max' => 'Ukuran file maksimal 1MB.',
+            'file_url.max' => 'Ukuran file maksimal 5 MB.',
             'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 

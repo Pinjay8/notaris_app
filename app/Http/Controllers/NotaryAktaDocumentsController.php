@@ -73,7 +73,7 @@ class NotaryAktaDocumentsController extends Controller
             'name' => 'required|string',
             'type' => 'required|string',
             // 'file_name' => 'required|string',
-            'file_url' => 'required|max:1024|mimes:png,jpg,jpeg,pdf',
+            'file_url' => 'required|max:5000|mimes:png,jpg,jpeg,pdf',
             // 'file_type' => 'required|string',
             'uploaded_at' => 'required|date',
         ], [
@@ -128,14 +128,14 @@ class NotaryAktaDocumentsController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'type' => 'required|string',
-            'file_url' => 'nullable|max:1024|mimes:png,jpg,jpeg,pdf',
+            'file_url' => 'nullable|max:5000|mimes:png,jpg,jpeg,pdf',
             'uploaded_at' => 'required|date',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
-            'file_url.max' => 'Ukuran file maksimal 1MB.',
+            'file_url.max' => 'Ukuran file maksimal 5MB.',
             'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 

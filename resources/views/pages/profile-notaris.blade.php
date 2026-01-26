@@ -17,7 +17,7 @@
         }
 
         try {
-            return \Carbon\Carbon::parse($date)->format('d F Y');
+            return \Carbon\Carbon::parse($date)->locale('id')->translatedFormat('d F Y');
         } catch (\Exception $e) {
             return '-';
         }
@@ -67,7 +67,7 @@
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-person-fill text-primary"></i>
-                                                Nama Lengkap
+                                                Nama Notaris
                                             </h6>
                                             <p class="fw-semibold mb-0">
                                                 {{ v($notaris->first_name) }} {{ v($notaris->last_name ?? '-') }}
@@ -94,9 +94,17 @@
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-telephone-fill text-primary"></i>
-                                                Nomor Telepon
+                                                SMS/WA
                                             </h6>
                                             <p class="fw-semibold mb-0">{{ v($notaris->phone ?? '-') }}</p>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-telephone-fill text-primary"></i>
+                                                No. Telp
+                                            </h6>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->no_telp ?? '-') }}</p>
                                         </div>
 
                                         <div class="col-md-6">
@@ -172,3 +180,5 @@
         </section>
     </main>
 @endsection
+
+
