@@ -33,6 +33,14 @@ class Notaris extends Model
         'sk_notaris_date',
         'no_kta_ini',
         'no_kta_ippat',
+        'provinsi_id',
+        'provinsi_name',
+        'kota_id',
+        'kota_name',
+        'kecamatan_id',
+        'kecamatan_name',
+        'kelurahan_id',
+        'kelurahan_name',
     ];
 
     protected $casts = [

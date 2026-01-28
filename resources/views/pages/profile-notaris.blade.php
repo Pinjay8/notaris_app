@@ -90,15 +90,38 @@
                                             </h6>
                                             <p class="fw-semibold mb-0">{{ v($notaris->office_address ?? '-') }}</p>
                                         </div>
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-map-fill text-primary"></i>
+                                                Provinsi
+                                            </h6>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->provinsi_name ?? '-') }}</p>
+                                        </div>
+
 
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
-                                                <i class="bi bi-telephone-fill text-primary"></i>
-                                                SMS/WA
+                                                <i class="bi bi-map-fill text-primary"></i>
+                                                Kota / Kabupaten
                                             </h6>
-                                            <p class="fw-semibold mb-0">{{ v($notaris->phone ?? '-') }}</p>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->kota_name ?? '-') }}</p>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-map-fill text-primary"></i>
+                                                Kecamatan
+                                            </h6>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->kecamatan_name ?? '-') }}</p>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-map-fill text-primary"></i>
+                                                Kelurahan / Desa
+                                            </h6>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->kelurahan_name ?? '-') }}</p>
+                                        </div>
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-telephone-fill text-primary"></i>
@@ -107,7 +130,18 @@
                                             <p class="fw-semibold mb-0">{{ v($notaris->no_telp ?? '-') }}</p>
                                         </div>
 
+
                                         <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2">
+                                                <i class="bi bi-whatsapp text-primary"></i>
+                                                SMS/WA
+                                            </h6>
+                                            <p class="fw-semibold mb-0">{{ v($notaris->phone ?? '-') }}</p>
+                                        </div>
+
+                                        <hr>
+
+                                        {{-- <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-file-earmark-text-fill text-primary"></i>
                                                 SK Notaris
@@ -121,8 +155,44 @@
                                                 Tanggal SK Notaris
                                             </h6>
                                             <p class="fw-semibold mb-0">{{ d($notaris->sk_notaris_date) }}</p>
+                                        </div> --}}
+
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2 mb-2">
+                                                <i class="bi bi-file-earmark-text-fill text-primary"></i>
+                                                Informasi SK Notaris
+                                            </h6>
+
+                                            <div class="d-flex justify-content-start gap-3">
+                                                <h6 class="fw-bold">SK Notaris</h6>
+                                                <h6 class="fw-semibold text-muted">{{ v($notaris->sk_notaris ?? '-') }}
+                                                </h6>
+                                            </div>
+
+                                            <div class="d-flex justify-content-start mt-1 gap-4">
+                                                <h6 class="fw-bold">Tanggal</h6>
+                                                <h6 class="fw-semibold text-muted">{{ d($notaris->sk_notaris_date) }}</h6>
+                                            </div>
                                         </div>
 
+                                        <div class="col-md-6">
+                                            <h6 class="d-flex align-items-center gap-2 mb-2">
+                                                <i class="bi bi-file-earmark-text-fill text-primary"></i>
+                                                Informasi SK PPAT
+                                            </h6>
+
+                                            <div class="d-flex justify-content-start gap-3">
+                                                <h6 class="fw-bold">SK PPAT</h6>
+                                                <h6 class="fw-semibold text-muted">{{ v($notaris->sk_ppat ?? '-') }}</h6>
+                                            </div>
+
+                                            <div class="d-flex justify-content-start mt-1 gap-3">
+                                                <h6 class="fw-bold">Tanggal</h6>
+                                                <h6 class="fw-semibold text-muted">{{ d($notaris->sk_ppat_date) }}</h6>
+                                            </div>
+                                        </div>
+
+                                        {{--
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-file-earmark-check-fill text-primary"></i>
@@ -137,9 +207,10 @@
                                                 Tanggal SK PPAT
                                             </h6>
                                             <p class="fw-semibold mb-0">{{ d($notaris->sk_ppat_date) }}</p>
-                                        </div>
+                                        </div> --}}
 
                                         {{-- KEANGGOTAAN --}}
+
                                         <div class="col-md-6">
                                             <h6 class="d-flex align-items-center gap-2">
                                                 <i class="bi bi-patch-check-fill text-primary"></i>
@@ -180,5 +251,3 @@
         </section>
     </main>
 @endsection
-
-

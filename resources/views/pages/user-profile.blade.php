@@ -198,6 +198,52 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" name="provinsi_name" id="provinsi_name"
+                                    value="{{ old('provinsi_name', $notaris->provinsi_name ?? '') }}">
+
+                                <input type="hidden" name="kota_name" id="kota_name"
+                                    value="{{ old('kota_name', $notaris->kota_name ?? '') }}">
+
+                                <input type="hidden" name="kecamatan_name" id="kecamatan_name"
+                                    value="{{ old('kecamatan_name', $notaris->kecamatan_name ?? '') }}">
+
+                                <input type="hidden" name="kelurahan_name" id="kelurahan_name"
+                                    value="{{ old('kelurahan_name', $notaris->kelurahan_name ?? '') }}">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Provinsi</label>
+                                        <select id="provinsi" name="provinsi_id" class="form-select">
+                                            <option value="">Pilih Provinsi</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Kota / Kabupaten</label>
+                                        <select id="kota" name="kota_id" class="form-select">
+                                            <option value="">Pilih Kota</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Kecamatan</label>
+                                        <select id="kecamatan" name="kecamatan_id" class="form-select">
+                                            <option value="">Pilih Kecamatan</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-control-label text-sm">Kelurahan / Desa</label>
+                                        <select id="kelurahan" name="kelurahan_id" class="form-select">
+                                            <option value="">Pilih Kelurahan</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label text-sm">SMS/WA
@@ -350,118 +396,26 @@
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md-3">
-                                        <label class="form-control-label text-sm">Provinsi</label>
-                                        <select id="provinsi" name="provinsi_id" class="form-select">
-                                            <option value="">Pilih Provinsi</option>
-                                        </select>
-                                    </div>
 
-                                    <div class="col-md-3">
-                                        <label class="form-control-label text-sm">Kota / Kabupaten</label>
-                                        <select id="kota" name="kota_id" class="form-select">
-                                            <option value="">Pilih Kota</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label class="form-control-label text-sm">Kecamatan</label>
-                                        <select id="kecamatan" name="kecamatan_id" class="form-select">
-                                            <option value="">Pilih Kecamatan</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <label class="form-control-label text-sm">Kelurahan / Desa</label>
-                                        <select id="kelurahan" name="kelurahan_id" class="form-select">
-                                            <option value="">Pilih Kelurahan</option>
-                                        </select>
-                                    </div>
                                 </div>
 
                             </div>
-
-                            {{-- <p class="text-uppercase text-sm">About me</p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label text-sm">About me</label>
-                                    <input class="form-control" type="text" name="about"
-                                        value="{{ old('about', $notaris->about) }}">
-                                </div>
-                            </div>
-                        </div> --}}
                         </div>
                     </form>
                 </div>
             </div>
-            {{-- <div class="col-md-4">
-            <div class="card card-profile">
-                <img src="/img/bg-profile.jpg" alt="Image placeholder" class="card-img-top">
-                <div class="row justify-content-center">
-                    <div class="col-4 col-lg-4 order-lg-2">
-                        <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                            <a href="javascript:;">
-                                <img src="/img/team-2.jpg"
-                                    class="rounded-circle img-fluid border border-2 border-white">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                    <div class="d-flex justify-content-between">
-                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Connect</a>
-                        <a href="javascript:;" class="btn btn-sm btn-info mb-0 d-block d-lg-none"><i
-                                class="ni ni-collection"></i></a>
-                        <a href="javascript:;"
-                            class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Message</a>
-                        <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i
-                                class="ni ni-email-83"></i></a>
-                    </div>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-flex justify-content-center">
-                                <div class="d-grid text-center">
-                                    <span class="text-lg font-weight-bolder">22</span>
-                                    <span class="text-sm opacity-8">Friends</span>
-                                </div>
-                                <div class="d-grid text-center mx-4">
-                                    <span class="text-lg font-weight-bolder">10</span>
-                                    <span class="text-sm opacity-8">Photos</span>
-                                </div>
-                                <div class="d-grid text-center">
-                                    <span class="text-lg font-weight-bolder">89</span>
-                                    <span class="text-sm opacity-8">Comments</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-center mt-4">
-                        <h5>
-                            Mark Davis<span class="font-weight-light">, 35</span>
-                        </h5>
-                        <div class="h6 font-weight-300">
-                            <i class="ni location_pin mr-2"></i>Bucharest, Romania
-                        </div>
-                        <div class="h6 mt-4">
-                            <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-                        </div>
-                        <div>
-                            <i class="ni education_hat mr-2"></i>University of Computer Science
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
         </div>
         {{-- @include('layouts.footers.auth.footer') --}}
-
     </div>
 
 @endsection
 @push('js')
+    <script>
+        const selectedProvinsi = "{{ $notaris->provinsi_id ?? '' }}";
+        const selectedKota = "{{ $notaris->kota_id ?? '' }}";
+        const selectedKecamatan = "{{ $notaris->kecamatan_id ?? '' }}";
+        const selectedKelurahan = "{{ $notaris->kelurahan_id ?? '' }}";
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -470,61 +424,97 @@
             const kecamatan = document.getElementById('kecamatan');
             const kelurahan = document.getElementById('kelurahan');
 
-            // Load Provinsi
+            const provinsiName = document.getElementById('provinsi_name');
+            const kotaName = document.getElementById('kota_name');
+            const kecamatanName = document.getElementById('kecamatan_name');
+            const kelurahanName = document.getElementById('kelurahan_name');
+
+            // ===== LOAD PROVINSI =====
             fetch('/api/provinsi')
                 .then(res => res.json())
                 .then(data => {
                     data.forEach(i => {
-                        provinsi.innerHTML += `<option value="${i.id}">${i.name}</option>`;
+                        provinsi.innerHTML +=
+                            `<option value="${i.id}" ${i.id == selectedProvinsi ? 'selected' : ''}>${i.name}</option>`;
                     });
+
+                    if (selectedProvinsi) {
+                        provinsiName.value = provinsi.options[provinsi.selectedIndex].text;
+                        loadKota(selectedProvinsi);
+                    }
                 });
 
-            // Provinsi → Kota
+            function loadKota(provinsiId) {
+                fetch(`/api/kota/${provinsiId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        kota.innerHTML = '<option value="">Pilih Kota</option>';
+                        data.forEach(i => {
+                            kota.innerHTML +=
+                                `<option value="${i.id}" ${i.id == selectedKota ? 'selected' : ''}>${i.name}</option>`;
+                        });
+
+                        if (selectedKota) {
+                            kotaName.value = kota.options[kota.selectedIndex].text;
+                            loadKecamatan(selectedKota);
+                        }
+                    });
+            }
+
+            function loadKecamatan(kotaId) {
+                fetch(`/api/kecamatan/${kotaId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
+                        data.forEach(i => {
+                            kecamatan.innerHTML +=
+                                `<option value="${i.id}" ${i.id == selectedKecamatan ? 'selected' : ''}>${i.name}</option>`;
+                        });
+
+                        if (selectedKecamatan) {
+                            kecamatanName.value = kecamatan.options[kecamatan.selectedIndex].text;
+                            loadKelurahan(selectedKecamatan);
+                        }
+                    });
+            }
+
+            function loadKelurahan(kecamatanId) {
+                fetch(`/api/kelurahan/${kecamatanId}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
+                        data.forEach(i => {
+                            kelurahan.innerHTML +=
+                                `<option value="${i.id}" ${i.id == selectedKelurahan ? 'selected' : ''}>${i.name}</option>`;
+                        });
+
+                        if (selectedKelurahan) {
+                            kelurahanName.value = kelurahan.options[kelurahan.selectedIndex].text;
+                        }
+                    });
+            }
+
+            // ===== CHANGE EVENTS =====
             provinsi.addEventListener('change', function() {
-                kota.innerHTML = '<option value="">Pilih Kota</option>';
-                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
-                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
-
-                if (!this.value) return;
-
-                fetch(`/api/kota/${this.value}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(i => {
-                            kota.innerHTML += `<option value="${i.id}">${i.name}</option>`;
-                        });
-                    });
+                provinsiName.value = this.options[this.selectedIndex].text;
+                kota.innerHTML = kecamatan.innerHTML = kelurahan.innerHTML = '';
+                loadKota(this.value);
             });
 
-            // Kota → Kecamatan
             kota.addEventListener('change', function() {
-                kecamatan.innerHTML = '<option value="">Pilih Kecamatan</option>';
-                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
-
-                if (!this.value) return;
-
-                fetch(`/api/kecamatan/${this.value}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(i => {
-                            kecamatan.innerHTML += `<option value="${i.id}">${i.name}</option>`;
-                        });
-                    });
+                kotaName.value = this.options[this.selectedIndex].text;
+                kecamatan.innerHTML = kelurahan.innerHTML = '';
+                loadKecamatan(this.value);
             });
 
-            // Kecamatan → Kelurahan
             kecamatan.addEventListener('change', function() {
-                kelurahan.innerHTML = '<option value="">Pilih Kelurahan</option>';
+                kecamatanName.value = this.options[this.selectedIndex].text;
+                kelurahan.innerHTML = '';
+                loadKelurahan(this.value);
+            });
 
-                if (!this.value) return;
-
-                fetch(`/api/kelurahan/${this.value}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        data.forEach(i => {
-                            kelurahan.innerHTML += `<option value="${i.id}">${i.name}</option>`;
-                        });
-                    });
+            kelurahan.addEventListener('change', function() {
+                kelurahanName.value = this.options[this.selectedIndex].text;
             });
 
         });

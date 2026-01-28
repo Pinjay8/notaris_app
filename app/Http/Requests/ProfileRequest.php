@@ -42,6 +42,17 @@ class ProfileRequest extends FormRequest
             'sk_notaris_date' => ['nullable', 'date'],
             'no_kta_ini' => ['nullable'],
             'no_kta_ippat' => ['nullable'],
+            'provinsi_id' => ['nullable', 'string'],
+            'provinsi_name' => ['nullable', 'string', 'max:100'],
+
+            'kota_id' => ['nullable', 'string'],
+            'kota_name' => ['nullable', 'string', 'max:100'],
+
+            'kecamatan_id' => ['nullable', 'string'],
+            'kecamatan_name' => ['nullable', 'string', 'max:100'],
+
+            'kelurahan_id' => ['nullable', 'string'],
+            'kelurahan_name' => ['nullable', 'string', 'max:100'],
         ];
     }
 
