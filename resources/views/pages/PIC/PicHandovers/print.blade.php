@@ -114,7 +114,7 @@
             <tr style="text-align: center">
                 <td>1</td>
                 <td style="text-transform: capitalize">{{ $handover->picDocument->transaction_type ?? '-' }}
-                    '-' }})</td>
+                </td>
                 @php
                     $badgeColors = [
                         'delivered' => 'primary', // biru

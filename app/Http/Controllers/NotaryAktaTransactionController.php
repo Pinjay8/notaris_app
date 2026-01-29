@@ -79,13 +79,12 @@ class NotaryAktaTransactionController extends Controller
     {
         $data = $request->validate(
             [
-                'akta_type_id' => 'required|exists:notary_akta_types,id',
+                'akta_type_id' => 'required',
                 'date_submission' => 'nullable|date',
                 'date_finished' => 'nullable|date',
                 'note' => 'nullable|string',
             ],
             [
-                // 'client_id.required' => 'Klien harus dipilih.',
                 'akta_type_id.required' => 'Jenis akta harus dipilih.',
             ]
         );
@@ -124,7 +123,7 @@ class NotaryAktaTransactionController extends Controller
     {
         $data = $request->validate(
             [
-                'akta_type_id' => 'required|exists:notary_akta_types,id',
+                'akta_type_id' => 'required',
                 'date_submission' => 'required|date',
                 'date_finished' => 'required|date',
                 'status' => 'required',
@@ -194,17 +193,14 @@ class NotaryAktaTransactionController extends Controller
 
         $akta = NotaryAktaTransaction::findOrFail($request->transaction_id);
 
-        // Cek apakah ini edit
         $isEdit = !is_null($akta->akta_number);
 
-        // Update data
         $akta->update([
             'akta_number' => $request->akta_number,
             'year' => $request->year,
             'akta_number_created_at' => now(),
         ]);
 
-        // Alert sesuai kondisi
         if ($isEdit) {
             notyf()->position('x', 'right')->position('y', 'top')
                 ->success('Nomor akta berhasil diperbarui.');

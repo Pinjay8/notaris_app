@@ -44,7 +44,7 @@
                                 <option value="" hidden>Pilih Tipe Transaksi</option>
                                 <option value="akta"
                                     {{ old('transaction_type', $picDocument->transaction_type ?? '') == 'akta' ? 'selected' : '' }}>
-                                    Akta
+                                    Notaris
                                 </option>
                                 <option value="ppat"
                                     {{ old('transaction_type', $picDocument->transaction_type ?? '') == 'ppat' ? 'selected' : '' }}>

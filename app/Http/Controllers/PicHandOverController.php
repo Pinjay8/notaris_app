@@ -41,7 +41,7 @@ class PicHandoverController extends Controller
             'recipient_contact' => 'required|string',
             'note'            => 'nullable|string',
             'file_path'       => 'nullable|file|mimes:pdf,jpg,png,png|max:5000',
-        ],[
+        ], [
             'pic_document_id.required' => 'Dokumen PIC harus dipilih.',
             'handover_date.required'   => 'Tanggal serah terima harus diisi.',
             'recipient_name.required'  => 'Nama penerima harus diisi.',
@@ -68,7 +68,6 @@ class PicHandoverController extends Controller
         notyf()->success('Data serah terima dihapus.');
         return back();
     }
-
     public function print($id)
     {
         $handover = $this->service->listHandovers([])->firstWhere('id', $id);
@@ -77,16 +76,19 @@ class PicHandoverController extends Controller
             abort(404, 'Data serah terima tidak ditemukan');
         }
 
-        // Ambil view dan render jadi HTML string
         $html = view('pages.PIC.PicHandovers.print', compact('handover'))->render();
 
-        // Pakai mpdf
-        $mpdf = new \Mpdf\Mpdf();
+        $mpdf = new \Mpdf\Mpdf([
+            'tempDir' => storage_path('app/mpdf'),
+            'format' => 'A4',
+            'mode'   => 'utf-8',
+        ]);
 
         $mpdf->WriteHTML($html);
 
-        // Unduh file PDF
-        return response($mpdf->Output("handover-{$handover->id}.pdf", \Mpdf\Output\Destination::STRING_RETURN))
+        return response(
+            $mpdf->Output("handover-{$handover->id}.pdf", \Mpdf\Output\Destination::STRING_RETURN)
+        )
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="handover-' . $handover->id . '.pdf"');
     }

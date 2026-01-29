@@ -84,7 +84,7 @@
                         <div class="card-header pb-0 rounded-top">
                             <div class="d-flex align-items-center">
                                 <h5 class="mb-0">Edit Profile</h5>
-                                <button type="submit" class="btn btn-primary btn-md ms-auto">Ubah</button>
+                                <button type="submit" class="btn btn-primary btn-md ms-auto">Simpan Perubahan</button>
                             </div>
                         </div>
                         <div class="card-body pt-3">
