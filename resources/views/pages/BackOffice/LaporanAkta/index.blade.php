@@ -21,15 +21,15 @@
                                 <label for="type" class="form-label text-sm">Jenis Akta</label>
                                 <select name="type" id="type" class="form-select">
                                     <option value="" hidden>Pilih Jenis</option>
-                                    <option value="partij" {{ request('type') == 'akta-notaris' ? 'selected' : '' }}>Akta
+                                    <option value="akta-notaris" {{ request('type') == 'akta-notaris' ? 'selected' : '' }}>
+                                        Akta
                                         Notaris
                                     </option>
-                                    <option value="relaas" {{ request('type') == 'ppat' ? 'selected' : '' }}>PPAT
+                                    <option value="ppat" {{ request('type') == 'ppat' ? 'selected' : '' }}>PPAT
                                     </option>
                                 </select>
                             </div>
 
-                            {{-- Start Date --}}
                             <div class="col-lg-3">
                                 <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                                 <input type="date" class="form-control" name="start_date" id="start_date"
@@ -56,7 +56,7 @@
             @if ($data->isNotEmpty())
                 <div class="card">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>{{ ucfirst($queryType) }}</h6>
+                        <h6 class="text-uppercase">{{ ucfirst($queryType) }}</h6>
                         <a href="{{ route('laporan-akta.export-pdf', [
                             'type' => $queryType,
                             'start_date' => $startDate,
@@ -77,7 +77,6 @@
                                     <th>Kode Klien</th>
                                     <th>Nama Klien / Pihak</th>
                                     <th>Tanggal Dibuat</th>
-                                    <th>Jenis Akta</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -89,8 +88,20 @@
                                         <td>{{ $row->client_code ?? '-' }}</td>
                                         <td>{{ $row->client->fullname ?? '-' }}</td>
                                         <td>{{ $row->created_at->format('d-m-Y H:i') }}</td>
-                                        <td>{{ ucfirst($queryType) }}</td>
-                                        <td>{{ $row->status }}</td>
+                                        <td>
+                                            <span
+                                                class="badge text-capitalize
+                                                @switch($row->status)
+                                                    @case('draft') bg-secondary @break
+                                                    @case('diproses') bg-warning @break
+                                                    @case('selesai') bg-success @break
+                                                    @case('dibatalkan') bg-danger @break
+                                                    @default bg-light text-dark
+                                                @endswitch
+                                            ">
+                                                {{ ucfirst($row->status) }}
+                                            </span>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

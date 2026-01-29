@@ -107,40 +107,58 @@ class NotaryPaymenttController extends Controller
             'amount'         => 'required',
             'payment_date'   => 'required|date',
             'payment_method' => 'required|string',
-            'payment_file'   => 'required|max:5000',
+            'payment_file'   => 'required|max:5000 |mimes:jpg,png,png',
         ], [
             'payment_code.required'   => 'Kode pembayaran harus diisi.',
             'payment_type.required'   => 'Tipe pembayaran harus diisi.',
             'amount.required'         => 'Jumlah pembayaran harus diisi.',
             'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
             'payment_method.required' => 'Metode pembayaran harus diisi.',
-            // 'payment_file.required'   => 'File pembayaran harus diupload.',
-            'payment_file.max'        => 'Ukuran file maksimal 5MB.',
+            'payment_file.required'   => 'File pembayaran harus diupload.',
+            'payment_file.max'        => 'Ukuran file maksimal 5 MB.',
+            'payment_file.mimes'      => 'Format file harus JPG, JPEG, atau PNG.',
         ]);
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();
 
         $amount = (float) str_replace('.', '', $request->amount);
 
+        $totalPaid = NotaryPayment::where('payment_code', $cost->payment_code)
+            ->where('is_valid', true)
+            ->sum('amount');
+
+        $remaining = $cost->total_cost - $totalPaid;
+
+        if ($amount > $remaining) {
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->error(
+                    'Jumlah pembayaran melebihi sisa pembayaran'
+                );
+
+            return back()->withInput();
+        }
+
 
         NotaryPayment::create([
-            'notaris_id'       => $cost->notaris_id,
-            'client_code'      => $cost->client_code,
-            'pic_document_id'  => $cost->pic_document_id,
-            'payment_code'     => $cost->payment_code,
-            'payment_type'     => $request->payment_type,
-            'amount'           => $amount,
-            'payment_date'     => $request->payment_date,
-            'payment_method'   => $request->payment_method,
-            'payment_file'     => $request->file('payment_file')?->storeAs(
+            'notaris_id'      => $cost->notaris_id,
+            'client_code'     => $cost->client_code,
+            'pic_document_id' => $cost->pic_document_id,
+            'payment_code'    => $cost->payment_code,
+            'payment_type'    => $request->payment_type,
+            'amount'          => $amount,
+            'payment_date'    => $request->payment_date,
+            'payment_method'  => $request->payment_method,
+            'payment_file'    => $request->file('payment_file')?->storeAs(
                 'documents',
                 $request->file('payment_file')->getClientOriginalName()
             ),
-            'note'             => $request->note,
-            'is_valid'         => false,  // default: belum valid
+            'note'            => $request->note,
+            'is_valid'        => false,
         ]);
 
-        notyf()->position('x', 'right')->position('y', 'top')->success('Pembayaran berhasil disimpan.');
+        notyf()->success('Pembayaran berhasil disimpan.');
         return back();
     }
 

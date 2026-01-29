@@ -11,7 +11,7 @@ class NotaryRelaasAktaRepository implements NotaryRelaasAktaRepositoryInterface
 {
     public function all(): Collection
     {
-        return NotaryRelaasAkta::where('notaris_id', auth()->user()->notaris_id)->get();
+        return NotaryRelaasAkta::where('notaris_id', auth()->user()->notaris_id)->where()->where('deleted_at', null)->get();
     }
 
     public function paginate(int $perPage = 10): LengthAwarePaginator

@@ -116,7 +116,7 @@
                     {{-- Status --}}
                     <div class="mb-3">
                         <label for="payment_status" class="form-label text-sm">Status</label>
-                        <select name="payment_status" id="payment_status" class="form-control form-control-sm">
+                        <select name="payment_status" id="payment_status" class="form-control form-control-md">
                             <option value="unpaid" {{ old('payment_status', $cost->payment_status ?? '') == 'unpaid' ?
                                 'selected' : '' }}>Belum Dibayar</option>
                             <option value="partial" {{ old('payment_status', $cost->payment_status ?? '') == 'partial' ?
@@ -130,12 +130,12 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="paid_date" class="form-label text-sm">Tanggal Bayar</label>
-                            <input type="date" name="paid_date" id="paid_date" class="form-control form-control-sm"
+                            <input type="date" name="paid_date" id="paid_date" class="form-control form-control-md"
                                 value="{{ old('paid_date', isset($cost->paid_date) ? \Carbon\Carbon::parse($cost->paid_date)->format('Y-m-d') : '') }}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="due_date" class="form-label text-sm">Jatuh Tempo</label>
-                            <input type="date" name="due_date" id="due_date" class="form-control form-control-sm"
+                            <input type="date" name="due_date" id="due_date" class="form-control form-control-md"
                                 value="{{ old('due_date', isset($cost->due_date) ? \Carbon\Carbon::parse($cost->due_date)->format('Y-m-d') : '') }}">
                         </div>
                     </div>

@@ -27,14 +27,17 @@ class NotaryAktaTransactionRepository implements NotaryAktaTransactionRepository
 
     public function all(array $filters = [], int $perPage = 10)
     {
-        $query = NotaryAktaTransaction::with(['client', 'akta_type'])->where('notaris_id', auth()->user()->notaris_id);
+        $query = NotaryAktaTransaction::with(['client', 'akta_type'])
+            ->where('notaris_id', auth()->user()->notaris_id);
 
-        // Filter status: hanya jika ada value dan tidak kosong
-        if (isset($filters['status']) && $filters['status'] !== '') {
+        if (!empty($filters['client_code'])) {
+            $query->where('client_code', $filters['client_code']);
+        }
+
+        if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }
 
-        // Filter client code
         if (!empty($filters['transaction_code'])) {
             $query->where('transaction_code', 'like', '%' . $filters['transaction_code'] . '%');
         }

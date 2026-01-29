@@ -72,8 +72,20 @@ class NotaryRelaasAktaController extends Controller
 
         $countToday += 1;
 
-        return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
+        return 'T' . '-' . 'P' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
     }
+
+    // public function generateTransactionCode(int $notarisId, string $clientCode): string
+    // {
+    //     $today = now()->format('Ymd');
+
+    //     $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
+    //         ->where('client_code', $clientCode)
+    //         ->whereDate('created_at', today())
+    //         ->count() + 1;
+
+    //     return 'T-' . $clientCode . '-' . $today . '-' . $countToday;
+    // }
 
 
 

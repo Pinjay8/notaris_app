@@ -41,7 +41,7 @@ class NotaryAktaTransactionController extends Controller
 
     public function index(Request $request)
     {
-        $filters = $request->only(['status', 'transaction_code']);
+        $filters = $request->only(['status', 'transaction_code', 'client_code']);
         $transactions = $this->service->list($filters);
 
         return view('pages.BackOffice.AktaTransaction.index', compact('transactions', 'filters'));
@@ -70,8 +70,20 @@ class NotaryAktaTransactionController extends Controller
 
         $countToday += 1;
 
-        return 'T' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
+        return 'T' . '-' . 'A' . '-'  . $today . '-' . $notarisId . '-'   . $countToday;
     }
+
+    // public function generateTransactionCode(int $notarisId, string $clientCode): string
+    // {
+    //     $today = now()->format('Ymd');
+
+    //     $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
+    //         ->where('client_code', $clientCode)
+    //         ->whereDate('created_at', today())
+    //         ->count() + 1;
+
+    //     return 'T-' . $clientCode . '-' . $today . '-' . $countToday;
+    // }
 
 
 

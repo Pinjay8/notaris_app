@@ -50,10 +50,25 @@ class NotaryCostController extends Controller
             ],
             [
                 'client_code.required' => 'Kode Klien harus diisi.',
-                'pic_document_id.required' => 'PIC Dokumen harus diisi.',
+                'pic_document_id.required' => 'Dokumen harus diisi.',
                 'payment_status.required' => 'Status Pembayaran harus diisi.',
+                'product_cost.required' => 'Biaya Produk harus diisi.',
             ]
         );
+        $productCost = (int) str_replace('.', '', $request->product_cost);
+        $adminCost   = (int) str_replace('.', '', $request->admin_cost ?? 0);
+        $otherCost   = (int) str_replace('.', '', $request->other_cost ?? 0);
+        $amountPaid  = (int) str_replace('.', '', $request->amount_paid ?? 0);
+        $totalCost = $productCost + $adminCost + $otherCost;
+        if ($amountPaid > $totalCost) {
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->error('Jumlah Pembayaran melebihi dari total biaya.');
+
+            return back()->withInput();
+        }
+
 
         // Ambil tanggal hari ini (format: 20251112)
         $today = now()->format('Ymd');
@@ -102,6 +117,14 @@ class NotaryCostController extends Controller
             'paid_date' => 'required|date',
             'due_date' => 'required|date',
             'note' => 'nullable',
+        ], [
+            'client_code.required' => 'Kode Klien harus diisi.',
+            'pic_document_id.required' => 'PIC Dokumen harus diisi.',
+            'payment_status.required' => 'Status Pembayaran harus diisi.',
+            'paid_date.required' => 'Tanggal Bayar harus diisi.',
+            'paid_date.date' => 'Format Tanggal Bayar tidak valid.',
+            'due_date.required' => 'Tanggal Jatuh Tempo harus diisi.',
+            'due_date.date' => 'Format Tanggal Jatuh Tempo tidak valid.',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
