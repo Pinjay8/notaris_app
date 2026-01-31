@@ -39,7 +39,7 @@ class NotaryCostController extends Controller
             [
                 'client_code' => 'required',
                 'pic_document_id' => 'required',
-                'product_cost' => 'required',
+                'product_cost' => 'required|numeric|min:1',
                 'admin_cost' => 'nullable',
                 'other_cost' => 'nullable',
                 'amount_paid' => 'nullable',
@@ -53,6 +53,8 @@ class NotaryCostController extends Controller
                 'pic_document_id.required' => 'Dokumen harus diisi.',
                 'payment_status.required' => 'Status Pembayaran harus diisi.',
                 'product_cost.required' => 'Biaya Produk harus diisi.',
+                'product_cost.numeric' => 'Biaya Produk harus berupa angka.',
+                'product_cost.min' => 'Biaya Produk harus lebih dari 0.',
             ]
         );
         $productCost = (int) str_replace('.', '', $request->product_cost);
@@ -120,6 +122,7 @@ class NotaryCostController extends Controller
         ], [
             'client_code.required' => 'Kode Klien harus diisi.',
             'pic_document_id.required' => 'PIC Dokumen harus diisi.',
+            'product_cost.required' => 'Biaya Produk harus diisi.',
             'payment_status.required' => 'Status Pembayaran harus diisi.',
             'paid_date.required' => 'Tanggal Bayar harus diisi.',
             'paid_date.date' => 'Format Tanggal Bayar tidak valid.',

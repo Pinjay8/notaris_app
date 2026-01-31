@@ -63,7 +63,7 @@ class NotaryAktaTransactionController extends Controller
         $today = Carbon::now()->format('Ymd');
 
         $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
-            ->where('client_code', $clientId)
+            // ->where('client_code', $clientId)
             ->whereDate('created_at', Carbon::today())
             ->where('deleted_at', null)
             ->count();

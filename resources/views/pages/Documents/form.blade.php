@@ -24,7 +24,7 @@
                         @endif
 
                         <div class="mb-3">
-                            <label for="name" class="form-label text-sm">Nama</label>
+                            <label for="name" class="form-label text-sm">Nama </label>
                             <input type=" text" name="name" id="name" class="form-control "
                                 value="{{ old('name', $document->name ?? '') }}">
                             @error('name')

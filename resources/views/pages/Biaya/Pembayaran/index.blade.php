@@ -120,7 +120,8 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="4" class="text-center">Belum ada file pembayaran</td>
+                                                    <td colspan="5" class="text-center text-sm">Belum ada file pembayaran
+                                                    </td>
                                                 </tr>
                                             @endforelse
                                         </tbody>

@@ -25,8 +25,9 @@
 
                         {{-- PIC Staff --}}
                         <div class="mb-3">
-                            <label for="pic_id" class="form-label text-sm">PIC Staff</label>
-                            <select name="pic_id" id="pic_id" class="form-select">
+                            <label for="pic_id" class="form-label text-sm">PIC Staff <span
+                                    class="text-danger">*</span></label>
+                            <select name="pic_id" id="pic_id" class="form-select @error('pic_id') is-invalid @enderror">
                                 <option value="" hidden>Pilih PIC Staff</option>
                                 @foreach ($picStaffList as $pic)
                                     <option value="{{ $pic->id }}"
@@ -35,12 +36,17 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('pic_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Tipe Transaksi --}}
                         <div class="mb-3">
-                            <label for="transaction_type" class="form-label text-sm">Tipe Transaksi</label>
-                            <select name="transaction_type" id="transaction_type" class="form-select">
+                            <label for="transaction_type" class="form-label text-sm">Tipe Transaksi <span
+                                    class="text-danger">*</span></label>
+                            <select name="transaction_type" id="transaction_type"
+                                class="form-select @error('transaction_type') is-invalid @enderror"">
                                 <option value="" hidden>Pilih Tipe Transaksi</option>
                                 <option value="akta"
                                     {{ old('transaction_type', $picDocument->transaction_type ?? '') == 'akta' ? 'selected' : '' }}>
@@ -51,12 +57,16 @@
                                     PPAT
                                 </option>
                             </select>
+                            @error('transaction_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Akta Transaction --}}
                         <div class="mb-3" id="akta_section" style="display: none;">
                             <label for="akta_transaction_id" class="form-label text-sm">Transaksi Akta </label>
-                            <select id="akta_transaction_id" name="akta_transaction_id" class="form-select">
+                            <select id="akta_transaction_id" name="akta_transaction_id"
+                                class="form-select @error('akta_transaction_id') is-invalid @enderror">
                                 <option value="" hidden>Pilih Transaksi</option>
                                 @foreach ($aktaTransaction as $akta)
                                     <option value="{{ $akta->id }}"
@@ -69,12 +79,16 @@
                             <small class="text-muted">
                                 Format : Nama Klien – Kode Transaksi – Jenis Akta
                             </small>
+                            @error('transaction_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Relaas Transaction --}}
                         <div class="mb-3" id="relaas_section" style="display: none;">
                             <label for="ppat_transaction_id" class="form-label text-sm">Transaksi PPAT</label>
-                            <select id="ppat_transaction_id" name="ppat_transaction_id" class="form-select">
+                            <select id="ppat_transaction_id" name="ppat_transaction_id"
+                                class="form-select @error('akta_transaction_id') is-invalid @enderror">
                                 <option value="" hidden>Pilih Transaksi PPAT</option>
                                 @foreach ($relaasTransaction as $relaas)
                                     <option value="{{ $relaas->id }}"
@@ -88,13 +102,21 @@
                             <small class="text-muted">
                                 Format : Nama Klien – Kode Transaksi – Jenis Akta
                             </small>
+                            @error('transaction_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Tanggal Terima --}}
                         <div class="mb-3">
-                            <label for="received_date" class="form-label text-sm">Tanggal Terima</label>
-                            <input type="datetime-local" name="received_date" id="received_date" class="form-control"
+                            <label for="received_date" class="form-label text-sm">Tanggal Terima <span
+                                    class="text-danger">*</span></label>
+                            <input type="datetime-local" name="received_date" id="received_date"
+                                class="form-control @error('received_date') is-invalid @enderror"
                                 value="{{ old('received_date', isset($picDocument->received_date) ? \Carbon\Carbon::parse($picDocument->received_date)->format('Y-m-d\TH:i') : '') }}">
+                            @error('received_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         {{-- Status --}}

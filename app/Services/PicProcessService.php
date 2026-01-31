@@ -8,6 +8,7 @@ class PicProcessService
 {
     protected $repository;
 
+
     public function __construct(PicProcessRepositoryInterface $repository)
     {
         $this->repository = $repository;

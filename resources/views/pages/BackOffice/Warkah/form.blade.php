@@ -3,7 +3,9 @@
 @section('title', isset($document) ? 'Edit Warkah' : 'Tambah Warkah')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Warkah'])
+    @include('layouts.navbars.auth.topnav', [
+        'title' => isset($document) ? 'Edit Warkah' : 'Tambah Warkah',
+    ])
 
     <div class="row mt-4 mx-4">
         <div class="col-12">
@@ -25,7 +27,7 @@
                             <input type="hidden" name="client_code" value="{{ $client->client_code }}">
 
                             <div class="col-md-12 mb-3">
-                                <label class="form-label text-sm">Jenis Warkah</label>
+                                <label class="form-label text-sm">Jenis Warkah <span class="text-danger">*</span></label>
                                 <select name="warkah_code" class="form-select @error('warkah_code') is-invalid @enderror">
                                     <option value="" hidden>Pilih Dokumen</option>
                                     @foreach ($documents as $doc)

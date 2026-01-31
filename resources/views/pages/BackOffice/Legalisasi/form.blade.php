@@ -21,7 +21,7 @@
                             @method('PUT')
                         @endif
                         <div class="mb-3">
-                            <label class="form-label text-sm">Klien</label>
+                            <label class="form-label text-sm">Klien <span class="text-danger">*</span></label>
                             <select name="client_code"
                                 class="form-select @error('client_code') is-invalid @enderror select2">
                                 <option value="" hidden>Pilih Klien</option>
@@ -38,7 +38,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">Nomor Legalisasi</label>
+                            <label class="form-label text-sm">
+                                Nomor Legalisasi <span class="text-danger">*</span>
+                            </label>
                             <input type="text" name="legalisasi_number"
                                 class="form-control @error('legalisasi_number') is-invalid @enderror"
                                 value="{{ old('legalisasi_number', $data->legalisasi_number ?? '') }}">
@@ -47,7 +49,7 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label text-sm">Nama Pemohon</label>
+                            <label class="form-label text-sm">Nama Pemohon <span class="text-danger">*</span></label>
                             <input type="text" name="applicant_name"
                                 class="form-control @error('applicant_name') is-invalid @enderror"
                                 value="{{ old('applicant_name', $data->applicant_name ?? '') }}">
@@ -57,7 +59,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label text-sm">Nama Petugas</label>
+                            <label class="form-label text-sm">Nama Petugas <span class="text-danger">*</span></label>
                             <input type="text" name="officer_name"
                                 class="form-control @error('officer_name') is-invalid @enderror"
                                 value="{{ old('officer_name', $data->officer_name ?? '') }}">
@@ -99,7 +101,7 @@
                             <label class="form-label text-sm">File</label>
                             <input type="file" name="file_path" class="form-control"
                                 {{ old('file_path') ? 'value=' . old('file_path') : '' }}>
-                            {{-- Sebenarnya ini tidak akan diisi ulang --}}
+                            <small> Maksimal ukuran file: 5 MB</small>
 
                             @if (isset($data) && $data->file_path)
                                 @php

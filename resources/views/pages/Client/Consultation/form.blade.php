@@ -51,11 +51,13 @@
                             </div> --}}
 
                             <div class="col-md-12 mb-3">
-                                <label for="subject" class="form-label text-sm">Subjek</label>
-                                <input type="text" name="subject" class="form-control"
+                                <label for="subject" class="form-label text-sm">Subjek <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" name="subject"
+                                    class="form-control @error('subject') is-invalid @enderror"
                                     value="{{ old('subject', $notaryConsultation->subject ?? '') }}">
                                 @error('subject')
-                                    <div class="text-danger text-sm mt-1">{{ $message }}</div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 

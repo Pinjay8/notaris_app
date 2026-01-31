@@ -32,7 +32,8 @@
                                 <th>#</th>
                                 <th>Kode Dokumen</th>
                                 <th>Tanggal</th>
-                                <th>Penerima</th>
+                                <th>Nama Penerima</th>
+                                <th>Kontak Penerima</th>
                                 <th>Catatan</th>
                                 <th>Aksi</th>
                             </tr>
@@ -46,6 +47,7 @@
                                     <td>{{ $handover->picDocument->pic_document_code }}</td>
                                     <td>{{ $handover->handover_date }}</td>
                                     <td>{{ $handover->recipient_name }}</td>
+                                    <td>{{ $handover->recipient_contact }}</td>
                                     <td>{{ $handover->note }}</td>
                                     <td>
                                         {{-- Tombol PDF --}}

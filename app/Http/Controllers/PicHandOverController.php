@@ -28,7 +28,7 @@ class PicHandoverController extends Controller
 
     public function create()
     {
-        $picDocuments = PicDocuments::all();
+        $picDocuments = PicDocuments::where('deleted_at', null)->latest()->get();
         return view('pages.PIC.PicHandovers.form', compact('picDocuments'));
     }
 
@@ -40,7 +40,7 @@ class PicHandoverController extends Controller
             'recipient_name'  => 'required|string',
             'recipient_contact' => 'required|string',
             'note'            => 'nullable|string',
-            'file_path'       => 'nullable|file|mimes:pdf,jpg,png,png|max:5000',
+            'file_path'       => 'nullable|file|mimes:jpg,png,png|max:5000',
         ], [
             'pic_document_id.required' => 'Dokumen PIC harus dipilih.',
             'handover_date.required'   => 'Tanggal serah terima harus diisi.',

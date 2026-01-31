@@ -29,7 +29,7 @@
                         @csrf
                         <button type="submit" class="btn btn-white text-primary mb-0 shadow">
                             <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Keluar</span>
+                            <span class="d-inline d-sm-inline d-md-inline">Keluar</span>
                         </button>
                     </form>
                 </li>
@@ -43,7 +43,7 @@
                     @csrf
                     <button type="submit" class="btn btn-white text-primary mb-0 shadow">
                         <i class="fa fa-user me-lg-1"></i>
-                        <span class="d-sm-inline d-none text-wrap">Keluar</span>
+                        <span class="d-sm-inline  text-wrap">Keluar</span>
                     </button>
                 </form>
             </li>

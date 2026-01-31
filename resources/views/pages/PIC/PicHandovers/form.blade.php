@@ -17,8 +17,9 @@
                     <form method="POST" action="{{ route('pic_handovers.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label text-sm">Dokumen</label>
-                            <select name="pic_document_id" class="form-select">
+                            <label class="form-label text-sm">Dokumen <span class="text-danger">*</span></label>
+                            <select name="pic_document_id"
+                                class="form-select @error('pic_document_id') is-invalid @enderror">
                                 <option value="" hidden>Pilih Dokumen</option>
                                 @foreach ($picDocuments as $doc)
                                     <option value="{{ $doc->id }}" class="text-capitalize">
@@ -26,21 +27,36 @@
                                         {{ $doc->transaction_type }}</option>
                                 @endforeach
                             </select>
+                            @error('pic_document_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-sm">Tanggal Serah Terima</label>
-                            <input type="date" name="handover_date" class="form-control"
+                            <input type="date" name="handover_date"
+                                class="form-control @error('handover_date') is-invalid @enderror"
                                 value="{{ old('handover_date', now()->toDateString()) }}">
+                            @error('handover_date')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-sm">Nama Penerima</label>
-                            <input type="text" name="recipient_name" class="form-control"
+                            <input type="text" name="recipient_name"
+                                class="form-control @error('recipient_name') is-invalid @enderror"
                                 value="{{ old('recipient_name') }}">
+                            @error('recipient_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-sm">Kontak Penerima</label>
-                            <input type="text" name="recipient_contact" class="form-control"
+                            <input type="text" name="recipient_contact"
+                                class="form-control @error('recipient_contact') is-invalid @enderror"
                                 value="{{ old('recipient_contact') }}">
+                            @error('recipient_contact')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-sm">Catatan</label>
@@ -50,7 +66,7 @@
                             <label class="form-label text-sm">File Serah Terima Dokumen</label>
                             <input type="file" name="file_path" class="form-control">
                             {{-- maximal 1mb --}}
-                            <div class="form-text">Maksimal File 1MB</div>
+                            <div class="form-text">Maksimal ukuran file: 5MB</div>
                         </div>
 
                         <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>

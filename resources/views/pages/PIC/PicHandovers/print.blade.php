@@ -112,8 +112,9 @@
         <tbody>
             {{-- Contoh kalau mau tampilkan list detail dokumen terkait --}}
             <tr style="text-align: center">
-                <td>1</td>
-                <td style="text-transform: capitalize">{{ $handover->picDocument->transaction_type ?? '-' }}
+                <td style="text-align: center">1</td>
+                <td style="text-transform: capitalize; text-align: center">
+                    {{ $handover->picDocument->transaction_type ?? '-' }}
                 </td>
                 @php
                     $badgeColors = [
@@ -131,8 +132,9 @@
                     ];
                 @endphp
 
-                <td>
-                    <span class="badge bg-{{ $badgeColors[$handover->picDocument->status] ?? 'secondary' }}">
+                <td class="text-align: center">
+                    <span
+                        class="badge bg-{{ $badgeColors[$handover->picDocument->status] ?? 'secondary' }} text-align: center">
                         {{ $statusText[$handover->picDocument->status] ?? ($handover->picDocument->status ?? '-') }}
                     </span>
                 </td>

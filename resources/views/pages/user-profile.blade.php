@@ -9,7 +9,7 @@
             <div class="row gx-4 p-2 px-4">
                 <div class=" d-flex gap-3 align-items-center justify-content-between flex-column flex-md-row w-100">
                     <div class="d-flex align-items-center gap-3">
-                        <div style="width:150px; height:150px;">
+                        <div style="width:130px; height:130px;">
                             <img src="{{ $notaris && $notaris->image
                                 ? (filter_var($notaris->image, FILTER_VALIDATE_URL)
                                     ? $notaris->image

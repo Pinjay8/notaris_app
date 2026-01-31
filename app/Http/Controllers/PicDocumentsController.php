@@ -43,15 +43,21 @@ class PicDocumentsController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request->input('pic_id'));
+
         // dd($request->all());
         $validated = $request->validate([
             'pic_id' => 'required',
-            // 'client_code' => 'required',
             'transaction_id' => 'required',
             'transaction_type' => 'required',
             'received_date' => 'required|date',
             'status' => 'required',
             'note' => 'nullable',
+        ],[
+            'pic_id.required' => 'PIC harus dipilih.',
+            'transaction_id.required' => 'Transaksi harus dipilih.',
+            'transaction_type.required' => 'Tipe transaksi harus dipilih.',
+            'received_date.required' => 'Tanggal diterima harus diisi.',
         ]);
 
         $validated['notaris_id'] = auth()->user()->notaris_id;
