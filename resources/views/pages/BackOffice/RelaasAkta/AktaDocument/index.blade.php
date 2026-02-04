@@ -14,15 +14,17 @@
                 <div class="card-body pt-1 pb-0">
 
                     {{-- Form Pencarian --}}
-                    <form method="GET" action="{{ route('relaas-documents.index') }}" class="mb-3" class="no-spinner">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode transaksi"
-                                value="{{ request('search') }}">
-                            <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                        </div>
+                    <form method="GET" action="{{ route('relaas-documents.index') }}"
+                        class="mb-3 no-spinner d-flex
+                        gap-2  justify-content-end">
+
+                        <input type="text" name="transaction_code" class="form-control"
+                            placeholder="Masukkan Kode Transaksi" value="{{ request('transaction_code') }}">
+                        <input type="text" name="relaas_number" class="form-control" placeholder="Masukkan Nomor Akta"
+                            value="{{ request('relaas_number') }}">
+                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                     </form>
 
-                    {{-- Jika ada data relaas --}}
                     @if ($relaasInfo)
                         <div class="card mb-4 shadow-sm">
                             <div class="card-header bg-primary text-white">

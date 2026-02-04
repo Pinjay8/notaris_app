@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\NotaryRelaasAkta;
 use App\Models\NotaryRelaasParties;
 use App\Repositories\Interfaces\RelaasPartiesRepositoryInterface;
 
@@ -13,15 +14,26 @@ class RelaasPartiesService
     {
         $this->repo = $repo;
     }
+    public function searchByRegistrationCode(
+        ?string $transaction_code,
+        ?string $relaas_number
+    ): ?object {
+        return NotaryRelaasAkta::with(['notaris', 'client'])
+            ->where('notaris_id', auth()->user()->notaris_id)
+            ->where(function ($q) use ($transaction_code, $relaas_number) {
 
-    public function searchRelaas(?string $transaction_code)
-    {
-        if (!$transaction_code) {
-            return null;
-        }
+                if ($transaction_code) {
+                    $q->where('transaction_code', $transaction_code);
+                }
 
-        return $this->repo->searchByRegistrationCode($transaction_code);
+                if ($relaas_number) {
+                    $q->orWhere('relaas_number', $relaas_number);
+                }
+            })
+            ->first();
     }
+
+
 
     public function getParties(int $relaasId)
     {

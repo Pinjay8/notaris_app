@@ -6,17 +6,58 @@
     <title>Serah Terima Dokumen</title>
     <style>
         body {
-            font-family: sans-serif;
-            font-size: 12pt;
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+            color: #000;
+            margin: 20px;
+        }
+
+        /* Header dengan logo dan informasi kantor */
+        .header-top {
+            width: 100%;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #000;
+            margin-bottom: 10px;
+        }
+
+        .header-top td {
+            vertical-align: middle;
+            border: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        .company-info {
+            text-align: right;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .company-info h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /* border-top: 1px solid #000; */
         }
 
         .header h2 {
             margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 10px;
+            padding-bottom: 5px;
         }
 
         .section {
@@ -35,12 +76,25 @@
             margin-top: 20px;
         }
 
-        table,
+        .logo img {
+            width: 40px;
+            height: auto;
+        }
+
+        /* table,
         th,
         td {
             border: 1px solid #000;
             padding: 8px;
+        } */
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 7px 10px;
+            font-size: 11px;
         }
+
 
         .handover-info {
             max-width: 500px;
@@ -49,6 +103,45 @@
             border-radius: 8px;
             background-color: #f9f9f9;
             font-family: Arial, sans-serif;
+        }
+
+        .info {
+            margin-bottom: 25px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        .info-table td {
+            padding: 5px 8px;
+            vertical-align: top;
+        }
+
+        .info-table tr td:first-child,
+        .info-table tr td:nth-child(3) {
+            width: 22%;
+            font-weight: bold;
+        }
+
+        .info-table tr td:nth-child(2),
+        .info-table tr td:nth-child(4) {
+            width: 28%;
+        }
+
+        .info-table tr:not(:last-child) td {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #eaeaea;
+            text-align: center;
+        }
+
+        td.amount {
+            text-align: right;
         }
 
         /* Grid untuk label dan value */
@@ -71,12 +164,50 @@
 </head>
 
 <body>
+    <table class="header-top">
+        <tr>
+            <td class="logo">
+                <img src="file://{{ public_path('img/logo-ct-dark.png') }}" alt="Logo Notaris"
+                    style="width:40px; height:auto;">
+            </td>
+            <td class="company-info">
+                <h3>Notaris App</h3>
+                <p>Office {{ $notaris->office_name }}</p>
+                <p>{{ $notaris->office_address }}</p>
+                <p>{{ $notaris->phone }}</p>
+            </td>
+        </tr>
+    </table>
+
     <div class="header">
-        <h2>Berita Acara Serah Terima Dokumen</h2>
-        <p>Notaris: {{ $handover->notaris->display_name ?? '-' }}</p>
+        <h2 style="text-transform: capitalize">Serah Terima Dokumen</h2>
     </div>
 
-    <div class="section">
+
+    <div class="info">
+        <table class="info-table">
+            <tr>
+                <td style="font-weight: bold">Kode Dokumen</td>
+                <td>{{ $handover->picDocument->pic_document_code ?? '-' }}</td>
+                <td>Tanggal Serah Terima</td>
+                <td>{{ $handover->handover_date }}</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">Nama Penerima</td>
+                <td>{{ $handover->recipient_name ?? '-' }}</td>
+                <td>Kontak</td>
+                <td>{{ $handover->recipient_contact ?? '-' }}</td>
+            </tr>
+            {{-- <tr>
+                <td>Tanggal Jatuh Tempo</td>
+                <td>{{ $cost->due_date ? \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}</td>
+                <td>Catatan</td>
+                <td>{{ $cost->note ?? '-' }}</td>
+            </tr> --}}
+        </table>
+    </div>
+
+    {{-- <div class="section">
         <div class="handover-info">
             <div class="info-row">
                 <span class="label">Kode Dokumen:</span>
@@ -95,11 +226,9 @@
                 <span class="value">{{ $handover->recipient_contact ?? '-' }}</span>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="section">
-        <span class="label">Catatan:</span> {{ $handover->note ?? '-' }}
-    </div>
+
 
     <table>
         <thead>
@@ -132,7 +261,7 @@
                     ];
                 @endphp
 
-                <td class="text-align: center">
+                <td style="text-align:  center">
                     <span
                         class="badge bg-{{ $badgeColors[$handover->picDocument->status] ?? 'secondary' }} text-align: center">
                         {{ $statusText[$handover->picDocument->status] ?? ($handover->picDocument->status ?? '-') }}
@@ -142,7 +271,11 @@
         </tbody>
     </table>
 
-    <p style="margin-top:40px;">Pihak penerima menyatakan telah menerima dokumen sebagaimana tertera di atas dengan
+    <div class="section" style="margin-top:20px;">
+        <span class="label">Catatan:</span> {{ $handover->note ?? '-' }}
+    </div>
+
+    <p style="margin-top:20px;">Pihak penerima menyatakan telah menerima dokumen sebagaimana tertera di atas dengan
         kondisi baik dan lengkap.</p>
 
     <table style="margin-top:50px; border:none;">
@@ -150,12 +283,14 @@
             <td style="text-align:center; border:none;">
                 <p>Yang Menyerahkan</p>
                 <br><br><br>
-                <p>(_____________________)</p>
+                <p>___________________________</p>
+                <p>{{ $notaris->display_name }}</p>
             </td>
             <td style="text-align:center; border:none;">
                 <p>Yang Menerima</p>
                 <br><br><br>
-                <p>({{ $handover->recipient_name }})</p>
+                <p>___________________________</p>
+                <p>{{ $handover->recipient_name }}</p>
             </td>
         </tr>
     </table>

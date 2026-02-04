@@ -174,7 +174,7 @@
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="fa-solid fa-handshake text-dark text-sm opacity-10 pb-0"></i>
                             </div>
-                            <span class="nav-link-text text-sm">Akta Notaris</span>
+                            <span class="nav-link-text text-sm">Notaris</span>
                         </div>
                         <!-- Kanan -->
                         <i class="bi bi-caret-down-fill"></i>

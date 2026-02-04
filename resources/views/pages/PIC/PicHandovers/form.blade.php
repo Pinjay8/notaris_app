@@ -65,8 +65,7 @@
                         <div class="mb-3">
                             <label class="form-label text-sm">File Serah Terima Dokumen</label>
                             <input type="file" name="file_path" class="form-control">
-                            {{-- maximal 1mb --}}
-                            <div class="form-text">Maksimal ukuran file: 5MB</div>
+                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
                         </div>
 
                         <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>

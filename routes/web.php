@@ -33,6 +33,7 @@ use App\Http\Controllers\PicProcessController;
 use App\Http\Controllers\PicStaffController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\PublicPaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelaasTypeController;
 use App\Http\Controllers\ReportPaymentController;
@@ -94,6 +95,9 @@ Route::middleware('guest')->group(function () {
         ->name('client.editClient');
     Route::put('/client/revisi/{encryptedClientId}', [ClientController::class, 'updateClient'])
         ->name('client.public.update');
+
+    Route::get('/public/payment/{token}', [PublicPaymentController::class, 'show'])
+        ->name('public.payment.show');
 
 
     // public form (link yang dikirim ke klien) — jelas beda URI

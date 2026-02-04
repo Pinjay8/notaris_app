@@ -43,7 +43,7 @@
                             <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
                             <input type="file" name="file_url" id="file_url"
                                 class="form-control @error('file_url') is-invalid @enderror">
-                            <small class="text-muted">Maksimal ukuran file: 5 MB</small>
+                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
 
                             @error('file_url')
                                 <div class="invalid-feedback">

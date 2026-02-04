@@ -156,8 +156,9 @@
             </td>
             <td class="company-info">
                 <h3>Notaris App</h3>
-                <p>Jl. Melati No. 45, Jakarta Selatan</p>
-                <p>Telp: (021) 123-4567</p>
+                <p>Office {{ $notaris->office_name }}</p>
+                <p>{{ $notaris->office_address }}</p>
+                <p>{{ $notaris->phone }}</p>
             </td>
         </tr>
     </table>
@@ -166,7 +167,6 @@
         <h2 style="text-transform: capitalize">Detail Pembayaran</h2>
     </div>
 
-    {{-- Informasi Utama --}}
     <div class="info">
         <table class="info-table">
             <tr>
@@ -272,11 +272,11 @@
     <div class="footer">
         <div class="left">
             <p>Jakarta, {{ now()->format('d F Y') }}</p>
-            <p class="signature-space">_________________________<br>Notaris</p>
+            <p class="signature-space">_________________________<br>{{ $notaris->display_name }}</p>
         </div>
         <div class="right">
             <p>Mengetahui,</p>
-            <p class="signature-space">_________________________<br>Klien</p>
+            <p class="signature-space">_________________________<br>{{ $cost->client->fullname }}</p>
         </div>
     </div>
 

@@ -25,12 +25,19 @@
 
                             @php
                                 // Daftar kategori standar
-                                $defaultCategories = ['pendirian', 'perubahan', 'pemutusan'];
+                                $defaultCategories = [
+                                    'Akta Jual Beli',
+                                    'Akta Hibah',
+                                    'Akta Tukar Menukar',
+                                    'Akta Pemasukan Dalam Perusahaan (Inbreng)',
+                                    'Akta Pembagian Hak Bersama',
+                                    'Akta Peralihan Hak Guna Bangunan/Hak Pengelolaan',
+                                    'Akta Pemberian Hak Tanggungan (APHT)',
+                                    'Surat Kuasa Membebankan Hak Tanggungan (SKMHT)',
+                                ];
 
-                                // Ambil kategori dari database (saat edit)
                                 $selectedCategory = old('category', $relaasType->category ?? '');
 
-                                // Cek apakah kategori bukan dari daftar standar
                                 $isOther = $selectedCategory && !in_array($selectedCategory, $defaultCategories);
                             @endphp
 
@@ -42,7 +49,7 @@
                                         {{ ucfirst($cat) }}
                                     </option>
                                 @endforeach
-                                <option value="lainnya" {{ $isOther ? 'selected' : '' }}>Lainnya</option>
+                                {{-- <option value="lainnya" {{ $isOther ? 'selected' : '' }}>Lainnya</option> --}}
                             </select>
 
                             {{-- Input tambahan hanya muncul jika pilih "lainnya" --}}

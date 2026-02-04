@@ -164,12 +164,13 @@ class NotaryPaymenttController extends Controller
 
     public function print($payment_code)
     {
-        $cost = NotaryCost::with('payments')
+        $cost = NotaryCost::with(['payments', 'client'])
             ->where('payment_code', $payment_code)
             ->firstOrFail();
+        $notaris = auth()->user()->notaris;
 
         // Render blade ke HTML
-        $html = view('pages.Biaya.Pembayaran.print', compact('cost'))->render();
+        $html = view('pages.Biaya.Pembayaran.print', compact('cost', 'notaris'))->render();
 
         // Inisialisasi mPDF
         $mpdf = new Mpdf([

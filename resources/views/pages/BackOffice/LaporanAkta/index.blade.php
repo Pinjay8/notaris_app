@@ -21,8 +21,7 @@
                                 <label for="type" class="form-label text-sm">Jenis Akta</label>
                                 <select name="type" id="type" class="form-select">
                                     <option value="" hidden>Pilih Jenis</option>
-                                    <option value="akta-notaris" {{ request('type') == 'akta-notaris' ? 'selected' : '' }}>
-                                        Akta
+                                    <option value="notaris" {{ request('type') == 'notaris' ? 'selected' : '' }}>
                                         Notaris
                                     </option>
                                     <option value="ppat" {{ request('type') == 'ppat' ? 'selected' : '' }}>PPAT
@@ -30,17 +29,31 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                                 <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                                 <input type="date" class="form-control" name="start_date" id="start_date"
                                     value="{{ request('start_date') }}">
                             </div>
 
                             {{-- End Date --}}
-                            <div class="col-lg-3">
+                            <div class="col-lg-2">
                                 <label for="end_date" class="form-label text-sm">Tanggal Selesai</label>
                                 <input type="date" class="form-control" name="end_date" id="end_date"
                                     value="{{ request('end_date') }}">
+                            </div>
+                            <div class="col-lg-2">
+                                <label for="status" class="form-label text-sm">Status</label>
+                                <select name="status" id="status" class="form-select">
+                                    <option value="">Semua Status</option>
+                                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="diproses" {{ request('status') == 'diproses' ? 'selected' : '' }}>
+                                        Diproses</option>
+                                    <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai
+                                    </option>
+                                    <option value="dibatalkan" {{ request('status') == 'dibatalkan' ? 'selected' : '' }}>
+                                        Dibatalkan</option>
+                                </select>
                             </div>
 
                             {{-- Tombol Filter --}}
@@ -56,7 +69,7 @@
             @if ($data->isNotEmpty())
                 <div class="card">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6 class="text-uppercase">{{ ucfirst($queryType) }}</h6>
+                        <h6 class="text-capitalize">{{ ucfirst($queryType) }}</h6>
                         <a href="{{ route('laporan-akta.export-pdf', [
                             'type' => $queryType,
                             'start_date' => $startDate,

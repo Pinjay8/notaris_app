@@ -22,17 +22,28 @@ class NotaryRelaasDocumentController extends Controller
         $relaasInfo = null;
         $documents = collect();
 
-        if ($request->filled('search')) {
-            $relaasInfo = $this->service->searchRelaas($request->search);
+        // cek minimal salah satu input terisi
+        if ($request->filled('transaction_code') || $request->filled('relaas_number')) {
+
+            $relaasInfo = $this->service->searchRelaas(
+                $request->transaction_code,
+                $request->relaas_number
+            );
 
             if ($relaasInfo) {
                 $documents = $this->service->getDocuments($relaasInfo->id);
             } else {
-                notyf()->position('x', 'right')->position('y', 'top')->warning('Data dokumen akta tidak ditemukan');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Data dokumen akta tidak ditemukan');
             }
         }
 
-        return view('pages.BackOffice.RelaasAkta.AktaDocument.index', compact('relaasInfo', 'documents'));
+        return view(
+            'pages.BackOffice.RelaasAkta.AktaDocument.index',
+            compact('relaasInfo', 'documents')
+        );
     }
 
     public function create($relaasId)

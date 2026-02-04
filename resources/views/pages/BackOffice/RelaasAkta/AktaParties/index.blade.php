@@ -14,12 +14,18 @@
                 <div class="card-body pt-1">
 
                     {{-- Form Pencarian --}}
-                    <form method="GET" action="{{ route('relaas-parties.index') }}" class="mb-3" class="no-spinner">
-                        <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Transaksi"
-                                value="{{ request('search') }}">
-                            <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
-                        </div>
+                    <form method="GET" action="{{ route('relaas-parties.index') }}"
+                        class="no-spinner d-flex
+                        gap-2  justify-content-end mb-3">
+
+                        {{-- <input type="text" name="search" class="form-control" placeholder="Masukkan Kode Transaksi"
+                                value="{{ request('search') }}"> --}}
+                        <input type="text" name="transaction_code" class="form-control"
+                            placeholder="Masukkan Kode Transaksi" value="{{ request('transaction_code') }}">
+                        <input type="text" name="relaas_number" class="form-control" placeholder="Masukkan Nomor Akta"
+                            value="{{ request('relaas_number') }}">
+                        <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
+
                     </form>
 
                     {{-- Jika ada data relaas --}}
@@ -36,7 +42,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <h6 class="mb-1"><strong>Nomor Akta</strong></h6>
-                                        <p class="text-muted text-sm">{{ $relaasInfo->first()->akta_number ?? '-' }}</p>
+                                        <p class="text-muted text-sm">{{ $relaasInfo->first()->relaas_number ?? '-' }}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <h6><strong>Notaris</strong></h6>

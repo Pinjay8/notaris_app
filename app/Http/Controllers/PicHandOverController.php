@@ -72,11 +72,13 @@ class PicHandoverController extends Controller
     {
         $handover = $this->service->listHandovers([])->firstWhere('id', $id);
 
+        $notaris = auth()->user()->notaris;
+
         if (!$handover) {
             abort(404, 'Data serah terima tidak ditemukan');
         }
 
-        $html = view('pages.PIC.PicHandovers.print', compact('handover'))->render();
+        $html = view('pages.PIC.PicHandovers.print', compact('handover', 'notaris'))->render();
 
         $mpdf = new \Mpdf\Mpdf([
             'tempDir' => storage_path('app/mpdf'),
@@ -90,6 +92,6 @@ class PicHandoverController extends Controller
             $mpdf->Output("handover-{$handover->id}.pdf", \Mpdf\Output\Destination::STRING_RETURN)
         )
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="handover-' . $handover->id . '.pdf"');
+            ->header('Content-Disposition', 'inline; filename="handover-' . $handover->id . '.pdf"');
     }
 }

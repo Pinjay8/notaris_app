@@ -58,20 +58,20 @@ class NotaryAktaTransactionController extends Controller
     }
 
 
-    public function generateTransactionCode(int $notarisId, string $clientId): string
-    {
-        $today = Carbon::now()->format('Ymd');
+    // public function generateTransactionCode(int $notarisId, string $clientId): string
+    // {
+    //     $today = Carbon::now()->format('Ymd');
 
-        $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
-            // ->where('client_code', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->where('deleted_at', null)
-            ->count();
+    //     $countToday = NotaryAktaTransaction::where('notaris_id', $notarisId)
+    //         // ->where('client_code', $clientId)
+    //         ->whereDate('created_at', Carbon::today())
+    //         ->where('deleted_at', null)
+    //         ->count();
 
-        $countToday += 1;
+    //     $countToday += 1;
 
-        return 'T' . '-' . 'A' . '-'  . $today . '-' . $notarisId . '-'   . $countToday;
-    }
+    //     return 'T' . '-' . 'A' . '-'  . $today . '-' . $notarisId . '-'   . $countToday;
+    // }
 
     // public function generateTransactionCode(int $notarisId, string $clientCode): string
     // {
@@ -84,6 +84,25 @@ class NotaryAktaTransactionController extends Controller
 
     //     return 'T-' . $clientCode . '-' . $today . '-' . $countToday;
     // }
+
+
+    public function generateTransactionCode(int $notarisId, string $clientId): string
+    {
+        $now = Carbon::now();
+
+        $date = $now->format('Ymd');
+        $yearMonth = $now->format('Ym');
+
+        $count = NotaryAktaTransaction::where('notaris_id', $notarisId)
+            ->whereYear('created_at', $now->year)
+            ->whereMonth('created_at', $now->month)
+            ->whereNull('deleted_at')
+            ->count();
+
+        $count += 1;
+
+        return 'T-A-' . $date . '-' . $notarisId . '-' . $count;
+    }
 
 
 

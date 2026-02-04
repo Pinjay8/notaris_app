@@ -11,11 +11,19 @@ class NotaryRelaasDocumentService
     /**
      * Cari relaas berdasarkan registration_code atau relaas_number
      */
-    public function searchRelaas(string $search)
+    public function searchRelaas(?string $transactionCode, ?string $relaasNumber)
     {
-        return NotaryRelaasAkta::where('transaction_code', $search)
-            ->where('notaris_id', auth()->user()->notaris_id)
-            ->orWhere('relaas_number', $search)
+        return NotaryRelaasAkta::where('notaris_id', auth()->user()->notaris_id)
+            ->where(function ($q) use ($transactionCode, $relaasNumber) {
+
+                if ($transactionCode) {
+                    $q->where('transaction_code', $transactionCode);
+                }
+
+                if ($relaasNumber) {
+                    $q->orWhere('relaas_number', $relaasNumber);
+                }
+            })
             ->first();
     }
 

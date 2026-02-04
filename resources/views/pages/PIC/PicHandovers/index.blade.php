@@ -52,7 +52,7 @@
                                     <td>
                                         {{-- Tombol PDF --}}
                                         <a href="{{ route('pic_handovers.print', $handover->id) }}"
-                                            class="btn btn-sm  btn btn-dark mb-0" target="_blank" title="Cetak PDF">
+                                            class="btn btn-sm btn-dark mb-0" target="_blank">
                                             <i class="fas fa-file-pdf" style="font-size: 15px;"></i>
                                         </a>
 

@@ -101,7 +101,7 @@
                             <label class="form-label text-sm">File</label>
                             <input type="file" name="file_path" class="form-control"
                                 {{ old('file_path') ? 'value=' . old('file_path') : '' }}>
-                            <small> Maksimal ukuran file: 5 MB</small>
+                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
 
                             @if (isset($data) && $data->file_path)
                                 @php

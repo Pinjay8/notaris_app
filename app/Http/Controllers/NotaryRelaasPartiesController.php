@@ -22,19 +22,31 @@ class NotaryRelaasPartiesController extends Controller
         $relaasInfo = null;
         $parties = collect();
 
-        if ($request->has('search')) {
-            $relaasInfo = $this->service->searchRelaas($request->search);
+        if (
+            $request->filled('transaction_code') ||
+            $request->filled('relaas_number')
+        ) {
+
+            $relaasInfo = $this->service->searchByRegistrationCode(
+                $request->transaction_code,
+                $request->relaas_number
+            );
 
             if ($relaasInfo) {
                 $parties = $this->service->getParties($relaasInfo->id);
             } else {
-                notyf()->position('x', 'right')->position('y', 'top')->warning('Data pihak akta tidak ditemukan');
+                notyf()
+                    ->position('x', 'right')
+                    ->position('y', 'top')
+                    ->warning('Data pihak akta tidak ditemukan');
             }
         }
 
-        return view('pages.BackOffice.RelaasAkta.AktaParties.index', compact('relaasInfo', 'parties'));
+        return view(
+            'pages.BackOffice.RelaasAkta.AktaParties.index',
+            compact('relaasInfo', 'parties')
+        );
     }
-
     public function create($relaasId)
     {
         // relaas untuk header + back-link + action form

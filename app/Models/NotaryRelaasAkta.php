@@ -49,6 +49,6 @@ class NotaryRelaasAkta extends Model
 
     protected $casts = [
         'relaas_number_created_at' => 'datetime',
-        'relaas_number' => 'encrypted',
+        // 'relaas_number' => 'encrypted',
     ];
 }

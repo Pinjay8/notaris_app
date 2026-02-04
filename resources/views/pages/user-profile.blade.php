@@ -156,6 +156,7 @@
                                         <label for="example-text-input" class="form-control-label text-sm">Foto</label>
                                         <input class="form-control @error('image') is-invalid @enderror" type="file"
                                             name="image">
+                                        <small>Maksimal ukuran foto 2MB (Format: JPG,JPEG, PNG)</small>
                                         @error('image')
                                             <p class="text-danger mt-1 text-sm">{{ $message }}</p>
                                         @enderror

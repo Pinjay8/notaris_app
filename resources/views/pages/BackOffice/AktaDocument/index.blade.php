@@ -22,6 +22,8 @@
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                     </form>
 
+                    
+
                     {{-- Tampilkan transaksi jika ada --}}
                     @if ($transaction)
                         <div class="card mb-4 shadow-sm mt-3">

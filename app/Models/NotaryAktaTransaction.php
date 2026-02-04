@@ -45,6 +45,6 @@ class NotaryAktaTransaction extends Model
 
     protected $casts = [
         'akta_number_created_at' => 'datetime',
-        'akta_number' => 'encrypted',
+        // 'akta_number' => 'encrypted',
     ];
 }

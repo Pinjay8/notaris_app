@@ -15,24 +15,36 @@ class NotaryLaporanAktaController extends Controller
 
     public function index(Request $request)
     {
-        $queryType = $request->get('type'); // partij / relaas
+        $queryType = $request->get('type');
         $startDate = $request->get('start_date');
         $endDate   = $request->get('end_date');
+        $status    = $request->get('status');
 
-        $data = collect(); // default kosong
+        $data = collect();
 
         if ($queryType && $startDate && $endDate) {
-            if ($queryType === 'akta-notaris') {
-                $data = NotaryAktaTransaction::whereBetween('created_at', [
-                    Carbon::parse($startDate)->startOfDay(),
-                    Carbon::parse($endDate)->endOfDay()
-                ])->where('notaris_id', auth()->user()->notaris_id)->get();
-                // dd($data);
+
+            $query = null;
+
+            if ($queryType === 'notaris') {
+                $query = NotaryAktaTransaction::query();
             } elseif ($queryType === 'ppat') {
-                $data = NotaryRelaasAkta::whereBetween('created_at', [
-                    Carbon::parse($startDate)->startOfDay(),
-                    Carbon::parse($endDate)->endOfDay()
-                ])->where('notaris_id', auth()->user()->notaris_id)->get();
+                $query = NotaryRelaasAkta::query();
+            }
+
+            if ($query) {
+                $query->where('notaris_id', auth()->user()->notaris_id)
+                    ->whereBetween('created_at', [
+                        Carbon::parse($startDate)->startOfDay(),
+                        Carbon::parse($endDate)->endOfDay()
+                    ]);
+
+                // 🔥 FILTER STATUS (OPSIONAL)
+                if ($status) {
+                    $query->where('status', $status);
+                }
+
+                $data = $query->get();
             }
         }
 
@@ -40,7 +52,8 @@ class NotaryLaporanAktaController extends Controller
             'data'      => $data,
             'queryType' => $queryType,
             'startDate' => $startDate,
-            'endDate'   => $endDate
+            'endDate'   => $endDate,
+            'status'    => $status
         ]);
     }
 

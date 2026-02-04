@@ -62,17 +62,19 @@ class NotaryRelaasAktaController extends Controller
 
     public function generateTransactionCode(int $notarisId, string $clientId): string
     {
-        $today = Carbon::now()->format('Ymd');
+        $now = Carbon::now();
 
-        $countToday = NotaryRelaasAkta::where('notaris_id', $notarisId)
-            // ->where('client_code', $clientId)
-            ->whereDate('created_at', Carbon::today())
-            ->where('deleted_at', null)
+        $year = $now->format('Y');
+        $date = $now->format('Ymd');
+
+        $count = NotaryRelaasAkta::where('notaris_id', $notarisId)
+            ->whereYear('created_at', $year)
+            ->whereNull('deleted_at')
             ->count();
 
-        $countToday += 1;
+        $count += 1;
 
-        return 'T' . '-' . 'P' . '-' . $today . '-' . $notarisId . '-'   . $countToday;
+        return 'T-P-' . $date . '-' . $notarisId . '-' . $count;
     }
 
     // public function generateTransactionCode(int $notarisId, string $clientCode): string

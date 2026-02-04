@@ -42,7 +42,8 @@
         <label for="payment_file-{{ $type }}">Bukti Pembayaran</label>
         <input type="file" name="payment_file" id="payment_file-{{ $type }}"
             class="form-control @error('payment_file') is-invalid @enderror">
-        <label class="text-muted">*) Bukti pembayaran harus berupa gambar.</label>
+        {{-- {{-- <label class="text-muted">*) Bukti pembayaran harus berupa gambar.</label> --}}
+        <small>Maksimal ukuran file <strong>500KB</strong> (Format: JPG)</small>
         @error('payment_file')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror

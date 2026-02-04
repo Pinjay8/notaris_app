@@ -176,6 +176,7 @@
                                             <i class="fa-solid fa-print"></i>
                                             <span class="text-sm">Cetak</span>
                                         </button>
+
                                     </li>
                                 </ul>
 
@@ -228,6 +229,34 @@
                                             class="btn btn-danger" target="_blank">
                                             <i class="bi bi-file-earmark-pdf"></i> Cetak Detail Pembayaran
                                         </a>
+                                        @php
+                                            $token = \Illuminate\Support\Facades\Crypt::encryptString(
+                                                $cost->payment_code,
+                                            );
+                                            $link = route('public.payment.show', $token);
+
+                                            $dns2d = new \Milon\Barcode\DNS2D();
+                                            $png = $dns2d->getBarcodePNG($link, 'QRCODE', 6, 6, [0, 0, 0], true);
+                                        @endphp
+
+                                        <div class="mt-3 text-center">
+                                            <img src="data:image/png;base64,{{ $png }}" alt="QR Pembayaran"
+                                                style="
+                                        width:150px;
+                                        background:#fff;
+                                        padding:14px;
+                                        border-radius:14px;
+                                        box-shadow: 0 10px 25px rgba(0,0,0,.2);
+                                    ">
+
+                                            <div class="mt-2 text-start">
+                                                <a href="data:image/png;base64,{{ $png }}"
+                                                    download="qr-pembayaran-{{ $cost->payment_code }}.png"
+                                                    class="btn btn-outline-primary btn-sm mb-0 ">
+                                                    <i class="bi bi-download"></i> Download QR
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
