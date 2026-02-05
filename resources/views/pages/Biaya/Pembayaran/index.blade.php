@@ -134,7 +134,7 @@
                     <div class="card-body pt-0">
                         <div class="row">
                             <!-- Nav kiri -->
-                            <div class="col-lg-2 border-end">
+                            <div class="col-lg-2 border-end-lg">
                                 <ul class="nav nav-pills flex-lg-column flex-row flex-wrap mb-3 gap-2 rounded"
                                     id="pills-tab" role="tablist" style="background: none !important">
                                     <!-- Pembayaran Penuh Awal -->
@@ -224,7 +224,7 @@
                                     </div>
 
                                     {{-- Cetak --}}
-                                    <div class="tab-pane fade" id="pills-print" role="tabpanel">
+                                    {{-- <div class="tab-pane fade" id="pills-print" role="tabpanel">
                                         <a href="{{ route('notary_payments.print', $cost->payment_code) }}"
                                             class="btn btn-danger" target="_blank">
                                             <i class="bi bi-file-earmark-pdf"></i> Cetak Detail Pembayaran
@@ -241,23 +241,105 @@
 
                                         <div class="mt-3 text-center">
                                             <img src="data:image/png;base64,{{ $png }}" alt="QR Pembayaran"
-                                                style="
-                                        width:150px;
-                                        background:#fff;
-                                        padding:14px;
-                                        border-radius:14px;
-                                        box-shadow: 0 10px 25px rgba(0,0,0,.2);
-                                    ">
-
+                                                style="width:150px; background:#fff;padding:14px;border-radius:14px;box-shadow: 0 10px 25px rgba(0,0,0,.2);">
                                             <div class="mt-2 text-start">
                                                 <a href="data:image/png;base64,{{ $png }}"
                                                     download="qr-pembayaran-{{ $cost->payment_code }}.png"
                                                     class="btn btn-outline-primary btn-sm mb-0 ">
                                                     <i class="bi bi-download"></i> Download QR
                                                 </a>
+                                                <div class="mt-3 form-group">
+                                                    <label class="form-label text-sm">Link Pembayaran</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="paymentLink" value="{{ $link }}" readonly>
+                                                        <button class="btn btn-outline-secondary btn-sm mb-0"
+                                                            type="button" onclick="copyPaymentLink()">
+                                                            <i class="bi bi-clipboard"></i> Salin
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="tab-pane fade" id="pills-print" role="tabpanel">
+                                        <div class="row">
+                                            <!-- Kiri: Aksi -->
+                                            <div class="col-lg-4">
+                                                <div class="card shadow-sm h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="mb-3">Aksi</h6>
+
+                                                        <a href="{{ route('notary_payments.print', $cost->payment_code) }}"
+                                                            class="btn btn-danger w-100 mb-2" target="_blank">
+                                                            <i class="bi bi-file-earmark-pdf"></i> Cetak Detail Pembayaran
+                                                        </a>
+                                                        @php
+                                                            $token = \Illuminate\Support\Facades\Crypt::encryptString(
+                                                                $cost->payment_code,
+                                                            );
+                                                            $link = route('public.payment.show', $token);
+
+                                                            $dns2d = new \Milon\Barcode\DNS2D();
+                                                            $png = $dns2d->getBarcodePNG(
+                                                                $link,
+                                                                'QRCODE',
+                                                                6,
+                                                                6,
+                                                                [0, 0, 0],
+                                                                true,
+                                                            );
+                                                        @endphp
+
+                                                        <a href="data:image/png;base64,{{ $png }}"
+                                                            download="qr-pembayaran-{{ $cost->payment_code }}.png"
+                                                            class="btn btn-outline-primary w-100 btn-sm">
+                                                            <i class="bi bi-download"></i> Download QR
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Kanan: QR & Link -->
+                                            <div class="col-lg-8 mt-3 mt-lg-0">
+                                                <div class="card shadow-sm">
+                                                    <div class="card-body text-center">
+                                                        <h6 class="mb-3">QR Pembayaran</h6>
+
+                                                        <img src="data:image/png;base64,{{ $png }}"
+                                                            alt="QR Pembayaran" class="mb-3"
+                                                            style="
+                                                                width:160px;
+                                                                background:#fff;
+                                                                padding:16px;
+                                                                border-radius:16px;
+                                                                box-shadow: 0 10px 25px rgba(0,0,0,.15);
+                                                                margin: 0 auto;
+                                                            ">
+
+                                                        <div class="text-start mt-3">
+                                                            <label class="form-label text-sm">Link Pembayaran</label>
+                                                            <div class="input-group input-group-sm">
+                                                                <input type="text" class="form-control"
+                                                                    id="paymentLink" value="{{ $link }}"
+                                                                    readonly>
+                                                                <button class="btn btn-primary mb-0" type="button"
+                                                                    onclick="copyPaymentLink()">
+                                                                    <i class="bi bi-clipboard"></i>
+                                                                </button>
+                                                            </div>
+                                                            <small class="text-muted">
+                                                                Bagikan link ini ke klien untuk melihat detail pembayaran
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -267,3 +349,17 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        function copyPaymentLink() {
+            const input = document.getElementById('paymentLink');
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value);
+
+            // alert('Link pembayaran berhasil disalin!');
+            window.notyf.success('Link berhasil disalin ke clipboard!');
+        }
+    </script>
+@endpush

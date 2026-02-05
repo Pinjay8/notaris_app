@@ -198,38 +198,8 @@
                 <td>Kontak</td>
                 <td>{{ $handover->recipient_contact ?? '-' }}</td>
             </tr>
-            {{-- <tr>
-                <td>Tanggal Jatuh Tempo</td>
-                <td>{{ $cost->due_date ? \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}</td>
-                <td>Catatan</td>
-                <td>{{ $cost->note ?? '-' }}</td>
-            </tr> --}}
         </table>
     </div>
-
-    {{-- <div class="section">
-        <div class="handover-info">
-            <div class="info-row">
-                <span class="label">Kode Dokumen:</span>
-                <span class="value">{{ $handover->picDocument->pic_document_code ?? '-' }}</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Tanggal Serah Terima:</span>
-                <span class="value">{{ $handover->handover_date }}</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Nama Penerima:</span>
-                <span class="value">{{ $handover->recipient_name }}</span>
-            </div>
-            <div class="info-row">
-                <span class="label">Kontak Penerima:</span>
-                <span class="value">{{ $handover->recipient_contact ?? '-' }}</span>
-            </div>
-        </div>
-    </div> --}}
-
-
-
     <table>
         <thead>
             <tr>

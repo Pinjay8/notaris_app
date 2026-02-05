@@ -158,7 +158,7 @@ class NotaryPaymenttController extends Controller
             'is_valid'        => false,
         ]);
 
-        notyf()->success('Pembayaran berhasil disimpan.');
+        notyf()->position('x', 'right')->position('y', 'top')->success('Pembayaran berhasil dilakukan dan harap melakukan validasi.');
         return back();
     }
 

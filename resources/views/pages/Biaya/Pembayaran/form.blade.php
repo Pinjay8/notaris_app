@@ -38,6 +38,8 @@
         @enderror
     </div>
 
+
+
     <div class="mb-2">
         <label for="payment_file-{{ $type }}">Bukti Pembayaran</label>
         <input type="file" name="payment_file" id="payment_file-{{ $type }}"

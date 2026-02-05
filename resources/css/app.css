@@ -8,6 +8,14 @@
     border-right: #000 !important;
 } */
 
+.input-group
+    > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+        .valid-feedback
+    ):not(.invalid-tooltip):not(.invalid-feedback) {
+    /* border-left: 0 !important; */
+    border-right: 1px solid rgb(199, 199, 199) !important;
+}
+
 th {
     text-transform: uppercase;
     text-align: center;

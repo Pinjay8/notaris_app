@@ -8,14 +8,11 @@
     <link rel="icon" type="image/png" href="/img/favicon.png">
 
     <title>@yield('title', 'Notaris App')</title>
-
-    <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
-    {{-- <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> --}}
     <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <!-- CSS Files -->
@@ -38,7 +35,6 @@
 
     @auth
         @if (in_array(request()->route()->getName(), $publicRoutes))
-            {{-- TAMPILAN CLEAN TANPA SIDEBAR --}}
             @yield('content')
         @else
             {{-- DASHBOARD NORMAL --}}
