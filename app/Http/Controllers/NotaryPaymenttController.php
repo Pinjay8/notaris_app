@@ -6,6 +6,8 @@ use App\Models\NotaryCost;
 use App\Models\NotaryPayment;
 use App\Models\NotaryPaymentt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+use Milon\Barcode\DNS2D;
 use Mpdf\Mpdf;
 
 class NotaryPaymenttController extends Controller
@@ -162,31 +164,76 @@ class NotaryPaymenttController extends Controller
         return back();
     }
 
+    // public function print($payment_code)
+    // {
+    //     $cost = NotaryCost::with(['payments', 'client'])
+    //         ->where('payment_code', $payment_code)
+    //         ->firstOrFail();
+    //     $notaris = auth()->user()->notaris;
+
+    //     // Render blade ke HTML
+    //     $html = view('pages.Biaya.Pembayaran.print', compact('cost', 'notaris'))->render();
+
+    //     // Inisialisasi mPDF
+    //     $mpdf = new Mpdf([
+    //         'default_font' => 'dejavusans',
+    //         'format'       => 'A4',
+    //         'margin_top'   => 10,
+    //         'margin_bottom' => 0,
+    //         'margin_left'  => 15,
+    //         'margin_right' => 15,
+    //         'tempDir' => storage_path('app/mpdf-temp'),
+    //     ]);
+
+    //     // Tulis HTML ke PDF
+    //     $mpdf->WriteHTML($html);
+
+    //     // Output langsung ke browser (inline)
+    //     return response($mpdf->Output("Pembayaran-{$payment_code}.pdf", 'I'))
+    //         ->header('Content-Type', 'application/pdf');
+    // }
+
     public function print($payment_code)
     {
         $cost = NotaryCost::with(['payments', 'client'])
             ->where('payment_code', $payment_code)
             ->firstOrFail();
+
         $notaris = auth()->user()->notaris;
 
-        // Render blade ke HTML
-        $html = view('pages.Biaya.Pembayaran.print', compact('cost', 'notaris'))->render();
+        // Link publik pembayaran
+        $token = Crypt::encryptString($cost->payment_code);
+        $paymentLink = route('public.payment.show', $token);
 
-        // Inisialisasi mPDF
-        $mpdf = new Mpdf([
+        // Generate QR Code (base64)
+        $dns2d = new DNS2D();
+        $qrCode = $dns2d->getBarcodePNG(
+            $paymentLink,
+            'QRCODE',
+            5,
+            5,
+            [0, 0, 0],
+            true
+        );
+
+        // Render blade
+        $html = view(
+            'pages.Biaya.Pembayaran.print',
+            compact('cost', 'notaris', 'qrCode', 'paymentLink')
+        )->render();
+
+        $mpdf = new \Mpdf\Mpdf([
             'default_font' => 'dejavusans',
             'format'       => 'A4',
             'margin_top'   => 10,
-            'margin_bottom' => 0,
+            'margin_bottom' => 10,
             'margin_left'  => 15,
             'margin_right' => 15,
-            'tempDir' => storage_path('app/mpdf-temp'),
+            'tempDir'      => storage_path('app/mpdf-temp'),
         ]);
 
-        // Tulis HTML ke PDF
         $mpdf->WriteHTML($html);
 
-        // Output langsung ke browser (inline)
         return response($mpdf->Output("Pembayaran-{$payment_code}.pdf", 'I'))
             ->header('Content-Type', 'application/pdf');
     }

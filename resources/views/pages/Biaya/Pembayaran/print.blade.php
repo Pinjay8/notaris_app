@@ -151,8 +151,16 @@
     <table class="header-top">
         <tr>
             <td class="logo">
-                <img src="file://{{ public_path('img/logo-ct-dark.png') }}" alt="Logo Notaris"
-                    style="width:40px; height:auto;">
+                {{-- <img src="file://{{ public_path('img/logo-ct-dark.png') }}" alt="Logo Notaris"
+                    style="width:40px; height:auto;"> --}}
+
+                <img src="data:image/png;base64,{{ $qrCode }}"
+                    style="
+            width:80px;
+            background:#fff;
+            padding:10px;
+            border:1px solid #000;
+         ">
             </td>
             <td class="company-info">
                 <h3>Notaris App</h3>
@@ -166,17 +174,30 @@
     <div class="header">
         <h2 style="text-transform: capitalize">Detail Pembayaran</h2>
     </div>
+    {{-- <div style="text-align: center;">
+        <p style="font-weight: bold; margin-bottom: 8px;">
+            Scan QR untuk Melihat Detail Pembayaran
+        </p>
+
+        <img src="data:image/png;base64,{{ $qrCode }}"
+            style="
+                width:80px;
+                background:#fff;
+                padding:10px;
+                border:1px solid #000;
+             ">
+    </div> --}}
 
     <div class="info">
         <table class="info-table">
             <tr>
-                <td>Kode Pembayaran</td>
+                <td style="font-weight: bold">Kode Pembayaran</td>
                 <td>{{ $cost->payment_code }}</td>
                 <td>Notaris</td>
                 <td>{{ $cost->notaris->display_name ?? '-' }}</td>
             </tr>
             <tr>
-                <td>Klien</td>
+                <td style="font-weight: bold">Klien</td>
                 <td>{{ $cost->client->fullname ?? '-' }}</td>
                 <td>Status Pembayaran</td>
                 <td>
@@ -190,7 +211,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Tanggal Jatuh Tempo</td>
+                <td style="font-weight: bold">Tanggal Jatuh Tempo</td>
                 <td>{{ $cost->due_date ? \Carbon\Carbon::parse($cost->due_date)->format('d/m/Y') : '-' }}</td>
                 <td>Catatan</td>
                 <td>{{ $cost->note ?? '-' }}</td>
