@@ -22,10 +22,6 @@ class DashboardController extends Controller
         $activeConsultations = NotaryConsultation::where('notaris_id', $notarisId)->count();
         $paymentsCount = NotaryPayment::where('notaris_id', $notarisId)->count();
 
-        // Dokumen masuk per bulan (untuk chart)
-        // $monthlyDocs = NotaryClientDocument::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-        //     ->groupBy('month')
-        //     ->pluck('total', 'month');
 
         $clientsPerMonth = Client::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
             ->where('notaris_id', $notarisId)
@@ -47,9 +43,9 @@ class DashboardController extends Controller
         $latestClients = Client::where('notaris_id', $notarisId)->latest()->take(5)->get();
 
 
-        $payments = NotaryCost::where('notaris_id', $notarisId)->get();
-        $paidCount = $payments->where('payment_status', 'paid')->count();
-        $pendingCount = $payments->where('payment_status', false)->count();
+        $payments = NotaryPayment::where('notaris_id', $notarisId)->get();
+        $paidCount = $payments->where('payment_type', 'full')->where('is_valid', true)->count();
+        $pendingCount = $payments->whereIn('payment_type', ['DP', 'dp', 'partial'])->count();
 
         return view('pages.dashboard', compact(
             'totalClients',
