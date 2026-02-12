@@ -495,6 +495,16 @@
                     <span class="nav-link-text ms-1 mt-2">Laporan Pengurusan</span>
                 </a>
             </li>
+            {{-- <li class="nav-item">
+                <a href="{{ route('report-progress.index') }}"
+                    class="nav-link {{ request()->is('report-progress*') ? 'active' : '' }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
+                    </div>
+                    <span class="nav-link-text ms-1 mt-2">Backup & Restore Data</span>
+                </a>
+            </li> --}}
         </ul>
     </div>
 </aside>

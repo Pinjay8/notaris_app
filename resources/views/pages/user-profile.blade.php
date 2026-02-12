@@ -33,6 +33,7 @@
                                 {{ $notaris->office_name ?? '-' }}
                             </h5>
                         </div>
+
                     </div>
                     @if (isset($notaris) && $notaris->id)
                         @php
@@ -403,6 +404,7 @@
                             </div>
                         </div>
                     </form>
+                   
                 </div>
             </div>
         </div>

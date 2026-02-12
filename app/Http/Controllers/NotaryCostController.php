@@ -39,7 +39,7 @@ class NotaryCostController extends Controller
             [
                 'client_code' => 'required',
                 'pic_document_id' => 'required',
-                'product_cost' => 'required|numeric|min:1',
+                'product_cost' => 'required',
                 'admin_cost' => 'nullable',
                 'other_cost' => 'nullable',
                 'amount_paid' => 'nullable',

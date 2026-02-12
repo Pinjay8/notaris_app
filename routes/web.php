@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AktaQrController;
+use App\Http\Controllers\BackupRestoreController;
 use App\Http\Controllers\ChangePassword;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
@@ -118,6 +119,9 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     // HomeController routes
+
+    Route::post('/backup', [BackupRestoreController::class, 'backup'])->name('backup');
+    Route::post('/restore', [BackupRestoreController::class, 'restore'])->name('restore');
     Route::get('/akta/{transaction_code}', [AktaQrController::class, 'show'])
         ->name('akta.qr.show');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
