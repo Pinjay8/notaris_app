@@ -30,7 +30,7 @@ class LoginController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             if ($user->status === 'pending') {
-                Auth::logout(); // logout dulu agar tidak masuk sesi
+                Auth::logout();
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
@@ -39,14 +39,18 @@ class LoginController extends Controller
             }
 
 
-            $lastSubscription = $user->subscriptions()->latest('end_date')->first();
+            $lastSubscription = $user->subscriptions()
+                ->latest('end_date')
+                ->first();
 
-            if ($lastSubscription && $lastSubscription->end_date < now()) {
+            if (!$lastSubscription || $lastSubscription->end_date < now()) {
                 Auth::logout();
+
                 notyf()
                     ->position('x', 'right')
                     ->position('y', 'top')
-                    ->warning('Akun anda sudah kadaluarsa. Silakan hubungi admin untuk aktivasi kembali.');
+                    ->warning('Akun anda tidak memiliki subscription aktif atau sudah kadaluarsa.');
+
                 return redirect()->route('login');
             }
 
