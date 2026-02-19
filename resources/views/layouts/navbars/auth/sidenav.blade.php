@@ -495,16 +495,32 @@
                     <span class="nav-link-text ms-1 mt-2">Laporan Pengurusan</span>
                 </a>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ route('report-progress.index') }}"
-                    class="nav-link {{ request()->is('report-progress*') ? 'active' : '' }}">
+
+            <div class="collapse {{ request()->is('pic_staff*') || request()->is('pic_documents*') || request()->is('pic_process*') || request()->is('pic_handovers*') ? 'show' : '' }}"
+                id="collapsePic">
+                <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
+                    <li>
+                        <a href="{{ route('pic_staff.index') }}"
+                            class="nav-link {{ request()->is('pic_staff*') ? 'active' : '' }}">
+                            <div
+                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="fa-solid fa-users-gear text-dark text-sm opacity-10 pb-0"></i>
+                            </div>
+                            <span class="nav-link-text ms-1 mt-2">Staff</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <li class="nav-item">
+                <a href="{{ route('backup-restore.index') }}"
+                    class="nav-link {{ request()->is('backup-restore*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Backup & Restore Data</span>
                 </a>
-            </li> --}}
+            </li>
         </ul>
     </div>
 </aside>

@@ -240,7 +240,7 @@ class NotaryAktaTransactionController extends Controller
                 ->success('Nomor akta berhasil ditambahkan.');
         }
 
-        return redirect()->route('akta_number.index', ['search' => $akta->client_code]);
+        return redirect()->route('akta_number.index', ['search' => $akta->transaction_code]);
     }
 
 
@@ -265,6 +265,6 @@ class NotaryAktaTransactionController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Nomor akta berhasil diperbarui.');
 
-        return redirect()->route('akta_number.index', ['search' => $akta->client_code]);
+        return redirect()->route('akta_number.index', ['search' => $akta->transaction_code]);
     }
 }

@@ -120,6 +120,8 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // HomeController routes
 
+    Route::get('/backup-restore',[BackupRestoreController::class, 'index'])->name('backup-restore.index');
+
     Route::post('/backup', [BackupRestoreController::class, 'backup'])->name('backup');
     Route::post('/restore', [BackupRestoreController::class, 'restore'])->name('restore');
     Route::get('/akta/{transaction_code}', [AktaQrController::class, 'show'])
