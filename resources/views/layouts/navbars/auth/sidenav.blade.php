@@ -496,7 +496,7 @@
                 </a>
             </li>
 
-            <div class="collapse {{ request()->is('pic_staff*') || request()->is('pic_documents*') || request()->is('pic_process*') || request()->is('pic_handovers*') ? 'show' : '' }}"
+            {{-- <div class="collapse {{ request()->is('backup-restore*') ? 'show' : '' }}"
                 id="collapsePic">
                 <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
                     <li>
@@ -520,7 +520,7 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Backup & Restore Data</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
 </aside>
