@@ -98,7 +98,13 @@
                                                         class="btn btn-dark btn-sm mb-0">Nonaktif</button>
                                                 </form>
                                             @else
-                                                {{-- <span class="badge bg-secondary">Nonaktif</span> --}}
+                                                <form action="{{ route('documents.activate', $document->id) }}"
+                                                    method="POST" class="d-inline-block">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit"
+                                                        class="btn btn-success btn-sm mb-0">Aktifkan</button>
+                                                </form>
                                             @endif
                                         </td>
                                     </tr>

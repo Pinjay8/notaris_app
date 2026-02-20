@@ -16,7 +16,7 @@ class DocumentsController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $status = $request->input('status', '1');
+        $status = $request->input('status', '');
 
         $documents = $this->documentService->getAll($search, $status);
         $documents->appends($request->query());
@@ -78,6 +78,22 @@ class DocumentsController extends Controller
         try {
             $this->documentService->deactivate($id);
             notyf()->position('x', 'right')->position('y', 'top')->success('Jenis Warkah berhasil dinonaktifkan.');
+            return redirect()->route('documents.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function activate($id)
+    {
+        try {
+            $this->documentService->activeDocument($id);
+
+            notyf()
+                ->position('x', 'right')
+                ->position('y', 'top')
+                ->success('Jenis Warkah berhasil diaktifkan.');
+
             return redirect()->route('documents.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

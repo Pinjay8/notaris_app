@@ -56,6 +56,12 @@ class DocumentRepository implements DocumentRepositoryInterface
         return $document->save();
     }
 
+    public function activeDocument(Documents $document): bool
+    {
+        $document->status = true;
+        return $document->save();
+    }
+
     public function find(int $id): ?Documents
     {
         return Documents::find($id);

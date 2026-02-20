@@ -11,5 +11,6 @@ interface DocumentRepositoryInterface
     public function create(array $data): Documents;
     public function update(Documents $document, array $data): Documents;
     public function deactivate(Documents $document): bool;
+    public function activeDocument(Documents $document): bool;
     public function find(int $id): ?Documents;
 }

@@ -44,6 +44,18 @@ class DocumentService
         return $this->documentRepo->deactivate($document);
     }
 
+    public function activeDocument(int $id): bool
+    {
+        $document = $this->documentRepo->find($id);
+
+        if (!$document) {
+            throw new \Exception('Dokumen tidak ditemukan.');
+        }
+
+        return $this->documentRepo->activeDocument($document);
+    }
+
+
     public function findProduct(int $id): ?Documents
     {
         return $this->documentRepo->find($id);

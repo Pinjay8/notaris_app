@@ -120,7 +120,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     // HomeController routes
 
-    Route::get('/backup-restore',[BackupRestoreController::class, 'index'])->name('backup-restore.index');
+    Route::get('/backup-restore', [BackupRestoreController::class, 'index'])->name('backup-restore.index');
 
     Route::post('/backup', [BackupRestoreController::class, 'backup'])->name('backup');
     Route::post('/restore', [BackupRestoreController::class, 'restore'])->name('restore');
@@ -148,6 +148,8 @@ Route::middleware('auth')->group(function () {
     Route::put('products/{product}/deactivate', [ProductsController::class, 'deactivate'])->name('products.deactivate');
     Route::resource('documents', DocumentsController::class)->except('show');
     Route::put('documents/{document}/deactivate', [DocumentsController::class, 'deactivate'])->name('documents.deactivate');
+    Route::put('/documents/{id}/activate', [DocumentsController::class, 'activate'])
+        ->name('documents.activate');
 
 
     Route::resource('clients', ClientController::class)->except('show');
