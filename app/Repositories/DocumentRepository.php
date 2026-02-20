@@ -9,7 +9,19 @@ use App\Models\Documents;
 class DocumentRepository implements DocumentRepositoryInterface
 {
 
-    public function all(string $status = '1')
+    // public function all(string $status = '1')
+    // {
+    //     $query = Documents::query();
+
+    //     if ($status === '1') {
+    //         $query->where('status', 1);
+    //     } elseif ($status === '0') {
+    //         $query->where('status', 0);
+    //     }
+
+    //     return $query->paginate(10)->appends(request()->query());
+    // }
+    public function all(?string $status = null)
     {
         $query = Documents::query();
 
@@ -22,7 +34,7 @@ class DocumentRepository implements DocumentRepositoryInterface
         return $query->paginate(10)->appends(request()->query());
     }
 
-    public function search(string $keyword, string $status = '1')
+    public function search(string $keyword, ?string $status = null)
     {
         $query = Documents::where(function ($q) use ($keyword) {
             $q->where('code', 'like', "%{$keyword}%")

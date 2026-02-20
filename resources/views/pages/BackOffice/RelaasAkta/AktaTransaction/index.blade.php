@@ -143,7 +143,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="12" class="text-muted text-center">Belum ada transaksi Aktas.</td>
+                                        <td colspan="12" class="text-muted text-center">Belum ada transaksi akta.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

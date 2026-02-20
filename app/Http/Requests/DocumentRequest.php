@@ -26,7 +26,6 @@ class DocumentRequest extends FormRequest
         $rules = [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            // 'notaris_id' => 'required',
             'status' => 'required',
         ];
 

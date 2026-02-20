@@ -23,7 +23,7 @@
                         <input type="hidden" name="client_code" value="{{ $clientCode }}">
 
                         <div class="mb-3">
-                            <label for="relaas_type_id" class="form-label text-sm">Jenis Akta</label>
+                            <label for="relaas_type_id" class="form-label text-sm">Jenis Akta (Kategori - Tipe)</label>
                             <select name="relaas_type_id" id="relaas_type_id"
                                 class="form-select text-capitalize @error('relaas_type_id') is-invalid @enderror">
                                 <option value="" hidden>Pilih Jenis Akta</option>
@@ -31,7 +31,7 @@
                                     <option value="{{ $relaasTypes->id }}"
                                         {{ old('relaas_type_id', $data->relaas_type_id ?? '') == $relaasTypes->id ? 'selected' : '' }}
                                         class="text-capitalize">
-                                        {{ $relaasTypes->type }}
+                                        {{ $relaasTypes->category }} - {{ $relaasTypes->type }}
                                     </option>
                                 @endforeach
                             </select>

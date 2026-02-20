@@ -15,14 +15,16 @@
                         </a>
                     </div>
                     <form method="GET" action="{{ route('documents.index') }}" class="d-flex gap-2 ms-auto mt-3"
-                        style="max-width: 500px;">
-                        <input type="text" name="search" placeholder="Cari nama jenis warkah"
-                            value="{{ request('search') }}" class="form-control">
+                        style="max-width:550px;">
+
                         <select name="status" class="form-select">
+                            <option value="" {{ request('status') == '' ? 'selected' : '' }}>Semua Status</option>
                             <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Aktif</option>
                             <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Nonaktif</option>
                             </option>
                         </select>
+                        <input type="text" name="search" placeholder="Cari nama/kode jenis warkah"
+                            value="{{ request('search') }}" class="form-control">
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                     </form>
                 </div>
@@ -80,16 +82,21 @@
                                         </td>
                                         <td>
                                             <span
-                                                class="badge text-center  bg-{{ $document->status == 1 ? 'success' : 'danger' }} text-capitalize">
-                                                {{ $document->status == 1 ? 'Aktif' : 'Nonaktif' }}
+                                                class="badge text-center bg-{{ $document->status == 1 ? 'success' : 'danger' }} text-capitalize px-2 py-2 "
+                                                style="font-size: 12px">
+                                                @if ($document->status == 1)
+                                                    <i class="bi bi-check-circle-fill me-1"></i> Aktif
+                                                @else
+                                                    <i class="bi bi-x-circle-fill me-1"></i> Nonaktif
+                                                @endif
                                             </span>
                                         </td>
                                         <td class="text-center align-middle">
+                                            <a href="{{ route('documents.edit', $document->id) }}"
+                                                class="btn btn-info btn-sm mb-0">
+                                                Edit
+                                            </a>
                                             @if ($document->status != 0)
-                                                <a href="{{ route('documents.edit', $document->id) }}"
-                                                    class="btn btn-info btn-sm mb-0">
-                                                    Edit
-                                                </a>
                                                 <form action="{{ route('documents.deactivate', $document->id) }}"
                                                     method="POST" class="d-inline-block">
                                                     @csrf

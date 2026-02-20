@@ -19,6 +19,7 @@ class NotaryLaporanAktaController extends Controller
         $startDate = $request->get('start_date');
         $endDate   = $request->get('end_date');
         $status    = $request->get('status');
+        $notaris =  auth()->user()->notaris;
 
         $data = collect();
 
@@ -53,7 +54,8 @@ class NotaryLaporanAktaController extends Controller
             'queryType' => $queryType,
             'startDate' => $startDate,
             'endDate'   => $endDate,
-            'status'    => $status
+            'status'    => $status,
+            'notaris'   => $notaris
         ]);
     }
 
@@ -63,16 +65,17 @@ class NotaryLaporanAktaController extends Controller
         $queryType = $request->get('type'); // partij / relaas
         $startDate = $request->get('start_date');
         $endDate   = $request->get('end_date');
+        $notaris =  auth()->user()->notaris;
 
         $data = collect(); // default kosong
 
         if ($queryType && $startDate && $endDate) {
-            if ($queryType === 'partij') {
+            if ($queryType === 'notaris') {
                 $data = NotaryAktaTransaction::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()
                 ])->get();
-            } elseif ($queryType === 'relaas') {
+            } elseif ($queryType === 'ppat') {
                 $data = NotaryRelaasAkta::whereBetween('created_at', [
                     Carbon::parse($startDate)->startOfDay(),
                     Carbon::parse($endDate)->endOfDay()
@@ -85,7 +88,8 @@ class NotaryLaporanAktaController extends Controller
             'data'      => $data,
             'queryType' => $queryType,
             'startDate' => $startDate,
-            'endDate'   => $endDate
+            'endDate'   => $endDate,
+            'notaris' => $notaris
         ])->render();
 
         // generate PDF
@@ -93,8 +97,10 @@ class NotaryLaporanAktaController extends Controller
         $mpdf->WriteHTML($html);
 
         // Output PDF
-        return response($mpdf->Output('laporan-akta.pdf', 'S'))
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="laporan-akta.pdf"');
+        // return response($mpdf->Output('laporan-akta.pdf', 'S'))
+        //     ->header('Content-Type', 'application/pdf')
+        //     ->header('Content-Disposition', 'attachment; filename="laporan-akta.pdf"');
+        return response($mpdf->Output('laporan-akta.pdf', 'I'))
+            ->header('Content-Type', 'application/pdf');
     }
 }

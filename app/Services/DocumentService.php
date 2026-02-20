@@ -9,7 +9,7 @@ class DocumentService
 {
     public function __construct(protected DocumentRepositoryInterface $documentRepo) {}
 
-    public function getAll(?string $search = null, string $status = '1')
+    public function getAll(?string $search = null, ?string $status = null)
     {
         if ($search) {
             return $this->documentRepo->search($search, $status);

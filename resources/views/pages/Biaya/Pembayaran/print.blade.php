@@ -164,7 +164,7 @@
             </td>
             <td class="company-info">
                 <h3>Notaris App</h3>
-                <p>Office {{ $notaris->office_name }}</p>
+                <p>{{ $notaris->office_name }}</p>
                 <p>{{ $notaris->office_address }}</p>
                 <p>{{ $notaris->phone }}</p>
             </td>

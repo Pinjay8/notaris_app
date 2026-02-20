@@ -36,16 +36,18 @@
                         <input type="hidden" name="client_code" value="{{ $clientCode }}">
 
                         <div class="mb-3">
-                            <label for="akta_type_id" class="form-label text-sm">Jenis Akta</label>
+                            <label for="akta_type_id" class="form-label text-sm">Jenis Akta (Kategori -
+                                Tipe)</label>
                             <select name="akta_type_id" id="akta_type_id" class="form-select">
-                                <option value="" hidden>Pilih Jenis Akta</option>
+                                <option value="" hidden>Pilih Jenis Akta </option>
                                 @foreach ($aktaTypes as $aktaType)
-                                    <option value="{{ $aktaType->id }}"
+                                    <option class="text-capitalize" value="{{ $aktaType->id }}"
                                         {{ isset($transaction) && $transaction->akta_type_id == $aktaType->id ? 'selected' : '' }}>
-                                        {{ $aktaType->type }}
+                                        {{ $aktaType->category }} - {{ $aktaType->type }}
                                     </option>
                                 @endforeach
                             </select>
+
                         </div>
                         <div class="mb-3">
                             <label for="date_submission" class="form-label text-sm">Tanggal Pengajuan</label>
