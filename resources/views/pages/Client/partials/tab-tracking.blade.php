@@ -2,8 +2,10 @@
     <thead>
         <tr class="text-center fw-bold text-black">
             <th>#</th>
-            <th>Kode Klien</th>
-            <th>Jenis Pengurusan</th>
+            <th>Notaris</th>
+            <th>Kode Dokumen</th>
+            <th>Tipe Transaksi</th>
+            <th></th>
             <th>Status Terakhir</th>
             <th>Aksi</th>
         </tr>
@@ -12,24 +14,26 @@
         @foreach ($picDocuments as $doc)
             <tr class="text-center">
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $doc->notaris->full_name ?? '-' }}</td>
                 <td>{{ $doc->pic_document_code }}</td>
-                <td class="text-capitalize">{{ $doc->document_type ?? '-' }}</td>
-                <td>
+                <td class="text-capitalize">{{ $doc->transaction_type ?? '-' }}</td>
+                <td class="text-capitalize">
                     @php
-                        $status = optional($doc->processes->last())->step_status ?? null;
+                        // $status = optional($doc->processes->last())->step_status ?? null;
+                        $status = $doc->status;
                     @endphp
-                    @if ($status === 'in_progress')
-                        <span class="badge bg-warning">Sedang Diproses</span>
+                    @if ($status === 'delivered')
+                        <span class="badge bg-warning text-capitalize">Sedang Diproses</span>
                     @elseif($status === 'done')
-                        <span class="badge bg-success">Selesai</span>
+                        <span class="badge bg-success text-capitalize">Selesai</span>
                     @elseif($status === 'pending')
-                        <span class="badge bg-secondary">Menunggu</span>
+                        <span class="badge bg-secondary text-capitalize">Menunggu</span>
                     @else
-                        <span class="badge bg-light text-dark">Belum ada progres</span>
+                        <span class="badge bg-light text-dark text-capitalize">Belum ada progres</span>
                     @endif
                 </td>
                 <td>
-                    <button class="btn btn-sm btn-info" data-bs-toggle="modal"
+                    <button class="btn btn-sm btn-info mb-0" data-bs-toggle="modal"
                         data-bs-target="#processModal-{{ $doc->id }}">
                         Detail
                     </button>

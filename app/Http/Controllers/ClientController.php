@@ -188,19 +188,19 @@ class ClientController extends Controller
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
 
-        $notaryCost     = NotaryCost::where('client_id', $client->id)->get();
-        $notaryPayment  = NotaryPayment::where('client_id', $client->id)->get();
+        $notaryCost     = NotaryCost::where('client_code', $client->client_code)->get();
+        $notaryPayment  = NotaryPayment::where('client_code', $client->client_code)->get();
 
         $picDocuments = collect();
 
-        if ($request->filled('registration_code')) {
+        if ($request->filled('client_code')) {
             $picDocuments = PicDocuments::with('processes')
-                ->where('client_id', $client->id)
-                ->where('pic_document_code', $request->registration_code)
+                ->where('client_code', $client->client_code)
+                // ->where('pic_document_code', $request->registration_code)
                 ->get();
         }
 
-        $clientDocuments = NotaryClientDocument::where('client_id', $client->id)->get();
+        $clientDocuments = NotaryClientDocument::where('client_code', $client->client_code)->get();
 
         $validUploadedCodes = $clientDocuments
             ->where('status', 'valid')

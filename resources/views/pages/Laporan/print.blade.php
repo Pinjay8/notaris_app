@@ -182,8 +182,9 @@
             </td>
             <td class="company-info">
                 <h3>Notaris App</h3>
-                <div>Jl. Jenderal Sudirman No. 123, Jakarta</div>
-                <div>Telp: (021) 123-4567</div>
+                <p>{{ $notaris->office_name }}</p>
+                <p>{{ $notaris->office_address }}</p>
+                <div>Telp: {{ $notaris->phone }}</div>
             </td>
         </tr>
     </table>
@@ -201,9 +202,9 @@
                 <td>{{ now()->format('d F Y') }}</td>
             </tr>
             <tr>
-                <td>Notaris</td>
+                <td style="font-weight: bold">Notaris</td>
                 <td>{{ $costs[0]->notaris->display_name }}</td>
-                <td>Kode</td>
+                <td>Kode Dokumen</td>
                 <td>{{ $costs[0]->picDocument->pic_document_code }}</td>
             </tr>
         </table>

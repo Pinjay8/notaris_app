@@ -9,14 +9,17 @@
             <div class="card shadow-sm border-0 pb-0">
                 <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                     <h5>Laporan Pembayaran</h5>
-                    <a href="{{ route('report-payment.print', request()->all()) }}" target="_blank"
-                        class="btn btn-danger mb-0 btn-sm">
-                        <i class="bi bi-file-earmark-pdf"></i> PDF
-                    </a>
+                    @if (request()->filled('start_date') || request()->filled('end_date') || request()->filled('status'))
+                        <a href="{{ route('report-payment.print', request()->all()) }}" target="_blank"
+                            class="btn btn-danger mb-0 btn-sm">
+                            <i class="bi fs-6 bi-file-earmark-pdf me-1"></i> Cetak PDF
+                        </a>
+                    @endif
                 </div>
                 <hr>
                 <div class="card-body px-2 pt-0 pb-2">
-                    <form method="GET" action="{{ route('report-payment.index') }}" class="row g-2 mb-4 px-1 flex-wrap no-spinner">
+                    <form method="GET" action="{{ route('report-payment.index') }}"
+                        class="row g-2 mb-4 px-1 flex-wrap no-spinner">
                         <div class="col-md-4 col-xl-4">
                             <label for="start_date" class="form-label text-sm">Tanggal Mulai</label>
                             <input type="date" class="form-control" id="start_date" name="start_date"
@@ -29,7 +32,7 @@
                                 value="{{ request('end_date') }}">
                         </div>
 
-                        <div class=" col-md-2 col-xl-2">
+                        <div class=" col-sm-2 col-md-4 col-xl-3">
                             <label for="status" class="form-label text-sm">Status</label>
                             <select class="form-select" name="status" id="status">
                                 <option value="all" {{ request('status') == 'all' ? 'selected' : '' }}>Semua</option>
@@ -42,8 +45,9 @@
                             </select>
                         </div>
 
-                        <div class=" col-lg-2 col-xl-2 d-flex align-items-end py-1">
-                            <button type="submit" class="btn btn-primary btn-sm w-100 mb-0">
+                        <div class=" col-lg-2 col-xl-1 d-flex align-items-end mt-0">
+                            <button type="submit" class="btn  btn-primary btn-sm w-100 mb-0 mt-0"
+                                style="height: 40px; font-size: 14px">
                                 Cari
                             </button>
                         </div>
@@ -81,6 +85,7 @@
                                         <td>
                                             @php
                                                 $status = $payment->cost->payment_status;
+                                                // $status = $payment->payment_type;
                                                 $badgeColor = match ($status) {
                                                     'full' => 'success',
                                                     'partial' => 'warning',

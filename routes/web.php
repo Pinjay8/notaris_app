@@ -89,6 +89,8 @@ Route::middleware('guest')->group(function () {
         Route::get('/change-password', 'show')->name('change-password');
         Route::post('/change-password', 'update')->name('change.perform');
     });
+    Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+
     // Public Access
     // Route untuk akses form update dari link revisi (menggunakan encrypted id)
     // revisi / edit (link untuk revisi klien)
@@ -109,7 +111,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/client/public/{encryptedNotarisId}/store', [ClientController::class, 'storeClient'])
         ->name('client.public.store');
 
-    Route::get('/client/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+    // Detail Klien
+
+
     // Route::post('/client/search', [ClientController::class, 'searchByRegistrationCode'])->name('client.search');
     Route::post('/client/{uuid}/upload-document', [ClientController::class, 'uploadDocument'])
         ->name('client.uploadDocument');

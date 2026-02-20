@@ -52,8 +52,10 @@ class ReportPaymentController extends Controller
                 $query->whereDate('payment_date', '<=', $request->end_date);
             }
 
-            if ($request->status && $request->status != 'all') {
-                $query->where('payment_type', $request->status);
+            if ($request->filled('status') && $request->status != 'all') {
+                $query->whereHas('cost', function ($q) use ($request) {
+                    $q->where('payment_status', $request->status);
+                });
             }
 
             $costs = $query->latest()->get();
@@ -78,9 +80,10 @@ class ReportPaymentController extends Controller
         }
 
         $costs = $query->latest()->get();
+        $notaris = auth()->user()->notaris;
 
         // Render Blade ke HTML
-        $html = View::make('pages.Laporan.print', compact('costs'))->render();
+        $html = View::make('pages.Laporan.print', compact('costs', 'notaris'))->render();
 
         $mpdf = new Mpdf([
             'format'  => 'A4',

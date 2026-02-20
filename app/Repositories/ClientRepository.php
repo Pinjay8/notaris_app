@@ -11,7 +11,7 @@ class ClientRepository implements ClientRepositoryInterface
 {
     public function all(): Collection
     {
-        return Client::where('notaris_id', auth()->user()->notaris_id)->get();
+        return Client::where('notaris_id', auth()->user()->notaris_id)->where('deleted_at', null)->get();
     }
 
     public function findById(int $id): ?Client

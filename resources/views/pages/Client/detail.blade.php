@@ -140,7 +140,7 @@
                         <input type="hidden" name="tab" value="tracking" id="hiddenTab">
                         <div class="input-group">
                             <input type="text" name="client_code" value="{{ request('client_code') }}"
-                                class="form-control form-control-md" placeholder="Masukkan Registration Code" required>
+                                class="form-control form-control-md" placeholder="Masukkan Kode Klien" required>
                             <button type="submit" class="btn btn-primary mb-0 btn-sm">Cari</button>
                         </div>
                     </form>

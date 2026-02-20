@@ -36,7 +36,7 @@ class PicDocuments extends Model
 
     public function notaris()
     {
-        return $this->belongsTo(Notaris::class, 'notaris_id');
+        return $this->belongsTo(Notaris::class, 'notaris_id', 'id');
     }
 
     public function processes()
