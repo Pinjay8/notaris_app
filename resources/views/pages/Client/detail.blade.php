@@ -20,7 +20,7 @@
                 <div>
                     @php
                         $phone = !empty($client->phone) ? preg_replace('/^0/', '62', $client->phone) : null;
-                        $link = url("/clients/{$client->uuid}");
+                        $link = url("/public-client/{$client->uuid}");
                     @endphp
 
                     @if ($phone)
@@ -187,7 +187,6 @@
             const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
             const hiddenTab = document.getElementById('hiddenTab');
 
-            // Klik tab → update URL & hidden input
             tabButtons.forEach(tab => {
                 tab.addEventListener("shown.bs.tab", function(e) {
                     const tabId = e.target.getAttribute("data-bs-target").replace('#', '');
@@ -197,14 +196,6 @@
                     if (hiddenTab) hiddenTab.value = tabId;
                 });
             });
-
-            // Set active tab dari URL saat reload
-            const urlParams = new URLSearchParams(window.location.search);
-            const activeTab = urlParams.get('tab') || 'info';
-            const tabToShow = document.querySelector(`#${activeTab}-tab`);
-            if (tabToShow) {
-                new bootstrap.Tab(tabToShow).show();
-            }
         });
     </script>
 @endpush

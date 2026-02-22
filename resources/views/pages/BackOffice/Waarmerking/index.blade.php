@@ -67,10 +67,78 @@
                                             {{-- file image --}}
                                             <td>
                                                 @if ($item->file_path)
-                                                    <a href="{{ asset('storage/' . $item->file_path) }}" target="_blank"
-                                                        class="btn btn-primary btn-sm mb-0">
+                                                    @php
+                                                        $extension = strtolower(
+                                                            pathinfo($item->file_path, PATHINFO_EXTENSION),
+                                                        );
+                                                        $isImage = in_array($extension, [
+                                                            'jpg',
+                                                            'jpeg',
+                                                            'png',
+                                                            'svg',
+                                                            'webp',
+                                                        ]);
+                                                        $isPdf = $extension === 'pdf';
+                                                    @endphp
+
+                                                    {{-- BUTTON --}}
+                                                    <button type="button" class="btn btn-primary btn-sm mb-0"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#fileModal{{ $item->id }}">
                                                         Lihat File
-                                                    </a>
+                                                    </button>
+
+                                                    {{-- MODAL --}}
+                                                    <div class="modal fade" id="fileModal{{ $item->id }}"
+                                                        tabindex="-1" aria-hidden="true">
+
+                                                        <div
+                                                            class="modal-dialog modal-dialog-centered
+                                                            {{ $isPdf ? 'modal-xl' : 'modal-lg' }}">
+
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">Preview Dokumen</h5>
+                                                                    <button type="button" class="btn-close btn-close-white"
+                                                                        data-bs-dismiss="modal">
+                                                                    </button>
+                                                                </div>
+
+                                                                <div class="modal-body text-center">
+
+                                                                    {{-- IMAGE --}}
+                                                                    @if ($isImage)
+                                                                        <img src="{{ asset('storage/' . $item->file_path) }}"
+                                                                            class="img-fluid rounded shadow"
+                                                                            style="max-height: 85vh; object-fit: contain; margin: auto;">
+
+                                                                        {{-- PDF --}}
+                                                                    @elseif ($isPdf)
+                                                                        <iframe
+                                                                            src="{{ asset('storage/' . $item->file_path) }}"
+                                                                            width="100%" height="750px"
+                                                                            style="border: none;">
+                                                                        </iframe>
+
+                                                                        {{-- OTHER --}}
+                                                                    @else
+                                                                        <div class="text-center">
+                                                                            <p class="text-muted">File tidak dapat
+                                                                                ditampilkan.</p>
+                                                                            <a href="{{ asset('storage/' . $item->file_path) }}"
+                                                                                target="_blank"
+                                                                                class="btn btn-secondary btn-sm">
+                                                                                Download File
+                                                                            </a>
+                                                                        </div>
+                                                                    @endif
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 @else
                                                     <span class="text-muted">Tidak ada file</span>
                                                 @endif

@@ -33,7 +33,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('client_id')
+                            @error('client_code')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -123,48 +123,35 @@
                         <div class="mb-3">
                             <label class="form-label text-sm">File Surat Keluar</label>
                             <input type="file" name="file_path" class="form-control" id="fileInput">
-
+                            <small>Maksimal ukuran file <strong>2MB </strong>(Format: JPG,JPEG, PNG, atau PDF)</small>
+                            <br>
                             @if (isset($data) && $data->file_path)
-                                <button type="button" class="btn btn-primary btn-sm mb-0 mt-2" data-bs-toggle="modal"
-                                    data-bs-target="#previewModal">
-                                    Lihat File
-                                </button>
+                                @php
+                                    $ext = pathinfo($data->file_path, PATHINFO_EXTENSION);
+                                @endphp
+
+                                @if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                                    <div class="mt-2">
+                                        <button type="button" class="btn btn-primary mb-0 text-white">
+
+                                            <a href="{{ asset('storage/' . $data->file_path) }}" alt="Preview"
+                                                target="_blank" class="img-fluid" style="max-height: 200px; color: white">
+                                                Lihat Gambar
+                                            </a>
+
+                                        </button>
+                                    </div>
+                                @else
+                                    <br>
+                                    <button class="btn btn-primary mb-0 text-white">
+                                        <a href="{{ asset('storage/' . $data->file_path) }}" target="_blank"
+                                            style="color: white">Lihat File Legalisasi</a>
+                                    </button>
+                                @endif
                             @endif
                         </div>
 
-                        @if (isset($data) && $data->file_path)
-                            @php
-                                $ext = strtolower(pathinfo($data->file_path, PATHINFO_EXTENSION));
-                            @endphp
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="previewModal" tabindex="-1">
-                                <div class="modal-dialog modal-lg modal-dialog-centered">
-                                    <div class="modal-content">
-
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">File Surat Keluar</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-
-                                        <div class="modal-body text-center">
-
-                                            @if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
-                                                <img src="{{ asset('storage/' . $data->file_path) }}" class="img-fluid"
-                                                    style="max-height: 250;">
-                                            @else
-                                                <a href="{{ asset('storage/' . $data->file_path) }}" target="_blank"
-                                                    class="btn btn-primary">
-                                                    Download / Lihat File
-                                                </a>
-                                            @endif
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
 
                         <div class="mt-4">
                             <a href="{{ route('notary-letters.index') }}" class="btn btn-secondary">Batal</a>

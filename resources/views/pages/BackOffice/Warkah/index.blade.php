@@ -78,7 +78,19 @@
                                             <div class="modal fade" id="viewDocumentModal-{{ $product->id }}"
                                                 tabindex="-1" aria-labelledby="viewDocumentModalLabel-{{ $product->id }}"
                                                 aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                @php
+                                                    $file = asset('storage/' . $product->warkah_link);
+                                                    $ext = strtolower(
+                                                        pathinfo($product->warkah_link, PATHINFO_EXTENSION),
+                                                    );
+
+                                                    $isImage = in_array($ext, ['jpg', 'jpeg', 'png', 'svg', 'webp']);
+                                                    $isPdf = $ext === 'pdf';
+
+                                                    $modalSize = $isPdf ? 'modal-xl' : 'modal-lg';
+                                                @endphp
+
+                                                <div class="modal-dialog modal-dialog-centered {{ $modalSize }}">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Dokumen Warkah</h5>
@@ -87,7 +99,6 @@
                                                         </div>
 
                                                         <div class="modal-body">
-
                                                             @php
                                                                 $file = asset('storage/' . $product->warkah_link);
                                                                 $ext = strtolower(
@@ -103,7 +114,7 @@
                                                                 </div>
                                                             @elseif ($ext === 'pdf')
                                                                 <iframe src="{{ $file }}" width="100%"
-                                                                    height="600px" style="border: none;"></iframe>
+                                                                    height="700px" style="border: none;"></iframe>
                                                             @else
                                                                 <p class="text-muted text-center">Format dokumen tidak dapat
                                                                     ditampilkan.</p>

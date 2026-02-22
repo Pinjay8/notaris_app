@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AuthMiddleware;
+use App\Http\Middleware\CheckFullAccess;
 use App\Listeners\LogAuthenticationActivity;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'auth.token' => AuthMiddleware::class,
+            'check.full.access' => CheckFullAccess::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

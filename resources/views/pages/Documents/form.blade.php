@@ -24,7 +24,7 @@
                         @endif
 
                         <div class="mb-3">
-                            <label for="name" class="form-label text-sm">Nama </label>
+                            <label for="name" class="form-label text-sm">Nama <span class="text-danger">*</span> </label>
                             <input type=" text" name="name" id="name" class="form-control "
                                 value="{{ old('name', $document->name ?? '') }}">
                             @error('name')
@@ -33,7 +33,8 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="code" class="form-label text-sm">Kode</label>
+                            <label for="code" class="form-label text-sm">Kode <span class="text-danger">*</span>
+                            </label>
                             <input type="text" name="code" id="code" class="form-control"
                                 value="{{ old('code', $document->code ?? '') }}">
                             @error('code')
@@ -41,15 +42,10 @@
                             @enderror
                         </div>
 
+
                         <div class="mb-3">
-                            <label for="description" class="form-label text-sm">Deskripsi</label>
-                            <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $document->description ?? '') }}</textarea>
-                            @error('description')
-                                <p class="text-danger mt-2">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label text-sm">Status</label>
+                            <label for="status" class="form-label text-sm">Status <span class="text-danger">*</span>
+                            </label>
                             <select name="status" id="status" class="form-select">
                                 <option value="" hidden>Pilih Status</option>
                                 <option value="1"
@@ -60,6 +56,14 @@
                                     Nonaktif</option>
                             </select>
                             @error('status')
+                                <p class="text-danger mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label text-sm">Deskripsi</label>
+                            <textarea name="description" id="description" class="form-control" rows="3">{{ old('description', $document->description ?? '') }}</textarea>
+                            @error('description')
                                 <p class="text-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>

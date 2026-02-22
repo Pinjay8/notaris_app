@@ -41,16 +41,19 @@
                             <tbody>
                                 @forelse ($costs as $cost)
                                     <tr class="text-center text-sm">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $costs->firstItem() + $loop->index }}</td>
                                         <td>{{ $cost->payment_code }}</td>
                                         <td>{{ $cost->client->fullname }}</td>
                                         <td>{{ $cost->client->client_code }}</td>
                                         <td>{{ $cost->picDocument->pic_document_code }}</td>
+                                        @php
+                                            $totalPaid = $cost->payments->where('is_valid', true)->sum('amount');
+                                            $remaining = max(0, $cost->total_cost - $totalPaid);
+                                        @endphp
+
                                         <td>Rp {{ number_format($cost->total_cost, 0, ',', '.') }}</td>
-                                        <td>Rp {{ number_format($cost->amount_paid, 0, ',', '.') }}</td>
-                                        <td>Rp
-                                            {{ number_format($cost->total_cost - $cost->amount_paid, 0, ',', '.') }}
-                                        </td>
+                                        <td>Rp {{ number_format($totalPaid, 0, ',', '.') }}</td>
+                                        <td>Rp {{ number_format($remaining, 0, ',', '.') }}</td>
                                         @php
                                             $statusMap = [
                                                 'paid' => ['class' => 'success', 'label' => 'Lunas'],
@@ -243,13 +246,16 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center text-muted text-sm">Belum ada data total biaya
+                                        <td colspan="9" class="text-center text-muted text-sm">Belum ada data total
+                                            biaya
                                         </td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
-
+                        <div class="d-flex justify-content-end mt-3 me-3">
+                            {{ $costs->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

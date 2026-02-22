@@ -59,7 +59,7 @@
                                 <input type="file" name="warkah_link"
                                     class="form-control @error('warkah_link') is-invalid @enderror"
                                     accept=".jpg,.jpeg,.png,.pdf">
-                                <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
+                                <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG atau PDF)</small>
                                 @error('warkah_link')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

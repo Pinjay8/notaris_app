@@ -16,12 +16,12 @@ class NotaryPaymenttController extends Controller
     {
         $cost = null;
 
-        if ($request->filled('pic_document_code')) {
+        if ($request->filled('payment_code')) {
             $cost = NotaryCost::with('payments')
                 ->whereHas(
                     'picDocument',
                     fn($q) =>
-                    $q->where('pic_document_code', $request->pic_document_code)
+                    $q->where('payment_code', $request->payment_code)
                 )
                 ->where('notaris_id', auth()->user()->notaris_id)
                 ->first();
@@ -109,7 +109,7 @@ class NotaryPaymenttController extends Controller
             'amount'         => 'required',
             'payment_date'   => 'required|date',
             'payment_method' => 'required|string',
-            'payment_file'   => 'required|max:5000 |mimes:jpg,png,png',
+            'payment_file'   => 'required|max:501|mimes:jpg,png,jpeg,pdf',
         ], [
             'payment_code.required'   => 'Kode pembayaran harus diisi.',
             'payment_type.required'   => 'Tipe pembayaran harus diisi.',
@@ -117,8 +117,8 @@ class NotaryPaymenttController extends Controller
             'payment_date.required'   => 'Tanggal pembayaran harus diisi.',
             'payment_method.required' => 'Metode pembayaran harus diisi.',
             'payment_file.required'   => 'File pembayaran harus diupload.',
-            'payment_file.max'        => 'Ukuran file maksimal 5 MB.',
-            'payment_file.mimes'      => 'Format file harus JPG, JPEG, atau PNG.',
+            'payment_file.max'        => 'Ukuran file maksimal 500kb.',
+            'payment_file.mimes'      => 'Format file harus JPG, JPEG, PNG atau PDF.',
         ]);
 
         $cost = NotaryCost::where('payment_code', $request->payment_code)->firstOrFail();

@@ -101,7 +101,7 @@
                             <label class="form-label text-sm">File</label>
                             <input type="file" name="file_path" class="form-control"
                                 {{ old('file_path') ? 'value=' . old('file_path') : '' }}>
-                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
+                            <small>Maksimal ukuran file <strong>2MB </strong>(Format: JPG,JPEG, PNG, atau PDF)</small>
 
                             @if (isset($data) && $data->file_path)
                                 @php
@@ -110,23 +110,28 @@
 
                                 @if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
                                     <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $data->file_path) }}" alt="Preview"
-                                            class="img-fluid" style="max-height: 200px;">
+                                        <button type="button" class="btn btn-primary mb-0 text-white">
+
+                                            <a href="{{ asset('storage/' . $data->file_path) }}" alt="Preview"
+                                                target="_blank" class="img-fluid" style="max-height: 200px; color: white">
+                                                Lihat Gambar
+                                            </a>
+
+                                        </button>
                                     </div>
                                 @else
-                                    <small class="text-muted">
-                                        File saat ini:
-                                        <a href="{{ asset('storage/' . $data->file_path) }}" target="_blank">Lihat /
-                                            Download</a>
-                                    </small>
+                                    <br>
+                                    <button class="btn btn-primary mb-0 text-white">
+                                        <a href="{{ asset('storage/' . $data->file_path) }}" target="_blank"
+                                            style="color: white">Lihat File Legalisasi</a>
+                                    </button>
                                 @endif
                             @endif
                         </div>
 
                         <div class="">
                             <a href="{{ route('notary-legalisasi.index') }}" class="btn btn-secondary">Batal</a>
-                            <button type="submit"
-                                class="btn btn-primary">{{ isset($data) ? 'Update' : 'Simpan' }}</button>
+                            <button type="submit" class="btn btn-primary">{{ isset($data) ? 'Ubah' : 'Simpan' }}</button>
                         </div>
 
                     </form>

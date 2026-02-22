@@ -21,7 +21,8 @@
                             @method('PUT')
                         @endif
                         <div class="mb-3">
-                            <label for="name" class="form-label text-sm">Nama Dokumen</label>
+                            <label for="name" class="form-label text-sm">Nama Dokumen <span class="text-danger">*</span>
+                            </label>
                             <input type="text" name="name" id="name"
                                 class="form-control @error('name') is-invalid @enderror"
                                 value="{{ old('name', $document->name ?? '') }}">
@@ -33,7 +34,8 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label for="type" class="form-label text-sm">Tipe Dokumen</label>
+                            <label for="type" class="form-label text-sm">Tipe Dokumen <span
+                                    class="text-danger">*</span></label>
                             <input type="text" name="type" id="type"
                                 class="form-control @error('type') is-invalid @enderror"
                                 value="{{ old('type', $document->type ?? '') }}"
@@ -47,10 +49,11 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="file_url" class="form-label text-sm">File Akta Dokumen</label>
+                            <label for="file_url" class="form-label text-sm">File Akta Dokumen <span
+                                    class="text-danger">*</span></label>
                             <input type="file" name="file_url" id="file_url"
                                 class="form-control @error('file_url') is-invalid @enderror">
-                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
+                            <small>Maksimal ukuran file <strong>2MB </strong>(Format: JPG,JPEG, PNG atau PDF)</small>
 
                             @error('file_url')
                                 <div class="invalid-feedback">
@@ -69,7 +72,8 @@
 
                         {{-- uploaded_at --}}
                         <div class="mb-3">
-                            <label for="uploaded_at" class="form-label text-sm">Tanggal Upload</label>
+                            <label for="uploaded_at" class="form-label text-sm">Tanggal Upload <span
+                                    class="text-danger">*</span></label>
                             <input type="datetime-local" name="uploaded_at" id="uploaded_at"
                                 class="form-control @error('uploaded_at') is-invalid @enderror"
                                 value="{{ old('uploaded_at', isset($document) && $document->uploaded_at ? \Carbon\Carbon::parse($document->uploaded_at)->format('Y-m-d\TH:i') : '') }}">

@@ -22,7 +22,7 @@
                         <button type="submit" class="btn btn-primary btn-sm mb-0">Cari</button>
                     </form>
 
-                    
+
 
                     {{-- Tampilkan transaksi jika ada --}}
                     @if ($transaction)
@@ -102,18 +102,34 @@
                                                 <td class="text-center">
                                                     @if ($doc->file_url)
                                                         <!-- Tombol buka modal -->
-                                                        <button type="button" class="btn btn-sm btn-outline-primary mb-0"
+                                                        <button type="button" class="btn btn-sm btn-primary mb-0"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#fileModal{{ $doc->id }}">
-                                                            <i class="bi bi-file-earmark me-1"></i> Lihat Akta Dokumen
+                                                            <i class="fa fa-file me-1"></i> Lihat Akta Dokumen
                                                         </button>
 
-                                                        <!-- Modal -->
+                                                        @php
+                                                            $isImage = in_array($doc->file_type, [
+                                                                'jpg',
+                                                                'jpeg',
+                                                                'png',
+                                                                'svg',
+                                                                'webp',
+                                                            ]);
+                                                            $isPdf = $doc->file_type === 'pdf';
+
+                                                            $modalSize = $isPdf
+                                                                ? 'modal-xl'
+                                                                : ($isImage
+                                                                    ? 'modal-lg'
+                                                                    : '');
+                                                        @endphp
                                                         <div class="modal fade" id="fileModal{{ $doc->id }}"
                                                             tabindex="-1"
                                                             aria-labelledby="fileModalLabel{{ $doc->id }}"
                                                             aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                            <div
+                                                                class="modal-dialog modal-dialog-centered {{ $modalSize }}">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header py-2">
                                                                         <h5 class="modal-title"
@@ -143,7 +159,7 @@
                                                                             <embed
                                                                                 src="{{ asset('storage/' . $doc->file_url) }}"
                                                                                 type="application/pdf" width="100%"
-                                                                                height="600px" />
+                                                                                height="700px" />
                                                                         @else
                                                                             <p class="text-muted">File tidak dapat
                                                                                 ditampilkan.</p>

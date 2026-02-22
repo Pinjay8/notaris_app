@@ -17,8 +17,8 @@
                 <div class="card-body">
                     <form method="GET" action="{{ route('notary_payments.index') }}">
                         <div class="input-group">
-                            <input type="text" name="pic_document_code" class="form-control"
-                                placeholder="Masukkan Kode Dokumen" value="{{ request('pic_document_code') }}">
+                            <input type="text" name="payment_code" class="form-control"
+                                placeholder="Masukkan Kode Pembayaran" value="{{ request('payment_code') }}">
                             <button type="submit" class="btn btn-primary mb-0">Cari</button>
                         </div>
                     </form>
@@ -92,10 +92,24 @@
                                                 <tr class="text-center">
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>
-                                                        <div class="d-flex justify-content-center">
-                                                            <img src="{{ asset('storage/' . $file->payment_file) }}"
-                                                                class="img-fluid" style="max-width: 150px">
-                                                        </div>
+                                                        @php
+                                                            $extension = pathinfo(
+                                                                $file->payment_file,
+                                                                PATHINFO_EXTENSION,
+                                                            );
+                                                        @endphp
+
+                                                        @if (in_array(strtolower($extension), ['jpg', 'jpeg', 'png']))
+                                                            <div class="d-flex justify-content-center">
+                                                                <img src="{{ asset('storage/' . $file->payment_file) }}"
+                                                                    class="img-fluid" style="max-width: 150px">
+                                                            </div>
+                                                        @elseif ($extension === 'pdf')
+                                                            <a href="{{ asset('storage/' . $file->payment_file) }}"
+                                                                target="_blank" class="btn btn-sm btn-danger mb-0">
+                                                                <i class="fas fa-file-pdf"></i> Lihat PDF
+                                                            </a>
+                                                        @endif
                                                     </td>
                                                     <td>Rp {{ number_format($file->amount, 0, ',', '.') }}</td>
                                                     <td>

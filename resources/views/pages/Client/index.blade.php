@@ -215,7 +215,7 @@
                                                                     data-bs-dismiss="modal" aria-label="Close">
                                                                 </button>
                                                                 @php
-                                                                    $link = url("/clients/{$client->uuid}");
+                                                                    $link = url("/public-client/{$client->uuid}");
                                                                     $dns2d = new \Milon\Barcode\DNS2D();
 
                                                                     // true di sini artinya return base64 data langsung

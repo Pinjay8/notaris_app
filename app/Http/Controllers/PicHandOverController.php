@@ -40,13 +40,13 @@ class PicHandoverController extends Controller
             'recipient_name'  => 'required|string',
             'recipient_contact' => 'required|string',
             'note'            => 'nullable|string',
-            'file_path'       => 'nullable|file|mimes:jpg,png,png|max:5000',
+            'file_path'       => 'nullable|file|mimes:jpg,png,png,pdf|max:2048',
         ], [
             'pic_document_id.required' => 'Dokumen PIC harus dipilih.',
             'handover_date.required'   => 'Tanggal serah terima harus diisi.',
             'recipient_name.required'  => 'Nama penerima harus diisi.',
             'recipient_contact.required' => 'Kontak penerima harus diisi.',
-            'file_path.max' => 'Ukuran file maksimal 5 MB.',
+            'file_path.max' => 'Ukuran file maksimal 2 MB.',
             'file_path.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 

@@ -89,7 +89,7 @@ Route::middleware('guest')->group(function () {
         Route::get('/change-password', 'show')->name('change-password');
         Route::post('/change-password', 'update')->name('change.perform');
     });
-    Route::get('/clients/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
+    Route::get('/public-client/{uuid}', [ClientController::class, 'showByUuid'])->name('clients.showByUuid');
 
     // Public Access
     // Route untuk akses form update dari link revisi (menggunakan encrypted id)
@@ -120,9 +120,29 @@ Route::middleware('guest')->group(function () {
 });
 
 
+// Route::middleware(['auth'])->group(function () {
 
-Route::middleware('auth')->group(function () {
-    // HomeController routes
+
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+//     Route::controller(UserProfileController::class)->group(function () {
+//         Route::get('/profile', 'show')->name('profile');
+//         Route::put('/profile', 'update')->name('profile.update');
+//     });
+
+
+//     Route::post('/profile/unlock', [UserProfileController::class, 'unlock'])
+//         ->name('profile.unlock');
+// });
+
+
+// Route::middleware(['auth', 'check.full.access'])->group(function () {
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::controller(UserProfileController::class)->group(function () {
+        Route::get('/profile', 'show')->name('profile');
+        Route::put('/profile', 'update')->name('profile.update');
+    });
 
     Route::get('/backup-restore', [BackupRestoreController::class, 'index'])->name('backup-restore.index');
 
@@ -130,7 +150,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/restore', [BackupRestoreController::class, 'restore'])->name('restore');
     Route::get('/akta/{transaction_code}', [AktaQrController::class, 'show'])
         ->name('akta.qr.show');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::resource('consultation', NotaryConsultationController::class);
     Route::get('/consultation/client/{id}', [NotaryConsultationController::class, 'getConsultationByClient'])->name('consultation.getConsultationByClient');
     Route::get('/consultation/client/product/{consultationId}', [NotaryConsultationController::class, 'getConsultationByProduct'])->name('consultation.detail');
@@ -139,10 +159,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/consultation/client/product/{consultationId}/product/{productId}', [NotaryConsultationController::class, 'deleteProduct'])->name('consultation.deleteProduct');
 
     // UserProfileController routes
-    Route::controller(UserProfileController::class)->group(function () {
-        Route::get('/profile', 'show')->name('profile');
-        Route::put('/profile', 'update')->name('profile.update');
-    });
+
 
     Route::controller(SubscriptionsController::class)->group(function () {
         Route::get('/subscriptions', 'index')->name('subscriptions');

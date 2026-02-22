@@ -40,7 +40,8 @@
                                     <form method="POST" action="{{ route('login.perform') }}">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="email" class="form-label text-sm">Email</label>
+                                            <label for="email" class="form-label text-sm">Email <span
+                                                    class="text-danger">*</span></label>
                                             <input type="email" name="email" class="form-control form-control-lg"
                                                 placeholder="Enter your email" required>
                                             @error('email')
@@ -49,7 +50,8 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="password" class="form-label text-sm">Password</label>
+                                            <label for="password" class="form-label text-sm">Password <span
+                                                    class="text-danger">*</span> </label>
                                             <div class="input-group">
                                                 <input type="password" name="password" id="password"
                                                     class="form-control form-control-lg border"

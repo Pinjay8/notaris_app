@@ -121,7 +121,7 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div class="col-md-6 mb-3 ">
+                            {{-- <div class="col-md-6 mb-3 ">
                                 <label for="amount_paid" class="form-label text-sm">Jumlah Dibayar</label>
                                 <div class="input-group">
                                     <span class="input-group-text" id="visible-addon">Rp</span>
@@ -133,51 +133,52 @@
                                     <p class="text-danger mt-2">{{ $message }}</p>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
-                        {{-- Status --}}
-                        <div class="mb-3">
-                            <label for="payment_status" class="form-label text-sm">Status <span
-                                    class="text-danger">*</span></label>
-                            <select name="payment_status" id="payment_status" class="form-control form-control-md">
-                                <option value="unpaid"
-                                    {{ old('payment_status', $cost->payment_status ?? '') == 'unpaid' ? 'selected' : '' }}>
-                                    Belum Dibayar</option>
-                                <option value="partial"
-                                    {{ old('payment_status', $cost->payment_status ?? '') == 'partial' ? 'selected' : '' }}>
-                                    Bayar Sebagian</option>
-                                <option value="paid"
-                                    {{ old('payment_status', $cost->payment_status ?? '') == 'paid' ? 'selected' : '' }}>
-                                    Lunas</option>
-                            </select>
-                        </div>
+                            {{-- Status --}}
+                            {{-- <div class="mb-3 col-md-6">
+                                <label for="payment_status" class="form-label text-sm">Status <span
+                                        class="text-danger">*</span></label>
+                                <select name="payment_status" id="payment_status" class="form-control form-control-md">
+                                    <option value="unpaid"
+                                        {{ old('payment_status', $cost->payment_status ?? '') == 'unpaid' ? 'selected' : '' }}>
+                                        Belum Dibayar</option>
+                                    <option value="partial"
+                                        {{ old('payment_status', $cost->payment_status ?? '') == 'partial' ? 'selected' : '' }}>
+                                        Bayar Sebagian</option>
+                                    <option value="paid"
+                                        {{ old('payment_status', $cost->payment_status ?? '') == 'paid' ? 'selected' : '' }}>
+                                        Lunas</option>
+                                </select>
+                            </div> --}}
 
-                        {{-- Tanggal --}}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="paid_date" class="form-label text-sm">Tanggal Bayar</label>
-                                <input type="date" name="paid_date" id="paid_date" class="form-control form-control-md"
-                                    value="{{ old('paid_date', isset($cost->paid_date) ? \Carbon\Carbon::parse($cost->paid_date)->format('Y-m-d') : '') }}">
+                            {{-- Tanggal --}}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="paid_date" class="form-label text-sm">Tanggal Bayar</label>
+                                    <input type="date" name="paid_date" id="paid_date"
+                                        class="form-control form-control-md"
+                                        value="{{ old('paid_date', isset($cost->paid_date) ? \Carbon\Carbon::parse($cost->paid_date)->format('Y-m-d') : '') }}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="due_date" class="form-label text-sm">Jatuh Tempo</label>
+                                    <input type="date" name="due_date" id="due_date"
+                                        class="form-control form-control-md"
+                                        value="{{ old('due_date', isset($cost->due_date) ? \Carbon\Carbon::parse($cost->due_date)->format('Y-m-d') : '') }}">
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="due_date" class="form-label text-sm">Jatuh Tempo</label>
-                                <input type="date" name="due_date" id="due_date"
-                                    class="form-control form-control-md"
-                                    value="{{ old('due_date', isset($cost->due_date) ? \Carbon\Carbon::parse($cost->due_date)->format('Y-m-d') : '') }}">
+
+                            {{-- Catatan --}}
+                            <div class="mb-3">
+                                <label for="note" class="form-label text-sm">Catatan</label>
+                                <textarea name="note" id="note" rows="2" class="form-control form-control-sm">{{ old('note', $cost->note ?? '') }}</textarea>
                             </div>
-                        </div>
 
-                        {{-- Catatan --}}
-                        <div class="mb-3">
-                            <label for="note" class="form-label text-sm">Catatan</label>
-                            <textarea name="note" id="note" rows="2" class="form-control form-control-sm">{{ old('note', $cost->note ?? '') }}</textarea>
-                        </div>
-
-                        <div class="mt-4">
-                            <a href="{{ route('notary_costs.index') }}" class="btn btn-secondary">Kembali</a>
-                            <button type="submit"
-                                class="btn btn-primary">{{ isset($cost) ? 'Ubah' : 'Simpan' }}</button>
-                        </div>
+                            <div class="mt-4">
+                                <a href="{{ route('notary_costs.index') }}" class="btn btn-secondary">Kembali</a>
+                                <button type="submit"
+                                    class="btn btn-primary">{{ isset($cost) ? 'Ubah' : 'Simpan' }}</button>
+                            </div>
                     </form>
                 </div>
             </div>

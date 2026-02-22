@@ -8,10 +8,41 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
+use function Flasher\Notyf\Prime\notyf;
 
 class UserProfileController extends Controller
 {
+
+    public function unlock(Request $request)
+    {
+        $request->validate([
+            'access_code' => 'required'
+        ]);
+
+        $user = auth()->user();
+
+        // if (!$user->access_code) {
+        //     return back()->with('error', 'Kode akses belum diset.');
+        // }
+
+        // if (Hash::check($request->access_code, $user->access_code)) {
+        if ($request->access_code === $user->access_code) {
+            // if ($request->access_code === '1234') {
+
+            session([
+                'access_all_menu' => true,
+                // 'access_expires_at' => now()->addHour()
+            ]);
+
+            notyf()->position('x', 'right')->position('y', 'top')->success('Kode akses benar.');
+            return back();
+        }
+        notyf()->position('x', 'right')->position('y', 'top')->error('Kode akses salah.');
+        return back();
+    }
+
 
     public function show()
     {

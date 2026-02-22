@@ -49,7 +49,7 @@ class NotaryCostController extends Controller
                 'note' => 'nullable',
             ],
             [
-                'client_code.required' => 'Kode Klien harus diisi.',
+                'client_code.required' => 'Klien harus diisi.',
                 'pic_document_id.required' => 'Dokumen harus diisi.',
                 'payment_status.required' => 'Status Pembayaran harus diisi.',
                 'product_cost.required' => 'Biaya Produk harus diisi.',

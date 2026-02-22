@@ -9,13 +9,13 @@ class NotaryCostRepository implements NotaryCostRepositoryInterface
 {
     public function all(array $filters = [])
     {
-        return NotaryCost::with(['client', 'picDocument'])
+        return NotaryCost::with(['client', 'picDocument', 'payments'])
             ->where('notaris_id', auth()->user()->notaris_id)
             ->when($filters['search'] ?? null, function ($q, $search) {
                 $q->where('payment_code', 'like', "%{$search}%");
             })
             ->latest()
-            ->get();
+            ->paginate(10);
     }
 
     public function find($id)

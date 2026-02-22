@@ -31,6 +31,26 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Nama Penerima <span class="text-danger">*</span></label>
+                            <input type="text" name="recipient_name"
+                                class="form-control @error('recipient_name') is-invalid @enderror"
+                                value="{{ old('recipient_name') }}">
+                            @error('recipient_name')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Kontak Penerima <span class="text-danger">*</span></label>
+                            <input type="text" name="recipient_contact"
+                                class="form-control @error('recipient_contact') is-invalid @enderror"
+                                value="{{ old('recipient_contact') }}">
+                            @error('recipient_contact')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <div class="mb-3">
                             <label class="form-label text-sm">Tanggal Serah Terima</label>
                             <input type="date" name="handover_date"
@@ -40,32 +60,17 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label text-sm">Nama Penerima</label>
-                            <input type="text" name="recipient_name"
-                                class="form-control @error('recipient_name') is-invalid @enderror"
-                                value="{{ old('recipient_name') }}">
-                            @error('recipient_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-sm">Kontak Penerima</label>
-                            <input type="text" name="recipient_contact"
-                                class="form-control @error('recipient_contact') is-invalid @enderror"
-                                value="{{ old('recipient_contact') }}">
-                            @error('recipient_contact')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label text-sm">Catatan</label>
-                            <textarea name="note" class="form-control">{{ old('note') }}</textarea>
-                        </div>
+
                         <div class="mb-3">
                             <label class="form-label text-sm">File Serah Terima Dokumen</label>
                             <input type="file" name="file_path" class="form-control">
-                            <small>Maksimal ukuran file 2MB (Format: JPG,JPEG, PNG)</small>
+                            <small>Maksimal ukuran file <strong>2MB</strong> (Format: JPG,JPEG, PNG, atau PDF)</small>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label text-sm">Catatan</label>
+                            <textarea name="note" class="form-control">{{ old('note') }}</textarea>
                         </div>
 
                         <a href="{{ route('pic_handovers.index') }}" class="btn btn-secondary">Kembali</a>

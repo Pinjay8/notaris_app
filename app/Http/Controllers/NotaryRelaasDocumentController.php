@@ -72,21 +72,21 @@ class NotaryRelaasDocumentController extends Controller
             'name'      => 'required|string|max:255',
             'type'      => 'required|string|max:255',
             'uploaded_at' => 'required|date',
-            'file_url'  => 'required|max:5000|mimes:pdf,jpg,jpeg,png',
+            'file_url'  => 'required|max:2048|mimes:pdf,jpg,jpeg,png',
         ], [
             'name.required' => 'Nama dokumen harus diisi.',
             'type.required' => 'Tipe dokumen harus diisi.',
             'uploaded_at.required' => 'Tanggal upload harus diisi.',
             'file_url.required' => 'File dokumen harus diupload.',
-            'file_url.max' => 'Ukuran file maksimal 5MB.',
+            'file_url.max' => 'Ukuran file maksimal 2MB.',
             'file_url.mimes' => 'Format file harus PDF, JPG, JPEG, atau PNG.',
         ]);
 
         if ($request->hasFile('file_url')) {
             $file = $request->file('file_url');
-            $originalName = $file->getClientOriginalName(); // contoh: akta_perubahan.pdf
-            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME); // akta_perubahan
-            $fileExtension = $file->getClientOriginalExtension(); // pdf
+            $originalName = $file->getClientOriginalName();
+            $fileNameOnly = pathinfo($originalName, PATHINFO_FILENAME);
+            $fileExtension = $file->getClientOriginalExtension();
 
             // simpan file ke storage/app/documents
             $storedPath = $file->storeAs('documents', $originalName);
@@ -108,7 +108,7 @@ class NotaryRelaasDocumentController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil ditambahkan.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->transaction_code]);
+        return redirect()->route('relaas-documents.index', ['transaction_code' => $relaas->transaction_code]);
     }
 
     public function update(Request $request, $relaasId, $id)
@@ -153,7 +153,7 @@ class NotaryRelaasDocumentController extends Controller
 
         notyf()->position('x', 'right')->position('y', 'top')->success('Dokumen akta berhasil diperbarui.');
 
-        return redirect()->route('relaas-documents.index', ['search' => $relaas->transaction_code]);
+        return redirect()->route('relaas-documents.index', ['transaction_code' => $relaas->transaction_code]);
     }
 
     public function destroy($id)

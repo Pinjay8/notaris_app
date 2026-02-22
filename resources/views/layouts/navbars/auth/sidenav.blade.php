@@ -53,16 +53,17 @@
                     </div>
                     <span class="nav-link-text ms-1">Profile</span>
                 </a>
-                <a href="{{ route('subscriptions') }}"
-                    class="nav-link {{ request()->is('subscriptions*') ? 'active' : '' }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-calendar-event-fill text-dark text-sm opacity-10 pb-0"></i>
-                    </div>
-                    <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
-                </a>
+                {{-- @if (session('access_all_menu')) --}}
+                    <a href="{{ route('subscriptions') }}"
+                        class="nav-link {{ request()->is('subscriptions*') ? 'active' : '' }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-calendar-event-fill text-dark text-sm opacity-10 pb-0"></i>
+                        </div>
+                        <span class="nav-link-text ms-1 mt-2">Subscriptions</span>
+                    </a>
 
-                {{-- <a href="{{ route('products.index') }}"
+                    {{-- <a href="{{ route('products.index') }}"
                     class="nav-link {{ request()->is('products*') ? 'active' : '' }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -80,14 +81,14 @@
                     <span class="nav-link-text ms-1 mt-2">Dokumen Layanan</span>
                 </a> --}}
 
-                <a href="{{ route('documents.index') }}"
-                    class="nav-link {{ request()->is('documents*') ? 'active' : '' }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
-                    </div>
-                    <span class="nav-link-text ms-1 mt-2">Jenis Warkah</span>
-                </a>
+                    <a href="{{ route('documents.index') }}"
+                        class="nav-link {{ request()->is('documents*') ? 'active' : '' }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
+                        </div>
+                        <span class="nav-link-text ms-1 mt-2">Jenis Warkah</span>
+                    </a>
             </li>
             <li class="nav-item mt-3 d-flex align-items-center">
                 <div class="ps-4">
@@ -117,16 +118,6 @@
                     <span class="nav-link-text ms-1 mt-2">Konsultasi Klien</span>
                 </a>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ route('management-process.index') }}"
-                    class="nav-link {{ request()->is('management-process*') ? 'active' : '' }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="fa-solid fa-calendar-days text-dark text-sm opacity-10 pb-0"></i>
-                    </div>
-                    <span class="nav-link-text ms-1 mt-2">Proses Pengurusan</span>
-                </a>
-            </li> --}}
             <li class="nav-item">
                 <a href="{{ route('pic-progress.indexProcess') }}"
                     class="nav-link {{ request()->is('client-progress*') ? 'active' : '' }}">
@@ -144,17 +135,6 @@
                 </div>
                 <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Back Office</h6>
             </li>
-            {{-- <li class="nav-item">
-                <a href="{{ route('management-document.index') }}"
-                    class="nav-link {{ request()->is('management-document*') ? 'active' : '' }}">
-
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="bi bi-folder-fill text-dark text-sm opacity-10 pb-0"></i>
-                    </div>
-                    <span class="nav-link-text ms-1 mt-2">Dokumen</span>
-                </a>
-            </li> --}}
             <li class="nav-item">
                 <a href="{{ route('warkah.selectClient') }}"
                     class="nav-link {{ request()->is('warkah*') ? 'active' : '' }}">
@@ -495,22 +475,6 @@
                     <span class="nav-link-text ms-1 mt-2">Laporan Pengurusan</span>
                 </a>
             </li>
-
-            {{-- <div class="collapse {{ request()->is('backup-restore*') ? 'show' : '' }}"
-                id="collapsePic">
-                <ul class="nav nav-collapse mb-0 pb-0 d-flex flex-column  justity-content-between px-3">
-                    <li>
-                        <a href="{{ route('pic_staff.index') }}"
-                            class="nav-link {{ request()->is('pic_staff*') ? 'active' : '' }}">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fa-solid fa-users-gear text-dark text-sm opacity-10 pb-0"></i>
-                            </div>
-                            <span class="nav-link-text ms-1 mt-2">Staff</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
             <li class="nav-item">
                 <a href="{{ route('backup-restore.index') }}"
                     class="nav-link {{ request()->is('backup-restore*') ? 'active' : '' }}">
@@ -520,7 +484,8 @@
                     </div>
                     <span class="nav-link-text ms-1 mt-2">Backup & Restore Data</span>
                 </a>
-            </li> --}}
+            </li>
+            {{-- @endif --}}
         </ul>
     </div>
 </aside>
