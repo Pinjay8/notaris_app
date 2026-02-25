@@ -36,7 +36,7 @@ class UserProfileController extends Controller
                 // 'access_expires_at' => now()->addHour()
             ]);
 
-            notyf()->position('x', 'right')->position('y', 'top')->success('Kode akses benar.');
+            notyf()->position('x', 'right')->position('y', 'top')->success('Berhasil membuka akses');
             return back();
         }
         notyf()->position('x', 'right')->position('y', 'top')->error('Kode akses salah.');

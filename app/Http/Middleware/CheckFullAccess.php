@@ -20,7 +20,7 @@ class CheckFullAccess
             // ||
             // now()->greaterThan(session('access_expires_at'))
         ) {
-            abort(403, 'Akses tidak diizinkan.');
+            // return redirect()->route('login');
         }
 
         return $next($request);

@@ -5,7 +5,7 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Profile'])
 
-    @if (!session('access_all_menu'))
+    {{-- @if (!session('access_all_menu'))
         <div class="card shadow-lg  mt-5 border-0 w-50 mx-auto">
             <div class="card-body p-4">
 
@@ -46,7 +46,7 @@
                 </form>
             </div>
         </div>
-    @else
+    @else --}}
         <div class="card shadow-lg mx-4 card-profile-bottom">
             <div class="card-body p-1">
                 <div class="row gx-4 p-2 px-4">
@@ -468,10 +468,8 @@
                 </div>
             </div>
             {{-- @include('layouts.footers.auth.footer') --}}
-
-
         </div>
-    @endif
+    {{-- @endif --}}
 
 @endsection
 @push('js')

@@ -169,25 +169,39 @@ class BackupRestoreController extends Controller
             'notaris' => DB::table('notaris')->where('id', $notarisId)->first(),
 
             'clients' => DB::table('clients')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'subscriptions' => DB::table('subscriptions')
-                ->where('user_id', auth()->id())->get(),
+                ->where('user_id', auth()->id())
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'documents' => DB::table('documents')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'notary_client_warkahs' => DB::table('notary_client_warkahs')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'notary_akta_types' => DB::table('notary_akta_types')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'relaas_types' => DB::table('relaas_types')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             'pic_staff' => DB::table('pic_staff')
-                ->where('notaris_id', $notarisId)->get(),
+                ->where('notaris_id', $notarisId)
+                ->whereBetween('created_at', [$start, $end])
+                ->get(),
 
             /*
             |--------------------------------------------------------------------------

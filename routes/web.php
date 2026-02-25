@@ -34,12 +34,14 @@ use App\Http\Controllers\PicProcessController;
 use App\Http\Controllers\PicStaffController;
 use App\Http\Controllers\ProductDocumentsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProsesLainController;
 use App\Http\Controllers\PublicPaymentController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelaasTypeController;
 use App\Http\Controllers\ReportPaymentController;
 use App\Http\Controllers\ReportProcessController;
 use App\Http\Controllers\ResetPassword;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SubscriptionsController;
 use App\Http\Controllers\UserProfileController;
 use App\Models\Notaris;
@@ -120,25 +122,27 @@ Route::middleware('guest')->group(function () {
 });
 
 
-// Route::middleware(['auth'])->group(function () {
-
-
-//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-//     Route::controller(UserProfileController::class)->group(function () {
-//         Route::get('/profile', 'show')->name('profile');
-//         Route::put('/profile', 'update')->name('profile.update');
-//     });
-
-
-//     Route::post('/profile/unlock', [UserProfileController::class, 'unlock'])
-//         ->name('profile.unlock');
-// });
-
-
-// Route::middleware(['auth', 'check.full.access'])->group(function () {
-
 Route::middleware(['auth'])->group(function () {
+
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+
+    Route::post('/profile/unlock', [UserProfileController::class, 'unlock'])
+        ->name('profile.unlock');
+});
+
+
+Route::middleware(['auth', 'check.full.access'])->group(function () {
+
+    // Route::middleware(['auth'])->group(function () {
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::controller(UserProfileController::class)->group(function () {
+    //     Route::get('/profile', 'show')->name('profile');
+    //     Route::put('/profile', 'update')->name('profile.update');
+    // });
+
     Route::controller(UserProfileController::class)->group(function () {
         Route::get('/profile', 'show')->name('profile');
         Route::put('/profile', 'update')->name('profile.update');
@@ -285,4 +289,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('report-progress/print', [ReportProcessController::class, 'print'])->name('report-progress.print');
     // Logout route
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    // Proses Lain
+    Route::resource('proses-lain-transaksi', ProsesLainController::class);
+    Route::get('proses-lain-pic', [ProsesLainController::class, 'indexPic'])->name('proses-lain-pic.index');
+    Route::get('proses-lain-pic/create', [ProsesLainController::class, 'createPic'])->name('proses-lain-pic.create');
+    Route::get('proses-lain-pic/{id}', [ProsesLainController::class, 'showPic'])->name('proses-lain-pic.show');
+    Route::post('proses-lain-pic', [ProsesLainController::class, 'storePic'])->name('proses-lain-pic.store');
+    Route::put('proses-lain-pic/{id}', [ProsesLainController::class, 'updatePic'])->name('proses-lain-pic.update');
+    Route::get('proses-lain-progress', [ProsesLainController::class, 'indexProgress'])->name('proses-lain-progress.index');
+    Route::post('proses-lain-progress/store', [ProsesLainController::class, 'storeProgress'])->name('proses-lain-progress.store');
+    Route::put('proses-lain-progress/{id}', [ProsesLainController::class, 'updateProgress'])->name('proses-lain-progress.update');
+    Route::delete('proses-lain-progress/{id}', [ProsesLainController::class, 'destroyProgress'])->name('proses-lain-progress.destroy');
 });
