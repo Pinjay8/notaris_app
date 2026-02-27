@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Documents;
 use App\Models\Notaris;
 use App\Models\NotaryClientDocument;
+use App\Models\NotaryClientWarkah;
 use App\Models\NotaryCost;
 use App\Models\NotaryPayment;
 use App\Models\PicDocuments;
@@ -200,11 +201,11 @@ class ClientController extends Controller
                 ->get();
         }
 
-        $clientDocuments = NotaryClientDocument::where('client_code', $client->client_code)->get();
+        $clientDocuments = NotaryClientWarkah::where('client_code', $client->client_code)->get();
 
         $validUploadedCodes = $clientDocuments
             ->where('status', 'valid')
-            ->pluck('document_code')
+            ->pluck('warkah_code')
             ->toArray();
 
         $documents = Documents::where('notaris_id', $client->notaris_id)
