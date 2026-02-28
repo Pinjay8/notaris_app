@@ -10,7 +10,7 @@
                 <div class="card-header pb-0 mb-0 ">
                     <div class=" d-flex justify-content-between align-items">
                         <h5 class="mb-0">Pic</h5>
-                        @if (auth()->user()->access_code !== 'staff')
+                        @if (!is_null(auth()->user()->access_code) && auth()->user()->access_code !== 'staff')
                             <a href="{{ route('proses-lain-pic.create') }}" class="btn btn-primary btn-sm mb-0">
                                 + Tambah PIC
                             </a>
@@ -24,7 +24,7 @@
                             </form>
                         @endif
                     </div>
-                    @if (auth()->user()->access_code !== 'staff')
+                    @if (!is_null(auth()->user()->access_code) && auth()->user()->access_code !== 'staff')
                         <form method="GET" action="{{ route('proses-lain-pic.index') }}" class="d-flex gap-2 ms-auto mt-3"
                             style="max-width:550px;">
 

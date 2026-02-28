@@ -13,6 +13,9 @@ class ProsesLainController extends Controller
 {
     public function index(Request $request)
     {
+
+        $notarisId = auth()->user()->notaris_id;
+
         $query = ProsesLain::query();
 
         if ($request->filled('search')) {
@@ -203,7 +206,7 @@ class ProsesLainController extends Controller
 
     public function indexProgress(Request $request)
     {
-        $prosesLain = collect(); // default kosong
+        $prosesLain = collect(); 
 
         if ($request->filled('search')) {
 
