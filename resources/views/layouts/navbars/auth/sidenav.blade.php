@@ -4,7 +4,7 @@
     <div class="sidenav-header">
         <i class="fas fa-times p-1 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <div class="d-flex  justify-content-center mt-3 gap-2">
+        <div class="d-flex  justify-content-center mt-3 gap-2 align-items-center">
             <a class="navbar-brand m-0 p-1" href="{{ route('dashboard') }}" target="_blank">
                 <div class="d-flex align-items-center justify-content-center rounded-circle"
                     style="width: 60px; height: 60px;">
@@ -39,29 +39,38 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item mt-3 d-flex align-items-center">
-                <div class="ps-4">
-                    <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                </div>
-                <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Menu</h6>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('settings') }}" class="nav-link {{ request()->is('settings*') ? 'active' : '' }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Setting</span>
-                </a>
-            </li>
-
             @php
-                $accessCode = auth()->user()->access_code;
+                $user = auth()->user();
             @endphp
-            @if ($accessCode === 'staff' && session('access_all_menu'))
+            @if ($user->access_code !== null)
                 <li class="nav-item mt-3 d-flex align-items-center">
                     <div class="ps-4">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="fa-solid fa-bars" style="color: #f4645f;"></i>
+                    </div>
+                    <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Menu</h6>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('settings') }}" class="nav-link {{ request()->is('settings*') ? 'active' : '' }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Setting</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- @php
+                $accessCode = auth()->user()->access_code;
+            @endphp
+            @if ($accessCode === null && session('access_all_menu')) --}}
+
+
+            @if (is_null($user->access_code))
+                <li class="nav-item mt-3 d-flex align-items-center">
+                    <div class="ps-4">
+                        <i class="fa-solid fa-envelope-open-text text-dark text-sm opacity-10 pb-0"></i>
                     </div>
                     <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Proses Lain</h6>
                 </li>
@@ -126,7 +135,7 @@
                 </li>
                 <li class="nav-item mt-3 d-flex align-items-center">
                     <div class="ps-4">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="fa-solid fa-headset" style="color: #f4645f;"></i>
                     </div>
                     <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">CS</h6>
                 </li>
@@ -165,7 +174,7 @@
 
                 <li class="nav-item mt-3 d-flex align-items-center">
                     <div class="ps-4">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="fa-solid fa-gears " style="color: #f4645f;"></i>
                     </div>
                     <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Back Office</h6>
                 </li>
@@ -523,7 +532,7 @@
                 </li>
                 <li class="nav-item mt-3 d-flex align-items-center">
                     <div class="ps-4">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
+                        <i class="fa-solid fa-gears" style="color: #f4645f;"></i>
                     </div>
                     <h6 class=" ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-1">Proses Lain</h6>
                 </li>
